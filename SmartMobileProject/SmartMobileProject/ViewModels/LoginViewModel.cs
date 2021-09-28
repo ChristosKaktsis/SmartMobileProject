@@ -62,7 +62,8 @@ namespace SmartMobileProject.ViewModels
         public List<string> items { get; set; }
         private async void SetAll()
         {
-            
+            //I am Creating Smthing
+            //
             await Task.Run(() =>
             {
                 Πωλητές = new XPCollection<Πωλητής>(uow);

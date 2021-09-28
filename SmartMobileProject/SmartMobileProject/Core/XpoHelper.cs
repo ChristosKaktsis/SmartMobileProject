@@ -1150,8 +1150,6 @@ namespace SmartMobileProject.Core
         /// <returns>Select From smartTable where GCRecord</returns>
         public static async Task<DataTable> getSmartTable(string smartTable)
         {
-
-            //await Shell.Current.GoToAsync("//LoginPage");
             HttpClient client = new HttpClient();
 
             string uri = "http://192.168.3.44:80/api/Values?sql= " + smartTable + "GCRecord is null ";
