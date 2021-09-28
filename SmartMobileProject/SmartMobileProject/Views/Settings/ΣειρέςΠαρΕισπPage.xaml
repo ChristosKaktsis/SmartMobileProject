@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxg="clr-namespace:DevExpress.XamarinForms.DataGrid;assembly=DevExpress.XamarinForms.Grid" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             
+             x:Class="SmartMobileProject.Views.Settings.ΣειρέςΠαρΕισπPage"
+             Title="Σειρες Παρ Εισπ">
+    
+    <ContentPage.BindingContext>
+        <vm:SettingsΣειρεςΠαρΕισπViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Προσθηκη" Command="{Binding Προσθήκη}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <dxg:DataGridView x:Name="grid" Grid.Row="1" HorizontalOptions="Center"
+                          ItemsSource="{Binding Σειρες}" EditorShowMode="Tap" DoubleTap="DataGridView_DoubleTap">
+                <dxg:DataGridView.Columns>
+                    <dxg:TextColumn FieldName="Σειρά" Column="0" IsReadOnly="True"/>
+                    <dxg:TextColumn FieldName="Περιγραφή" Column="1" IsReadOnly="True"/>
+                </dxg:DataGridView.Columns>
+            </dxg:DataGridView>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview"
+             x:Class="SmartMobileProject.Views.ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewPage"
+             Shell.PresentationMode="ModalAnimated">
+    <ContentPage.BindingContext>
+        <vm:ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewModel/>
+    </ContentPage.BindingContext>
+   
+    <ContentPage.Content>
+        
+        <StackLayout>
+            <StackLayout Orientation="Horizontal" Padding="10">
+                <Label Text="Επιλογή Ειδών" FontSize="24"
+                           HorizontalOptions="StartAndExpand"/>
+                <dxe:SimpleButton Grid.Row="1"
+                              Grid.Column="0"
+                              CornerRadius="10"
+                              ShowShadow="True"
+                              BackgroundColor="{StaticResource PrimaryLight}"
+                              HorizontalOptions="End"
+                              Command="{Binding  Αποθήκευση}"
+                              Text="Προσθήκη"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <dxe:ComboBoxEdit x:Name="ComboBoxOikogeneia"
+                              ItemsSource="{Binding OikogeneiaCollection}"
+                              LabelText="Οικογένεια"
+                              DisplayMember="Περιγραφή"
+                              BorderColor="Transparent"
+                              IsFilterEnabled="True"
+                              ClearIconVisibility="Auto"
+                              SelectionChanged="ComboBoxEdit_SelectionChanged"
+                              HorizontalOptions="FillAndExpand"/>
+                <dxe:NumericEdit x:Name="posotita"
+                             IsUpDownIconVisible="True" 
+                             StepValue="1"
+                             MinValue="1"
+                             MaxValue="1000"
+                             AllowLooping="False"
+                             LabelText="Ποσότητα"
+                             BorderColor="Transparent"
+                             WidthRequest="150"
+                             HorizontalOptions="End"  Margin="7"/>
+            </StackLayout>
+           
+            <StackLayout Orientation="Horizontal" 
+                         Spacing="0">
+                <dxe:TextEdit x:Name="Search"
+                          PlaceholderText="Search"
+                          HorizontalOptions="FillAndExpand"
+                          
+                          BorderColor="Transparent"
+                          StartIcon="outline_search_black_24"
+                          ClearIconVisibility="Auto"/>
+                <dxe:ComboBoxEdit x:Name="SearchType"
+                                  TextColor="Gray"
+                                  BorderColor="Transparent"
+                                  HorizontalOptions="End"/>
+            </StackLayout>
+           
+            <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding EidosCollection}" 
+                                   SelectionMode="Multiple"
+                                   SelectedItems="{Binding SelectedEidosCollection}"
+                                   Tap="grid_Tap"
+                                   SelectionChanged="grid_SelectionChanged">
+                
+                <!-- Define ItemTemplate here.-->
+                <dxcv:DXCollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="LightGray" Padding="0" HasShadow="True" > 
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Περιγραφή}" 
+                                           Margin="0"
+                                           FontSize="16"
+                                           TextColor="#55575c"/>
+                                    <Label Text="{Binding ΤιμήΧονδρικής ,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                </StackLayout>
+                                <StackLayout Grid.Row="1" Orientation="Horizontal">
+                                    <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
+                                    
+                                    <Label Text="{Binding Οικογένεια.Περιγραφή}" IsVisible="false" />
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </dxcv:DXCollectionView.ItemTemplate>
+                <dxcv:DXCollectionView.SelectedItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="{StaticResource Complementary}" Padding="0" HasShadow="True">
+                            <Grid Padding="10" BackgroundColor="{StaticResource PrimaryLight}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Περιγραφή}" 
+                                   Margin="0"
+                                   FontSize="16"
+                                   TextColor="#55575c"/>
+                                    <Label Text="{Binding ΤιμήΧονδρικής ,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                </StackLayout>
+                                <StackLayout Grid.Row="1" Orientation="Horizontal">
+                                    <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
+                                    <Label Text="{Binding Ποσότητα ,StringFormat='Ποσότητα {0}'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0" FontAttributes="Bold"/>
+                                   
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </dxcv:DXCollectionView.SelectedItemTemplate>
+                <!--Sort items.-->
+                <dxcv:DXCollectionView.SortDescriptions>
+                    <dxcv:SortDescription FieldName="Περιγραφή" SortOrder="Ascending"/>
+                </dxcv:DXCollectionView.SortDescriptions>
+            </dxcv:DXCollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

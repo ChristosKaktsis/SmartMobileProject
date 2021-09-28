@@ -1,0 +1,224 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="xpoXamarinDemo.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="xpoXamarinDemo.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DevExpress.XamarinForms.Charts" Version="21.1.5" />
+    <PackageReference Include="DevExpress.XamarinForms.CollectionView" Version="21.1.5" />
+    <PackageReference Include="DevExpress.XamarinForms.Editors" Version="21.1.5" />
+    <PackageReference Include="DevExpress.XamarinForms.Grid" Version="21.1.5" />
+    <PackageReference Include="DevExpress.XamarinForms.Navigation" Version="21.1.5" />
+    <PackageReference Include="DevExpress.XamarinForms.Scheduler" Version="21.1.5" />
+    <PackageReference Include="DevExpress.Xpo" Version="20.2.7" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />  
+    <PackageReference Include="Xamarin.Forms.DataGrid" Version="4.8.0" />  
+    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2083" />  
+    <PackageReference Include="ZXing.Net.Mobile" Version="3.1.0-beta2" />  
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="3.1.0-beta2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v20.2">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.2\Components\Bin\Standard\DevExpress.Data.v20.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v20.2">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.2\Components\Bin\Standard\DevExpress.Xpo.v20.2.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Settings\ΕίδοςΥποΟικογένειαPage.xaml.cs">
+      <DependentUpon>ΕίδοςΥποοικογένειαPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΕίδοςΚατηγορίεςPage.xaml.cs">
+      <DependentUpon>ΕίδοςΚατηγορίεςPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΕίδοςΟμάδαPage.xaml.cs">
+      <DependentUpon>ΕίδοςΟμάδαPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΕίδοςΟμάδαDetailViewPage.xaml.cs">
+      <DependentUpon>ΕίδοςΟμάδαDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΕίδοςΚατηγορίεςDetailViewPage.xaml.cs">
+      <DependentUpon>ΕίδοςΚατηγορίεςDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΕίδοςΥποοικογένειαDetailViewPage.xaml.cs">
+      <DependentUpon>ΕίδοςΥποοικογένειαDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΕίδοςΟικογένειαDetailViewPage.xaml.cs">
+      <DependentUpon>ΕίδοςΟικογένειαDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΕίδοςΟικογένειαPage.xaml.cs">
+      <DependentUpon>ΕίδοςΟικογένειαPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΔΟΥPage.xaml.cs">
+      <DependentUpon>ΔΟΥPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΔΟΥDetailViewPage.xaml.cs">
+      <DependentUpon>ΔΟΥDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΤΚDetailViewPage.xaml.cs">
+      <DependentUpon>ΤΚDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΤΚPage.xaml.cs">
+      <DependentUpon>ΤΚPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΠόληPage.xaml.cs">
+      <DependentUpon>ΠόληPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΠόληςDetailViewPage.xaml.cs">
+      <DependentUpon>ΠόληςDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΣειρέςΠαρΕισπPage.xaml.cs">
+      <DependentUpon>ΣειρέςΠαρΕισπPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΣειρέςΠαραστατικώνΕισπράξεωνDetailViewPage.xaml.cs">
+      <DependentUpon>ΣειρέςΠαραστατικώνΕισπράξεωνDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΣειρέςΠαραστατικώνΠωλήσεωνDetailViewPage.xaml.cs">
+      <DependentUpon>ΣειρέςΠαραστατικώνΠωλήσεωνDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\UploadToSmart.xaml.cs">
+      <DependentUpon>UploadToSmart.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ΛογαριασμόςDetailViewPage.xaml.cs">
+      <DependentUpon>ΛογαριασμόςDetailViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ΓραμμέςΠαραστατικώνΠωλήσεωνListViewPage.xaml.cs">
+      <DependentUpon>ΓραμμέςΠαραστατικώνΠωλήσεωνListViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ΕίδοςListViewPage.xaml.cs">
+      <DependentUpon>ΕίδοςListViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ΝέοΠαραστατικόPage.xaml.cs">
+      <DependentUpon>ΝέοΠαραστατικόPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ΠαραστατικάΕισπράξεωνListViewPage.xaml.cs">
+      <DependentUpon>ΠαραστατικάΕισπράξεωνListViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ΠαραστατικόListViewPage.xaml.cs">
+      <DependentUpon>ΠαραστατικόListViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ΠελάτηςListViewPage.xaml.cs">
+      <DependentUpon>ΠελάτηςListViewPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\FlyoutHeader.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\LoadingFromSmart.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MapViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ScannerViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingsViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Settings\ApplicationSettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Settings\PrintSettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Settings\ΣτοιχείαΕταιρίαςPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TestΠελάτηςDetailViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΑξιόγραφοDetailViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΕνέργειαDetailViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΕργασίεςDetailViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΕργασίεςViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΛογαριασμόςDetailViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΓραμμέςΠαραστατικώνΕισπράξεωνListViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΓραμμέςΠαραστατικώνΠωλήσεωνDetailViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΔιευθύνσειςΠελάτηDetailViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΔιευθύνσειςΠελάτηListViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΕίδοςDetailViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΕίδοςListViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΝέοΠαραστατικόPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΓραμμέςΠαραστατικώνΠωλήσεωνListViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΠαραστατικάΕισπράξεωνListViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΠαραστατικόListViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΠαραστατικόΒασικάΣτοιχείαPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΠαραστατικόΕισπράξεωνΒασικάΣτοιχείαPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΠαραστατικόΟλοκλήρωσηViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΠελάτηςListViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΠρογραμματισμόςViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΠωλητήςViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Connected Services\" />
+  </ItemGroup>
+</Project>

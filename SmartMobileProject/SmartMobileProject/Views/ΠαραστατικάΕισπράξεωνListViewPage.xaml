@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             x:Class="SmartMobileProject.Views.ΠαραστατικάΕισπράξεωνListViewPage"
+             Title="{Binding Title}">
+
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Image Source="BO_Opportunity.png" Scale="1.5" Margin="5"/>
+            <Label Text="{Binding Title}" Style="{DynamicResource TitleStyle}" TextColor="White" Margin="10"/>
+        </StackLayout>
+    </Shell.TitleView>
+
+    <ContentPage.BindingContext>
+        <vm:ΠαρασταικάΕισπράξεωνViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Νέο" Command="{Binding ΔημιουργίαΠαραστατικού}" IconImageSource="add_white_36" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <dxg:DataGridView x:Name="grid" 
+                          ItemsSource="{Binding Parastatika}" 
+                          DoubleTap="grid_DoubleTap"
+                          IsColumnHeaderVisible="False">
+
+            <dxg:DataGridView.CellStyle>
+                <dxg:CellStyle Padding="3" BorderColor="Transparent"  BottomBorderColor="LightGray" HorizontalLineThickness="1" FontSize="15">
+
+                </dxg:CellStyle>
+            </dxg:DataGridView.CellStyle>
+            <dxg:DataGridView.StartSwipeItems>
+                <dxg:SwipeItem Command="{Binding  ΔιαγραφήΠαρασατικού}"
+                               Caption="delete"
+                               BackgroundColor="{StaticResource Tradic}"
+                               Image="delete_white_18"/>
+            </dxg:DataGridView.StartSwipeItems>
+            <dxg:DataGridView.EndSwipeItems>
+                <dxg:SwipeItem Command="{Binding Εκτύπωση}" 
+                               Caption="Print" 
+                               BackgroundColor="{StaticResource PrimaryLight}"
+                               Image="Print_16x16.png"/>
+                <dxg:SwipeItem Command="{Binding ΤροποποίησηΠαρασατικού}" 
+                               Caption="edit" 
+                               BackgroundColor="{StaticResource Analogous}"
+                               Image="edit_white_18.png"/>
+            </dxg:DataGridView.EndSwipeItems>
+
+            <dxg:DataGridView.Columns>
+                <dxg:DateColumn FieldName="Ημνία" DisplayFormat="d/M/y" HorizontalContentAlignment="Start" Row="0"/>
+                <dxg:TextColumn FieldName="Παραστατικό" VerticalContentAlignment="End" Row="0"/>
+                <dxg:TextColumn FieldName="Πελάτης.Επωνυμία" Row="1"/>
+                
+                <dxg:NumberColumn FieldName="Πίστωση" DisplayFormat="Πίστωση: {0:n1} €" Row="2"/>
+            </dxg:DataGridView.Columns>
+        </dxg:DataGridView>
+    </ContentPage.Content>
+
+</ContentPage>

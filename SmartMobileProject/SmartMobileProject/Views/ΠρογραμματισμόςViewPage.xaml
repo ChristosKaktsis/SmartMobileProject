@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxsch="http://schemas.devexpress.com/xamarin/2014/forms/scheduler" 
+             xmlns:local="clr-namespace:SmartMobileProject.ViewModels"
+             x:Class="SmartMobileProject.Views.ΠρογραμματισμόςViewPage"
+             Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <local:ReceptionDeskViewModel/>
+    </ContentPage.BindingContext>
+    
+    <dxsch:WeekView x:Name="schedule"
+                    Start="{Binding StartDate}"
+                    FirstDayOfWeek="Monday"
+                    WorkTime="07:00:00-20:00:00"
+                    ShowWorkTimeOnly="True"
+                    TimeScaleInterval="01:00:00"
+                    TimeScaleSlotCount="4"
+                    SnapToCellsMode="Never"
+                    Tap="WeekView_OnTap"
+                    LongPress="schedule_LongPress">
+        <dxsch:WeekView.DataStorage >
+            <dxsch:SchedulerDataStorage x:Name="storage" RemindersChanged="OnRemindersChanged">
+                <dxsch:SchedulerDataStorage.DataSource>
+                    <dxsch:DataSource AppointmentsSource="{Binding Appointments}">
+                        <dxsch:DataSource.AppointmentMappings>
+                            <dxsch:AppointmentMappings 
+                                Id="Id"
+                                Start="StartTime"
+                                End="EndTime"
+                                Subject="Subject"
+                                LabelId="LabelId"
+                                AllDay="AllDay"
+                                StatusId="Status"
+                            />
+                        </dxsch:DataSource.AppointmentMappings>
+                    </dxsch:DataSource>
+                </dxsch:SchedulerDataStorage.DataSource>
+            </dxsch:SchedulerDataStorage>
+        </dxsch:WeekView.DataStorage>
+    </dxsch:WeekView>
+</ContentPage>

@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartMobileProject.Views.TestΠελάτηςDetailViewPage"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"             
+             xmlns:local1="clr-namespace:SmartMobileProject.Views" 
+             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid"
+             Shell.FlyoutBehavior="Disabled"
+             Title="{Binding Title}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding Πίσω}"/>
+    </Shell.BackButtonBehavior>
+    <ContentPage.BindingContext>
+        <vm:ΠελάτηςDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <local1:StringToBoolConverter x:Key="stringToBoolConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" IconImageSource="save_white_24" Command="{Binding  Αποθήκευση}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid  
+            VerticalOptions="FillAndExpand"
+            RowSpacing="10"
+            ColumnSpacing="8"
+            Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="80"/>
+                   
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontSize="20"
+                    Text="Βασικά Στοιχεία"/>
+                <dxe:TextEdit Grid.Row="1"
+                          Grid.Column="0"
+                          LabelText="Κωδικος"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Keyboard="Numeric"
+                          Text="{Binding customer.Κωδικός}"/>
+                <dxe:TextEdit Grid.Row="2"
+                          Grid.Column="0"
+                          LabelText="Διακριτικός Τίτλος"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Text="{Binding customer.Διακριτικόςτίτλος}"/>
+                <dxe:TextEdit Grid.Row="3"
+                          Grid.Column="0"
+                          LabelText="Επωνυμία"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Text="{Binding customer.Επωνυμία}"
+                         
+                          ErrorText="{Binding EponimiaErrorMessage}"
+                          HasError="{Binding EponimiaErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
+                <dxe:TextEdit Grid.Row="4"
+                          Grid.Column="0"
+                          LabelText="ΑΦΜ"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Keyboard="Numeric"
+                          Text="{Binding customer.ΑΦΜ}"     
+                          
+                          ErrorText="{Binding AfmErrorMessage}"
+                          HasError="{Binding AfmErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
+                <dxe:ComboBoxEdit Grid.Row="5"
+                              Grid.Column="0"
+                              LabelText="ΔΟΥ"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding DOYCollection}"
+                              SelectedItem="{Binding customer.ΔΟΥ}"
+                              DisplayMember="Περιγραφή"
+                              IsFilterEnabled="True"/>
+                <dxe:TextEdit Grid.Row="6"
+                          Grid.Column="0"
+                          LabelText="Email"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Keyboard="Email"
+                          Text="{Binding customer.Email}"/>
+                <Frame Grid.Row="7"
+                       CornerRadius="20"
+                       Padding="0"
+                       HasShadow="True"
+                       BorderColor="LightGray">
+                    <Button               
+                        Text="Διευθύνσεις Πελάτη"
+                        TextColor="{StaticResource ComplementaryLight}"
+                        
+                        FontAttributes="Bold"
+                        TextTransform="None"
+                        FontSize="20"
+                        Command="{Binding Διευθύνσεις}"/>
+                </Frame>
+               
+
+                
+            </Grid>
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>

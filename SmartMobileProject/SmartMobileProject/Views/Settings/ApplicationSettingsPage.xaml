@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             x:Class="SmartMobileProject.Views.Settings.ApplicationSettingsPage"
+             Title="Application Settings">
+    <ContentPage.BindingContext>
+        <vm:ApplicationSettingsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid Margin="10" >
+            <Grid.RowDefinitions >
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
+            <Line Grid.Row="1" BackgroundColor="Gray"/>
+            <Label  Text="Online Mode" FontSize="Large"/>
+            <Switch  IsToggled="{Binding OnlineMode}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

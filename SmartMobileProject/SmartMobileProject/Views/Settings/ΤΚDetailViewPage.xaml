@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:local1="clr-namespace:SmartMobileProject.Views"
+             x:Class="SmartMobileProject.Views.ΤΚDetailViewPage">
+
+    <ContentPage.BindingContext>
+        <vm:ΤΚDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+
+        <Grid RowSpacing="0"
+              ColumnSpacing="8"
+              Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <dxe:TextEdit Grid.Row="1"
+                LabelText="TK"
+                          Text="{Binding Όνομα}"
+                          x:Name="ΟνομαΠόλης"/>
+            <dxe:ComboBoxEdit Grid.Row="2"
+                              LabelText="Πόλη"
+                              SelectedItem="{Binding Πόλη,Mode=TwoWay}"
+                              ItemsSource="{Binding Πόλης}"
+                              DisplayMember="ΟνομαΠόλης"
+                              x:Name="πόλης"/>
+            <dxe:TextEdit Grid.Row="3"
+                LabelText="Νομός"
+                          Text="{Binding Νομός}"
+                          x:Name="Νομός"/>
+            <dxe:TextEdit Grid.Row="4"
+                LabelText="Περιοχή"
+                          Text="{Binding Περιοχή}"
+                          x:Name="Περιοχή"/>
+            <dxe:TextEdit Grid.Row="5"
+                LabelText="Χώρα"
+                          Text="{Binding Χώρα}"
+                          x:Name="Χώρα"/>
+
+            <Button Grid.Row="6"
+                    Text="Προσθήκη"
+                    Margin="10"
+                    CornerRadius="10"
+                    HorizontalOptions="End"
+                    Command="{Binding Αποθήκευση}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

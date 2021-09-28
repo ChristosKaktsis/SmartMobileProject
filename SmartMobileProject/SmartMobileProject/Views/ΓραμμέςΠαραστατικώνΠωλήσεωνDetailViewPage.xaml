@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             x:Class="SmartMobileProject.Views.ΓραμμέςΠαραστατικώνΠωλήσεωνDetailViewPage"
+             Shell.PresentationMode="ModalAnimated">
+    <ContentPage.BindingContext>
+        <vm:ΓραμμέςΠαραστατικώνΠωλήσεωνDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid  
+            VerticalOptions="FillAndExpand"
+            RowSpacing="10"
+            ColumnSpacing="8"
+            Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="{Binding Title}" FontSize="20"
+                           HorizontalOptions="StartAndExpand"/>
+                </StackLayout>
+               
+                <dxe:ComboBoxEdit Grid.Row="1"                              
+                              ItemsSource="{Binding EidosCollection}"
+                              DisplayMember="Περιγραφή"
+                              SelectedItem="{Binding Eidos}"
+                              LabelText="Είδος"
+                              IsFilterEnabled="True"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True">
+                    <dxe:ComboBoxEdit.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Label Padding="10" Text="{Binding Περιγραφή}" FontAttributes="Bold"/>
+                                <Label Padding="10" Grid.Column="1" Text="{Binding ΤιμήΧονδρικής , StringFormat='{0} €'}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </dxe:ComboBoxEdit.ItemTemplate>
+                </dxe:ComboBoxEdit>
+                <dxe:NumericEdit Grid.Row="2"
+                          Grid.Column="0"
+                          LabelText="Ποσότητα"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"   
+                          IsUpDownIconVisible="True"
+                          MinValue="0"   
+                          MaxValue="100000000000"
+                          Value="{Binding Ποσότητα}"/>
+                <dxe:NumericEdit Grid.Row="3"
+                          Grid.Column="0"
+                          LabelText="Τιμή"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True" 
+                          IsUpDownIconVisible="True"   
+                          Suffix="€"
+                          MinValue="0"
+                          MaxValue="100000000000"
+                          Value="{Binding Τιμή }"/>
+                <Grid Grid.Row="4">
+                    <dxe:NumericEdit Grid.Row="0"
+                          Grid.Column="0"
+                          LabelText="Εκπτωση"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True" 
+                          IsUpDownIconVisible="True"
+                          StepValue="0.01"
+                          DisplayFormat="p"                        
+                          Value="{Binding Εκπτωση}"/>
+                    <dxe:NumericEdit Grid.Row="0"
+                          Grid.Column="1"
+                          LabelText="Αξία Εκπτωσης"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True" 
+                          Suffix="€"
+                          DisplayFormat="n"      
+                          IsReadOnly="True"
+                          Value="{Binding LineOfOrders.ΑξίαΕκπτωσης}"/>
+                </Grid>
+                <dxe:NumericEdit Grid.Row="5"
+                          Grid.Column="0"
+                          LabelText="Καθαρή Αξία"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"  
+                          IsReadOnly="True"
+                          DisplayFormat="n"
+                          Suffix="€"
+                          Value="{Binding LineOfOrders.ΚαθαρήΑξία}"/>
+                <Grid Grid.Row="6">
+                    <dxe:NumericEdit Grid.Row="0"
+                          Grid.Column="0"
+                          LabelText="Ποσοστό Φπα"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True" 
+                          IsUpDownIconVisible="False"
+                          IsReadOnly="True"
+                          StepValue="0.01"
+                          DisplayFormat="p"                        
+                          Value="{Binding  ΠοσοστόΦπα}"/>
+                    <dxe:NumericEdit Grid.Row="0"
+                          Grid.Column="1"
+                          LabelText="Φπα"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True" 
+                          IsReadOnly="True"
+                          Suffix="€"
+                          DisplayFormat="n"                        
+                          Value="{Binding LineOfOrders.Φπα}"/>
+                </Grid>
+                <dxe:NumericEdit Grid.Row="7"
+                          Grid.Column="0"
+                          LabelText="Αξία Γραμμής"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          IsReadOnly="True"       
+                          DisplayFormat="n"
+                          Suffix="€"
+                          Value="{Binding LineOfOrders.ΑξίαΓραμμής}"/>
+                <Frame Grid.Row="0"
+                           Grid.Column="0"
+                           Padding="0"
+                           CornerRadius="10"
+                       WidthRequest="50"
+                       HeightRequest="50"
+                           HorizontalOptions="Start"
+                           HasShadow="True">
+                    <Button Command="{Binding Ακύρωση}"
+                           ImageSource="arrow_back_white_20"/>
+                </Frame>
+                <Frame Grid.Row="9"
+                           Grid.Column="0"
+                           Padding="0"
+                           CornerRadius="10"
+                           HorizontalOptions="End"
+                           HasShadow="True">
+                    <Button Command="{Binding  Αποθήκευση}"
+                            Text="Προσθήκη"/>
+                </Frame>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

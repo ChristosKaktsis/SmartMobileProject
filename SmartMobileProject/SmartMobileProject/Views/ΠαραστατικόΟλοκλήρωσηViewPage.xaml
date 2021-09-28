@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview"
+             Shell.FlyoutBehavior="Disabled"
+             x:Class="SmartMobileProject.Views.ΠαραστατικόΟλοκλήρωσηViewPage"
+             Title="{Binding NewOrder.Παραστατικό}">
+    <ContentPage.BindingContext>
+        <vm:ΝέοΠαραστατικόViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ολοκλήρωση" Command="{Binding Αποθήκευση}" IconImageSource="save_white_24.png" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+            <Grid>
+                <Label Text="Παραστατικό"
+                   Grid.Row="0" Grid.Column="0"/>
+                <Label Text="{Binding NewOrder.Παραστατικό}"
+                   Grid.Row="0" Grid.Column="1"/>
+                <Label Text="Ημνία"
+                   Grid.Row="1" Grid.Column="0"/>
+                <Label Text="{Binding NewOrder.Ημνία}"
+                   Grid.Row="1" Grid.Column="1"/>
+                <Label Text="Πελάτης"
+                   Grid.Row="2" Grid.Column="0"/>
+                <Label Text="{Binding NewOrder.Πελάτης.DisplayName}"
+                   Grid.Row="2" Grid.Column="1"/>
+                <Label Text="Καθαρή Αξία"
+                   Grid.Row="3" Grid.Column="0"/>
+                <Label Text="{Binding NewOrder.ΚαθαρήΑξία, StringFormat='{0:n2} €'}"
+                   Grid.Row="3" Grid.Column="1"/>
+                <Label Text="Αξία Παραστατικού"
+                   Grid.Row="4" Grid.Column="0"/>
+                <Label Text="{Binding NewOrder.ΑξίαΠαραστατικού, StringFormat='{0:n2} €'}"
+                   Grid.Row="4" Grid.Column="1"/>
+            </Grid>
+            <Label Grid.Row="1" HorizontalOptions="Center"
+                   Text="Γραμμές Παραστατικών Πωλήσεων"
+                   FontAttributes="Bold" FontSize="18"/>
+            <Frame  Grid.Row="2"
+                    CornerRadius="20"
+                    BorderColor="Gray">
+                <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding NewOrder.ΓραμμέςΠαραστατικώνΠωλήσεων}" >
+                    <dxcv:DXCollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BorderColor="LightGray" Padding="0">
+                                <Grid Padding="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding Είδος.Περιγραφή}" 
+                                   Margin="0"
+                                   FontSize="16"
+                                   TextColor="#55575c"/>
+                                    <StackLayout Grid.Row="1" Orientation="Horizontal">
+                                        <Label Text="{Binding Ποσότητα ,StringFormat='Ποσότητα: {0}'}"  Padding="0, 0, 0, 0"/>
+                                        <Label Text="{Binding  ΑξίαΓραμμής ,StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </dxcv:DXCollectionView.ItemTemplate>
+                </dxcv:DXCollectionView>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

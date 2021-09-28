@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+            xmlns:local="clr-namespace:SmartMobileProject.Views" 
+            xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+            x:Class="SmartMobileProject.Views.ΝέοΠαραστατικόPage"
+            Title="Νέο Παραστατικό"
+            Shell.FlyoutBehavior="Disabled">
+
+    <TabbedPage.BindingContext>
+        <vm:ΝέοΠαραστατικόViewModel />
+    </TabbedPage.BindingContext>
+
+    <!--Pages can be added as references or inline-->
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="Ολοκλήρωση" Command="{Binding Αποθήκευση}" IconImageSource="save_white_24.png" />
+    </TabbedPage.ToolbarItems>
+    <local:ΠαραστατικόΒασικάΣτοιχείαPage />
+    <local:ΓραμμέςΠαραστατικώνΠωλήσεωνListViewPage />
+   
+
+
+</TabbedPage>

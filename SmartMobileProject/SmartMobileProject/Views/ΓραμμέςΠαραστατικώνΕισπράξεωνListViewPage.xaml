@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid" 
+             x:Class="SmartMobileProject.Views.ΓραμμέςΠαραστατικώνΕισπράξεωνListViewPage"
+             Shell.FlyoutBehavior="Disabled"
+             Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <vm:ΓραμμέςΠαραστατικώνΕισπράξεωνViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ολοκλήρωση" IconImageSource="save_white_24.png" Order="Primary" Command="{Binding Αποθήκευση}" Priority="1"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        
+        <Grid  
+            RowSpacing="20"
+            ColumnSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+           
+            <dxg:DataGridView x:Name="grid" Grid.Row="1" HorizontalOptions="Center"
+                          ItemsSource="{Binding LineOfOrdersCollection}"                              
+                          IsColumnHeaderVisible="False" >
+                <dxg:DataGridView.CellStyle>
+                    <dxg:CellStyle Padding="10" BorderColor="Transparent"  BottomBorderColor="LightGray" HorizontalLineThickness="1" FontSize="13">
+                    </dxg:CellStyle>
+                </dxg:DataGridView.CellStyle>
+                <dxg:DataGridView.StartSwipeItems>
+                    <dxg:SwipeItem Command="{Binding ΔιαγραφήΓραμμής}"
+                               Caption="delete"
+                               BackgroundColor="{StaticResource Tradic}"
+                               Image="delete_white_18"/>
+                </dxg:DataGridView.StartSwipeItems>
+                <dxg:DataGridView.EndSwipeItems>
+                    <dxg:SwipeItem Command="{Binding ΕπεξεργασίαΓραμμής}" 
+                               Caption="edit  " 
+                               BackgroundColor="{StaticResource Analogous}"
+                               Image="edit_white_18.png"/>
+                </dxg:DataGridView.EndSwipeItems>
+                <dxg:DataGridView.Columns>
+                    <dxg:TextColumn FieldName="DisplayName" Caption="Λογαριασμός" RowSpan="2" ColumnSpan="0" VerticalContentAlignment="Start" IsReadOnly="True"/>
+                    <dxg:NumberColumn FieldName="Ποσόν"  DisplayFormat="Ποσόν: {0:n2} €" Row="1" Column="1"  RowSpan="0" VerticalContentAlignment="Center" />
+                    <dxg:NumberColumn FieldName=""   Row="0" Column="1"  RowSpan="0" VerticalContentAlignment="Center" />
+                    
+                </dxg:DataGridView.Columns>
+                <dxg:DataGridView.TotalSummaries>
+                    <dxg:GridColumnSummary FieldName="Ποσόν" Type="Sum"
+                                                   DisplayFormat="Ποσόν: {0:n2} €"/>
+                </dxg:DataGridView.TotalSummaries>
+                
+            </dxg:DataGridView>
+
+            <StackLayout Grid.Row="1"
+                         Spacing="20"
+                         HorizontalOptions="Center"
+                         VerticalOptions="End">
+                <Frame x:Name="axiografo"
+                    HasShadow="True"
+                    WidthRequest="130"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    IsVisible="false"
+                    Scale="0"
+                    Padding="0"
+                    HorizontalOptions="Center">
+                    <Button Text="Αξιόγραφο" TextColor="{StaticResource ComplementaryLight}"
+                        BackgroundColor="{StaticResource PrimaryLight}"
+                        Command="{Binding ΝέαΓραμμήΑξιόγραφο}"/>
+                </Frame>
+                <Frame x:Name="logariasmos"
+                    HasShadow="True"
+                    WidthRequest="130"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    IsVisible="False"
+                    Scale="0"
+                    Padding="0"
+                    HorizontalOptions="Center">
+                    <Button Text="Λογαριασμός" TextColor="{StaticResource ComplementaryLight}"
+                        BackgroundColor="{StaticResource PrimaryLight}"
+                        Command="{Binding ΝέαΓραμμήΛογαριαμός}"/>
+                </Frame>
+                <Frame 
+                    HasShadow="True"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    CornerRadius="35"
+                    Padding="0"
+                    HorizontalOptions="Center">
+                    <Button x:Name="plusBtn" 
+                        ImageSource="add_white_20"
+                        BackgroundColor="{StaticResource PrimaryLight}"
+                        Clicked="Button_Clicked"/>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             x:Class="SmartMobileProject.Views.ΕίδοςDetailViewPage"
+             Shell.FlyoutBehavior="Disabled"
+             Title="{Binding Title}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding Πίσω}"/>
+    </Shell.BackButtonBehavior>
+    
+    <ContentPage.BindingContext>
+        <vm:ΕίδοςDetailViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" Command="{Binding Αποθήκευση}" IconImageSource="save_white_24" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid  
+            VerticalOptions="FillAndExpand"
+            RowSpacing="20"
+            ColumnSpacing="8"
+            Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+
+                <dxe:TextEdit Grid.Row="1"
+                          Grid.Column="0"
+                          LabelText="Κωδικος"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Keyboard="Numeric"
+                          Text="{Binding Eidos.Κωδικός}"/>
+                <dxe:TextEdit Grid.Row="2"
+                          Grid.Column="0"
+                          LabelText="Περιγραφή"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Text="{Binding Eidos.Περιγραφή}"/>
+                <dxe:ComboBoxEdit Grid.Row="3"
+                              Grid.Column="0"
+                              LabelText="ΦΠΑ"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding ΦΠΑ}"
+                              SelectedItem="{Binding Eidos.ΦΠΑ}"
+                              DisplayMember="Φπαid"/>
+                <dxe:ComboBoxEdit Grid.Row="4"
+                              Grid.Column="0"
+                              LabelText="Οικογένεια"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding ΟικογένειαΕίδους}"
+                              SelectedItem="{Binding Eidos.Οικογένεια}"
+                              DisplayMember="Περιγραφή"
+                              IsFilterEnabled="True"/>
+                <dxe:ComboBoxEdit Grid.Row="5"
+                              Grid.Column="0"
+                              LabelText="Υποοικογένεια"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding ΥποοικογένειαΕίδους}"
+                              SelectedItem="{Binding Eidos.Υποοικογένεια}"
+                              DisplayMember="Περιγραφή"
+                              IsFilterEnabled="True"/>
+                <dxe:ComboBoxEdit Grid.Row="6"
+                              Grid.Column="0"
+                              LabelText="Ομάδα"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding ΟμάδαΕίδους}"
+                              SelectedItem="{Binding Eidos.Ομάδα}"
+                              DisplayMember="Ομάδα"
+                              IsFilterEnabled="True"/>
+                <dxe:ComboBoxEdit Grid.Row="7"
+                              Grid.Column="0"
+                              LabelText="Κατηγορία"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding ΚατηγορίαΕίδους}"
+                              SelectedItem="{Binding Eidos.Κατηγορία}"
+                              DisplayMember="Κατηγορία"
+                              IsFilterEnabled="True"/>
+                <dxe:NumericEdit Grid.Row="8"
+                          Grid.Column="0"
+                          LabelText="Τιμή Χονδρικής"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Value="{Binding Eidos.ΤιμήΧονδρικής}"/>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

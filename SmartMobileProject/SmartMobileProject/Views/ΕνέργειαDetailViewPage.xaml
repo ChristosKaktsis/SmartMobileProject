@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             x:Class="SmartMobileProject.Views.ΕνέργειαDetailViewPage"
+             Shell.PresentationMode="ModalAnimated">
+    <ContentPage.BindingContext>
+        <vm:ΕνέργειαDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid  
+            VerticalOptions="FillAndExpand"
+            RowSpacing="20"
+            ColumnSpacing="8"
+            Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Frame Grid.Row="0"
+                       CornerRadius="20"
+                       HorizontalOptions="End"
+                       Padding="0"
+                       HasShadow="True"
+                       BorderColor="LightGray">
+                    <Button               
+                        Text="Save"
+                        TextColor="{StaticResource ComplementaryLight}"
+                        FontAttributes="Bold"
+                        TextTransform="None"
+                        FontSize="20"
+                        Command="{Binding Αποθήκευση}"/>
+                </Frame>
+                <dxe:ComboBoxEdit Grid.Row="1"
+                          Grid.Column="0"
+                          x:Name="ΤύποςEdit"    
+                          LabelText="Τύπος Ενέργειας"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          DisplayMember="Περιγραφή"
+                          SelectionChanged="ΤύποςEdit_SelectionChanged"
+                          ItemsSource="{Binding ΙδιότηταΕνέργειας}"
+                          SelectedItem="{Binding ΤύποςΕνέργειας, Mode=Default}">
+                </dxe:ComboBoxEdit>
+                <dxe:MultilineEdit Grid.Row="2"
+                          Grid.Column="0"
+                          x:Name="ΠεριγραφήEdit"         
+                          LabelText="Περιγραφή"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          IsVisible="false"
+                          Text="{Binding Ενέργεια.Περιγραφή}"/>
+                <dxe:NumericEdit Grid.Row="2"
+                                     x:Name="ΑριθμόςEdit"
+                                     LabelText="Αριθμός"
+                                     IsLabelFloating="True"
+                                     IsUpDownIconVisible="True"
+                                     IsVisible="false"
+                                     Value="{Binding Ενέργεια.Αριθμός}"/>
+                <dxe:CheckEdit Grid.Row="2"
+                               x:Name="CheckEdit"
+                               Label="Ναί/Όχι"
+                               IsVisible="false"
+                               IsChecked="{Binding Ενέργεια.Option}"/>
+                <dxe:DateEdit Grid.Row="2"
+                              x:Name="ΗμEdit"
+                              LabelText ="Ημ/νία"
+                              IsVisible="false"
+                              Date="{Binding Ενέργεια.Ημερ, Mode=Default}"/>
+                <dxe:ComboBoxEdit Grid.Row="2"
+                                  x:Name="ΕπιλογήEdit"
+                                  LabelText="Επιλογή"
+                                  IsVisible="false"
+                                  DisplayMember="Περιγραφή"
+                                  ItemsSource="{Binding ΤύποςΕνέργειας.ΕπιλογήΙδιότητας}"
+                                  SelectedItem="{Binding ΕπιλογήΙδιότητας, Mode=Default}"/>
+
+                <Frame Grid.Row="4"
+                       HasShadow="True"
+                       Padding="0"
+                       CornerRadius="20"
+                       WidthRequest="40"
+                       HeightRequest="40">
+                    <Button x:Name="addimgbtn"
+                            Text="Φωτογραφία"
+                            Clicked="TakeImage"/>
+                </Frame>
+                <Image Grid.Row="5"
+                    x:Name="resultImage"
+                    Source="{Binding ImageSource ,Mode=OneWay}"/>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

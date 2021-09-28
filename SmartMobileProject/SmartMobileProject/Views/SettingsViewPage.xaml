@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="SmartMobileProject.Views.SettingsViewPage"
+             Title="Settings">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Image Source="Settings.png" Scale="1.5" Margin="5"/>
+            <Label Text="Settings" Style="{DynamicResource TitleStyle}" TextColor="White" Margin="10"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Στοιχεία Εταιρίας"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_1"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Σειρες Παραστατικών Πωλήσεων"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Σειρες Παραστατικών Εισπράξεων"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_2"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Πόλης"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_3"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="ΤΚ"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_4"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="ΔΟΥ"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_5"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Οικογένεια Είδους"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_6"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Υποοικογένεια Είδους"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_7"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Ομάδα Είδους"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_8"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Κατηγορία Είδους"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_9"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Application Settings"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_10"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

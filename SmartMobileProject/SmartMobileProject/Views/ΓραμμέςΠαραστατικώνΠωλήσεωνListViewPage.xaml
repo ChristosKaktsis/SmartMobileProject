@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview" 
+             xmlns:editors="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             Shell.FlyoutBehavior="Disabled"
+             x:Class="SmartMobileProject.Views.ΓραμμέςΠαραστατικώνΠωλήσεωνListViewPage"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:ΓραμμέςΠαραστατικώνΠωλήσεωνViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ολοκλήρωση" IconImageSource="arrow_forward_white" Order="Primary" Command="{Binding Ολοκλήρωση}" Priority="1"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid  
+            RowSpacing="20"
+            ColumnSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <dxg:DataGridView x:Name="grid" Grid.Row="1" HorizontalOptions="Center"
+                          ItemsSource="{Binding LineOfOrdersCollection}"                        
+                         
+                          EditorShowMode="DoubleTap"
+                          
+                          IsColumnHeaderVisible="False">
+                <dxg:DataGridView.CellStyle>
+                    <dxg:CellStyle Padding="10" BorderColor="Transparent"  BottomBorderColor="LightGray" HorizontalLineThickness="1" FontSize="13">
+                    </dxg:CellStyle>
+                </dxg:DataGridView.CellStyle>
+                <dxg:DataGridView.StartSwipeItems>
+                    <dxg:SwipeItem Command="{Binding ΔιαγραφήΓραμμής}"
+                               Caption="delete"
+                               BackgroundColor="{StaticResource Tradic}"
+                               Image="delete_white_18"/>
+                </dxg:DataGridView.StartSwipeItems>
+                <dxg:DataGridView.EndSwipeItems>
+                    <dxg:SwipeItem Command="{Binding ΕπεξεργασίαΓραμμής}" 
+                               Caption="edit  " 
+                               BackgroundColor="{StaticResource Analogous}"
+                               Image="edit_white_18.png"/>
+                </dxg:DataGridView.EndSwipeItems>
+                <dxg:DataGridView.Columns>
+                    <dxg:TextColumn FieldName="Είδος.Περιγραφή" Caption="Είδος" RowSpan="2" ColumnSpan="2" VerticalContentAlignment="Start" IsReadOnly="True"/>
+                    <dxg:NumberColumn FieldName="Ποσότητα"  DisplayFormat="Ποσότητα: {0}" Row="1" Column="2"   VerticalContentAlignment="Center" />
+                    <dxg:TextColumn FieldName="ΑξίαΓραμμής" Column="2" DisplayFormat="n2" Suffix="€" HorizontalContentAlignment="End" IsReadOnly="True"/>
+                </dxg:DataGridView.Columns>
+                <dxg:DataGridView.TotalSummaries>
+                    <dxg:GridColumnSummary FieldName="Ποσότητα" Type="Sum"
+                                                   DisplayFormat="Ποσότητα: {0}"/>
+                    <dxg:GridColumnSummary FieldName="ΑξίαΓραμμής" Type="Sum"
+                                                   DisplayFormat="Αξία: {0:n0} €"/>
+                    <dxg:GridColumnSummary FieldName="Είδος.Περιγραφή" Type="Count"
+                                                   DisplayFormat="Count: {0}"/>
+                </dxg:DataGridView.TotalSummaries>
+
+            </dxg:DataGridView>
+
+            <StackLayout Grid.Row="1"
+                         Spacing="20"
+                         HorizontalOptions="Center"
+                         VerticalOptions="End">
+                <Frame x:Name="ScanSelectionBtn"
+                    HasShadow="True"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    IsVisible="false"
+                    Scale="0"
+                    Padding="0"
+                    HorizontalOptions="Center">
+                    <Button ImageSource="Barcode_16x16"
+                        BackgroundColor="{StaticResource ComplementaryLight}"
+                        Command="{Binding Scanner}"/>
+                </Frame>
+                <Frame x:Name="NewlnBtn"
+                    HasShadow="True"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    IsVisible="false"
+                    Scale="0"
+                    Padding="0"
+                    HorizontalOptions="Center">
+                    <Button ImageSource="BOProduct_16x16"
+                        BackgroundColor="{StaticResource ComplementaryLight}"
+                        Command="{Binding ΝέαΓραμμή}"/>
+                </Frame>
+                <Frame x:Name="QuickSelectionBtn"
+                    HasShadow="True"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    IsVisible="false"
+                    Scale="0"
+                    Padding="0"
+                    HorizontalOptions="Center">
+                    <Button ImageSource="BO_Product_Group"
+                        BackgroundColor="{StaticResource ComplementaryLight}"
+                        Command="{Binding ΓρήγορηΕπιλογή}"/>
+                </Frame>
+                <Frame 
+                    HasShadow="True"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    CornerRadius="35"
+                    Padding="0"
+                    HorizontalOptions="Center">
+                    <Button x:Name="plusBtn" 
+                        ImageSource="add_white_20"
+                        BackgroundColor="{StaticResource PrimaryLight}"
+                        Clicked="Button_Clicked"/>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

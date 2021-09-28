@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid"
+             x:Class="SmartMobileProject.Views.ΔιευθύνσειςΠελάτηListViewPage"
+              Shell.PresentationMode="ModalAnimated"
+             Title="Διευθύνσεις Πελάτη">
+    <ContentPage.BindingContext>
+        <vm:ΔιευθύνσειςΠελάτηViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <Grid  
+            ColumnSpacing="8"
+            Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="{Binding Title}" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="1" Padding="20"/>
+            <Label Text="Διευθύνσεις" HorizontalOptions="Center" FontSize="18" Grid.Row="2"/>
+
+            <dxg:DataGridView x:Name="grid" Grid.Row="3"
+                          ItemsSource="{Binding AddressCollection}"   
+                          RowHeight="70"
+                          IsColumnHeaderVisible="False">
+                <dxg:DataGridView.ColumnHeaderStyle>
+                    <dxg:ColumnHeaderStyle Padding="2" FontAttributes="Bold" FontSize="18" BorderColor="Transparent" BottomBorderColor="LightGray"/>
+                </dxg:DataGridView.ColumnHeaderStyle>
+
+                <dxg:DataGridView.CellStyle>
+                    <dxg:CellStyle Padding="3" BorderColor="Transparent"  BottomBorderColor="LightGray" HorizontalLineThickness="1" FontSize="15">
+
+                    </dxg:CellStyle>
+                </dxg:DataGridView.CellStyle>
+                <dxg:DataGridView.StartSwipeItems>
+                        <dxg:SwipeItem Command="{Binding  ΔιαγραφήΔιεύθυνσης}"
+                               Caption="delete"
+                               BackgroundColor="{StaticResource Tradic}"
+                               Image="delete_white_18"/>
+                    </dxg:DataGridView.StartSwipeItems>
+                    <dxg:DataGridView.EndSwipeItems>
+                    <dxg:SwipeItem Command="{Binding Κλήση}" 
+                               Caption="Call" 
+                               BackgroundColor="{StaticResource PrimaryLight}"
+                               Image="Phone.png"/>
+                    <dxg:SwipeItem Command="{Binding ΕπεξεργασίαΔιεύθυνσης}" 
+                               Caption="edit  " 
+                               BackgroundColor="{StaticResource Analogous}"
+                               Image="edit_white_18.png"/>
+                    </dxg:DataGridView.EndSwipeItems>
+                    <dxg:DataGridView.Columns>
+                        <dxg:TextColumn FieldName="Addresstring" Caption="Διεύθυνση" ColumnSpan="2" RowSpan="0"/>
+                        <dxg:TextColumn FieldName="Τηλέφωνο" Row="1" Column="0"/>
+                        <dxg:TextColumn FieldName="Kίντηλέφωνο" Row="1" Column="1"/>
+
+                    </dxg:DataGridView.Columns>
+                </dxg:DataGridView>
+
+            <StackLayout Grid.Row="3"
+                         Padding="20"
+                         HorizontalOptions="End" 
+                         VerticalOptions="End">
+                <Frame 
+                    HasShadow="True"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    CornerRadius="35"
+                    Padding="0"
+                    HorizontalOptions="Center">
+                    <Button x:Name="plusBtn" 
+                            ImageSource="add_white_20"
+                            Command="{Binding ΝέαΔιεύθυνση}"/>
+                </Frame>
+               
+            </StackLayout>
+            <StackLayout 
+                         Padding="10"
+                         HorizontalOptions="Start" 
+                         VerticalOptions="Start">
+                <Frame 
+                    HasShadow="True"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    CornerRadius="10"
+                    Padding="0"
+                    HorizontalOptions="Center">
+                    <Button x:Name="BackBtn" 
+                            ImageSource="arrow_back_white_20"
+                            Command="{Binding Ακύρωση}"/>
+                </Frame>
+
+            </StackLayout>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

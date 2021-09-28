@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:local1="clr-namespace:SmartMobileProject.Views"
+             x:Class="SmartMobileProject.Views.ΑξιόγραφοDetailViewPage"
+             Shell.PresentationMode="ModalAnimated">
+    <ContentPage.BindingContext>
+        <vm:ΑξιόγραφοViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <local1:StringToBoolConverter x:Key="stringToBoolConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid  
+            VerticalOptions="FillAndExpand"
+            RowSpacing="0"
+            ColumnSpacing="8"
+            Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="80"/>
+                    
+                    
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Title}" FontSize="20"
+                           HorizontalOptions="StartAndExpand"/>
+                </StackLayout>
+                <dxe:TextEdit Grid.Row="1"
+                          Grid.Column="0"
+                          LabelText="Αριθμός Αξιογράφου"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"   
+                          Text="{Binding Αξιόγραφο.ΑριθμόςΑξιογράφου}"
+                          IsFocused ="{Binding ArithmosIsFocused}"
+                          ErrorText="{Binding ArithmosErrorMessage}"
+                          HasError="{Binding ArithmosErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
+                <dxe:DateEdit Grid.Row="2"
+                          Grid.Column="0"
+                          LabelText="Ημ/νία Παραλαβής"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"    
+                          DisplayFormat="d"
+                          Date="{Binding Αξιόγραφο.ΗμνίαΠαραλαβής}"/>
+                <dxe:DateEdit Grid.Row="3"
+                          Grid.Column="0"
+                          LabelText="Ημ/νία Εκδοσης"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"    
+                          DisplayFormat="d"
+                          Date="{Binding Αξιόγραφο.ΗμνίαΕκδοσης}"/>
+                <dxe:DateEdit Grid.Row="4"
+                          Grid.Column="0"
+                          LabelText="Ημ/νία Λήξης"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"    
+                          DisplayFormat="d"
+                          Date="{Binding Αξιόγραφο.ΗμνίαΛήξης, Mode=OneWayToSource}"
+                          IsFocused ="{Binding HmerlixisIsFocused}"
+                          ErrorText="{Binding HmerlixisErrorMessage}"
+                          HasError="{Binding HmerlixisErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
+               
+                <dxe:NumericEdit Grid.Row="5"
+                          Grid.Column="0"
+                          LabelText="Αξία"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"  
+                          IsUpDownIconVisible="True"
+                          DisplayFormat="n"
+                          Suffix="€"
+                          Value="{Binding Αξιόγραφο.Αξία}"
+                          IsFocused ="{Binding AxiaIsFocused}"
+                          ErrorText="{Binding AxiaErrorMessage}"
+                          HasError="{Binding AxiaErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
+                
+                <dxe:ComboBoxEdit Grid.Row="6"                              
+                              ItemsSource="{Binding Τράπεζα}"
+                              DisplayMember="ΟνομαΤράπεζας"
+                              SelectedItem="{Binding Αξιόγραφο.ΤράπεζαΕκδοσης}"
+                              LabelText="Τράπεζα Έκδοσης"
+                              IsFilterEnabled="True"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                             />
+
+                <dxe:TextEdit Grid.Row="7"
+                              Text="{Binding Αξιόγραφο.Εκδότης}"
+                              LabelText="Εκδότης"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              />
+                <Frame Grid.Row="0"
+                           Padding="0"
+                           CornerRadius="10"
+                       WidthRequest="50"
+                       HeightRequest="50"
+                           HorizontalOptions="Start"
+                           HasShadow="True">
+                    <Button Command="{Binding Ακύρωση}"
+                           ImageSource="arrow_back_white_20"/>
+                </Frame>
+                <Frame Grid.Row="8"
+                           Grid.Column="0"
+                           Padding="0"
+                           CornerRadius="10"
+                           HorizontalOptions="End"
+                           HasShadow="True">
+                    <Button Command="{Binding  Αποθήκευση}"
+                            Text="Προσθήκη"/>
+                </Frame>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
+             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview"
+             x:Class="SmartMobileProject.Views.ΕργασίεςDetailViewPage"
+             Shell.PresentationMode="ModalAnimated">
+    <ContentPage.BindingContext>
+        <vm:ΕργασίεςDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid  
+            VerticalOptions="FillAndExpand"
+            RowSpacing="20"
+            ColumnSpacing="8"
+            Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/><!--Grid Row 8-->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                </Grid.RowDefinitions>
+                
+                <dxe:ComboBoxEdit Grid.Row="1"
+                          Grid.Column="0"
+                          x:Name="ΧαρακτηρισμόςComboBoxEdit"
+                          LabelText="Χαρακτηρισμός"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True" IsEnabled="False" DisabledTextColor="Black"
+                          SelectedItem="{Binding Εργασία.Χαρακτηρισμός}">
+                    <dxe:ComboBoxEdit.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Είσοδος στον πελάτη</x:String>
+                        </x:Array>
+                    </dxe:ComboBoxEdit.ItemsSource>
+                </dxe:ComboBoxEdit>
+                <dxe:MultilineEdit Grid.Row="2"
+                          Grid.Column="0"
+                          x:Name="ΠεριγραφήEdit"
+                          LabelText="Περιγραφή"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True" IsEnabled="False"
+                          Text="{Binding Εργασία.Περιγραφή}"/>
+                <dxe:ComboBoxEdit Grid.Row="3"
+                              Grid.Column="0"
+                              x:Name="ΠελάτηςEdit"
+                              LabelText="Πελάτης"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True" IsEnabled="False" DisabledTextColor="Black"
+                              ItemsSource="{Binding Πελάτες}"
+                              SelectedItem="{Binding Εργασία.Πελάτης}"
+                              DisplayMember="DisplayName"
+                              IsFilterEnabled="True">
+                    <dxe:ComboBoxEdit.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Label Padding="10" Text="{Binding DisplayName}" FontAttributes="Bold"/>
+                                <Label Padding="10" Grid.Column="1" Text="{Binding ΑΦΜ}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </dxe:ComboBoxEdit.ItemTemplate>
+                </dxe:ComboBoxEdit>
+                <dxe:CheckEdit Grid.Row="5" 
+                               Label="Ολοκήρώθηκε"
+                               IsEnabled="False"
+                               IsChecked="{Binding Εργασία.Κατάσταση}"/>
+                <Frame Grid.Row="8"
+                       CornerRadius="20"
+                       Padding="0"
+                       HasShadow="True"
+                       BorderColor="LightGray">
+                    <Button               
+                        Text="Ενέργειες"
+                        TextColor="{StaticResource ComplementaryLight}"                       
+                        FontAttributes="Bold"
+                        TextTransform="None"
+                        FontSize="20"
+                        Clicked="Button_Clicked"/>
+                </Frame>
+                <Frame Grid.Row="9"
+                       x:Name="energeiesCollection"
+                       Scale="0" IsVisible="false"
+                       HeightRequest="250"
+                       Padding="0">
+                    <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding Ενέργειεs}">
+                        <dxcv:DXCollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <dxcv:SwipeContainer>
+                                    <dxcv:SwipeContainer.ItemView>
+                                        <Frame BorderColor="LightGray" Padding="0">
+                                            <Grid Padding="10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Label Text="{Binding Τύπος}" 
+                                                   Margin="0"
+                                                   FontSize="16"
+                                                   TextColor="#55575c"/>
+                                                <Label Text="{Binding DisplayValue}" 
+                                                   Grid.Column="1"
+                                                   Margin="0"
+                                                   FontSize="16"
+                                                   TextColor="#55575c"/>
+                                            </Grid>
+                                        </Frame>
+                                    </dxcv:SwipeContainer.ItemView>
+                                    <dxcv:SwipeContainer.StartSwipeItems>
+                                        <dxcv:SwipeItem Caption="Delete"
+                                        BackgroundColor="{StaticResource Tradic}"
+                                        Image="delete_white_18.png"
+                                        />
+                                    </dxcv:SwipeContainer.StartSwipeItems>
+                                    <dxcv:SwipeContainer.EndSwipeItems>
+                                        <dxcv:SwipeItem Caption="Edit"
+                                        BackgroundColor="{StaticResource  Analogous}"
+                                        Image="edit_white_18.png"
+                                        Invoked="SwipeItem_Invoked_Edit"/>
+                                    </dxcv:SwipeContainer.EndSwipeItems>
+                                </dxcv:SwipeContainer>
+                            </DataTemplate>
+                        </dxcv:DXCollectionView.ItemTemplate>
+                    </dxcv:DXCollectionView>
+                </Frame>
+                <Frame Grid.Row="0"
+                       CornerRadius="10"
+                       HorizontalOptions="Start"
+                       Padding="0"
+                       HasShadow="True"
+                       WidthRequest="50"
+                       BorderColor="LightGray">
+                    <Button 
+                        x:Name="ΑκύρωσηButton"
+                        ImageSource="arrow_back_white_20"
+                        Command="{Binding Ακύρωση}"/>
+                </Frame>
+                <Frame Grid.Row="10"
+                       CornerRadius="10"
+                       HorizontalOptions="End"
+                       Padding="0"
+                       HasShadow="True"
+                       BorderColor="LightGray">
+                    <Button 
+                        x:Name="ΕνέργειαButton"
+                        Text="+ Ενέργεια"
+                        TextColor="{StaticResource ComplementaryLight}"
+                        FontAttributes="Bold"
+                        TextTransform="None"
+                        FontSize="20"
+                        Command="{Binding ΝέαΕνέργεια}"/>
+                </Frame>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

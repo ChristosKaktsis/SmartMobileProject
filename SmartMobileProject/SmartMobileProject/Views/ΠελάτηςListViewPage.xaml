@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartMobileProject.Views.ΠελάτηςListViewPage"
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             Title="{Binding Title}">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Image Source="BOCustomer_16x16.png" Scale="1.5" Margin="5"/>
+            <Label Text="{Binding Title}" Style="{DynamicResource TitleStyle}" TextColor="White" Margin="10"/>
+        </StackLayout>
+    </Shell.TitleView>
+    
+    <ContentPage.BindingContext>
+        <vm:ΠελάτηςViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Νέος Πελάτης" Command="{Binding ΝέοςΠελάτηςΜεΑφμΗΧωρίς}" 
+                     Order="Primary" IconImageSource="add_white_36"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+
+        <StackLayout>
+            
+            <StackLayout Orientation="Horizontal" 
+                         Spacing="0">
+                <dxe:TextEdit x:Name="Search"
+                          PlaceholderText="Search"
+                          HorizontalOptions="FillAndExpand"
+                          
+                          BorderColor="Transparent"
+                          StartIcon="outline_search_black_24"
+                          ClearIconVisibility="Auto"/>
+                <dxe:ComboBoxEdit x:Name="SearchType"
+                                  TextColor="Gray"
+                                  BorderColor="Transparent"
+                                  HorizontalOptions="End"/>
+            </StackLayout>
+           
+            <dxg:DataGridView x:Name="grid" 
+                          ItemsSource="{Binding CustomerCollection}" 
+                          DoubleTap="grid_DoubleTap"
+                          ShowAutoFilterRow="false"
+                          SortMode="Single"
+                          AutoFilterRowHeight="60"     
+                          ShowFilterIcon="True"
+                        ColumnHeaderHeight="100" IsColumnHeaderVisible="False">
+                <dxg:DataGridView.ColumnHeaderStyle>
+                    <dxg:ColumnHeaderStyle Padding="2" FontAttributes="Bold" BottomBorderColor="LightGray"/>
+                </dxg:DataGridView.ColumnHeaderStyle>
+
+                <dxg:DataGridView.CellStyle>
+                    <dxg:CellStyle Padding="1" BorderColor="Transparent"  BottomBorderColor="LightGray" HorizontalLineThickness="1" FontSize="15">
+
+                    </dxg:CellStyle>
+                </dxg:DataGridView.CellStyle>
+                <dxg:DataGridView.StartSwipeItems>
+                    <dxg:SwipeItem Command="{Binding ΔιαγραφήΠελάτη}"
+                               Caption="delete"
+                               BackgroundColor="{StaticResource Tradic}"
+                               Image="delete_white_18"/>
+                </dxg:DataGridView.StartSwipeItems>
+                <dxg:DataGridView.EndSwipeItems>
+                    <dxg:SwipeItem Command="{Binding Κλήση}" 
+                               Caption="Call" 
+                               BackgroundColor="{StaticResource PrimaryLight}"
+                               Image="Phone.png"/>
+                    <dxg:SwipeItem Command="{Binding ΤροποποίησηΠελάτη}" 
+                               Caption="edit  " 
+                               BackgroundColor="{StaticResource Analogous}"
+                               Image="edit_white_18.png"/>
+                </dxg:DataGridView.EndSwipeItems>
+
+
+
+                <dxg:DataGridView.Columns>
+                    <dxg:TextColumn FieldName="Επωνυμία" RowSpan="0" Column="0" FontAttributes="Bold" FontSize="16" ColumnSpan="3" SortOrder="Ascending" SortIndex="0" AutoFilterCondition="Contains"/>
+                    <dxg:TextColumn FieldName="ΑΦΜ" Row="0" Column="3" />
+                    <dxg:TextColumn FieldName="ΔΟΥ.Περιγραφή" Row="1" Caption="ΔΟΥ" Column="0" ColumnSpan="4"  AllowAutoFilter="False"/>
+                    <dxg:TextColumn FieldName="Addresstring" Row="2" Caption="Διεύθυνση" Column="0" ColumnSpan="4"  AllowAutoFilter="False"/>
+
+                </dxg:DataGridView.Columns>
+
+
+            </dxg:DataGridView>
+        </StackLayout>
+      
+    </ContentPage.Content>
+
+
+</ContentPage>

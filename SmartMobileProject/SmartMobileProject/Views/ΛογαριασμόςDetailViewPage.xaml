@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" xmlns:local1="clr-namespace:SmartMobileProject.Views"
+             x:Class="SmartMobileProject.Views.ΛογαριασμόςDetailViewPage"
+             Shell.PresentationMode="ModalAnimated">
+    <ContentPage.BindingContext>
+        <vm:ΓραμμέςΠαραστατικώνΕισπράξεωνDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <local1:StringToBoolConverter x:Key="stringToBoolConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <Grid RowSpacing="0"
+              ColumnSpacing="8"
+              Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <dxe:ComboBoxEdit Grid.Row="1"
+                              LabelText="Λογαριασμός"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding Λογαριασμοί}"
+                              SelectedItem="{Binding ΓραμμέςΠΕ.Λογαριασμός}"
+                              DisplayMember="Λογαριασμός"
+                              IsFocused ="{Binding LogariasmosIsFocused}"
+                              ErrorText="{Binding LogariasmosErrorMessage}"
+                              HasError="{Binding LogariasmosErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
+            <dxe:NumericEdit Grid.Row="2"
+                          LabelText="Ποσόν"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"   
+                          IsUpDownIconVisible="True"
+                          MinValue="0"   
+                          MaxValue="100000000000"
+                          Suffix="€"
+                          Value="{Binding ΓραμμέςΠΕ.Ποσόν}"/>
+            <Frame Grid.Row="0"
+                           Grid.Column="0"
+                           Padding="0"
+                           CornerRadius="10"
+                       WidthRequest="50"
+                       HeightRequest="50"
+                           HorizontalOptions="Start"
+                           HasShadow="True">
+                <Button Command="{Binding Ακύρωση}"
+                           ImageSource="arrow_back_white_20"/>
+            </Frame>
+            <Button Grid.Row="3"
+                    Text="Προσθήκη"
+                    Margin="10"
+                    CornerRadius="10"
+                    HorizontalOptions="End"
+                    Command="{Binding Αποθήκευση}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

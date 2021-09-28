@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:local1="clr-namespace:SmartMobileProject.Views"
+             x:Class="SmartMobileProject.Views.ΠαραστατικόΒασικάΣτοιχείαPage"
+             Shell.FlyoutBehavior="Disabled"
+             Title="{Binding Title}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding Πίσω}"/>
+    </Shell.BackButtonBehavior>
+    <ContentPage.BindingContext>
+        <vm:ΠαραστατικόDetailViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <local1:StringToBoolConverter x:Key="stringToBoolConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        
+        <ScrollView>
+            <Grid  
+            VerticalOptions="FillAndExpand"
+            RowSpacing="20"
+            ColumnSpacing="8"
+            Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+
+                <dxe:DateEdit Grid.Row="1"
+                          Grid.Column="0"
+                          LabelText="Ημ/νία"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"    
+                          DisplayFormat="d"
+                          
+                          Date="{Binding Order.Ημνία, Mode=TwoWay}"/>
+                <dxe:ComboBoxEdit Grid.Row="2"                              
+                              ItemsSource="{Binding ΣειρέςΠαραστατικώνΠωλήσεων}"
+                              DisplayMember="Σειρά" 
+                              SelectedItem="{Binding Order.Σειρά }"                         
+                              LabelText="Σειρά"
+                              LabelFontSize="Body"
+                              IsEnabled="True"
+                              IsFilterEnabled="True"
+                              FilterMode="StartsWith"
+                              IsLabelFloating="True"
+                              IsFocused ="{Binding SeiraIsFocused}"
+                              ErrorText="{Binding SeiraErrorMessage}"
+                              HasError="{Binding SeiraErrorMessage, Converter={StaticResource stringToBoolConverter}}">
+                    <dxe:ComboBoxEdit.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Label Padding="10" Text="{Binding Σειρά}" FontAttributes="Bold"/>
+                                <Label Padding="10" Grid.Column="1" Text="{Binding Περιγραφή}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </dxe:ComboBoxEdit.ItemTemplate>
+                </dxe:ComboBoxEdit>
+                <dxe:ComboBoxEdit Grid.Row="3"                              
+                              ItemsSource="{Binding CustomerCollection}"
+                              DisplayMember="Επωνυμία"
+                              SelectedItem="{Binding Customer, Mode=Default}"
+                              LabelText="Πελάτης"
+                              IsFilterEnabled="True"
+                              IsFocused ="{Binding PelatisIsFocused}"
+                              ErrorText="{Binding PelatisErrorMessage}"
+                              HasError="{Binding PelatisErrorMessage, Converter={StaticResource stringToBoolConverter}}"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True">
+                    <dxe:ComboBoxEdit.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Label Padding="10" Text="{Binding Επωνυμία}" FontAttributes="Bold"/>
+                                <Label Padding="10" Grid.Column="1" Text="{Binding ΑΦΜ}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </dxe:ComboBoxEdit.ItemTemplate>
+                </dxe:ComboBoxEdit>
+                <dxe:ComboBoxEdit Grid.Row="4"     
+                                  x:Name="ComboBoxDieuthParadosis"
+                              ItemsSource="{Binding Order.Πελάτης.ΔιευθύνσειςΠελάτη}"
+                              DisplayMember="Οδός" 
+                              SelectedItem="{Binding Order.ΔιεύθυνσηΠαράδοσης}"                         
+                              LabelText="Διευθύνση Παράδοσης"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True">
+                </dxe:ComboBoxEdit>
+                <Grid Grid.Row="5">
+                    <dxe:ComboBoxEdit Grid.Column="0"                              
+                              ItemsSource="{Binding ΤρόποςΠληρωμής}"
+                              DisplayMember="Τρόποςπληρωμής" 
+                              SelectedItem="{Binding Order.ΤρόποςΠληρωμής}"                         
+                              LabelText="ΤρόποςΠληρωμής"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True">
+                    </dxe:ComboBoxEdit>
+                    <dxe:ComboBoxEdit Grid.Column="1"                              
+                              ItemsSource="{Binding ΤρόποςΑποστολής}"
+                              DisplayMember="Τρόποςαποστολής" 
+                              SelectedItem="{Binding Order.ΤρόποςΑποστολής}"                         
+                              LabelText="ΤρόποςΑποστολής"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True">
+                    </dxe:ComboBoxEdit>
+                    
+                </Grid>
+                <Button Grid.Row="6"
+                        HorizontalOptions="End"
+                        Text="Επόμενο"
+                        ContentLayout="right,10"
+                        CornerRadius="10"
+                        ImageSource="arrow_forward_white"
+                        BackgroundColor="{StaticResource PrimaryLight}"
+                        Command="{Binding ΓραμμεςΠΠ}"/>
+            </Grid>
+        </ScrollView>
+
+    </ContentPage.Content>
+    
+</ContentPage>

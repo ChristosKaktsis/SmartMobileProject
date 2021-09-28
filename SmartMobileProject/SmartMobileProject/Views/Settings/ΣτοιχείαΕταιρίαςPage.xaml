@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             x:Class="SmartMobileProject.Views.Settings.ΣτοιχείαΕταιρίαςPage"
+             Title="Στοιχεία Εταιρίας">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" Command="{Binding Αποθήκευση}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:SettingsStaticSourceViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid  
+            VerticalOptions="FillAndExpand"
+            Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <!--<Image Grid.Row="1"
+                   Source="unnamed" 
+                   Scale="1"/>-->
+
+                <dxe:TextEdit Grid.Row="2"
+                          Grid.Column="0"
+                          LabelText="Επωνυμία"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Text="{Binding Εταιρία.Επωνυμία}"/>
+                <dxe:ComboBoxEdit Grid.Row="3"
+                              Grid.Column="0"
+                              LabelText="ΔΟΥ"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding ΔΟΥ}"
+                              SelectedItem="{Binding Εταιρία.ΔΟΥ}"
+                              DisplayMember="Περιγραφή"
+                              IsFilterEnabled="True"/>
+                <dxe:TextEdit Grid.Row="4"
+                          Grid.Column="0"
+                          LabelText="Δικτυακός Τόπος"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Keyboard="Email"
+                          Text="{Binding Εταιρία.ΔικτυακόςΤόπος}"/>
+                <Grid Grid.Row="5">
+                    <dxe:TextEdit 
+                          Grid.Column="0"
+                          LabelText="ΑΦΜ"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Keyboard="Numeric"
+                          Text="{Binding Εταιρία.ΑΦΜ}"/>
+                    <dxe:TextEdit 
+                          Grid.Column="1"
+                          LabelText="ΚατηγορίαΦΠΑ"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Text="{Binding ΚατΦΠΑ,Mode=OneWay}"/>
+                </Grid>
+                
+                <Grid Grid.Row="6">
+                    <dxe:TextEdit Grid.Row="0"
+                          Grid.Column="0"
+                          LabelText="Οδός"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Text="{Binding Εταιρία.Οδός}"/>
+                    <dxe:TextEdit Grid.Row="0"
+                          Grid.Column="1"
+                          LabelText="Αριθμός"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Keyboard="Numeric"
+                          Text="{Binding Εταιρία.Αριθμός}"/>
+                </Grid>
+                <dxe:ComboBoxEdit Grid.Row="7"
+                              Grid.Column="0"
+                              LabelText="TK"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding TK}"
+                              SelectedItem="{Binding Tk}"
+                              DisplayMember="Ονοματκ"
+                              IsFilterEnabled="True">
+                    <dxe:ComboBoxEdit.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Label Padding="10" Text="{Binding Ονοματκ}" FontAttributes="Bold"/>
+                                <Label Padding="10" Grid.Column="1" Text="{Binding Περιοχή}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </dxe:ComboBoxEdit.ItemTemplate>
+                </dxe:ComboBoxEdit>
+                <Grid Grid.Row="8">
+                    <dxe:ComboBoxEdit Grid.Row="0"
+                              Grid.Column="0"
+                              LabelText="Πόλη"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding Poli}"
+                              SelectedItem="{Binding Εταιρία.Πόλη}"
+                              DisplayMember="ΟνομαΠόλης"
+                              IsFilterEnabled="True"/>
+                    <dxe:TextEdit Grid.Row="0"
+                          Grid.Column="1"
+                          LabelText="Περιοχή"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"                           
+                          Text="{Binding Εταιρία.Περιοχή}"/>
+                </Grid>
+                <Grid Grid.Row="9">
+                    <dxe:TextEdit 
+                          Grid.Column="0"
+                          LabelText="Τηλ"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Keyboard="Numeric"
+                          Text="{Binding Εταιρία.Τηλέφωνο}"/>
+                    <dxe:TextEdit 
+                          Grid.Column="1"
+                          LabelText="FAX"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Keyboard="Numeric"
+                          Text="{Binding Εταιρία.FAX}"/>
+                </Grid>
+                <dxe:TextEdit Grid.Row="10"
+                          Grid.Column="0"
+                          LabelText="Email"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          
+                          Text="{Binding Εταιρία.Email}"/>
+                <Grid Grid.Row="11">
+                    <dxe:TextEdit Grid.Column="0"
+                          LabelText="Username"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          Text="{Binding Εταιρία.UsernameΥπηρεσίαςΣτοιχείωνΜητρώου}"/>
+                    <dxe:PasswordEdit Grid.Column="1"
+                              LabelText="Password"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              Text="{Binding Εταιρία.PasswordΥπηρεσίαςΣτοιχείωνΜητρώου}"/>
+                </Grid>
+                
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

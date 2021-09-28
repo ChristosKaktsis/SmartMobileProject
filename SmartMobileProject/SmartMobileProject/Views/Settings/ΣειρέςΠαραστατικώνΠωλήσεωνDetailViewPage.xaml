@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:local1="clr-namespace:SmartMobileProject.Views"
+             x:Class="SmartMobileProject.Views.ΣειρέςΠαραστατικώνΠωλήσεωνDetailViewPage">
+
+    <ContentPage.BindingContext>
+        <vm:ΣειρέςΠαραστατικώνΠωλήσεωνViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+
+        <Grid RowSpacing="0"
+              ColumnSpacing="8"
+              Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <dxe:TextEdit Grid.Row="1"
+                          x:Name="Πρόθεμα"
+                LabelText="Πρόθεμα"
+                          Text="{Binding Πρόθεμα}"/>
+            <dxe:TextEdit Grid.Row="2"
+                          x:Name="Περιγραφή"
+                LabelText="Περιγραφή"
+                          Text="{Binding Περιγραφή}"/>
+            <dxe:ComboBoxEdit LabelText="Print Type" Grid.Row="3"
+                              x:Name="PrintType"
+                    SelectedItem="{Binding PrintType}">
+                <dxe:ComboBoxEdit.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>A4</x:String>
+                        <x:String>80 mm</x:String>
+                    </x:Array>
+                </dxe:ComboBoxEdit.ItemsSource>
+            </dxe:ComboBoxEdit>
+            <Button Grid.Row="4"
+                    Text="Προσθήκη"
+                    Margin="10"
+                    CornerRadius="10"
+                    HorizontalOptions="End"
+                    Command="{Binding Αποθήκευση}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
