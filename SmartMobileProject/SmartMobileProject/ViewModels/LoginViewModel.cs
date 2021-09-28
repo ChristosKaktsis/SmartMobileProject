@@ -61,9 +61,7 @@ namespace SmartMobileProject.ViewModels
         }
         public List<string> items { get; set; }
         private async void SetAll()
-        {
-            //I am Creating Smthing
-            //
+        {    
             await Task.Run(() =>
             {
                 Πωλητές = new XPCollection<Πωλητής>(uow);
@@ -89,7 +87,6 @@ namespace SmartMobileProject.ViewModels
                     LoginCommand.Execute(null);
                 }
                 catch { }
-               
             }
         }
 
@@ -105,9 +102,7 @@ namespace SmartMobileProject.ViewModels
                 return;
             }
             ((AppShell)Application.Current.MainPage).πωλητής = Πωλητής;
-            
             await Shell.Current.GoToAsync($"//{nameof(ΠωλητήςViewPage)}");
-           
         }
         public ICommand LoginCommand { protected set; get; }
         public ICommand ΝέοςΠωλητής { protected set; get; }
