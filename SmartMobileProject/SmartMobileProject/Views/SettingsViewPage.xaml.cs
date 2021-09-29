@@ -70,7 +70,7 @@ namespace SmartMobileProject.Views
 
         private async void Button_Clicked_10(object sender, EventArgs e)
         {
-            await Shell.Current.Navigation.PushAsync(new ApplicationSettingsPage());
+            await Shell.Current.Navigation.PushAsync(new PreLoginPage());
         }
     }
 }

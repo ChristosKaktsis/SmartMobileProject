@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             x:Class="SmartMobileProject.PreLoginPage">
+    <ContentPage.BindingContext>
+        <vm:PreLoginViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+                <Label Text="Online" FontSize="40"/>
+                <Switch  IsToggled="{Binding OnlineMode}"/>
+                <dxe:TextEdit Grid.Row="1"
+                          LabelText="IP"
+                          Keyboard="Telephone"
+                          IsEnabled="{Binding OnlineMode}"
+                          Text="{Binding IP}"/>
+                <Grid Grid.Row="2">
+                    <dxe:TextEdit  Grid.Column="0"
+                               LabelText="Port 1"
+                               Keyboard="Numeric"
+                               IsEnabled="{Binding OnlineMode}"
+                               Text="{Binding Port1}"/>
+                    <dxe:TextEdit  Grid.Column="1"
+                               LabelText="Port 2"
+                               Keyboard="Numeric"
+                               IsEnabled="{Binding OnlineMode}"
+                               Text="{Binding Port2}"/>
+                </Grid>
+                <Button Grid.Row="3"
+                    CornerRadius="10"
+                    Text="Συνέχεια"
+                    Command="{Binding Συνέχεια}"/>
+            </Grid>
+
+            <!--Pop Up-->
+            <StackLayout x:Name="BackGreyColor" BackgroundColor="#80000000" IsVisible="{Binding AllLoading,Mode=OneWay}" ></StackLayout>
+            <Frame x:Name="BottomSheet"
+                   Margin="100"
+                   VerticalOptions="Start"
+                   CornerRadius="20"
+                   HasShadow="True"
+                   IsVisible="{Binding AllLoading,Mode=OneWay}"
+                   BorderColor="White">
+                <StackLayout  Margin="5">
+                    <Label Text="Loading"/>
+                    <ActivityIndicator
+                               IsRunning="{Binding AllLoading, Mode=OneWay}"/>
+                    <!--Pop Up Buttons-->
+                </StackLayout>
+            </Frame>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

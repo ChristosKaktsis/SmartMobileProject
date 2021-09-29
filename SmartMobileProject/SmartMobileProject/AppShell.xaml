@@ -83,6 +83,9 @@
         FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
+    <!--<TabBar Route="PreLoginPage">
+        <ShellContent Route="PreLoginPage" ContentTemplate="{DataTemplate local:PreLoginPage}" />
+    </TabBar>-->
     <TabBar Route="LoginPage">
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>

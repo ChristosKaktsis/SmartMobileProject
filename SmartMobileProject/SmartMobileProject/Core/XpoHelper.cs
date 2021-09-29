@@ -14,7 +14,7 @@ using Xamarin.Forms;
 using System.Net;
 using System.IO;
 using System.Threading;
-
+using Xamarin.Essentials;
 
 namespace SmartMobileProject.Core
 {
@@ -1151,8 +1151,9 @@ namespace SmartMobileProject.Core
         public static async Task<DataTable> getSmartTable(string smartTable)
         {
             HttpClient client = new HttpClient();
-
-            string uri = "http://192.168.3.44:80/api/Values?sql= " + smartTable + "GCRecord is null ";
+            string ip = Preferences.Get("IP", "79.129.5.42");
+            string port = Preferences.Get("Port1", "8881");
+            string uri = "http://"+ip+":"+port+"/mobile/Values?sql= " + smartTable + "GCRecord is null ";
             HttpResponseMessage response;
             string content;
             try
@@ -1181,8 +1182,9 @@ namespace SmartMobileProject.Core
             string authval = "DemoAdmin:DemoPass";
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(authval);
             string conv = System.Convert.ToBase64String(plainTextBytes);
-
-            var httpRequest = (HttpWebRequest)WebRequest.Create("http://192.168.3.44:8080/api/PutDataJson?Type="+type);
+            string ip = Preferences.Get("IP", "79.129.5.42");
+            string port = Preferences.Get("Port2", "8882");
+            var httpRequest = (HttpWebRequest)WebRequest.Create("http://"+ip+":"+port+"/api/PutDataJson?Type=" + type);
             httpRequest.ContentType = "application/json";
             httpRequest.Method = "POST";
             httpRequest.Headers.Add("Authorization", "Basic " + conv);

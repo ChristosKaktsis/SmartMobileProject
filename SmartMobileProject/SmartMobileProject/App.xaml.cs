@@ -9,6 +9,7 @@ using DevExpress.Xpo;
 using System.Reflection;
 using Xamarin.Essentials;
 
+
 namespace SmartMobileProject
 {
     public partial class App : Application
@@ -47,23 +48,21 @@ namespace SmartMobileProject
 
             //Application.Current.Properties.Clear();
 
-            MainPage = new AppShell();
-
         }
 
         protected override async void OnStart()
         {
-            if(!Preferences.Get("Remember", false))
+            if (!Preferences.Get("Remember", false))
             {
+                MainPage = new PreLoginPage();
                 await Application.Current.MainPage.DisplayAlert("Online",
                 "Υπάρχει δυνατότητα Online λειτουργείας όπου μπορείτε να ανεβάζετε και να κατεβάζετε δεδομένα απο το Smart. " +
                 "Μπορείτε να την ενεργοποιήσετε ή να την απενεργοποιήσετε οποιαδήποτε στιγμή απο το Application Settings", "Εντάξει");
-                bool answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?",
-                    "Θέλετε να Ενεργοποιήσετε τώρα την Online λειτουργεία? " +
-                    "", "Ναί", "Όχι");
-                Preferences.Set("OnlineMode", answer); 
             }
-            Preferences.Set("Remember", true);
+            else
+            {
+                MainPage = new AppShell();
+            }           
         }
 
         protected override void OnSleep()
