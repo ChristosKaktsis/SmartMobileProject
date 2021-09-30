@@ -75,6 +75,11 @@ namespace SmartMobileProject.ViewModels
         }
         private async void Save(object obj)
         {
+            if(!ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.ΓραμμέςΠαραστατικώνΕισπράξεων.Any())
+            {
+                await Application.Current.MainPage.DisplayAlert("Δεν είναι έγκυρη", "Το παραστατικό πρέπει να έχει γραμμές", "Οκ");
+                return;
+            }
             SaveTask();
             if (uow.InTransaction)
             {

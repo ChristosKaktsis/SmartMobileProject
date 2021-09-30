@@ -82,7 +82,15 @@ namespace SmartMobileProject.ViewModels
         }
         private async void Submission(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(ΠαραστατικόΟλοκλήρωσηViewPage));
+            if (ΝέοΠαραστατικόViewModel.Order.ΓραμμέςΠαραστατικώνΠωλήσεων.Any())
+            {
+                await Shell.Current.GoToAsync(nameof(ΠαραστατικόΟλοκλήρωσηViewPage));
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Δεν είναι έγκυρη", "Το παραστατικό πρέπει να έχει γραμμές","Οκ");
+            }
+            
         }
 
         public ICommand ΝέαΓραμμή { get; set; }

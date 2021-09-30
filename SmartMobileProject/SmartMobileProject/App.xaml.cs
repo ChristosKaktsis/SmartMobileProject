@@ -46,6 +46,7 @@ namespace SmartMobileProject
             XpoHelper.InitXpo(connectionString);
             uow = XpoHelper.CreateUnitOfWork();
 
+            MainPage = new AppShell();
             //Application.Current.Properties.Clear();
 
         }
@@ -54,14 +55,14 @@ namespace SmartMobileProject
         {
             if (!Preferences.Get("Remember", false))
             {
-                MainPage = new PreLoginPage();
+                
                 await Application.Current.MainPage.DisplayAlert("Online",
                 "Υπάρχει δυνατότητα Online λειτουργείας όπου μπορείτε να ανεβάζετε και να κατεβάζετε δεδομένα απο το Smart. " +
                 "Μπορείτε να την ενεργοποιήσετε ή να την απενεργοποιήσετε οποιαδήποτε στιγμή απο το Application Settings", "Εντάξει");
             }
             else
             {
-                MainPage = new AppShell();
+                await AppShell.Current.GoToAsync("///LoginPage");
             }           
         }
 

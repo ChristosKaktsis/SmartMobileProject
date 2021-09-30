@@ -50,7 +50,8 @@
                 <dxe:PasswordEdit Grid.Row="3"
                               LabelText="Password"
                               LabelFontSize="Body"
-                              IsLabelFloating="True"/>
+                              IsLabelFloating="True"
+                                  IsVisible="false"/>
                 <Label Grid.Row="4"
                    HorizontalOptions="Center"
                    TextColor="{StaticResource PrimaryLight}"

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SmartMobileProject.ViewModels
@@ -26,8 +27,8 @@ namespace SmartMobileProject.ViewModels
         public ΠωλητήςViewModel()
         {
             Πωλητής = ((AppShell)Application.Current.MainPage).πωλητής;
+            Preferences.Set("Πωλητής", Πωλητής.Oid.ToString());
             
-            Application.Current.Properties["Πωλητής"] = Πωλητής.Oid.ToString();
             Αποθήκευση = new Command(Save);
         }
         private void Save(object obj)

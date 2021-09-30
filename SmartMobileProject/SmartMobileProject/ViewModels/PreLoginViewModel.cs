@@ -28,10 +28,7 @@ namespace SmartMobileProject.ViewModels
             if (OnlineMode)
                 await XpoHelper.CreatePolitisData();
             AllLoading = false;
-            await Task.Delay(1);
-            
-            App.Current.MainPage = new AppShell();
-            
+            await AppShell.Current.GoToAsync("///LoginPage");
         }
 
         public bool OnlineMode

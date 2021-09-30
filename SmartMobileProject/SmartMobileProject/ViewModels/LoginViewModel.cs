@@ -65,9 +65,9 @@ namespace SmartMobileProject.ViewModels
             await Task.Run(() =>
             {
                 Πωλητές = new XPCollection<Πωλητής>(uow);
-                if (Application.Current.Properties.ContainsKey("Πωλητής"))
+                if(Preferences.Get("Πωλητής", null)!=null)
                 {
-                    string politis = (string)Application.Current.Properties["Πωλητής"];
+                    string politis = Preferences.Get("Πωλητής", null);
                     // do something with id
                     var find = uow.GetObjectByKey<Πωλητής>(int.Parse(politis));
                     Πωλητής = (Πωλητής)find;

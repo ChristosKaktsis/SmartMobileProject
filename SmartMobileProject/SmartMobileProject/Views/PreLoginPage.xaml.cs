@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SmartMobileProject
+namespace SmartMobileProject.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PreLoginPage : ContentPage
 	{
-		public PreLoginPage ()
+        public PreLoginPage()
 		{
 			InitializeComponent ();
+		}
+		protected override bool OnBackButtonPressed()
+		{
+			return true;
 		}
 	}
 }
