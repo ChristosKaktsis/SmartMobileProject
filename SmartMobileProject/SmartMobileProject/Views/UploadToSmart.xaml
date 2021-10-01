@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
              x:Class="SmartMobileProject.Views.UploadToSmart"
-             Title="Load From Smart">
+             Title="Upload to Smart">
     <ContentPage.BindingContext>
         <vm:UploadToSmartModel/>
     </ContentPage.BindingContext>
@@ -21,7 +21,7 @@
                    IsEnabled="{Binding OnlineMode}"
                    HorizontalOptions="Fill"
                    CornerRadius="10"
-                   Text="Upload All"
+                   Text="Ανέβασμα όλων"
                    FontSize="24" Clicked="Button_Clicked"/>
             <ActivityIndicator Grid.Row="0" Grid.Column="1"
                                IsRunning="{Binding AllItemsLoading, Mode=OneWay}"/>

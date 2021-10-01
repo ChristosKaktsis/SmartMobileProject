@@ -28,12 +28,12 @@
                     <dxe:TextEdit  Grid.Column="0"
                                LabelText="Port 1"
                                Keyboard="Numeric"
-                               IsEnabled="False"
+                               IsEnabled="{Binding OnlineMode}"
                                Text="{Binding Port1}"/>
                     <dxe:TextEdit  Grid.Column="1"
                                LabelText="Port 2"
                                Keyboard="Numeric"
-                               IsEnabled="False"
+                               IsEnabled="{Binding OnlineMode}"
                                Text="{Binding Port2}"/>
                 </Grid>
                 <Button Grid.Row="3"
