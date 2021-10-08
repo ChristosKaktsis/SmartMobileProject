@@ -24,7 +24,6 @@ namespace SmartMobileProject.Views
         private async void Continue_Button_Clicked(object sender, System.EventArgs e)
         {
             await PopUp.ScaleTo(0, 200);
-            
             BackGreyColor.IsVisible = false;
             PopUp.IsVisible = false;
         }
