@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             x:Class="SmartMobileProject.Views.ActivationPage" 
+             Shell.NavBarHasShadow="False"
+             Title="Product Activation">
+    <ContentPage.BindingContext>
+        <vm:ActivationViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid>
+                <Image Grid.Row="0"
+                       VerticalOptions="Center"
+                       Source="{Binding LicenseImage}"/>
+                <Label Grid.Row="1"
+                       VerticalOptions="End"
+                       HorizontalOptions="Center"
+                       Text="{Binding LicenseText}"
+                       FontSize="30"
+                       TextColor="{Binding LicenseColor}"/>
+                <Button Grid.Row="2"
+                            VerticalOptions="End"
+                            Margin="30"
+                            CornerRadius="30"
+                            Text="Activate Product"
+                        Clicked="Button_Clicked"/>
+            </Grid>
+            <StackLayout x:Name="BackGreyColor" BackgroundColor="#80000000" IsVisible="false" Grid.Row="0"></StackLayout>
+            <Frame Margin="20" 
+                   Grid.Row="0" 
+                   CornerRadius="10"
+                   IsVisible="false"
+                   x:Name="PopUp">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0"
+                           HorizontalOptions="Center"
+                           Text="Choose your plan"
+                           FontSize="30"/>
+                    <Frame Grid.Row="1"
+                           CornerRadius="20"
+                           HasShadow="True"
+                           BorderColor="Green"
+                           BackgroundColor="LightGreen"
+                           x:Name="Frame1"
+                           Scale="1">
+                        <StackLayout>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Frame1_Tapped"/>
+                            </StackLayout.GestureRecognizers>
+                            <Label HorizontalOptions="Center"
+                               Text="30-Day free trial"
+                               FontSize="30"/>
+                            <Label HorizontalOptions="Center"
+                                   Text="Full use for limited time"
+                                   TextColor="Gray"
+                               FontSize="15"/>
+                        </StackLayout>
+                    </Frame>
+                    <Frame Grid.Row="2"
+                           CornerRadius="20"
+                           HasShadow="True"
+                           BorderColor="LightGray"
+                           BackgroundColor="LightGray"
+                           x:Name="Frame2"
+                           Scale="0.9">
+                        <StackLayout>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Frame2_Tapped"/>
+                            </StackLayout.GestureRecognizers>
+                            <Label HorizontalOptions="Center"
+                               Text="Start today"
+                               FontSize="30"/>
+                            <Label HorizontalOptions="Center"
+                                   Text="Full use for xxx $ "
+                                   TextColor="Gray"
+                               FontSize="15"/>
+                        </StackLayout>
+                    </Frame>
+                    <Label Grid.Row="3"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Text="Επιλέξτε την διαδικασία που θέλετε να ακολουθήσετε. Όταν ολοκληρωθεί η διαδικασία θα σας στείλουμε με email τον Κωδικό Ενεργοποίησης"/>
+                    <Button Grid.Row="4"
+                            VerticalOptions="End"
+                            Margin="30"
+                            CornerRadius="30"
+                            Text="Continue"
+                            Clicked="Continue_Button_Clicked"/>
+                </Grid>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

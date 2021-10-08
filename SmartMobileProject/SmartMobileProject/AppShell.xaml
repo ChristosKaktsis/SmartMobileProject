@@ -119,6 +119,8 @@
     </MenuItem>
     <MenuItem Text="Upload to Smart" IconImageSource="Upload_16x16.png" StyleClass="MenuItemLayoutStyle"  Clicked="Upload_MenuItem_Clicked">
     </MenuItem>
+    <MenuItem Text="Activation"  StyleClass="MenuItemLayoutStyle"  Clicked="Activation_MenuItem_Clicked">
+    </MenuItem>
     
 
 

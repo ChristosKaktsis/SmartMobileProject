@@ -53,6 +53,8 @@ namespace SmartMobileProject
 
         protected override async void OnStart()
         {
+            TrialCheck.Check();
+
             if (!Preferences.Get("Remember", false))
             {
                 
@@ -63,7 +65,8 @@ namespace SmartMobileProject
             else
             {
                 await AppShell.Current.GoToAsync("///LoginPage");
-            }           
+            }
+            
         }
 
         protected override void OnSleep()

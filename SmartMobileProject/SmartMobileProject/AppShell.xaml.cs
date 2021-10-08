@@ -25,6 +25,7 @@ namespace SmartMobileProject
         {
             InitializeComponent();
 
+            Routing.RegisterRoute(nameof(ActivationPage), typeof(ActivationPage));
             Routing.RegisterRoute(nameof(UploadToSmart), typeof(UploadToSmart));
             Routing.RegisterRoute(nameof(LoadingFromSmart), typeof(LoadingFromSmart));
             Routing.RegisterRoute(nameof(ΠαραστατικόΒασικάΣτοιχείαPage), typeof(ΠαραστατικόΒασικάΣτοιχείαPage));
@@ -87,6 +88,10 @@ namespace SmartMobileProject
         private async void Upload_MenuItem_Clicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(UploadToSmart));
+        }
+        private async void Activation_MenuItem_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(ActivationPage));
         }
     }
 }

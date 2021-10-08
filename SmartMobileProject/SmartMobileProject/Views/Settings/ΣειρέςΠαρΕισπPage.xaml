@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
              
              x:Class="SmartMobileProject.Views.Settings.ΣειρέςΠαρΕισπPage"
-             Title="Σειρες Παρ Εισπ">
+             Title="Σειρες Παρ.Εισπράξεων">
     
     <ContentPage.BindingContext>
         <vm:SettingsΣειρεςΠαρΕισπViewModel/>

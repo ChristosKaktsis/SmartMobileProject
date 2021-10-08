@@ -285,10 +285,19 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\error.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\checked150.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\important.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\expired.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarSmartMobileProjectAndroidHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionSmartMobileProjectAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionSmartMobileProjectAndroidHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarSmartMobileProjectAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

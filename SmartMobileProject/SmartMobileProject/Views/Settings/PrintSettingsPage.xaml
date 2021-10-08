@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
              
              x:Class="SmartMobileProject.Views.Settings.PrintSettingsPage"
-             Title="Print For Σειρες">
+             Title="Σειρές Παρ.Πωλήσεων">
     
     <!-- ... -->
     <ContentPage.BindingContext>
