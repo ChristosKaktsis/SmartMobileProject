@@ -19,14 +19,9 @@ namespace SmartMobileProject.Core
                 var yesterday = await SecureStorage.GetAsync("yesterday");
                 if (Token == null)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Free Trial",
-                     "Η εφαρμογή έχει 30 μέρες δοκιμή. " +"\n"+
-                     "Για να ενεργοποιήσετε την εφαρμογή σε Full Αγόραστε την", "Εντάξει");
-
                     var startDate = DateTime.Today;
                     await SecureStorage.SetAsync("token", startDate.ToString());
                     await SecureStorage.SetAsync("yesterday", DateTime.Now.ToString());
-
                 }
                 else
                 {  
@@ -40,15 +35,16 @@ namespace SmartMobileProject.Core
                     }
                     if(DateTime.Now > expire.AddDays(30))
                     {
-                        await Application.Current.MainPage.DisplayAlert("Free Trial",
-                     "Έχει λήξει ή δωρεάν δοκιμή 30 ημερών", "Εντάξει");
+                     //   await Application.Current.MainPage.DisplayAlert("Free Trial",
+                     //"Έχει λήξει ή δωρεάν δοκιμή 30 ημερών", "Εντάξει");
                         Preferences.Set("Lock", true);
                     }
                     else
                     {
-                        await Application.Current.MainPage.DisplayAlert("Free Trial",
-                     "Έχετε ακόμα "+ (expire.AddDays(30) - DateTime.Now).Days+" μέρες", "Εντάξει");
+                     //   await Application.Current.MainPage.DisplayAlert("Free Trial",
+                     //"Έχετε ακόμα "+ (expire.AddDays(30) - DateTime.Now).Days+" μέρες", "Εντάξει");
                         await SecureStorage.SetAsync("yesterday", DateTime.Now.ToString());
+                        Preferences.Set("DaysLeft", (expire.AddDays(30) - DateTime.Now).Days);
                     } 
                 }
             }

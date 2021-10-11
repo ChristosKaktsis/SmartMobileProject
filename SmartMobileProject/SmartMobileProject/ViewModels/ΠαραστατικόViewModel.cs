@@ -34,7 +34,7 @@ namespace SmartMobileProject.ViewModels
             ΤροποποίησηΠαρασατικού = new Command(EditOrder);
             Εκτύπωση = new Command(Print);
             ΔιαγραφήΠαρασατικού = new Command(DeleteOrder);
-
+            
         }
         private void SetPolitis()
         {
@@ -45,7 +45,8 @@ namespace SmartMobileProject.ViewModels
 
         private async void CreateOrder(object obj)
         {
-
+            if (!IsTrialOn)
+                return;
             ΝέοΠαραστατικόViewModel.Order = null;
             
             ΝέοΠαραστατικόViewModel.uow = uow;
@@ -54,6 +55,8 @@ namespace SmartMobileProject.ViewModels
         }
         private async void EditOrder(object obj)
         {
+            if (!IsTrialOn)
+                return;
             var editItem = (ΠαραστατικάΠωλήσεων)obj;
             if(editItem.IsUploaded)
             {

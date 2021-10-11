@@ -14,7 +14,20 @@ namespace SmartMobileProject.Views
     {
         public LoginPage()
         { 
-            InitializeComponent();         
+            InitializeComponent();
+            TrialPopUp.Opacity = 0;
+        }
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (!(BindingContext is LoginViewModel model))
+                return;
+            if(!model.Remember)
+            {
+                TrialPopUp.IsVisible = true;
+                await Task.Delay(1000);
+                await TrialPopUp.FadeTo(1, 200);
+            }
         }
     }
 }

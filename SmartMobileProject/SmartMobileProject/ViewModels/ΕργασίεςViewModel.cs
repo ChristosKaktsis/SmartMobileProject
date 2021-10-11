@@ -44,10 +44,11 @@ namespace SmartMobileProject.ViewModels
 
         private async void Edit(object obj)
         {
+            if (!IsTrialOn)
+                return;
             ΕργασίεςStaticViewModel.εργασία = (Εργασία)obj;
             await Shell.Current.GoToAsync(nameof(ΕργασίεςDetailViewPage));
         }
-
         private void Delete(object obj)
         {
             var task = (Εργασία)obj;
@@ -65,6 +66,8 @@ namespace SmartMobileProject.ViewModels
         }
         private void Save(object obj)
         {
+            if (!IsTrialOn)
+                return;
             var task = uow.Query<Εργασία>().Where
                 (x => x.Χαρακτηρισμός == "Είσοδος στον πελάτη" && x.Πωλητής.Oid == πωλητής.Oid && x.Κατάσταση == false);
             if (task.Any())

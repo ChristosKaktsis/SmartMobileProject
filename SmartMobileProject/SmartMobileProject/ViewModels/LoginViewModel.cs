@@ -17,7 +17,8 @@ namespace SmartMobileProject.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-       
+       public bool Remember { get => Preferences.Get("Remember", false); }
+
         UnitOfWork uow = ((App)Application.Current).uow;
         public XPCollection<Πωλητής> Πωλητές { get; set; }
         private Πωλητής πωλητής;
@@ -55,7 +56,8 @@ namespace SmartMobileProject.ViewModels
         }
         public LoginViewModel()
         {
-            SetAll();        
+            
+            SetAll();   
             LoginCommand = new Command(OnLoginClicked);
             ΝέοςΠωλητής = new Command(CreateNew);
         }
@@ -101,6 +103,7 @@ namespace SmartMobileProject.ViewModels
             {
                 return;
             }
+            Preferences.Set("Remember", true);
             ((AppShell)Application.Current.MainPage).πωλητής = Πωλητής;
             await Shell.Current.GoToAsync($"//{nameof(ΠωλητήςViewPage)}");
         }

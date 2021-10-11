@@ -23,7 +23,7 @@ namespace SmartMobileProject.ViewModels
                await Shell.Current.Navigation.PopAsync();
                 return;
             }
-            Preferences.Set("Remember", true);
+            
             AllLoading = true;
             if (OnlineMode)
                 await XpoHelper.CreatePolitisData();

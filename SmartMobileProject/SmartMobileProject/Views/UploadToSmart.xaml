@@ -9,7 +9,7 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid Margin="20"
-              RowSpacing="20">
+              RowSpacing="20" IsEnabled="{Binding IsTrialOn}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="80"/>

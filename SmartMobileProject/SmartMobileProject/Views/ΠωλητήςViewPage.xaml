@@ -12,14 +12,14 @@
         </StackLayout>
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" Command="{Binding Αποθήκευση}"/>
+        <ToolbarItem Text="Save" Command="{Binding Αποθήκευση}" />
     </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
         <vm:ΠωλητήςViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <Grid  
+            <Grid IsEnabled="{Binding IsTrialOn}"
             VerticalOptions="FillAndExpand"
             RowSpacing="20"
             ColumnSpacing="8"

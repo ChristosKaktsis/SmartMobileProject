@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SmartMobileProject.Core;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -36,14 +34,7 @@ namespace SmartMobileProject.ViewModels
                 SetProperty(ref licenseColor, value);
             }
         }
-        public bool Lock
-        {
-            get => Preferences.Get(nameof(Lock), false);
-            set
-            {
-                OnPropertyChanged(nameof(Lock));
-            }
-        }
+       
         ImageSource licenseImage = "important";
         public ImageSource LicenseImage
         {
@@ -53,16 +44,44 @@ namespace SmartMobileProject.ViewModels
                 SetProperty(ref licenseImage, value);
             }
         }
+        string activationCode;
+        public string ActivationCode
+        {
+            get => activationCode;
+            set
+            {
+                SetProperty(ref activationCode, value);
+            }
+        }
         public ActivationViewModel()
         {
             Shell.Current.FlyoutIsPresented = false;
-            if(Lock)
+            LicenseText += "\n" + "Days Left : " + Preferences.Get("DaysLeft", 0);
+            if (Lock)
             {
                 LicenseColor = Color.Red;
                 LicenseImage = "expired";
                 LicenseText = "Triela Expired";
+            }else if (Active)
+            {
+                LicenseColor = Color.Green;
+                LicenseImage = "checked150";
+                LicenseText = "Product Activated";
+            }
+            
+        }
+        public async void CheckActivationCode() 
+        {
+            //set the activation code 
+            //check if valid
+            //set Pref
+            Active = await ActivationCheck.CheckActivationCode();
+            if (Active)
+            {
+                LicenseColor = Color.Green;
+                LicenseImage = "checked150";
+                LicenseText = "Product Activated";
             }
         }
-
     }
 }

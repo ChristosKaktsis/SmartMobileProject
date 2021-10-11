@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SmartMobileProject.ViewModels
@@ -66,6 +67,38 @@ namespace SmartMobileProject.ViewModels
         public async void Cancel(object obj)
         {
             await Shell.Current.Navigation.PopAsync();
+        }
+        public bool Lock
+        {
+            get => Preferences.Get(nameof(Lock), false);
+            set
+            {
+                OnPropertyChanged(nameof(Lock));
+            }
+        }
+        public bool IsTrialOn
+        {
+            get 
+            {
+                if(Lock)
+                    TrialMessage();
+                return !Lock; 
+            }
+        }
+        public bool Active
+        {
+            get => Preferences.Get(nameof(Active), false);
+            set
+            {
+                Preferences.Set(nameof(Active), value);
+                OnPropertyChanged(nameof(Active));
+            }
+        }
+        public async void TrialMessage()
+        {
+            await Application.Current.MainPage.DisplayAlert("Free Trial",
+                     "Έχει λήξει ή δωρεάν δοκιμή 30 ημερών. Για να ενεργοποιήσετε την εφαρμογή " +
+                     "πατήστε Activate Product απο το menu Activation", "Εντάξει");
         }
     }
 }

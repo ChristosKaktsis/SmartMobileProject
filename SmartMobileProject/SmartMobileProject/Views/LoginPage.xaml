@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
-             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" xmlns:customview="clr-namespace:SmartMobileProject.Views.CustomView"
              mc:Ignorable="d"
              x:Class="SmartMobileProject.Views.LoginPage"
              Shell.NavBarIsVisible="False">
@@ -13,58 +13,62 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <Grid  
+            <Grid>
+                <Grid  
             VerticalOptions="FillAndExpand"
             RowSpacing="20"
             ColumnSpacing="8"
             Padding="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="AUTO"/>
-                    <RowDefinition Height="200"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO"/>
+                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Label Text="Welcome To smart"
+                    <Label Text="Welcome To smart"
                    TextColor="#37474f"
                    FontSize="40"
                   FontAttributes="Bold"
                    HorizontalOptions="Center"/>
-                <Image Grid.Row="1"
+                    <Image Grid.Row="1"
                    Source="unnamed.jpg"/>
-                <dxe:ComboBoxEdit Grid.Row="2"                              
+                    <dxe:ComboBoxEdit Grid.Row="2"                              
                               ItemsSource="{Binding Πωλητές}"
                               DisplayMember="Ονοματεπώνυμο"
                               SelectedItem="{Binding Πωλητής}"
                               LabelText="Ονοματεπώνυμο"
                               LabelFontSize="Body"
                               IsLabelFloating="True">
-                </dxe:ComboBoxEdit>
+                    </dxe:ComboBoxEdit>
 
-                <dxe:PasswordEdit Grid.Row="3"
+                    <dxe:PasswordEdit Grid.Row="3"
                               LabelText="Password"
                               LabelFontSize="Body"
                               IsLabelFloating="True"
                                   IsVisible="false"/>
-                <Label Grid.Row="4"
+                    <Label Grid.Row="4"
                    HorizontalOptions="Center"
                    TextColor="{StaticResource PrimaryLight}"
                    Text="Add New">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ΝέοςΠωλητής}"/>
-                    </Label.GestureRecognizers>
-                </Label>
-                <dxe:SimpleButton Grid.Row="6"
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ΝέοςΠωλητής}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <dxe:SimpleButton Grid.Row="6"
                               Grid.Column="0"
                               Command="{Binding  LoginCommand}"
                               BackgroundColor="{StaticResource PrimaryLight}"
                               Text="LogIn"/>
+
+                </Grid>
+                <customview:TrialPopUp x:Name="TrialPopUp" IsVisible="False"/>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

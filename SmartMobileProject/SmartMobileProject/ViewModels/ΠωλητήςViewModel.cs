@@ -33,11 +33,13 @@ namespace SmartMobileProject.ViewModels
         }
         private void Save(object obj)
         {
+            if (!IsTrialOn)
+                return;
             if (uow.InTransaction)
             {
                 uow.CommitChanges();
             }
-        }
+        }   
         public ICommand Αποθήκευση { set; get; }
     }
 }

@@ -44,6 +44,8 @@ namespace SmartMobileProject.ViewModels
         }
         private async void CreateOrder(object obj)
         {
+            if (!IsTrialOn)
+                return;
             ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr = null;
             ΠαραστατικάΕισπράξεωνStaticViewModel.uow = uow;
            //await Shell.Current.GoToAsync(nameof(ΝέοΠαραστατικόPage));
@@ -51,6 +53,8 @@ namespace SmartMobileProject.ViewModels
         }
         private async void EditOrder(object obj)
         {
+            if (!IsTrialOn)
+                return;
             var editItem = (ΠαραστατικάΕισπράξεων)obj;
             if (editItem.IsUploaded)
             {

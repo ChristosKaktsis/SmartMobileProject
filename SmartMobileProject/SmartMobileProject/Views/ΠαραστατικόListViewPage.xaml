@@ -17,7 +17,7 @@
     </ContentPage.BindingContext>
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Νέο" Command="{Binding ΔημιουργίαΠαραστατικού}" IconImageSource="add_white_36" />
+        <ToolbarItem Text="Νέο" Command="{Binding ΔημιουργίαΠαραστατικού}" IconImageSource="add_white_36"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

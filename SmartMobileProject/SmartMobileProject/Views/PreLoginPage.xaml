@@ -41,7 +41,6 @@
                     Text="Συνέχεια"
                     Command="{Binding Συνέχεια}"/>
             </Grid>
-
             <!--Pop Up-->
             <StackLayout x:Name="BackGreyColor" BackgroundColor="#80000000" IsVisible="{Binding AllLoading,Mode=OneWay}" ></StackLayout>
             <Frame x:Name="BottomSheet"

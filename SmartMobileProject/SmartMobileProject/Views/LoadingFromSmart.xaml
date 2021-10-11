@@ -8,7 +8,7 @@
         <vm:LoadFromSmartModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <Grid >
+        <Grid IsEnabled="{Binding IsTrialOn}">
             <Grid Margin="20"
                   RowSpacing="20">
                 <Grid.RowDefinitions>
