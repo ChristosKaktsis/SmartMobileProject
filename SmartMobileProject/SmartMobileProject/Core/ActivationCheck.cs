@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace SmartMobileProject.Core
 {
@@ -11,6 +12,8 @@ namespace SmartMobileProject.Core
         {
             return Task.Run(() =>
             {
+                Preferences.Set("Lock", false);
+                Preferences.Set("Active", true);
                 return true;
             });
         }

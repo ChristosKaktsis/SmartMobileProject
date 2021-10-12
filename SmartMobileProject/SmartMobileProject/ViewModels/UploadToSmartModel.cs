@@ -15,15 +15,6 @@ namespace SmartMobileProject.ViewModels
 {
     class UploadToSmartModel : BaseViewModel
     {
-        public bool OnlineMode
-        {
-            get => Preferences.Get(nameof(OnlineMode), false);
-            set
-            {
-                Preferences.Set(nameof(OnlineMode), value);
-                OnPropertyChanged(nameof(OnlineMode));
-            }
-        }
         bool allItemsLoading = false;
         public bool AllItemsLoading
         {

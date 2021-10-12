@@ -75,7 +75,7 @@ namespace SmartMobileProject.ViewModels
             //set the activation code 
             //check if valid
             //set Pref
-            Active = await ActivationCheck.CheckActivationCode();
+            await ActivationCheck.CheckActivationCode();
             if (Active)
             {
                 LicenseColor = Color.Green;

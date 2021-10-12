@@ -48,13 +48,12 @@ namespace SmartMobileProject
 
             MainPage = new AppShell();
             //Application.Current.Properties.Clear();
+            //string deviceIdentifier = DependencyService.Get<IDevice>().GetIdentifier();
 
         }
 
         protected override async void OnStart()
-        {
-            TrialCheck.Check();
-
+        {                      
             if (!Preferences.Get("Remember", false))
             {
                 await Application.Current.MainPage.DisplayAlert("Online",
@@ -65,7 +64,8 @@ namespace SmartMobileProject
             {
                 await AppShell.Current.GoToAsync("///LoginPage");
             }
-            
+            //await ActivationCheck.CheckActivationCode();
+            TrialCheck.Check();
         }
 
         protected override void OnSleep()

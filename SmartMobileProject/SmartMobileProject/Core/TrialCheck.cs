@@ -15,6 +15,9 @@ namespace SmartMobileProject.Core
         {
             try
             {
+                if (Preferences.Get("Active", false))
+                    return;
+
                 var Token = await SecureStorage.GetAsync("token");
                 var yesterday = await SecureStorage.GetAsync("yesterday");
                 if (Token == null)
@@ -22,6 +25,7 @@ namespace SmartMobileProject.Core
                     var startDate = DateTime.Today;
                     await SecureStorage.SetAsync("token", startDate.ToString());
                     await SecureStorage.SetAsync("yesterday", DateTime.Now.ToString());
+                    Preferences.Set("DaysLeft", (startDate.AddDays(30) - DateTime.Now).Days);
                 }
                 else
                 {  

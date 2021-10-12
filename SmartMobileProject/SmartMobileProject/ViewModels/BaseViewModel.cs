@@ -68,6 +68,17 @@ namespace SmartMobileProject.ViewModels
         {
             await Shell.Current.Navigation.PopAsync();
         }
+        public bool OnlineMode
+        {
+            get => Preferences.Get(nameof(OnlineMode), false);
+            set
+            {
+                if (!Preferences.Get(nameof(OnlineMode), false))
+                    OnlineWarning();
+                Preferences.Set(nameof(OnlineMode), value);
+                OnPropertyChanged(nameof(OnlineMode));
+            }
+        }
         public bool Lock
         {
             get => Preferences.Get(nameof(Lock), false);
@@ -99,6 +110,12 @@ namespace SmartMobileProject.ViewModels
             await Application.Current.MainPage.DisplayAlert("Free Trial",
                      "Έχει λήξει ή δωρεάν δοκιμή 30 ημερών. Για να ενεργοποιήσετε την εφαρμογή " +
                      "πατήστε Activate Product απο το menu Activation", "Εντάξει");
+        }
+        public async void OnlineWarning()
+        {
+            await Application.Current.MainPage.DisplayAlert("Προσοχή",
+                     "Μόνο τα δεδομένα που υπάρχουν στο Smart μπορούν να επικοινωνήσουν με το mobile. " +
+                     "Οποιαδήποτε ενέργεια κάνετε στο Stand Alone δεν θα λειτουργεί με το Online(Connected to Smart) ", "Εντάξει");
         }
     }
 }

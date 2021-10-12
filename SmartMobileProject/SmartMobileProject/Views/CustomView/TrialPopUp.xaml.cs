@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartMobileProject.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,12 @@ namespace SmartMobileProject.Views.CustomView
         private async void Continue_Button_Clicked(object sender, System.EventArgs e)
         {
             await this.FadeTo(0, 200);
-            this.IsVisible = false; 
+            this.IsVisible = false;
+            //crypt test 
+           //string crypto = AesOperation.EncryptString("b14ca5898a4e4133bbce2ea2315a1916", "Hello Crypto");
+           // Console.WriteLine("Before Encrypt : Hello Crypto \n After Encrypt :" + crypto);
+           // string decrypto = AesOperation.DecryptString("b14ca5898a4e4133bbce2ea2315a1916", crypto);
+           // Console.WriteLine("After Decrypt :" + decrypto);
         }
         private async void Frame1_Tapped(object sender, System.EventArgs e)
         {

@@ -30,17 +30,7 @@ namespace SmartMobileProject.ViewModels
             AllLoading = false;
             await AppShell.Current.GoToAsync("///LoginPage");
         }
-
-        public bool OnlineMode
-        {
-            get => Preferences.Get(nameof(OnlineMode), false);
-            set
-            {
-                Preferences.Set(nameof(OnlineMode), value);
-                OnPropertyChanged(nameof(OnlineMode));
-            }
-        }
-        
+ 
         public string IP
         {
             get => Preferences.Get(nameof(IP), "79.129.5.42");

@@ -58,7 +58,9 @@ namespace SmartMobileProject.ViewModels
         public SettingsStaticSourceViewModel()
         {  
             SetAtt();
-            Check();       
+            if(OnlineMode)
+                Check();
+
             Αποθήκευση = new Command(Save);
         }
         private  void SetAtt()
