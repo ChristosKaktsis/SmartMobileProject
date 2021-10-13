@@ -1,4 +1,5 @@
 ﻿using SmartMobileProject.Services;
+using SmartMobileProject.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +17,18 @@ namespace SmartMobileProject.Views.CustomView
         public TrialPopUp()
         {
             InitializeComponent();
+            BindingContext = new TrialPopUpViewModel();
+            
         }
         private async void Continue_Button_Clicked(object sender, System.EventArgs e)
         {
             await this.FadeTo(0, 200);
             this.IsVisible = false;
-            //crypt test 
-           //string crypto = AesOperation.EncryptString("b14ca5898a4e4133bbce2ea2315a1916", "Hello Crypto");
-           // Console.WriteLine("Before Encrypt : Hello Crypto \n After Encrypt :" + crypto);
-           // string decrypto = AesOperation.DecryptString("b14ca5898a4e4133bbce2ea2315a1916", crypto);
-           // Console.WriteLine("After Decrypt :" + decrypto);
+             
+            
+            if (!(BindingContext is TrialPopUpViewModel model))
+                return;
+            model.ContinuePressed();
         }
         private async void Frame1_Tapped(object sender, System.EventArgs e)
         {
@@ -35,6 +38,11 @@ namespace SmartMobileProject.Views.CustomView
             Frame2.BackgroundColor = Color.LightGray;
             await Frame1.ScaleTo(1, 20);
             await Frame2.ScaleTo(0.9, 20);
+            if (!(BindingContext is TrialPopUpViewModel model))
+                return;  
+            model.TrialButton();
+
+            
         }
         private async void Frame2_Tapped(object sender, System.EventArgs e)
         {
@@ -44,6 +52,9 @@ namespace SmartMobileProject.Views.CustomView
             Frame1.BackgroundColor = Color.LightGray;
             await Frame2.ScaleTo(1, 20);
             await Frame1.ScaleTo(0.9, 20);
+            if (!(BindingContext is TrialPopUpViewModel model))
+                return;
+            model.ActivationButton();
         }
     }
 }

@@ -10,11 +10,11 @@ namespace SmartMobileProject.Services
     {
         public static string EncryptString(string key, string plainText)
         {
-            byte[] iv = new byte[16];
-            byte[] array;
-
             try
             {
+                byte[] iv = new byte[16];
+                byte[] array;
+
                 using (Aes aes = Aes.Create())
                 {
                     aes.Key = Encoding.UTF8.GetBytes(key);
@@ -47,11 +47,11 @@ namespace SmartMobileProject.Services
         }
         public static string DecryptString(string key, string cipherText)  
         {  
-            byte[] iv = new byte[16];  
-            byte[] buffer = Convert.FromBase64String(cipherText);
-
             try
             {
+                byte[] iv = new byte[16];
+                byte[] buffer = Convert.FromBase64String(cipherText);
+
                 using (Aes aes = Aes.Create())
                 {
                     aes.Key = Encoding.UTF8.GetBytes(key);

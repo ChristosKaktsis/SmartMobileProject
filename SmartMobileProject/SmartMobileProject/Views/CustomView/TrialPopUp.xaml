@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
              x:Class="SmartMobileProject.Views.CustomView.TrialPopUp">
+    <ContentView.BindingContext>
+        <vm:TrialPopUpViewModel/>
+    </ContentView.BindingContext>
   <ContentView.Content>
         <Grid>
             <StackLayout x:Name="BackGreyColor" BackgroundColor="#80000000" ></StackLayout>
@@ -19,10 +23,10 @@
                     <Frame Grid.Row="1"
                            CornerRadius="20"
                            HasShadow="True"
-                           BorderColor="Green"
-                           BackgroundColor="LightGreen"
+                           BorderColor="LightGray"
+                           BackgroundColor="LightGray"
                            x:Name="Frame1"
-                           Scale="1">
+                           Scale="0.9">
                         <StackLayout>
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Frame1_Tapped"/>
@@ -59,7 +63,8 @@
                     <Label Grid.Row="3"
                            VerticalOptions="Center"
                            HorizontalOptions="Center"
-                           Text="Επιλέξτε την διαδικασία που θέλετε να ακολουθήσετε. Όταν ολοκληρωθεί η διαδικασία θα σας στείλουμε με email τον Κωδικό Ενεργοποίησης"/>
+                           x:Name="bottomText"
+                           Text="{Binding BottomText}"/>
                     <Button Grid.Row="4"
                             VerticalOptions="End"
                             Margin="30"

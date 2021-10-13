@@ -8,7 +8,7 @@ namespace SmartMobileProject.Services
 {
     class EmailSender
     {
-        public async Task SendEmail(string subject, string body, List<string> recipients)
+        public static async Task SendEmail(string subject, string body, List<string> recipients)
         {
             try
             {
