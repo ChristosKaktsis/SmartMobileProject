@@ -11,7 +11,7 @@ namespace SmartMobileProject.Core
     {
         public static Task<bool> CheckActivationCode(string code)
         {
-            return Task.Run(() =>
+            return Task.Run(async () =>
             {
                 string decrypto = AesOperation.DecryptString("b14ca5898a4e4133bbce2ea2315a1916", code);
                 Console.WriteLine("After Decrypt :" + decrypto);
@@ -21,7 +21,8 @@ namespace SmartMobileProject.Core
                 string[] subs = decrypto.Split(separators, StringSplitOptions.RemoveEmptyEntries);
                 if (subs.Length != 3)
                     return false;
-                if(subs[0].Equals("OK") && subs[2].Equals("277d011b1fd48623"))
+                string Id =  await SecureStorage.GetAsync("ID");
+                if (subs[0].Equals("OK") && subs[2].Equals(Id))
                 {
                     Preferences.Set("Lock", false);
                     Preferences.Set("Active", true);

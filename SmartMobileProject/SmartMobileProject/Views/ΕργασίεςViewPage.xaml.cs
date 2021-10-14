@@ -24,8 +24,9 @@ namespace SmartMobileProject.Views
         }
         void SwipeItem_Invoked(System.Object sender, SwipeItemTapEventArgs e)
         {
-            this.grid.DeleteItem(e.ItemHandle);
-            model.Διαγραφή.Execute(e.Item);
+            //this.grid.DeleteItem(e.ItemHandle);
+            //model.Διαγραφή.Execute(e.Item);
+            model.CheckTask(e.Item);
         }
         private async void plusBtn_Clicked(object sender, EventArgs e)
         {
@@ -57,7 +58,7 @@ namespace SmartMobileProject.Views
 
         private  void grid_Tap(object sender, CollectionViewGestureEventArgs e)
         {
-            model.CheckTask(e.Item);
+            //model.CheckTask(e.Item);
            // this.grid.MoveItem(e.ItemHandle, grid.ItemCount - 1, null);
         }
 

@@ -82,6 +82,11 @@ namespace SmartMobileProject.ViewModels
                 LicenseImage = "checked150";
                 LicenseText = "Product Activated";
             }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Activation",
+                "Κάτι πήγε στραβά με το κλειδί ενεργοποίησης", "Εντάξει");
+            }
         }
     }
 }

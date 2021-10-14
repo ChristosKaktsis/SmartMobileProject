@@ -59,9 +59,9 @@
                             </dxcv:SwipeContainer.ItemView>
 
                             <dxcv:SwipeContainer.StartSwipeItems>
-                                <dxcv:SwipeItem Caption="Delete"
-                                        BackgroundColor="{StaticResource Tradic}"
-                                        Image="delete_white_18.png"
+                                <dxcv:SwipeItem Caption="Done"
+                                        BackgroundColor="{StaticResource Primary}"
+                                        Image="checked24.png"
                                         Invoked="SwipeItem_Invoked"/>
                             </dxcv:SwipeContainer.StartSwipeItems>
                             <dxcv:SwipeContainer.EndSwipeItems>

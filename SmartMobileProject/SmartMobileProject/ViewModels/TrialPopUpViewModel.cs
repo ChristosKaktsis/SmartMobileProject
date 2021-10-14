@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SmartMobileProject.ViewModels
@@ -68,12 +69,13 @@ namespace SmartMobileProject.ViewModels
                          "τον κωδικό ενεργοποίησης τον οποίο τον εισάγετε πατώντας Activate Product ";
             ActiveIsSelected = true;
         }
-        public void ContinuePressed()
+        public async void ContinuePressed()
         {
             if (ActiveIsSelected)
             {
                 //Get id
                 string Id = GetId();
+                await SecureStorage.SetAsync("ID", Id);
                 //crypto id
                 string crypto = CryptoId(Id);
                 //get compncredetial
@@ -85,8 +87,11 @@ namespace SmartMobileProject.ViewModels
         private async void EmailSetter(string crypto)
         {
             if (Εταιρία == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Προσοχή",
+                "Συμπληρώστε τα στοιχεία εταιρίας πριν κάνετε αίτηση ενεργοποίησης", "Εντάξει");
                 return;
-
+            } 
             String body = "";
             body += "  --Στοιχεία Εταιρίας--\n" +
                     "Επωνυμία :" + Εταιρία.Επωνυμία + "\n" +

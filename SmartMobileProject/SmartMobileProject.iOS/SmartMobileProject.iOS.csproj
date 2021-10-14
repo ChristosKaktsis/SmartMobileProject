@@ -284,6 +284,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\checked24.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarSmartMobileProjectiOSHideInfoBar="True" />
