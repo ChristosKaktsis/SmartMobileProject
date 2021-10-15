@@ -1,12 +1,10 @@
 ﻿using DevExpress.Xpo;
-using SmartMobileProject.Core;
 using SmartMobileProject.Models;
 using SmartMobileProject.Services;
 using SmartMobileProject.Views;
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SmartMobileProject.ViewModels
@@ -69,17 +67,19 @@ namespace SmartMobileProject.ViewModels
             ΝέοΠαραστατικόViewModel.Order = editItem;
             await Shell.Current.GoToAsync(nameof(ΠαραστατικόΒασικάΣτοιχείαPage));
         }
-        public void Print(object obj)
+        public async void Print(object obj)
         {
             CreatePrintView createPrintView = new CreatePrintView();
             var seira = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.Oid == ((ΠαραστατικάΠωλήσεων)obj).Σειρά.Oid);
             if (seira.FirstOrDefault().PrintType=="80 mm")
             {
-                createPrintView.CreatePrint((ΠαραστατικάΠωλήσεων)obj);
+                string print = await createPrintView.page1((ΠαραστατικάΠωλήσεων)obj);
+                createPrintView.CreatePrint(print);
             }
             else
             {
-                createPrintView.CreatePrint2((ΠαραστατικάΠωλήσεων)obj);
+                string print = await createPrintView.page2((ΠαραστατικάΠωλήσεων)obj);
+                createPrintView.CreatePrint(print);
             }
            
         }

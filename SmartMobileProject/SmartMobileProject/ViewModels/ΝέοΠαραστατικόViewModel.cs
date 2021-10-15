@@ -99,16 +99,18 @@ namespace SmartMobileProject.ViewModels
             Εργασία.Ενέργειες.Add(new Ενέργεια(uow) { SmartOid = Guid.NewGuid(), Τύπος = "Παραστατικό Πώλησης  " + Order.Παραστατικό }); 
         }
 
-        public void Print(object obj)
+        public async void Print(object obj)
         {
             CreatePrintView createPrintView = new CreatePrintView();
             if(Order.Σειρά.PrintType=="80 mm")
             {
-                createPrintView.CreatePrint(Order);
+                string print = await createPrintView.page1(Order);
+                createPrintView.CreatePrint(print);
             }
             else
             {
-                createPrintView.CreatePrint2(Order);
+                string print = await createPrintView.page2(Order);
+                createPrintView.CreatePrint(print);
             }
            
         }
