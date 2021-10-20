@@ -111,7 +111,7 @@ namespace SmartMobileProject.ViewModels
                     "StandAlone :" + (OnlineMode ? "Οχι" : "Ναι") + "\n" +
                     "Activation :" + crypto + "\n";
                     
-            await EmailSender.SendEmail("Αίτηση ενεργοποίησης", body, new List<string> { "christoskaktsis@gmail.com" });
+            await EmailSender.SendEmail("Αίτηση ενεργοποίησης", body, new List<string> { "license@exelixis-software.gr" });
         }
 
         private string CryptoId(string id)

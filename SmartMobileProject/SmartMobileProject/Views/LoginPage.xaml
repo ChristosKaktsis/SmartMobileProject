@@ -32,7 +32,7 @@
                         <ColumnDefinition Width="4*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Text="Welcome To smart"
+                    <Label Text="Καλώς ήλθατε στο smart"
                    TextColor="#37474f"
                    FontSize="40"
                   FontAttributes="Bold"

@@ -83,16 +83,28 @@ namespace SmartMobileProject.Core
             if(okP)
                 await CreateDIEUPELATIData();
 
-           var ok =  await Task.WhenAll(
-                CreateEIDOSData(),
-                CreateSEIRAPOLData(),
-                CreateSEIRAEISData(),
-                CreateEvent(),
-                CreatePolitisData(),
-                CreateTrapezaData()
+
+            await Task.WhenAll(
+                 CreateOIKOGENEIAEIDOUSData(),
+                 CreateOMADAEIDOUSData(),
+                 CreateKATIGORIAEIDOUSData(),
+                 CreateYPOOIKOGENEIAEIDOYSData(),
+                 CreatePOLIData(),
+                 CreateTRAPLOGData()
                 );
+
+            var ok = await Task.WhenAll(
+                 CreateEIDOSData(),
+                 CreateSEIRAPOLData(),
+                 CreateSEIRAEISData(),
+                 CreateEvent(),
+                 CreatePolitisData(),
+                 CreateTrapezaData()
+                 );
+            
             await CreateIDIOTITAData();
             await CreateEPILOGESIDIOTITASData();
+            await CreateLOGXRHMDIATHData();
             return ok.All(x => x) && okP;
         }
         public static UnitOfWork CreateUnitOfWork()
@@ -231,71 +243,71 @@ namespace SmartMobileProject.Core
         }
         public static async Task CreateXORAData()
         {
-
             using (var uow = CreateUnitOfWork())
             {
-                if (!uow.Query<Χώρα>().Any())
+                DataTable dt = await getSmartTable("Select Oid, Χώρα, Συντομογραφία  From Χώρα where ");
+                if (dt == null) { return; }
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataTable dt = await getSmartTable("Select Oid, Χώρα, Συντομογραφία  From Χώρα where ");
-                    if (dt == null) { return; }
-                    foreach (DataRow row in dt.Rows)
+                    if (uow.Query<Χώρα>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
                     {
-                        Χώρα data = new Χώρα(uow);
-                        data.SmartOid = Guid.Parse((string)row["Oid"]);
-                        data.ΌνομαΧώρας = row["Χώρα"].ToString();
-                        data.Συντομογραφία = row["Συντομογραφία"].ToString();
+                        continue;
+                    }
+                    Χώρα data = new Χώρα(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    data.ΌνομαΧώρας = row["Χώρα"].ToString();
+                    data.Συντομογραφία = row["Συντομογραφία"].ToString();
 
-                        uow.Save(data);
+                    uow.Save(data);
+                }
+
+                if (uow.InTransaction)
+                {
+                    try
+                    {
+                        uow.CommitChanges();
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
                     }
 
-                    if (uow.InTransaction)
-                    {
-                        try
-                        {
-                            uow.CommitChanges();
-                        }
-                        catch (Exception exc)
-                        {
-                            uow.RollbackTransaction();
-                            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        }
-
-                    }
                 }
             }
         }
         public static async Task CreateYPOOIKOGENEIAEIDOYSData()
         {
-
             using (var uow = CreateUnitOfWork())
             {
-                if (!uow.Query<ΥποοικογένειαΕίδους>().Any())
+                DataTable dt = await getSmartTable("Select Oid, Περιγραφή From ΥποοικογένειαΕίδους where ");
+                if (dt == null) { return; }
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataTable dt = await getSmartTable("Select Oid, Περιγραφή From ΥποοικογένειαΕίδους where ");
-                    if (dt == null) { return; }
-                    foreach (DataRow row in dt.Rows)
+                    if (uow.Query<ΥποοικογένειαΕίδους>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
                     {
-                        ΥποοικογένειαΕίδους data = new ΥποοικογένειαΕίδους(uow);
-                        data.SmartOid = Guid.Parse((string)row["Oid"]);
-                        data.Περιγραφή = row["Περιγραφή"].ToString();
+                        continue;
+                    }
+                    ΥποοικογένειαΕίδους data = new ΥποοικογένειαΕίδους(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    data.Περιγραφή = row["Περιγραφή"].ToString();
 
 
-                        uow.Save(data);
+                    uow.Save(data);
+                }
+
+                if (uow.InTransaction)
+                {
+                    try
+                    {
+                        uow.CommitChanges();
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
                     }
 
-                    if (uow.InTransaction)
-                    {
-                        try
-                        {
-                            uow.CommitChanges();
-                        }
-                        catch (Exception exc)
-                        {
-                            uow.RollbackTransaction();
-                            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        }
-
-                    }
                 }
             }
         }
@@ -336,7 +348,6 @@ namespace SmartMobileProject.Core
         }
         public static async Task CreateTROPOSAPOSTOLISData()
         {
-
             using (var uow = CreateUnitOfWork())
             {
                 if (!uow.Query<ΤρόποςΑποστολής>().Any())
@@ -457,32 +468,33 @@ namespace SmartMobileProject.Core
         {
             using (UnitOfWork uow = CreateUnitOfWork())
             {
-                if (!uow.Query<Πόλη>().Any())
+                DataTable dt = await getSmartTable("Select Oid, Πόλη From Πόλη where ");
+                if (dt == null) { return; }
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataTable dt = await getSmartTable("Select Oid, Πόλη From Πόλη where ");
-                    if (dt == null) { return; }
-                    foreach (DataRow row in dt.Rows)
+                    if (uow.Query<Πόλη>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
                     {
-                        Πόλη data = new Πόλη(uow);
-                        data.SmartOid = Guid.Parse((string)row["Oid"]);
-                        data.ΟνομαΠόλης = row["Πόλη"].ToString();
-                        //data.ΓεωγραφικόΜήκος = (double)row["ΓεωγραφικόΜήκος"];
-                        // data.ΓεωγραφικόΠλάτος = (double)row["ΓεωγραφικόΠλάτος"];
-
-                        uow.Save(data);
+                        continue;
                     }
+                    Πόλη data = new Πόλη(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    data.ΟνομαΠόλης = row["Πόλη"].ToString();
+                    //data.ΓεωγραφικόΜήκος = (double)row["ΓεωγραφικόΜήκος"];
+                    // data.ΓεωγραφικόΠλάτος = (double)row["ΓεωγραφικόΠλάτος"];
 
-                    if (uow.InTransaction)
+                    uow.Save(data);
+                }
+
+                if (uow.InTransaction)
+                {
+                    try
                     {
-                        try
-                        {
-                            uow.CommitChanges();
-                        }
-                        catch (Exception exc)
-                        {
-                            uow.RollbackTransaction();
-                            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        }
+                        uow.CommitChanges();
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
                     }
                 }
             }
@@ -562,35 +574,35 @@ namespace SmartMobileProject.Core
         }
         public static async Task CreateOMADAEIDOUSData()
         {
-
             using (var uow = CreateUnitOfWork())
             {
-                if (!uow.Query<ΟμάδαΕίδους>().Any())
+                DataTable dt = await getSmartTable("Select Oid, Ομάδα, ΣειράΕμφάνισης From ΟμάδεςΕίδους where ");
+                if (dt == null) { return; }
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataTable dt = await getSmartTable("Select Oid, Ομάδα, ΣειράΕμφάνισης From ΟμάδεςΕίδους where ");
-                    if (dt == null) { return; }
-                    foreach (DataRow row in dt.Rows)
+                    if (uow.Query<ΟμάδαΕίδους>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
                     {
-                        ΟμάδαΕίδους data = new ΟμάδαΕίδους(uow);
-                        data.SmartOid = Guid.Parse((string)row["Oid"]);
-                        data.Ομάδα = row["Ομάδα"].ToString();
-                        data.ΣειράΕμφάνισης = int.Parse(row["ΣειράΕμφάνισης"].ToString());
-
-                        uow.Save(data);
+                        continue;
                     }
-                    if (uow.InTransaction)
+                    ΟμάδαΕίδους data = new ΟμάδαΕίδους(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    data.Ομάδα = row["Ομάδα"].ToString();
+                    data.ΣειράΕμφάνισης = int.Parse(row["ΣειράΕμφάνισης"].ToString());
+
+                    uow.Save(data);
+                }
+                if (uow.InTransaction)
+                {
+                    try
                     {
-                        try
-                        {
-                            uow.CommitChanges();
-                        }
-                        catch (Exception exc)
-                        {
-                            uow.RollbackTransaction();
-                            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        }
-
+                        uow.CommitChanges();
                     }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
+                    }
+
                 }
             }
         }
@@ -598,60 +610,61 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                if (!uow.Query<ΟικογένειαΕίδους>().Any())
+                DataTable dt = await getSmartTable("Select Oid, Περιγραφή From ΟικογένειαΕίδους where ");
+                if (dt == null) { return; }
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataTable dt = await getSmartTable("Select Oid, Περιγραφή From ΟικογένειαΕίδους where ");
-                    if (dt == null) { return; }
-                    foreach (DataRow row in dt.Rows)
+                    if (uow.Query<ΟικογένειαΕίδους>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
                     {
-                        ΟικογένειαΕίδους data = new ΟικογένειαΕίδους(uow);
-                        data.SmartOid = Guid.Parse((string)row["Oid"]);
-                        data.Περιγραφή = row["Περιγραφή"].ToString();
-                        uow.Save(data);
+                        continue;
                     }
-                    if (uow.InTransaction)
+                    ΟικογένειαΕίδους data = new ΟικογένειαΕίδους(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    data.Περιγραφή = row["Περιγραφή"].ToString();
+                    uow.Save(data);
+                }
+                if (uow.InTransaction)
+                {
+                    try
                     {
-                        try
-                        {
-                            uow.CommitChanges();
-                        }
-                        catch (Exception exc)
-                        {
-                            uow.RollbackTransaction();
-                            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        }
+                        uow.CommitChanges();
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
                     }
                 }
             }
         }
         public static async Task CreateKATIGORIAEIDOUSData()
         {
-
             using (var uow = CreateUnitOfWork())
             {
-                if (!uow.Query<ΚατηγορίαΕίδους>().Any())
+                DataTable dt = await getSmartTable("Select Oid, Κατηγορία From ΚατηγορίεςΕίδους where ");
+                if (dt == null) { return; }
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataTable dt = await getSmartTable("Select Oid, Κατηγορία From ΚατηγορίεςΕίδους where ");
-                    if (dt == null) { return; }
-                    foreach (DataRow row in dt.Rows)
+                    if (uow.Query<ΚατηγορίαΕίδους>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
                     {
-                        ΚατηγορίαΕίδους data = new ΚατηγορίαΕίδους(uow);
-                        data.SmartOid = Guid.Parse((string)row["Oid"]);
-                        data.Κατηγορία = row["Κατηγορία"].ToString();
-
-                        uow.Save(data);
+                        continue;
                     }
-                    if (uow.InTransaction)
+                    ΚατηγορίαΕίδους data = new ΚατηγορίαΕίδους(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    data.Κατηγορία = row["Κατηγορία"].ToString();
+
+                    uow.Save(data);
+                }
+                if (uow.InTransaction)
+                {
+                    try
                     {
-                        try
-                        {
-                            uow.CommitChanges();
-                        }
-                        catch (Exception exc)
-                        {
-                            uow.RollbackTransaction();
-                            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        }
+                        uow.CommitChanges();
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
                     }
                 }
             }
@@ -735,35 +748,36 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                if (!uow.Query<ΤραπεζικοίΛογαριασμοί>().Any())
+                DataTable dt = await getSmartTable("Select Oid, Τράπεζα, Swift, Λογαριασμός, IBAN, Υποκατάστημα From ΤραπεζικοίΛογαριασμοί where ");
+                if (dt == null) { return; }
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataTable dt = await getSmartTable("Select Oid, Τράπεζα, Swift, Λογαριασμός, IBAN, Υποκατάστημα From ΤραπεζικοίΛογαριασμοί where ");
-                    if (dt == null) { return; }
-                    foreach (DataRow row in dt.Rows)
+                    if (uow.Query<ΤραπεζικοίΛογαριασμοί>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
                     {
-                        ΤραπεζικοίΛογαριασμοί data = new ΤραπεζικοίΛογαριασμοί(uow);
-                        data.SmartOid = Guid.Parse((string)row["Oid"]);
-                        var p = uow.Query<Τράπεζα>().Where(x => x.SmartOid == Guid.Parse((string)row["Τράπεζα"]));
-                        data.Τράπεζα = p.FirstOrDefault();
-                        data.Swift = row["Swift"].ToString();
-                        data.Λογαριασμός = row["Λογαριασμός"].ToString();
-                        data.IBAN = row["IBAN"].ToString();
-                        data.Υποκατάστημα = row["Υποκατάστημα"].ToString();
-
-                        uow.Save(data);
+                        continue;
                     }
+                    ΤραπεζικοίΛογαριασμοί data = new ΤραπεζικοίΛογαριασμοί(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    var p = uow.Query<Τράπεζα>().Where(x => x.SmartOid == Guid.Parse((string)row["Τράπεζα"]));
+                    data.Τράπεζα = p.FirstOrDefault();
+                    data.Swift = row["Swift"].ToString();
+                    data.Λογαριασμός = row["Λογαριασμός"].ToString();
+                    data.IBAN = row["IBAN"].ToString();
+                    data.Υποκατάστημα = row["Υποκατάστημα"].ToString();
 
-                    if (uow.InTransaction)
+                    uow.Save(data);
+                }
+
+                if (uow.InTransaction)
+                {
+                    try
                     {
-                        try
-                        {
-                            uow.CommitChanges();
-                        }
-                        catch (Exception exc)
-                        {
-                            uow.RollbackTransaction();
-                            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        }
+                        uow.CommitChanges();
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
                     }
                 }
             }
@@ -772,39 +786,40 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                if (!uow.Query<ΛογαριασμοίΧρηματικώνΔιαθέσιμων>().Any())
+                DataTable dt = await getSmartTable("Select Oid, Τράπεζα, ΤραπεζικόςΛογαριασμός, Λογαριασμός From ΛογαριασμοίΧρηματικώνΔιαθέσιμων where ");
+                if (dt == null) { return; }
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataTable dt = await getSmartTable("Select Oid, Τράπεζα, ΤραπεζικόςΛογαριασμός, Λογαριασμός From ΛογαριασμοίΧρηματικώνΔιαθέσιμων where ");
-                    if (dt == null) { return; }
-                    foreach (DataRow row in dt.Rows)
+                    if (uow.Query<ΛογαριασμοίΧρηματικώνΔιαθέσιμων>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
                     {
-                        ΛογαριασμοίΧρηματικώνΔιαθέσιμων data = new ΛογαριασμοίΧρηματικώνΔιαθέσιμων(uow);
-                        data.SmartOid = Guid.Parse((string)row["Oid"]);
-                        data.Λογαριασμός = row["Λογαριασμός"].ToString();
-                        if (!string.IsNullOrEmpty(row["Τράπεζα"].ToString()))
-                        {
-                            var p = uow.Query<Τράπεζα>().Where(x => x.SmartOid == Guid.Parse((string)row["Τράπεζα"]));
-                            data.Τράπεζα = p.FirstOrDefault();
-                        }
-                        if (!string.IsNullOrEmpty(row["ΤραπεζικόςΛογαριασμός"].ToString()))
-                        {
-                            var p = uow.Query<ΤραπεζικοίΛογαριασμοί>().Where(x => x.SmartOid == Guid.Parse((string)row["ΤραπεζικόςΛογαριασμός"]));
-                            data.ΤραπεζικόςΛογαριασμός = p.FirstOrDefault();
-                        }
-                        uow.Save(data);
+                        continue;
                     }
-
-                    if (uow.InTransaction)
+                    ΛογαριασμοίΧρηματικώνΔιαθέσιμων data = new ΛογαριασμοίΧρηματικώνΔιαθέσιμων(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    data.Λογαριασμός = row["Λογαριασμός"].ToString();
+                    if (!string.IsNullOrEmpty(row["Τράπεζα"].ToString()))
                     {
-                        try
-                        {
-                            uow.CommitChanges();
-                        }
-                        catch (Exception exc)
-                        {
-                            uow.RollbackTransaction();
-                            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        }
+                        var p = uow.Query<Τράπεζα>().Where(x => x.SmartOid == Guid.Parse((string)row["Τράπεζα"]));
+                        data.Τράπεζα = p.FirstOrDefault();
+                    }
+                    if (!string.IsNullOrEmpty(row["ΤραπεζικόςΛογαριασμός"].ToString()))
+                    {
+                        var p = uow.Query<ΤραπεζικοίΛογαριασμοί>().Where(x => x.SmartOid == Guid.Parse((string)row["ΤραπεζικόςΛογαριασμός"]));
+                        data.ΤραπεζικόςΛογαριασμός = p.FirstOrDefault();
+                    }
+                    uow.Save(data);
+                }
+
+                if (uow.InTransaction)
+                {
+                    try
+                    {
+                        uow.CommitChanges();
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
                     }
                 }
             }

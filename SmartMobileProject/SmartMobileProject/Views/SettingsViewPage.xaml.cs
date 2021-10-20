@@ -72,5 +72,10 @@ namespace SmartMobileProject.Views
         {
             await Shell.Current.Navigation.PushAsync(new PreLoginPage());
         }
+
+        private async void Button_Clicked_11(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("Settings/ΛογαριασμοίΧρημΔιαθPage");
+        }
     }
 }

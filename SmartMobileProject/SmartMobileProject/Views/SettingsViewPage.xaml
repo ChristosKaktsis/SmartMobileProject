@@ -55,6 +55,13 @@
                 BackgroundColor="{StaticResource PrimaryLight}"
                 Clicked="Button_Clicked_5"/>
                 <Button HorizontalOptions="FillAndExpand"
+                Text="Λογαριασμοί Χρηματικών Διαθέσιμων"
+                ContentLayout="right,200"
+                CornerRadius="1"
+                ImageSource="arrow_forward_white"
+                BackgroundColor="{StaticResource PrimaryLight}"
+                Clicked="Button_Clicked_11"/>
+                <Button HorizontalOptions="FillAndExpand"
                 Text="Οικογένεια Είδους"
                 ContentLayout="right,200"
                 CornerRadius="1"

@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" xmlns:customview="clr-namespace:SmartMobileProject.Views.CustomView" xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
              x:Class="SmartMobileProject.Views.ActivationPage" 
              Shell.NavBarHasShadow="False"
-             Title="Product Activation">
+             Title="Ενεργοποίηση προϊόντος">
     <ContentPage.BindingContext>
         <vm:ActivationViewModel/>
     </ContentPage.BindingContext>
@@ -31,7 +31,7 @@
                             HorizontalOptions="Center"
                             Margin="30"
                             CornerRadius="10"
-                            Text="Choose Product"
+                            Text="Επιλέξτε Προϊόν"
                         TextColor="DarkGray"
                         BackgroundColor="WhiteSmoke"
                         Clicked="Button_Clicked"/>

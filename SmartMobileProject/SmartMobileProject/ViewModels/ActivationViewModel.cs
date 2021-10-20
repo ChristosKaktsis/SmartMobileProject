@@ -16,7 +16,7 @@ namespace SmartMobileProject.ViewModels
                 SetProperty(ref popupon, value);
             }
         }
-        string licenseText = "Trial Product";
+        string licenseText = "Δοκιμαστικό προϊόν";
         public string LicenseText
         {
             get => licenseText;
@@ -56,17 +56,17 @@ namespace SmartMobileProject.ViewModels
         public ActivationViewModel()
         {
             Shell.Current.FlyoutIsPresented = false;
-            LicenseText += "\n" + "Days Left : " + Preferences.Get("DaysLeft", 0);
+            LicenseText += "\n" + "Μέρες που απομένουν : " + Preferences.Get("DaysLeft", 0);
             if (Lock)
             {
                 LicenseColor = Color.Red;
                 LicenseImage = "expired";
-                LicenseText = "Trial Expired";
+                LicenseText = "Η δοκιμή έληξε";
             }else if (Active)
             {
                 LicenseColor = Color.Green;
                 LicenseImage = "checked150";
-                LicenseText = "Product Activated";
+                LicenseText = "Ενεργοποιημένο προϊόν";
             }
             
         }
@@ -80,7 +80,7 @@ namespace SmartMobileProject.ViewModels
             {
                 LicenseColor = Color.Green;
                 LicenseImage = "checked150";
-                LicenseText = "Product Activated";
+                LicenseText = "Ενεργοποιημένο προϊόν";
             }
             else
             {

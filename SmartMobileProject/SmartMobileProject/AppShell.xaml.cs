@@ -54,6 +54,7 @@ namespace SmartMobileProject
             Routing.RegisterRoute("Settings/ΕίδοςΥποοικογένειαPage", typeof(ΕίδοςΥποοικογένειαPage));
             Routing.RegisterRoute("Settings/ΕίδοςΟμάδαPage", typeof(ΕίδοςΟμάδαPage));
             Routing.RegisterRoute("Settings/ΕίδοςΚατηγορίεςPage", typeof(ΕίδοςΚατηγορίεςPage));
+            Routing.RegisterRoute("Settings/ΛογαριασμοίΧρημΔιαθPage", typeof(ΛογαριασμοίΧρημΔιαθPage));
 
         }
 

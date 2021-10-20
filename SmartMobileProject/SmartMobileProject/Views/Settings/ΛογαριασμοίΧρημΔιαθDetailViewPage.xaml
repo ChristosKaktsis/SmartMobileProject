@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             x:Class="SmartMobileProject.Views.Settings.ΛογαριασμοίΧρημΔιαθDetailViewPage">
+    <ContentPage.BindingContext>
+        <vm:ΛογαριασμοίΧρημΔιαθDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid RowSpacing="0"
+              ColumnSpacing="8"
+              Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <dxe:TextEdit Grid.Row="1"
+                LabelText="Λογαριασμός"
+                          Text="{Binding Όνομα}"
+                          x:Name="Λογαριασμός"/>
+
+        <Button Grid.Row="3"
+                    Text="Προσθήκη"
+                    Margin="10"
+                    CornerRadius="10"
+                    HorizontalOptions="End"
+                    Command="{Binding Αποθήκευση}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

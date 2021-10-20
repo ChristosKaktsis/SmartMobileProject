@@ -46,6 +46,12 @@ namespace SmartMobileProject.ViewModels
         public async Task<bool> LoadItems()
         {
             AllLoading = true;
+            await Task.WhenAll(
+                XpoHelper.CreateOIKOGENEIAEIDOUSData(),
+                XpoHelper.CreateOMADAEIDOUSData(),
+                XpoHelper.CreateKATIGORIAEIDOUSData(),
+                XpoHelper.CreateYPOOIKOGENEIAEIDOYSData()
+                );
             bool done = await XpoHelper.CreateEIDOSData();
             AllLoading = false;
            
