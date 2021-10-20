@@ -100,15 +100,15 @@ namespace SmartMobileProject.ViewModels
                     "Περιοχή :" + Εταιρία.Περιοχή + "\n" +
                     "Πόλη :" + Εταιρία.Πόλη.ΟνομαΠόλης + "\n" +
                     "Τηλ :" + Εταιρία.Τηλέφωνο + "\n" +
+                    "Email :" + Πωλητής.Email + "\n" +
                     "ΑΦΜ :" + Εταιρία.ΑΦΜ + "\n" +
                     "ΔΟΥ :" + Εταιρία.ΔΟΥ.Περιγραφή + "\n \n \n" +
                     "  --Στοιχεία Πωλητή--\n" +
                     "Ονοματεπώνυμο :" + Πωλητής.Ονοματεπώνυμο + "\n" +
                     "Οδός :" + Πωλητής.Οδός + "\n" +
                     "Αριθμός :" + Πωλητής.Αριθμός + "\n" +
-                    "Email :" + Πωλητής.Email + "\n" +
                     "Τηλ :" + Πωλητής.KίνΤηλέφωνο + "\n" +
-                    "OnlineMode :" + (OnlineMode ? "Nai" : "Oxi") + "\n" +
+                    "StandAlone :" + (OnlineMode ? "Οχι" : "Ναι") + "\n" +
                     "Activation :" + crypto + "\n";
                     
             await EmailSender.SendEmail("Αίτηση ενεργοποίησης", body, new List<string> { "christoskaktsis@gmail.com" });

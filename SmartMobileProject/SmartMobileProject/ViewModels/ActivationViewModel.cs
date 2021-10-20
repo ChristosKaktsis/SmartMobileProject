@@ -61,7 +61,7 @@ namespace SmartMobileProject.ViewModels
             {
                 LicenseColor = Color.Red;
                 LicenseImage = "expired";
-                LicenseText = "Triela Expired";
+                LicenseText = "Trial Expired";
             }else if (Active)
             {
                 LicenseColor = Color.Green;

@@ -17,7 +17,12 @@ namespace SmartMobileProject.Services
 
                 using (Aes aes = Aes.Create())
                 {
-                    aes.Key = Encoding.UTF8.GetBytes(key);
+                    byte[] key2 =
+                    {
+                        13,45,163,95,158,94,26,129,59,6,97,120,93,18,11,138,141,
+                        0,171,79,231,159,143,25,137,76,239,159,36,200,55,251
+                    };  
+                    aes.Key = key2;
                     aes.IV = iv;
 
                     ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
@@ -54,7 +59,12 @@ namespace SmartMobileProject.Services
 
                 using (Aes aes = Aes.Create())
                 {
-                    aes.Key = Encoding.UTF8.GetBytes(key);
+                    byte[] key2 =
+                   {
+                        13,45,163,95,158,94,26,129,59,6,97,120,93,18,11,138,141,
+                        0,171,79,231,159,143,25,137,76,239,159,36,200,55,251
+                    };
+                    aes.Key = key2;
                     aes.IV = iv;
                     ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 

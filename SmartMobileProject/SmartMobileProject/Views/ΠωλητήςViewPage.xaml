@@ -36,7 +36,7 @@
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
                 <Image Grid.Row="1"
-                   Source="unnamed" 
+                   Source="unnamed.jpg" 
                    Scale="1"/>
 
                 <dxe:TextEdit Grid.Row="2"

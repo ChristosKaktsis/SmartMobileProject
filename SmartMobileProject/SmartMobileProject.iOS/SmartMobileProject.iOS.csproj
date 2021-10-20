@@ -149,7 +149,7 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\output-onlinepngtools.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -261,16 +261,16 @@
     <BundleResource Include="Resources\arrow_back_white_20.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\save_white_24.png">
+    <BundleResource Include="Resources\save_white_24.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
-    </AndroidResource>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\Settings.png">
+    <BundleResource Include="Resources\Settings.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
-    </AndroidResource>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\checkmark.png" />
@@ -279,13 +279,28 @@
     <BundleResource Include="Resources\error.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\Upload_16x16.png">
+    <BundleResource Include="Resources\Upload_16x16.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
-    </AndroidResource>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\checked24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\BOTask_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\unnamed.jpg">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </BundleResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Print_16x16.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </BundleResource>
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>

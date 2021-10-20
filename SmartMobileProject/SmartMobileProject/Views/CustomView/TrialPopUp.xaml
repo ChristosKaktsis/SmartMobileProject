@@ -35,7 +35,7 @@
                                Text="30-Day free trial"
                                FontSize="30"/>
                             <Label HorizontalOptions="Center"
-                                   Text="Full use for limited time"
+                                   Text="Πλήρης χρήση για περιορισμένο χρονικό διάστημα"
                                    TextColor="Gray"
                                FontSize="15"/>
                         </StackLayout>
@@ -55,7 +55,7 @@
                                Text="Start today"
                                FontSize="30"/>
                             <Label HorizontalOptions="Center"
-                                   Text="Full use for xxx $ "
+                                   Text="Πλήρης χρήση"
                                    TextColor="Gray"
                                FontSize="15"/>
                         </StackLayout>

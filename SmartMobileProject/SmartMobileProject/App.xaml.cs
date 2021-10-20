@@ -57,7 +57,7 @@ namespace SmartMobileProject
             if (!Preferences.Get("Remember", false))
             {
                 await Application.Current.MainPage.DisplayAlert("Online",
-                "Υπάρχει δυνατότητα Online λειτουργείας όπου μπορείτε να ανεβάζετε και να κατεβάζετε δεδομένα απο το Smart. " +
+                "Για να μπορείτε να ανεβάζετε και να κατεβάζετε δεδομένα απο το Smart θα πρέπει να γίνουν κάποιες ρυθμήσεις στο Server" +
                 "Μπορείτε να την ενεργοποιήσετε ή να την απενεργοποιήσετε οποιαδήποτε στιγμή απο το Application Settings", "Εντάξει");
             }
             else

@@ -35,7 +35,7 @@
                 <dxg:SwipeItem Command="{Binding  ΔιαγραφήΠαρασατικού}"
                                Caption="delete"
                                BackgroundColor="{StaticResource Tradic}"
-                               Image="delete_white_18"/>
+                               Image="delete_white_18.png"/>
             </dxg:DataGridView.StartSwipeItems>
             <dxg:DataGridView.EndSwipeItems>
                 <dxg:SwipeItem Command="{Binding Εκτύπωση}" 
