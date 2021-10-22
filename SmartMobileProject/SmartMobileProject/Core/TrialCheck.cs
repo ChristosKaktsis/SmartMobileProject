@@ -18,14 +18,14 @@ namespace SmartMobileProject.Core
                 if (Preferences.Get("Active", false))
                     return;
 
-                var Token = await SecureStorage.GetAsync("token");
-                var yesterday = await SecureStorage.GetAsync("yesterday");
+                var Token =  Preferences.Get("token",null);
+                var yesterday =  Preferences.Get("yesterday",null);
                 if (Token == null)
                 {
                     var startDate = DateTime.Today;
-                    await SecureStorage.SetAsync("token", startDate.ToString());
-                    await SecureStorage.SetAsync("yesterday", DateTime.Now.ToString());
-                    Preferences.Set("DaysLeft", (startDate.AddDays(30) - DateTime.Now).Days);
+                    Preferences.Set("token", startDate.ToString());
+                    Preferences.Set("yesterday", DateTime.Now.ToString());
+                    Preferences.Set("DaysLeft", (startDate.AddDays(30) - DateTime.Now).Days);    
                 }
                 else
                 {  
@@ -45,9 +45,9 @@ namespace SmartMobileProject.Core
                     }
                     else
                     {
-                     //   await Application.Current.MainPage.DisplayAlert("Free Trial",
-                     //"Έχετε ακόμα "+ (expire.AddDays(30) - DateTime.Now).Days+" μέρες", "Εντάξει");
-                        await SecureStorage.SetAsync("yesterday", DateTime.Now.ToString());
+                        //   await Application.Current.MainPage.DisplayAlert("Free Trial",
+                        //"Έχετε ακόμα "+ (expire.AddDays(30) - DateTime.Now).Days+" μέρες", "Εντάξει");
+                        Preferences.Set("yesterday", DateTime.Now.ToString());
                         Preferences.Set("DaysLeft", (expire.AddDays(30) - DateTime.Now).Days);
                     } 
                 }

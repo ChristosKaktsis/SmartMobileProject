@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.smartmobileproject" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="1.0" package="com.exelixissoftware.smartmobileproject" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="30" />
 	<application android:label="SmartMobileProject.Android" android:theme="@style/MainTheme" android:icon="@drawable/ic_launcher">
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCr4D5etOmamo9b-AEPnx0TkakRFLhDh9Q" />
@@ -24,10 +24,10 @@
 			<action android:name="android.media.action.IMAGE_CAPTURE" />
 		</intent>
 	</queries>
-  <queries>
-    <intent>
-      <action android:name="android.intent.action.SENDTO" />
-      <data android:scheme="mailto" />
-    </intent>
-  </queries>
+	<queries>
+		<intent>
+			<action android:name="android.intent.action.SENDTO" />
+			<data android:scheme="mailto" />
+		</intent>
+	</queries>
 </manifest>

@@ -56,7 +56,7 @@ namespace SmartMobileProject.ViewModels
         public ActivationViewModel()
         {
             Shell.Current.FlyoutIsPresented = false;
-            LicenseText += "\n" + "Μέρες που απομένουν : " + Preferences.Get("DaysLeft", 0);
+            LicenseText += "\n" + "Απομένουν μέρες : " + Preferences.Get("DaysLeft", 0);
             if (Lock)
             {
                 LicenseColor = Color.Red;
