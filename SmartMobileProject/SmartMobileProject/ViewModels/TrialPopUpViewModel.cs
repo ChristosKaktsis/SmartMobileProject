@@ -69,13 +69,13 @@ namespace SmartMobileProject.ViewModels
                          "τον κωδικό ενεργοποίησης τον οποίο τον εισάγετε πατώντας Activate Product ";
             ActiveIsSelected = true;
         }
-        public async void ContinuePressed()
+        public  void ContinuePressed()
         {
             if (ActiveIsSelected)
             {
                 //Get id
                 string Id = GetId();
-                await SecureStorage.SetAsync("ID", Id);
+                Preferences.Set("ID", Id);
                 //crypto id
                 string crypto = CryptoId(Id);
                 //get compncredetial

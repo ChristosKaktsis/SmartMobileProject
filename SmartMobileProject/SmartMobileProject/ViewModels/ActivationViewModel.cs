@@ -1,4 +1,6 @@
 ﻿using SmartMobileProject.Core;
+using SmartMobileProject.Services;
+using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -75,7 +77,7 @@ namespace SmartMobileProject.ViewModels
             //set the activation code 
             //check if valid
             //set Pref
-            await ActivationCheck.CheckActivationCode(ActivationCode);
+            await ActivationCheck.CheckActivationCode(ActivationCode,GetId());
             if (Active)
             {
                 LicenseColor = Color.Green;
@@ -87,6 +89,11 @@ namespace SmartMobileProject.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Activation",
                 "Κάτι πήγε στραβά με το κλειδί ενεργοποίησης", "Εντάξει");
             }
+        }
+
+        private string GetId()
+        {
+            return DependencyService.Get<IDevice>().GetIdentifier();
         }
     }
 }
