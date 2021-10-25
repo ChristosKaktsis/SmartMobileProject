@@ -15,6 +15,7 @@
             ColumnSpacing="8"
             Padding="10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="50"/>
@@ -24,10 +25,10 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Label Text="{Binding Title}" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="1" Padding="20"/>
+            <Label Text="{Binding Title}" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="2" Padding="20"/>
             <Label Text="Διευθύνσεις" HorizontalOptions="Center" FontSize="18" Grid.Row="2"/>
 
-            <dxg:DataGridView x:Name="grid" Grid.Row="3"
+            <dxg:DataGridView x:Name="grid" Grid.Row="4"
                           ItemsSource="{Binding AddressCollection}"   
                           RowHeight="70"
                           IsColumnHeaderVisible="False">
@@ -64,7 +65,7 @@
                     </dxg:DataGridView.Columns>
                 </dxg:DataGridView>
 
-            <StackLayout Grid.Row="3"
+            <StackLayout Grid.Row="4"
                          Padding="20"
                          HorizontalOptions="End" 
                          VerticalOptions="End">
@@ -81,7 +82,7 @@
                 </Frame>
                
             </StackLayout>
-            <StackLayout 
+            <StackLayout Grid.Row="1"
                          Padding="10"
                          HorizontalOptions="Start" 
                          VerticalOptions="Start">

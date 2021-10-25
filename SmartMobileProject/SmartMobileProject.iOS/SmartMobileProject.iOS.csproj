@@ -302,6 +302,9 @@
       <SubType>Designer</SubType>
     </BundleResource>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\arrowright.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarSmartMobileProjectiOSHideInfoBar="True" />

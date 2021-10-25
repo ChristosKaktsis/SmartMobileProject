@@ -17,8 +17,11 @@
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
-                <Label Text="Online" FontSize="40"/>
-                <Switch  IsToggled="{Binding OnlineMode}"/>
+                <StackLayout Margin="0,0,10,10">
+                    <Label Text="Online" FontSize="40"/>
+                    <Switch   IsToggled="{Binding OnlineMode}"/>
+                </StackLayout>
+                
                 <dxe:TextEdit Grid.Row="1"
                           LabelText="IP"
                           Keyboard="Telephone"

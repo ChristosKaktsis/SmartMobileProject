@@ -20,6 +20,7 @@
             ColumnSpacing="8"
             Padding="20">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="20*"/>
@@ -28,8 +29,9 @@
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="20*"/>
-                    <RowDefinition Height="AUTO"/>
-                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="50"/>
+                    
                     
                     
 
@@ -38,11 +40,11 @@
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Grid.Row="1" Orientation="Horizontal">
                     <Label Text="{Binding Title}" FontSize="20"
                            HorizontalOptions="StartAndExpand"/>
                 </StackLayout>
-                <dxe:TextEdit Grid.Row="1"
+                <dxe:TextEdit Grid.Row="2"
                           Grid.Column="0"
                           LabelText="Αριθμός Αξιογράφου"
                           LabelFontSize="Body"
@@ -51,21 +53,21 @@
                           IsFocused ="{Binding ArithmosIsFocused}"
                           ErrorText="{Binding ArithmosErrorMessage}"
                           HasError="{Binding ArithmosErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
-                <dxe:DateEdit Grid.Row="2"
+                <dxe:DateEdit Grid.Row="3"
                           Grid.Column="0"
                           LabelText="Ημ/νία Παραλαβής"
                           LabelFontSize="Body"
                           IsLabelFloating="True"    
                           DisplayFormat="d"
                           Date="{Binding Αξιόγραφο.ΗμνίαΠαραλαβής}"/>
-                <dxe:DateEdit Grid.Row="3"
+                <dxe:DateEdit Grid.Row="4"
                           Grid.Column="0"
                           LabelText="Ημ/νία Εκδοσης"
                           LabelFontSize="Body"
                           IsLabelFloating="True"    
                           DisplayFormat="d"
                           Date="{Binding Αξιόγραφο.ΗμνίαΕκδοσης}"/>
-                <dxe:DateEdit Grid.Row="4"
+                <dxe:DateEdit Grid.Row="5"
                           Grid.Column="0"
                           LabelText="Ημ/νία Λήξης"
                           LabelFontSize="Body"
@@ -76,7 +78,7 @@
                           ErrorText="{Binding HmerlixisErrorMessage}"
                           HasError="{Binding HmerlixisErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
                
-                <dxe:NumericEdit Grid.Row="5"
+                <dxe:NumericEdit Grid.Row="6"
                           Grid.Column="0"
                           LabelText="Αξία"
                           LabelFontSize="Body"
@@ -89,7 +91,7 @@
                           ErrorText="{Binding AxiaErrorMessage}"
                           HasError="{Binding AxiaErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
                 
-                <dxe:ComboBoxEdit Grid.Row="6"                              
+                <dxe:ComboBoxEdit Grid.Row="7"                              
                               ItemsSource="{Binding Τράπεζα}"
                               DisplayMember="ΟνομαΤράπεζας"
                               SelectedItem="{Binding Αξιόγραφο.ΤράπεζαΕκδοσης}"
@@ -99,13 +101,13 @@
                               IsLabelFloating="True"
                              />
 
-                <dxe:TextEdit Grid.Row="7"
+                <dxe:TextEdit Grid.Row="8"
                               Text="{Binding Αξιόγραφο.Εκδότης}"
                               LabelText="Εκδότης"
                               LabelFontSize="Body"
                               IsLabelFloating="True"
                               />
-                <Frame Grid.Row="0"
+                <Frame Grid.Row="1"
                            Padding="0"
                            CornerRadius="10"
                        WidthRequest="50"
@@ -115,7 +117,7 @@
                     <Button Command="{Binding Ακύρωση}"
                            ImageSource="arrow_back_white_20"/>
                 </Frame>
-                <Frame Grid.Row="8"
+                <Frame Grid.Row="10"
                            Grid.Column="0"
                            Padding="0"
                            CornerRadius="10"

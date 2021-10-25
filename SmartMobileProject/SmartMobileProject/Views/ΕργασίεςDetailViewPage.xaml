@@ -18,6 +18,7 @@
             ColumnSpacing="8"
             Padding="20">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -32,7 +33,7 @@
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 
-                <dxe:ComboBoxEdit Grid.Row="1"
+                <dxe:ComboBoxEdit Grid.Row="2"
                           Grid.Column="0"
                           x:Name="ΧαρακτηρισμόςComboBoxEdit"
                           LabelText="Χαρακτηρισμός"
@@ -45,14 +46,14 @@
                         </x:Array>
                     </dxe:ComboBoxEdit.ItemsSource>
                 </dxe:ComboBoxEdit>
-                <dxe:MultilineEdit Grid.Row="2"
+                <dxe:MultilineEdit Grid.Row="3"
                           Grid.Column="0"
                           x:Name="ΠεριγραφήEdit"
                           LabelText="Περιγραφή"
                           LabelFontSize="Body"
                           IsLabelFloating="True" IsEnabled="False"
                           Text="{Binding Εργασία.Περιγραφή}"/>
-                <dxe:ComboBoxEdit Grid.Row="3"
+                <dxe:ComboBoxEdit Grid.Row="4"
                               Grid.Column="0"
                               x:Name="ΠελάτηςEdit"
                               LabelText="Πελάτης"
@@ -71,11 +72,11 @@
                         </DataTemplate>
                     </dxe:ComboBoxEdit.ItemTemplate>
                 </dxe:ComboBoxEdit>
-                <dxe:CheckEdit Grid.Row="5" 
+                <dxe:CheckEdit Grid.Row="6" 
                                Label="Ολοκήρώθηκε"
                                IsEnabled="False"
                                IsChecked="{Binding Εργασία.Κατάσταση}"/>
-                <Frame Grid.Row="8"
+                <Frame Grid.Row="9"
                        CornerRadius="20"
                        Padding="0"
                        HasShadow="True"
@@ -88,7 +89,7 @@
                         FontSize="20"
                         Clicked="Button_Clicked"/>
                 </Frame>
-                <Frame Grid.Row="9"
+                <Frame Grid.Row="10"
                        x:Name="energeiesCollection"
                        Scale="0" IsVisible="false"
                        HeightRequest="250"
@@ -132,7 +133,7 @@
                         </dxcv:DXCollectionView.ItemTemplate>
                     </dxcv:DXCollectionView>
                 </Frame>
-                <Frame Grid.Row="0"
+                <Frame Grid.Row="1"
                        CornerRadius="10"
                        HorizontalOptions="Start"
                        Padding="0"
@@ -144,7 +145,7 @@
                         ImageSource="arrow_back_white_20"
                         Command="{Binding Ακύρωση}"/>
                 </Frame>
-                <Frame Grid.Row="10"
+                <Frame Grid.Row="11"
                        CornerRadius="10"
                        HorizontalOptions="End"
                        Padding="0"

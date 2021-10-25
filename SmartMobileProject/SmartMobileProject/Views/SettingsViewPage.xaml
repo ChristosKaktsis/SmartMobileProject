@@ -9,92 +9,91 @@
             <Label Text="Settings" Style="{DynamicResource TitleStyle}" TextColor="White" Margin="10"/>
         </StackLayout>
     </Shell.TitleView>
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="ImageSource">
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="Android" Value="arrowright.png" />
+                </OnPlatform>
+            </Setter>
+           
+        </Style>
+        
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="Στοιχεία Εταιρίας"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+                TextColor="#616161"
+                BackgroundColor="White"
+                ContentLayout="right,100"
                 Clicked="Button_Clicked_1"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="Σειρες Παραστατικών Πωλήσεων"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                        ContentLayout="right,100"
                 Clicked="Button_Clicked"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="Σειρες Παραστατικών Εισπράξεων"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                        ContentLayout="right,100"
                 Clicked="Button_Clicked_2"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="Πόλης"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+               TextColor="#616161"     
+                BackgroundColor="White"
+                        ContentLayout="right,100"
                 Clicked="Button_Clicked_3"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="ΤΚ"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                        ContentLayout="right,100"
                 Clicked="Button_Clicked_4"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="ΔΟΥ"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+               TextColor="#616161"     
+                BackgroundColor="White"
+                ContentLayout="right,100"
                 Clicked="Button_Clicked_5"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="Λογαριασμοί Χρηματικών Διαθέσιμων"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                ContentLayout="right,100"
                 Clicked="Button_Clicked_11"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="Οικογένεια Είδους"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+               TextColor="#616161"     
+                BackgroundColor="White"
+                ContentLayout="right,100"
                 Clicked="Button_Clicked_6"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="Υποοικογένεια Είδους"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                ContentLayout="right,100"
                 Clicked="Button_Clicked_7"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="Ομάδα Είδους"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                ContentLayout="right,125"
                 Clicked="Button_Clicked_8"/>
                 <Button HorizontalOptions="FillAndExpand"
                 Text="Κατηγορία Είδους"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                ContentLayout="right,115"
                 Clicked="Button_Clicked_9"/>
-                <Button HorizontalOptions="FillAndExpand"
+                <Button 
                 Text="Application Settings"
-                ContentLayout="right,200"
-                CornerRadius="1"
-                ImageSource="arrow_forward_white"
-                BackgroundColor="{StaticResource PrimaryLight}"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                ContentLayout="right,115"
                 Clicked="Button_Clicked_10"/>
             </StackLayout>
         </ScrollView>

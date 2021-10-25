@@ -14,6 +14,7 @@
     <ContentPage.Content>
         
         <StackLayout>
+            <Label HeightRequest="30"/>
             <StackLayout Orientation="Horizontal" Padding="10">
                 <Label Text="Επιλογή Ειδών" FontSize="24"
                            HorizontalOptions="StartAndExpand"/>

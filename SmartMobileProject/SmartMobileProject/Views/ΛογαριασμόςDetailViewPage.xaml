@@ -17,13 +17,14 @@
               ColumnSpacing="8"
               Padding="20">
             <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="70"/>
-                <RowDefinition Height="20"/>
+                
             </Grid.RowDefinitions>
-            <dxe:ComboBoxEdit Grid.Row="1"
+            <dxe:ComboBoxEdit Grid.Row="2"
                               LabelText="Λογαριασμός"
                               LabelFontSize="Body"
                               IsLabelFloating="True"
@@ -33,7 +34,7 @@
                               IsFocused ="{Binding LogariasmosIsFocused}"
                               ErrorText="{Binding LogariasmosErrorMessage}"
                               HasError="{Binding LogariasmosErrorMessage, Converter={StaticResource stringToBoolConverter}}"/>
-            <dxe:NumericEdit Grid.Row="2"
+            <dxe:NumericEdit Grid.Row="3"
                           LabelText="Ποσόν"
                           LabelFontSize="Body"
                           IsLabelFloating="True"   
@@ -42,7 +43,7 @@
                           MaxValue="100000000000"
                           Suffix="€"
                           Value="{Binding ΓραμμέςΠΕ.Ποσόν}"/>
-            <Frame Grid.Row="0"
+            <Frame Grid.Row="1"
                            Grid.Column="0"
                            Padding="0"
                            CornerRadius="10"
@@ -53,7 +54,7 @@
                 <Button Command="{Binding Ακύρωση}"
                            ImageSource="arrow_back_white_20"/>
             </Frame>
-            <Button Grid.Row="3"
+            <Button Grid.Row="4"
                     Text="Προσθήκη"
                     Margin="10"
                     CornerRadius="10"

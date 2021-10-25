@@ -16,28 +16,29 @@
             ColumnSpacing="8"
             Padding="20">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="0"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
                     <Label Text="{Binding Title}" FontSize="20"
                            HorizontalOptions="StartAndExpand"/>
                 </StackLayout>
                
-                <dxe:ComboBoxEdit Grid.Row="1"                              
+                <dxe:ComboBoxEdit Grid.Row="2"                              
                               ItemsSource="{Binding EidosCollection}"
                               DisplayMember="Περιγραφή"
                               SelectedItem="{Binding Eidos}"
@@ -54,7 +55,7 @@
                         </DataTemplate>
                     </dxe:ComboBoxEdit.ItemTemplate>
                 </dxe:ComboBoxEdit>
-                <dxe:NumericEdit Grid.Row="2"
+                <dxe:NumericEdit Grid.Row="3"
                           Grid.Column="0"
                           LabelText="Ποσότητα"
                           LabelFontSize="Body"
@@ -63,7 +64,7 @@
                           MinValue="0"   
                           MaxValue="100000000000"
                           Value="{Binding Ποσότητα}"/>
-                <dxe:NumericEdit Grid.Row="3"
+                <dxe:NumericEdit Grid.Row="4"
                           Grid.Column="0"
                           LabelText="Τιμή"
                           LabelFontSize="Body"
@@ -73,7 +74,7 @@
                           MinValue="0"
                           MaxValue="100000000000"
                           Value="{Binding Τιμή }"/>
-                <Grid Grid.Row="4">
+                <Grid Grid.Row="5">
                     <dxe:NumericEdit Grid.Row="0"
                           Grid.Column="0"
                           LabelText="Εκπτωση"
@@ -93,7 +94,7 @@
                           IsReadOnly="True"
                           Value="{Binding LineOfOrders.ΑξίαΕκπτωσης}"/>
                 </Grid>
-                <dxe:NumericEdit Grid.Row="5"
+                <dxe:NumericEdit Grid.Row="6"
                           Grid.Column="0"
                           LabelText="Καθαρή Αξία"
                           LabelFontSize="Body"
@@ -102,7 +103,7 @@
                           DisplayFormat="n"
                           Suffix="€"
                           Value="{Binding LineOfOrders.ΚαθαρήΑξία}"/>
-                <Grid Grid.Row="6">
+                <Grid Grid.Row="7">
                     <dxe:NumericEdit Grid.Row="0"
                           Grid.Column="0"
                           LabelText="Ποσοστό Φπα"
@@ -123,7 +124,7 @@
                           DisplayFormat="n"                        
                           Value="{Binding LineOfOrders.Φπα}"/>
                 </Grid>
-                <dxe:NumericEdit Grid.Row="7"
+                <dxe:NumericEdit Grid.Row="8"
                           Grid.Column="0"
                           LabelText="Αξία Γραμμής"
                           LabelFontSize="Body"
@@ -132,18 +133,17 @@
                           DisplayFormat="n"
                           Suffix="€"
                           Value="{Binding LineOfOrders.ΑξίαΓραμμής}"/>
-                <Frame Grid.Row="0"
+                <Frame Grid.Row="1"
                            Grid.Column="0"
                            Padding="0"
                            CornerRadius="10"
-                       WidthRequest="50"
-                       HeightRequest="50"
+                           WidthRequest="50"
                            HorizontalOptions="Start"
                            HasShadow="True">
                     <Button Command="{Binding Ακύρωση}"
                            ImageSource="arrow_back_white_20"/>
                 </Frame>
-                <Frame Grid.Row="9"
+                <Frame Grid.Row="10"
                            Grid.Column="0"
                            Padding="0"
                            CornerRadius="10"
