@@ -43,7 +43,7 @@
                               DisplayMember="Περιγραφή"
                               SelectedItem="{Binding Eidos}"
                               LabelText="Είδος"
-                              IsFilterEnabled="True"
+                              IsFilterEnabled="True" FilterMode="Contains"
                               LabelFontSize="Body"
                               IsLabelFloating="True">
                     <dxe:ComboBoxEdit.ItemTemplate>

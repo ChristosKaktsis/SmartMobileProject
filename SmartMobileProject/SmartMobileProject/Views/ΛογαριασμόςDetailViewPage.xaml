@@ -27,7 +27,7 @@
             <dxe:ComboBoxEdit Grid.Row="2"
                               LabelText="Λογαριασμός"
                               LabelFontSize="Body"
-                              IsLabelFloating="True"
+                              IsLabelFloating="True" IsFilterEnabled="True" FilterMode="Contains"
                               ItemsSource="{Binding Λογαριασμοί}"
                               SelectedItem="{Binding ΓραμμέςΠΕ.Λογαριασμός}"
                               DisplayMember="Λογαριασμός"

@@ -89,7 +89,7 @@
                               ItemsSource="{Binding DOYCollection}"
                               SelectedItem="{Binding customer.ΔΟΥ}"
                               DisplayMember="Περιγραφή"
-                              IsFilterEnabled="True"/>
+                              IsFilterEnabled="True" FilterMode="Contains"/>
                 <dxe:TextEdit Grid.Row="6"
                           Grid.Column="0"
                           LabelText="Email"

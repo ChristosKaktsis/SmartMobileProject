@@ -73,7 +73,7 @@
                               DisplayMember="Επωνυμία"
                               SelectedItem="{Binding Customer, Mode=Default}"
                               LabelText="Πελάτης"
-                              IsFilterEnabled="True"
+                              IsFilterEnabled="True" FilterMode="Contains"
                               IsFocused ="{Binding PelatisIsFocused}"
                               ErrorText="{Binding PelatisErrorMessage}"
                               HasError="{Binding PelatisErrorMessage, Converter={StaticResource stringToBoolConverter}}"
