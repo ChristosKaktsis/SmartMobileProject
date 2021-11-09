@@ -29,6 +29,8 @@ namespace SmartMobileProject.Services
         }
         public void CreatePrint(string printpage)
         {
+            if (string.IsNullOrEmpty(printpage))
+                return;
             WebView browser = new WebView();
             var htmlSource = new HtmlWebViewSource();
             htmlSource.Html = printpage;
