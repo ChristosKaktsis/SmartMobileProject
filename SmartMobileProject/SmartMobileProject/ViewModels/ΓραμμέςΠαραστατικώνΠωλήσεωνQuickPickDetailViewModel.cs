@@ -52,7 +52,7 @@ namespace SmartMobileProject.ViewModels
                 SetProperty(ref eidos, value);
                 LineOfOrders.Είδος = value;
                 LineOfOrders.Τιμή = value.ΤιμήΧονδρικής;   
-                LineOfOrders.ΠοσοστόΦπα = value.ΦΠΑ.Φπακανονικό / 100;
+                LineOfOrders.ΠοσοστόΦπα =value.ΦΠΑ!=null ? (value.ΦΠΑ.Φπακανονικό / 100) : 0;
                 LineOfOrders.Ποσότητα = value.Ποσότητα;
                 LineOfOrders.Εκπτωση = 0;
                 OnPropertyChanged("Eidos");
