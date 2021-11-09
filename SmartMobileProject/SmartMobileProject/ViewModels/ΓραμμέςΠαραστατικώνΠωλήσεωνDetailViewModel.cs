@@ -30,7 +30,7 @@ namespace SmartMobileProject.ViewModels
                 LineOfOrders.Είδος = value;
                 LineOfOrders.Τιμή = value.ΤιμήΧονδρικής;
                 Τιμή = value.ΤιμήΧονδρικής;
-                ΠοσοστόΦπα = value.ΦΠΑ.Φπακανονικό/100;
+                ΠοσοστόΦπα = value.ΦΠΑ != null ? (value.ΦΠΑ.Φπακανονικό / 100) : 0;
                 OnPropertyChanged("Eidos");
                 ChangeValue();
             }
