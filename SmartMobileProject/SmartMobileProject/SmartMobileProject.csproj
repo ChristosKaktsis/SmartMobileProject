@@ -71,6 +71,12 @@
     <Compile Update="Views\Settings\ΔΟΥDetailViewPage.xaml.cs">
       <DependentUpon>ΔΟΥDetailViewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Settings\ΦΠΑPage.xaml.cs">
+      <DependentUpon>ΦΠΑPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\ΦΠΑDetailViewPage.xaml.cs">
+      <DependentUpon>ΦΠΑDetailViewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Settings\ΤΚDetailViewPage.xaml.cs">
       <DependentUpon>ΤΚDetailViewPage.xaml</DependentUpon>
     </Compile>

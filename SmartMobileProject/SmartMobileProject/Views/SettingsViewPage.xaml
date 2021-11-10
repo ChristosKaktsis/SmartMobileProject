@@ -48,6 +48,12 @@
                         ContentLayout="right,100"
                 Clicked="Button_Clicked_3"/>
                 <Button HorizontalOptions="FillAndExpand"
+                Text="ΦΠΑ"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                        ContentLayout="right,100"
+                Clicked="Button_Clicked_12"/>
+                <Button HorizontalOptions="FillAndExpand"
                 Text="ΤΚ"
                 TextColor="#616161"     
                 BackgroundColor="White"

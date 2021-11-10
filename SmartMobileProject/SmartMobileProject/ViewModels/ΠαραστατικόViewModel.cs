@@ -73,7 +73,7 @@ namespace SmartMobileProject.ViewModels
             var seira = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.Oid == ((ΠαραστατικάΠωλήσεων)obj).Σειρά.Oid);
             if (seira.FirstOrDefault().PrintType=="80 mm")
             {
-                string print = await createPrintView.page1((ΠαραστατικάΠωλήσεων)obj);
+                string print = await createPrintView.Page1((ΠαραστατικάΠωλήσεων)obj);
                 createPrintView.CreatePrint(print);
             }
             else

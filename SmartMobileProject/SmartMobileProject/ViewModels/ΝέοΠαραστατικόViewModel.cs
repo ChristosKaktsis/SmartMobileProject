@@ -104,7 +104,7 @@ namespace SmartMobileProject.ViewModels
             CreatePrintView createPrintView = new CreatePrintView();
             if(Order.Σειρά.PrintType=="80 mm")
             {
-                string print = await createPrintView.page1(Order);
+                string print = await createPrintView.Page1(Order);
                 createPrintView.CreatePrint(print);
             }
             else

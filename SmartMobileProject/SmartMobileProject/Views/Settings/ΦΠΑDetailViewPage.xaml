@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:local1="clr-namespace:SmartMobileProject.Views"
+             x:Class="SmartMobileProject.Views.ΦΠΑDetailViewPage">
+
+    <ContentPage.BindingContext>
+        <vm:ΦΠΑDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+
+        <Grid RowSpacing="0"
+              ColumnSpacing="8"
+              Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <dxe:NumericEdit Grid.Row="1"
+                LabelText="Φπακανονικό"
+                          Value="{Binding FpaKanoniko}"
+                          />
+            <dxe:NumericEdit Grid.Row="2"
+                LabelText="Φπαμειωμένο"
+                          Value="{Binding FpaMeiomeno}"
+                          />
+            <dxe:NumericEdit Grid.Row="3"
+                LabelText="Φπαεξαίρεση"
+                          Value="{Binding FpaEksairesi}"
+                          />
+            <Button Grid.Row="4"
+                    Text="Προσθήκη"
+                    Margin="10"
+                    CornerRadius="10"
+                    HorizontalOptions="End"
+                    Command="{Binding Αποθήκευση}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

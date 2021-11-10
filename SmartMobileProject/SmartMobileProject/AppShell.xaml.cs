@@ -48,6 +48,7 @@ namespace SmartMobileProject
             Routing.RegisterRoute("Settings/ΣειρέςΠαρΕισπPage", typeof(ΣειρέςΠαρΕισπPage));
             Routing.RegisterRoute("Settings/ΣτοιχείαΕταιρίαςPage", typeof(ΣτοιχείαΕταιρίαςPage));
             Routing.RegisterRoute("Settings/ΠόληPage", typeof(ΠόληPage));
+            Routing.RegisterRoute("Settings/ΦΠΑPage", typeof(ΦΠΑPage));
             Routing.RegisterRoute("Settings/ΤΚPage", typeof(ΤΚPage));
             Routing.RegisterRoute("Settings/ΔΟΥPage", typeof(ΔΟΥPage));
             Routing.RegisterRoute("Settings/ΕίδοςΟικογένειαPage", typeof(ΕίδοςΟικογένειαPage));
