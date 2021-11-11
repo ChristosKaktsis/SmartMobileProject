@@ -1,4 +1,5 @@
-﻿using SmartMobileProject.Core;
+﻿using DevExpress.Xpo;
+using SmartMobileProject.Core;
 using SmartMobileProject.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace SmartMobileProject.Services
     public class CreatePrintView
     {
         ΣτοιχείαΕταιρίας στοιχείαΕταιρίας ;
+        XPCollection<ΦΠΑ> φπά;
         private string στοιχείαΕταιρίας_ΔΟΥ_Περιγραφή = "";
         private string order_Πελάτης_ΚεντρικήΔιευθυνση_Πόλη_ΟνομαΠόλης = "";
         private string order_Πελάτης_ΔΟΥ_Περιγραφή="";
@@ -115,7 +117,7 @@ namespace SmartMobileProject.Services
                         sunoloFPA13 += i.Φπα;
                         sunAxia13 += i.ΑξίαΓραμμής;
                         break;
-                    case 23:
+                    case 24:
                         kathAxia23 += i.ΚαθαρήΑξία;
                         sunoloFPA23 += i.Φπα;
                         sunAxia23 += i.ΑξίαΓραμμής;
@@ -322,7 +324,7 @@ namespace SmartMobileProject.Services
                                             "<td>" + sunAxia13.ToString("0.##") + "</td>" + @"
                                         </tr>
                                         <tr>
-                                            <td>23%</td>
+                                            <td>24%</td>
                                             <td>" + kathAxia23.ToString("0.##") + "</td>" +
                                            "<td>" + sunoloFPA23.ToString("0.##") + "</td>" +
                                            "<td>" + sunAxia23.ToString("0.##") + "</td>" + @"
@@ -353,6 +355,7 @@ namespace SmartMobileProject.Services
         public async Task<string> page2(ΠαραστατικάΠωλήσεων order)
         {
             στοιχείαΕταιρίας = await XpoHelper.CreateSTOIXEIAETAIRIASData();
+            
             if (στοιχείαΕταιρίας == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "Δεν Υπαρχουν Στοιχεια Εταιρίας", "OK");
@@ -378,6 +381,7 @@ namespace SmartMobileProject.Services
             decimal sunAxia13 = 0;
             decimal sunAxia23 = 0;
             string grammes = "";
+            string analisifpa = "";
             foreach (var i in order.ΓραμμέςΠαραστατικώνΠωλήσεων)
             {
                 grammes += "<tr>" +
@@ -401,13 +405,14 @@ namespace SmartMobileProject.Services
                         sunoloFPA13 += i.Φπα;
                         sunAxia13 += i.ΑξίαΓραμμής;
                         break;
-                    case 23:
+                    case 24:
                         kathAxia23 += i.ΚαθαρήΑξία;
                         sunoloFPA23 += i.Φπα;
                         sunAxia23 += i.ΑξίαΓραμμής;
                         break;
                 }
             }
+            
             string τρόποςΑποστολής = "";
             if (order.ΤρόποςΑποστολής != null) { τρόποςΑποστολής = order.ΤρόποςΑποστολής.Τρόποςαποστολής; }
             string τρόποςΠληρωμής = "";
@@ -579,9 +584,9 @@ namespace SmartMobileProject.Services
                      </tr>
                      <tr>
                           <td>6%</td>
-                          <td>"+ kathAxia6.ToString("0.##") + "</td>"+
-                          "<td>"+ sunoloFPA6.ToString("0.##") + "</td>"+
-                          "<td>"+ sunAxia6.ToString("0.##") + "</td>"+ @"
+                          <td>" + kathAxia6.ToString("0.##") + "</td>" +
+                          "<td>" + sunoloFPA6.ToString("0.##") + "</td>" +
+                          "<td>" + sunAxia6.ToString("0.##") + "</td>" + @"
                      </tr>
                      <tr>
                           <td>13%</td>
@@ -590,7 +595,7 @@ namespace SmartMobileProject.Services
                           "<td>" + sunAxia13.ToString("0.##") + "</td>" + @"
                      </tr>
                      <tr>
-                        <td>23%</td>
+                        <td>24%</td>
                        <td>" + kathAxia23.ToString("0.##") + "</td>" +
                        "<td>" + sunoloFPA23.ToString("0.##") + "</td>" +
                        "<td>" + sunAxia23.ToString("0.##") + "</td>" + @"
