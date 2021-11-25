@@ -33,7 +33,7 @@ namespace SmartMobileProject.ViewModels
  
         public string IP
         {
-            get => Preferences.Get(nameof(IP), "00.000.0.00");
+            get => Preferences.Get(nameof(IP), "79.129.5.42");
             set
             {
                 Preferences.Set(nameof(IP), value);
@@ -43,7 +43,7 @@ namespace SmartMobileProject.ViewModels
         
         public string Port1
         {
-            get => Preferences.Get(nameof(Port1), "0000");
+            get => Preferences.Get(nameof(Port1), "8881");
             set
             {
                 Preferences.Set(nameof(Port1), value);
@@ -53,7 +53,7 @@ namespace SmartMobileProject.ViewModels
         
         public string Port2
         {
-            get => Preferences.Get(nameof(Port2), "0000");
+            get => Preferences.Get(nameof(Port2), "8882");
             set
             {
                 Preferences.Set(nameof(Port2), value);

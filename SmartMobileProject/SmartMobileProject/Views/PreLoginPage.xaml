@@ -16,18 +16,19 @@
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="80"/>
+                    <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
                 <StackLayout Margin="0,0,10,10">
-                    <Label Text="Online" FontSize="40"/>
+                    <Label Text="Διασυνδεδεμένο με Smart" FontSize="40"/>
                     <Switch   IsToggled="{Binding OnlineMode}"/>
                 </StackLayout>
                 
-                <dxe:TextEdit Grid.Row="1"
+                <dxe:TextEdit Grid.Row="2"
                           LabelText="IP"
                           Keyboard="Telephone"
                           IsEnabled="{Binding OnlineMode}"
                           Text="{Binding IP}"/>
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="3">
                     <dxe:TextEdit  Grid.Column="0"
                                LabelText="Port 1"
                                Keyboard="Numeric"
@@ -39,7 +40,7 @@
                                IsEnabled="{Binding OnlineMode}"
                                Text="{Binding Port2}"/>
                 </Grid>
-                <Button Grid.Row="3"
+                <Button Grid.Row="4"
                     CornerRadius="10"
                     Text="Συνέχεια"
                     Command="{Binding Συνέχεια}"/>

@@ -54,6 +54,18 @@
                         ContentLayout="right,100"
                 Clicked="Button_Clicked_12"/>
                 <Button HorizontalOptions="FillAndExpand"
+                Text="Τρόπος Πληρωμής"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                        ContentLayout="right,100"
+                Clicked="Button_Clicked_14"/>
+                <Button HorizontalOptions="FillAndExpand"
+                Text="Τρόπος Αποστολής"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                        ContentLayout="right,100"
+                Clicked="Button_Clicked_15"/>
+                <Button HorizontalOptions="FillAndExpand"
                 Text="ΤΚ"
                 TextColor="#616161"     
                 BackgroundColor="White"
@@ -101,6 +113,12 @@
                 BackgroundColor="White"
                 ContentLayout="right,115"
                 Clicked="Button_Clicked_10"/>
+                <!--<Button 
+                Text="Καθαρισμός Δεδομένων"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                ContentLayout="right,115"
+                Clicked="Button_Clicked_13"/>-->
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

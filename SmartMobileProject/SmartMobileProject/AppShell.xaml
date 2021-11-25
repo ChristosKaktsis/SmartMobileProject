@@ -115,9 +115,9 @@
         <ShellContent  Route="SettingsViewPage" ContentTemplate="{DataTemplate local:SettingsViewPage}" />
     </FlyoutItem>
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
-    <MenuItem Text="Import From Smart"  IconImageSource="Download_16x16.png" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
+    <MenuItem Text="Εισαγωγή απο το Smart"  IconImageSource="Download_16x16.png" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
     </MenuItem>
-    <MenuItem Text="Upload to Smart" IconImageSource="Upload_16x16.png" StyleClass="MenuItemLayoutStyle"  Clicked="Upload_MenuItem_Clicked">
+    <MenuItem Text="Ανέβασμα στο Smart" IconImageSource="Upload_16x16.png" StyleClass="MenuItemLayoutStyle"  Clicked="Upload_MenuItem_Clicked">
     </MenuItem>
     <MenuItem Text="Activation" IconImageSource="icon_about.png"  StyleClass="MenuItemLayoutStyle"  Clicked="Activation_MenuItem_Clicked">
     </MenuItem>
@@ -167,7 +167,7 @@
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <StackLayout>
-                <Label Text="Ver 1.0"
+                <Label Text="Ver 1.1.3"
                        TextColor="Black"
                        FontAttributes="Bold"
                        HorizontalOptions="Center" />

@@ -55,6 +55,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(Counter), ref counter, value); }
         }
         int counter;
+        public int ΚίνησηΣυναλασόμενου
+        {
+            get { return κίνησηΣυναλασόμενου; }
+            set { SetPropertyValue(nameof(ΚίνησηΣυναλασόμενου), ref κίνησηΣυναλασόμενου, value); }
+        }
+        int κίνησηΣυναλασόμενου;
         public string PrintType
         {
             get { return printtype; }

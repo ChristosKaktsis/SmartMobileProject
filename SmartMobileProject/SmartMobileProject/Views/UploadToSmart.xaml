@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
              x:Class="SmartMobileProject.Views.UploadToSmart"
-             Title="Upload to Smart">
+             Title="Ανέβασμα στο Smart">
     <ContentPage.BindingContext>
         <vm:UploadToSmartModel/>
     </ContentPage.BindingContext>

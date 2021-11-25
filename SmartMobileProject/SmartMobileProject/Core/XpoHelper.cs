@@ -45,36 +45,7 @@ namespace SmartMobileProject.Core
             var dataStore = XpoDefault.GetConnectionProvider(connectionString, AutoCreateOption.SchemaAlreadyExists);
             XpoDefault.DataLayer = new ThreadSafeDataLayer(dictionary, dataStore);
             XpoDefault.Session = null;
-            
-
-            //Ελεγχος Εαν Υπαρχουν δεδομένα στην Βαση για να μην τρέξει όλες τις μεθοδους ασκοπα   
-            //using (UnitOfWork uow = CreateUnitOfWork())
-            //{
-            //    if (!uow.Query<Πωλητής>().Any())
-            //    {
-            //        await CreatePolitisData();//
-            //        await Task.WhenAll(
-            //            CreateDOYData(),
-            //            CreateFPAData(),
-            //            CreateXORAData(),
-            //            CreateYPOOIKOGENEIAEIDOYSData(),
-            //            CreateTROPOSPLIROMISData(),
-            //            CreateTROPOSAPOSTOLISData(),
-            //            CreateSEIRAPOLData(),
-            //            CreateSEIRAEISData(),
-            //            CreatePOLIData(),
-            //            CreateTrapezaData(),
-            //            CreateTRAPLOGData(),//
-            //            CreateLOGXRHMDIATHData(),// 
-            //            CreateIDIOTITAData(),
-            //            CreateEPILOGESIDIOTITASData(),
-            //            CreateOMADAEIDOUSData(),
-            //            CreateOIKOGENEIAEIDOUSData(),
-            //            CreateKATIGORIAEIDOUSData());
-            //        await CreateDOYData();
-            //        await CreateΤΚData();
-            //    }
-            //}
+                     
         }
         public static async Task<bool> CreateTableData()
         {
@@ -344,8 +315,11 @@ namespace SmartMobileProject.Core
                 if (dt == null) { return; }
                 foreach (DataRow row in dt.Rows)
                 {
-                    if (uow.Query<ΤρόποςΠληρωμής>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
+                    var troposlist = uow.Query<ΤρόποςΠληρωμής>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"]));
+                    var troposmeIdioOnoma = uow.Query<ΤρόποςΠληρωμής>().Where(x => x.Τρόποςπληρωμής == row["ΤρόποςΠληρωμής"].ToString());
+                    if (troposlist.Any() || troposmeIdioOnoma.Any())
                     {
+                        troposmeIdioOnoma.FirstOrDefault().SmartOid = Guid.Parse((string)row["Oid"]);
                         continue;
                     }
                     ΤρόποςΠληρωμής data = new ΤρόποςΠληρωμής(uow);
@@ -376,8 +350,11 @@ namespace SmartMobileProject.Core
                 if (dt == null) { return; }
                 foreach (DataRow row in dt.Rows)
                 {
-                    if (uow.Query<ΤρόποςΑποστολής>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
+                    var troposlist = uow.Query<ΤρόποςΑποστολής>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"]));
+                    var troposmeIdioOnoma = uow.Query<ΤρόποςΑποστολής>().Where(x => x.Τρόποςαποστολής == row["ΤρόποςΑποστολής"].ToString());
+                    if (troposlist.Any() || troposmeIdioOnoma.Any())
                     {
+                        troposmeIdioOnoma.FirstOrDefault().SmartOid = Guid.Parse((string)row["Oid"]);
                         continue;
                     }
                     ΤρόποςΑποστολής data = new ΤρόποςΑποστολής(uow);
@@ -404,12 +381,15 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή, ΠρόθεμαΑρίθμησης From ΣειρέςΠαραστατικώνΠωλήσεων where ");
+                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή, ΚίνησηΣυναλασόμενου, ΠρόθεμαΑρίθμησης From ΣειρέςΠαραστατικώνΠωλήσεων where ");
                 if (dt == null) { return false; }
                 foreach (DataRow row in dt.Rows)
                 {
-                    if (uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
+                    var seireslist = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"]));
+                    var seiresmeIdioOnoma = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.Σειρά == row["Σειρά"].ToString());
+                    if (seireslist.Any() || seiresmeIdioOnoma.Any())
                     {
+                        seireslist.FirstOrDefault().ΚίνησηΣυναλασόμενου = row["ΚίνησηΣυναλασόμενου"] == DBNull.Value ? 2 : int.Parse(row["ΚίνησηΣυναλασόμενου"].ToString());
                         continue;
                     }
                     ΣειρέςΠαραστατικώνΠωλήσεων data = new ΣειρέςΠαραστατικώνΠωλήσεων(uow);
@@ -417,6 +397,7 @@ namespace SmartMobileProject.Core
                     data.Σειρά = row["Σειρά"].ToString();
                     data.Περιγραφή = row["Περιγραφή"].ToString();
                     data.ΠρόθεμαΑρίθμησης = Guid.Parse((string)row["ΠρόθεμαΑρίθμησης"]);
+                    data.ΚίνησηΣυναλασόμενου = row["ΚίνησηΣυναλασόμενου"] == DBNull.Value ? 2:int.Parse(row["ΚίνησηΣυναλασόμενου"].ToString());
                     data.Counter = 0;
                     uow.Save(data);
                 }
@@ -1014,7 +995,7 @@ namespace SmartMobileProject.Core
         {
             ΣτοιχείαΕταιρίας στοιχείαΕταιρίας;
             using (var uow = CreateUnitOfWork())
-            {
+            {             
                 if (!uow.Query<ΣτοιχείαΕταιρίας>().Any())
                 {
                     DataTable dt = await getSmartTable("Select Oid, Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email," +
@@ -1359,6 +1340,31 @@ namespace SmartMobileProject.Core
                 Console.WriteLine("Don't fragment: {0}", reply.Options.DontFragment);
                 Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
             }
+        }
+        public static void ClearAllData()
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                
+            }
+        }
+        public static async Task<double> GetYpoloipo(string customerOid)
+        {
+            double trexousaxreosh=0;
+            double trexousaPistosh=0;
+            DataTable dt = await getSmartTable($@"Select _ΤρέχουσαΠίστωση, _ΤρέχουσαΧρέωση
+                        From Πελάτης where Oid ='{customerOid}' and ΑΦΜ is not null and ΑΦΜ != '' and ");
+            if (dt == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading Πελάτης", "OK");
+                return 0;
+            }
+            foreach (DataRow row in dt.Rows)
+            {
+                 trexousaxreosh = row["_ΤρέχουσαΧρέωση"] == DBNull.Value ? 0 : double.Parse(row["_ΤρέχουσαΧρέωση"].ToString());
+                 trexousaPistosh = row["_ΤρέχουσαΠίστωση"] == DBNull.Value ? 0 : double.Parse(row["_ΤρέχουσαΠίστωση"].ToString());
+            }
+            return trexousaxreosh - trexousaPistosh;
         }
     }
 }

@@ -94,6 +94,8 @@ namespace SmartMobileProject.Services
             decimal sunAxia6 = 0;
             decimal sunAxia13 = 0;
             decimal sunAxia23 = 0;
+            double ProhgoumenoYpoloipo = 0;
+            double NeoYpoloipo = 0;
             string grammes = "";
             foreach (var i in order.ΓραμμέςΠαραστατικώνΠωλήσεων)
             {
@@ -380,6 +382,7 @@ namespace SmartMobileProject.Services
             decimal sunAxia6 = 0;
             decimal sunAxia13 = 0;
             decimal sunAxia23 = 0;
+            string ypologismosFPA = "";
             string grammes = "";
             string analisifpa = "";
             foreach (var i in order.ΓραμμέςΠαραστατικώνΠωλήσεων)
@@ -392,7 +395,7 @@ namespace SmartMobileProject.Services
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.ΑξίαΓραμμής.ToString("0.##") + "</td>" +
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.ΠοσοστόΦπα * 100 + "%</td>" +
                        "</tr>";
-
+                
                 switch (i.ΠοσοστόΦπα * 100)
                 {
                     case 6:
@@ -412,13 +415,16 @@ namespace SmartMobileProject.Services
                         break;
                 }
             }
-            
+            var ProhgoumenoYpoloipo = await XpoHelper.GetYpoloipo(order.Πελάτης.SmartOid.ToString());
+
+            ypologismosFPA += SetYpologismosFPAString(order.ΓραμμέςΠαραστατικώνΠωλήσεων);
             string τρόποςΑποστολής = "";
             if (order.ΤρόποςΑποστολής != null) { τρόποςΑποστολής = order.ΤρόποςΑποστολής.Τρόποςαποστολής; }
             string τρόποςΠληρωμής = "";
             if (order.ΤρόποςΠληρωμής != null)
             { τρόποςΠληρωμής = order.ΤρόποςΠληρωμής.Τρόποςπληρωμής; }
-             string source = @"<html >
+            string YpologismenoYpoloipo = YpologismosYpoloipou(τρόποςΠληρωμής, ProhgoumenoYpoloipo, (double)order.ΑξίαΠαραστατικού, order.Σειρά.ΚίνησηΣυναλασόμενου);
+            string source = @"<html >
 <head>
     
     <title></title>"+
@@ -525,14 +531,7 @@ namespace SmartMobileProject.Services
                 </table>
         </div>"+
         "<div style=\"float:left;\">"+
-            "<table style=\"border-style: groove; border-width: thin; width: 100%; text-align: center;\">"+@"
-                <tr>"+
-                    "<td style=\"font-weight: bold; background-color: #CCFFFF; border-style: groove; border-width: thin\">ΣΧΕΤΙΚΑ ΠΑΡΑΣΤΑΤΙΚΑ</td>"+@"
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                </tr>
-                </table><br />"+
+            "<br />"+
             "<table style=\"border-style: groove; border-width: thin; width: 100%;\">"+@"
                 <tr>
                     <td >ΜΕΤΑΦΟΡΙΚΟ ΜΕΣΟ</td>
@@ -570,8 +569,8 @@ namespace SmartMobileProject.Services
         </table>
         <br/><br/>
     </div>
-    <div>"+
-        "<div style=\"float:left;\">"+
+    <div>"+ YpologismenoYpoloipo+
+        " <div style=\"float:left;\">" +
             "<table style=\"text-align: center; border-style: groove; border-width: thin\">"+@"
                 <tr>" +
                          "<td colspan=\"4\" style=\"text-align: center\">ΑΝΑΛΥΣΗ Φ.Π.Α.</td>" + @"
@@ -599,7 +598,7 @@ namespace SmartMobileProject.Services
                        <td>" + kathAxia23.ToString("0.##") + "</td>" +
                        "<td>" + sunoloFPA23.ToString("0.##") + "</td>" +
                        "<td>" + sunAxia23.ToString("0.##") + "</td>" + @"
-                     </tr>
+                     </tr>"+ ypologismosFPA+@"
             </table>
         </div>"+
         "<div style=\"float:right;\">"+
@@ -628,7 +627,76 @@ namespace SmartMobileProject.Services
             return source;
         }
 
+        private string SetYpologismosFPAString(XPCollection<ΓραμμέςΠαραστατικώνΠωλήσεων> γραμμέςΠαραστατικώνΠωλήσεων)
+        {
+            string htmlstring = "";
+            decimal kathAxia = 0;
+            decimal sunoloFPA = 0;
+            decimal sunAxia = 0;
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                var listFPA = uow.Query<ΦΠΑ>();
+                foreach (var item in listFPA)
+                {
+                    foreach(var gram in γραμμέςΠαραστατικώνΠωλήσεων)
+                    {
+                        if (item.Φπακανονικό == gram.ΠοσοστόΦπα * 100)
+                        {
+                            kathAxia += gram.ΚαθαρήΑξία;
+                            sunoloFPA += gram.Φπα;
+                            sunAxia += gram.ΑξίαΓραμμής;
+                        }
+                    }
+
+                    htmlstring += $@"<tr>
+                          <td> {item.Φπακανονικό} %</td >
+                          <td>{kathAxia.ToString("0.##")} </td>
+                          <td>{sunoloFPA.ToString("0.##")} </td>
+                          <td>{sunAxia.ToString("0.##")} </td>
+                     </tr>";
+                }
+            }
+            return htmlstring;
+        }
+
         
+
+        private string YpologismosYpoloipou(string τρόποςΠληρωμής,double ProhgoumenoYpoloipo, double αξίαΠαραστατικού ,int κίνηση)
+        {
+            string htmlpeace = ""; 
+            double NeoYpoloipo = 0;
+            if (ProhgoumenoYpoloipo == 0)
+                return htmlpeace;
+            if (κίνηση == 0)
+            {
+                NeoYpoloipo = ProhgoumenoYpoloipo + αξίαΠαραστατικού;
+            }
+            else if(κίνηση == 1)
+            {
+                NeoYpoloipo = ProhgoumenoYpoloipo - αξίαΠαραστατικού;
+            }
+            else
+            {
+                return htmlpeace;
+            }
+            if (τρόποςΠληρωμής == "ΤΟΙΣ ΜΕΤΡΗΤΟΙΣ")
+                NeoYpoloipo = ProhgoumenoYpoloipo;
+            htmlpeace = "<div style =\"float:right;\">" +
+               "<table style=\"border-style: groove; border-width: thin; width: 100%;\">" + @"
+                <tr>" +
+                       "<td style=\"font-weight: bold; text-align: center; background-color: #CCFFFF\">ΠΡΟΗΓ.ΥΠΟΛΟΙΠΟ</td>" + @"
+                    <td>" + ProhgoumenoYpoloipo.ToString("0.##") + @" €</td>
+                </tr>
+                <tr>" +
+                       "<td style=\"font-weight: bold; text-align: center; background-color: #CCFFFF\">ΝΕΟ ΥΠΟΛΟΙΠΟ</td>" + @"
+                    <td>" + NeoYpoloipo.ToString("0.##") + @" €</td>
+                </tr>
+  
+            </table>
+        </div>";
+
+            return htmlpeace;
+        }
 
         //        public  async void CreatePrint2(ΠαραστατικάΠωλήσεων order)
         //        {
