@@ -580,25 +580,8 @@ namespace SmartMobileProject.Services
                           <td>Καθ.αξία</td>
                           <td>Αξία Φ.Π.Α.</td>
                           <td>Συν.αξία</td>
-                     </tr>
-                     <tr>
-                          <td>6%</td>
-                          <td>" + kathAxia6.ToString("0.##") + "</td>" +
-                          "<td>" + sunoloFPA6.ToString("0.##") + "</td>" +
-                          "<td>" + sunAxia6.ToString("0.##") + "</td>" + @"
-                     </tr>
-                     <tr>
-                          <td>13%</td>
-                          <td>" + kathAxia13.ToString("0.##") + "</td>" +
-                          "<td>" + sunoloFPA13.ToString("0.##") + "</td>" +
-                          "<td>" + sunAxia13.ToString("0.##") + "</td>" + @"
-                     </tr>
-                     <tr>
-                        <td>24%</td>
-                       <td>" + kathAxia23.ToString("0.##") + "</td>" +
-                       "<td>" + sunoloFPA23.ToString("0.##") + "</td>" +
-                       "<td>" + sunAxia23.ToString("0.##") + "</td>" + @"
-                     </tr>"+ ypologismosFPA+@"
+                     </tr>"
+                     + ypologismosFPA+@"
             </table>
         </div>"+
         "<div style=\"float:right;\">"+
@@ -630,17 +613,20 @@ namespace SmartMobileProject.Services
         private string SetYpologismosFPAString(XPCollection<ΓραμμέςΠαραστατικώνΠωλήσεων> γραμμέςΠαραστατικώνΠωλήσεων)
         {
             string htmlstring = "";
-            decimal kathAxia = 0;
-            decimal sunoloFPA = 0;
-            decimal sunAxia = 0;
+           
             using (UnitOfWork uow = new UnitOfWork())
             {
                 var listFPA = uow.Query<ΦΠΑ>();
                 foreach (var item in listFPA)
                 {
-                    foreach(var gram in γραμμέςΠαραστατικώνΠωλήσεων)
+                    decimal kathAxia = 0;
+                    decimal sunoloFPA = 0;
+                    decimal sunAxia = 0;
+
+                    foreach (var gram in γραμμέςΠαραστατικώνΠωλήσεων)
                     {
-                        if (item.Φπακανονικό == gram.ΠοσοστόΦπα * 100)
+                        var posostofpa = gram.ΠοσοστόΦπα * 100;
+                        if (item.Φπακανονικό == posostofpa)
                         {
                             kathAxia += gram.ΚαθαρήΑξία;
                             sunoloFPA += gram.Φπα;
