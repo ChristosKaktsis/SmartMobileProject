@@ -143,7 +143,7 @@ namespace SmartMobileProject.ViewModels
         }
         private async void GetCustomerWithAFM(object obj)
         {
-            ΣτοιχείαΕταιρίας στοιχεία = await XpoHelper.CreateSTOIXEIAETAIRIASData();
+            ΣτοιχείαΕταιρίας στοιχεία = await XpoHelper.GetSTOIXEIAETAIRIASData();
             string result = await Application.Current.MainPage.DisplayPromptAsync("Αναζήτηση στοιχείων με το ΑΦΜ", 
                 "Γράψε το ΑΦΜ", 
                 "Αποδοχή", "Ακύρωση");

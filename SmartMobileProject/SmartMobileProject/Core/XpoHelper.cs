@@ -995,60 +995,65 @@ namespace SmartMobileProject.Core
         {
             ΣτοιχείαΕταιρίας στοιχείαΕταιρίας;
             using (var uow = CreateUnitOfWork())
-            {             
-                if (!uow.Query<ΣτοιχείαΕταιρίας>().Any())
+            {
+                DataTable dt = await getSmartTable("Select Oid, Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email," +
+                       " ΔΟΥ, Οδός, Αριθμός, ΔικτυακόςΤόπος, Περιοχή, Τηλέφωνο, Τηλέφωνο1, ΤΚ, Πόλη," +
+                       " UsernameΥπηρεσίαςΣτοιχείωνΜητρώου, PasswordΥπηρεσίαςΣτοιχείωνΜητρώου, Fax From ΣτοιχείαΕταιρίας where ");
+                if (dt == null) { return null; }
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataTable dt = await getSmartTable("Select Oid, Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email," +
-                        " ΔΟΥ, Οδός, Αριθμός, ΔικτυακόςΤόπος, Περιοχή, Τηλέφωνο, Τηλέφωνο1, ΤΚ, Πόλη," +
-                        " UsernameΥπηρεσίαςΣτοιχείωνΜητρώου, PasswordΥπηρεσίαςΣτοιχείωνΜητρώου, Fax From ΣτοιχείαΕταιρίας where ");
-                    if (dt == null) { return null; }
-                    foreach (DataRow row in dt.Rows)
+                    ΣτοιχείαΕταιρίας data = new ΣτοιχείαΕταιρίας(uow);
+                    data.Επωνυμία = row["Επωνυμία"].ToString();
+                    data.ΚατηγορίαΦΠΑ = int.Parse(row["ΚατηγορίαΦΠΑ"].ToString());
+                    data.ΑΦΜ = row["ΑΦΜ"].ToString();
+                    data.Οδός = row["Οδός"].ToString();
+                    data.Αριθμός = row["Αριθμός"].ToString();
+                    data.Περιοχή = row["Περιοχή"].ToString();
+                    data.Τηλέφωνο = row["Τηλέφωνο"].ToString();
+                    data.Τηλέφωνο1 = row["Τηλέφωνο1"].ToString();
+                    data.FAX = row["FAX"].ToString();
+                    data.ΔικτυακόςΤόπος = row["ΔικτυακόςΤόπος"].ToString();
+                    data.Email = row["Email"].ToString();
+                    data.UsernameΥπηρεσίαςΣτοιχείωνΜητρώου = row["UsernameΥπηρεσίαςΣτοιχείωνΜητρώου"].ToString();
+                    data.PasswordΥπηρεσίαςΣτοιχείωνΜητρώου = row["PasswordΥπηρεσίαςΣτοιχείωνΜητρώου"].ToString();
+                    if (!string.IsNullOrEmpty(row["ΤΚ"].ToString()))
                     {
-                        ΣτοιχείαΕταιρίας data = new ΣτοιχείαΕταιρίας(uow);
-                        data.Επωνυμία = row["Επωνυμία"].ToString();
-                        data.ΚατηγορίαΦΠΑ = int.Parse(row["ΚατηγορίαΦΠΑ"].ToString());
-                        data.ΑΦΜ = row["ΑΦΜ"].ToString();
-                        data.Οδός = row["Οδός"].ToString();
-                        data.Αριθμός = row["Αριθμός"].ToString();
-                        data.Περιοχή = row["Περιοχή"].ToString();
-                        data.Τηλέφωνο = row["Τηλέφωνο"].ToString();
-                        data.Τηλέφωνο1 = row["Τηλέφωνο1"].ToString();
-                        data.FAX = row["FAX"].ToString();
-                        data.ΔικτυακόςΤόπος = row["ΔικτυακόςΤόπος"].ToString();
-                        data.Email = row["Email"].ToString();
-                        data.UsernameΥπηρεσίαςΣτοιχείωνΜητρώου = row["UsernameΥπηρεσίαςΣτοιχείωνΜητρώου"].ToString();
-                        data.PasswordΥπηρεσίαςΣτοιχείωνΜητρώου = row["PasswordΥπηρεσίαςΣτοιχείωνΜητρώου"].ToString();
-                        if (!string.IsNullOrEmpty(row["ΤΚ"].ToString()))
-                        {
-                            var tk = uow.Query<ΤαχυδρομικόςΚωδικός>().Where(x => x.Ονοματκ == row["ΤΚ"].ToString());
-                            data.ΤΚ = tk.FirstOrDefault();
-                        }
-                        if (!string.IsNullOrEmpty(row["Πόλη"].ToString()))
-                        {
-                            var poli = uow.Query<Πόλη>().Where(x => x.SmartOid == Guid.Parse((string)row["Πόλη"]));
-                            data.Πόλη = poli.FirstOrDefault();
-                        }
-                        if (!string.IsNullOrEmpty(row["ΔΟΥ"].ToString()))
-                        {
-                            var doy = uow.Query<ΔΟΥ>().Where(x => x.SmartOid == Guid.Parse((string)row["ΔΟΥ"]));
-                            data.ΔΟΥ = doy.FirstOrDefault();
-                        }
-
-                        uow.Save(data);
-
-                        break;
+                        var tk = uow.Query<ΤαχυδρομικόςΚωδικός>().Where(x => x.Ονοματκ == row["ΤΚ"].ToString());
+                        data.ΤΚ = tk.FirstOrDefault();
                     }
-                    if (uow.InTransaction)
+                    if (!string.IsNullOrEmpty(row["Πόλη"].ToString()))
                     {
-                        try
-                        {
-                            uow.CommitChanges();
-                        }
-                        catch (Exception exc)
-                        {
-                            uow.RollbackTransaction();
-                            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        }
+                        var poli = uow.Query<Πόλη>().Where(x => x.SmartOid == Guid.Parse((string)row["Πόλη"]));
+                        data.Πόλη = poli.FirstOrDefault();
+                    }
+                    if (!string.IsNullOrEmpty(row["ΔΟΥ"].ToString()))
+                    {
+                        var doy = uow.Query<ΔΟΥ>().Where(x => x.SmartOid == Guid.Parse((string)row["ΔΟΥ"]));
+                        data.ΔΟΥ = doy.FirstOrDefault();
+                    }
+                    var eterialist =  uow.Query<ΣτοιχείαΕταιρίας>();
+                    if (eterialist.Any())
+                    {
+                        //var eteria= eterialist.FirstOrDefault();
+                        // eteria = data;
+                        uow.Delete(eterialist.FirstOrDefault());
+                    }
+                    
+                   
+                    uow.Save(data);
+
+                    break;
+                }
+                if (uow.InTransaction)
+                {
+                    try
+                    {
+                        uow.CommitChanges();
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
                     }
                 }
 
@@ -1345,7 +1350,7 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                
+                uow.Delete(new XPCollection<ΣτοιχείαΕταιρίας>(uow));
             }
         }
         public static async Task<double> GetYpoloipo(string customerOid)
@@ -1356,7 +1361,7 @@ namespace SmartMobileProject.Core
                         From Πελάτης where Oid ='{customerOid}' and ΑΦΜ is not null and ΑΦΜ != '' and ");
             if (dt == null)
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading Πελάτης", "OK");
+                await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στον υπολογισμό υπολ. Πελάτη", "OK");
                 return 0;
             }
             foreach (DataRow row in dt.Rows)
@@ -1365,6 +1370,22 @@ namespace SmartMobileProject.Core
                  trexousaPistosh = row["_ΤρέχουσαΠίστωση"] == DBNull.Value ? 0 : double.Parse(row["_ΤρέχουσαΠίστωση"].ToString());
             }
             return trexousaxreosh - trexousaPistosh;
+        }
+        public static async Task<ΣτοιχείαΕταιρίας> GetSTOIXEIAETAIRIASData()
+        {
+            return await Task<ΣτοιχείαΕταιρίας>.Run(() =>
+            {
+                ΣτοιχείαΕταιρίας στοιχείαΕταιρίας = null;
+                using (var uow = CreateUnitOfWork())
+                {
+                    if(uow.Query<ΣτοιχείαΕταιρίας>().Any())
+                    {
+                        στοιχείαΕταιρίας = uow.Query<ΣτοιχείαΕταιρίας>().First();
+                    }
+                    
+                    return στοιχείαΕταιρίας;
+                }
+            });
         }
     }
 }

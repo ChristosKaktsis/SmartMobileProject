@@ -74,7 +74,11 @@ namespace SmartMobileProject.ViewModels
             set
             {
                 if (!Preferences.Get(nameof(OnlineMode), false))
+                {
                     OnlineWarning();
+                    
+                }
+                    
                 Preferences.Set(nameof(OnlineMode), value);
                 OnPropertyChanged(nameof(OnlineMode));
             }
@@ -115,7 +119,7 @@ namespace SmartMobileProject.ViewModels
         {
             await Application.Current.MainPage.DisplayAlert("Προσοχή",
                      "Μόνο τα δεδομένα που υπάρχουν στο Smart μπορούν να επικοινωνήσουν με το mobile. " +
-                     "Οποιαδήποτε ενέργεια κάνετε στο Stand Alone δεν θα λειτουργεί με το Online(Connected to Smart) ", "Εντάξει");
+                     "Οποιαδήποτε ενέργεια κάνετε στο Stand Alone δεν θα λειτουργεί με την διασύνδεση με το Smart ", "Εντάξει");
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SmartMobileProject.Services
@@ -69,7 +70,7 @@ namespace SmartMobileProject.Services
         }
         public async Task<string> Page1(ΠαραστατικάΠωλήσεων order)
         {
-            στοιχείαΕταιρίας = await XpoHelper.CreateSTOIXEIAETAIRIASData();
+            στοιχείαΕταιρίας = await XpoHelper.GetSTOIXEIAETAIRIASData();
             if (στοιχείαΕταιρίας == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "Δεν Υπαρχουν Στοιχεια Εταιρίας", "OK");
@@ -356,7 +357,7 @@ namespace SmartMobileProject.Services
         }
         public async Task<string> page2(ΠαραστατικάΠωλήσεων order)
         {
-            στοιχείαΕταιρίας = await XpoHelper.CreateSTOIXEIAETAIRIASData();
+            στοιχείαΕταιρίας = await XpoHelper.GetSTOIXEIAETAIRIASData();
             
             if (στοιχείαΕταιρίας == null)
             {
@@ -415,7 +416,9 @@ namespace SmartMobileProject.Services
                         break;
                 }
             }
-            var ProhgoumenoYpoloipo = await XpoHelper.GetYpoloipo(order.Πελάτης.SmartOid.ToString());
+            double ProhgoumenoYpoloipo = 0;
+            if (Preferences.Get("OnlineMode", false))
+                ProhgoumenoYpoloipo = await XpoHelper.GetYpoloipo(order.Πελάτης.SmartOid.ToString());
 
             ypologismosFPA += SetYpologismosFPAString(order.ΓραμμέςΠαραστατικώνΠωλήσεων);
             string τρόποςΑποστολής = "";

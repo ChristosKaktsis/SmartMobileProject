@@ -58,20 +58,25 @@ namespace SmartMobileProject.ViewModels
         public SettingsStaticSourceViewModel()
         {  
             SetAtt();
-            if(OnlineMode)
+            if (OnlineMode)
                 Check();
+            else
+                SimpleCheck();
 
             Αποθήκευση = new Command(Save);
         }
-        private  void SetAtt()
+
+        
+
+        private void SetAtt()
         {
             uow = new UnitOfWork();
             Εταιρία = new ΣτοιχείαΕταιρίας(uow);
-            
             ΔΟΥ = new XPCollection<ΔΟΥ>(uow);
             FPA = new XPCollection<ΦΠΑ>(uow);
             TK = new XPCollection<ΤαχυδρομικόςΚωδικός>(uow);
             Poli = new XPCollection<Πόλη>(uow);
+
         }
 
         async void Check()
@@ -88,6 +93,16 @@ namespace SmartMobileProject.ViewModels
                 }
             });
             
+        }
+        private void SimpleCheck()
+        {
+            var list = uow.Query<ΣτοιχείαΕταιρίας>();
+            if (list.Any())
+            {
+                Εταιρία = list.First();
+                Tk = Εταιρία.ΤΚ;
+                κατΦΠΑ = ((KatFPA)Εταιρία.ΚατηγορίαΦΠΑ).ToString();
+            }
         }
         private  void Save(object obj)
         {
