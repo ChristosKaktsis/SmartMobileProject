@@ -525,7 +525,8 @@ namespace SmartMobileProject.Core
                     ΤαχυδρομικόςΚωδικός data = new ΤαχυδρομικόςΚωδικός(uow);
                     //data.SmartOid = Guid.Parse((string)row["Oid"]);
                     data.Ονοματκ = row["ΤαχυδρομικόςΚωδικός"].ToString();
-                    var p = uow.Query<Πόλη>().Where(x => x.SmartOid == Guid.Parse((string)row["Πόλη"]));
+                    var pd = row["Πόλη"].ToString();
+                    var p = uow.Query<Πόλη>().Where(x => x.SmartOid.ToString() == pd);
                     data.Πόλη = p.FirstOrDefault();
                     data.Νομός = row["Νομός"].ToString();
                     data.Περιοχή = row["Περιοχή"].ToString();
@@ -688,7 +689,7 @@ namespace SmartMobileProject.Core
         {
             using (UnitOfWork uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select  Oid, Κωδικός, Περιγραφή, ΦΠΑ, ΤιμήΧονδρικής, Ομάδα, Κατηγορία, Οικογένεια, Υποοικογένεια From Είδος where ");
+                DataTable dt = await getSmartTable("Select  Oid, Κωδικός, REPLACE(Περιγραφή,'\"','') as Περιγραφή, ΦΠΑ, ΤιμήΧονδρικής, Ομάδα, Κατηγορία, Οικογένεια, Υποοικογένεια From Είδος where ");
                 if (dt == null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading Είδος", "OK");
@@ -843,7 +844,7 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email, " +
+                DataTable dt = await getSmartTable("Select Oid, REPLACE(Επωνυμία,'\"','') as Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email, " +
                         "ΔΟΥ, ΚεντρικήΔιευθυνση, Πωλητής, Κείμενο5 , ΔιακριτικόςΤίτλος From Πελάτης where ΑΦΜ is not null and ΑΦΜ != '' and ");
                 if (dt == null)
                 {
@@ -908,10 +909,9 @@ namespace SmartMobileProject.Core
         }
         public static async Task<bool> CreateDIEUPELATIData()
         {
-
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Οδός, Αριθμός, Περιοχή, Τηλέφωνο, Τηλέφωνο1, " +
+                DataTable dt = await getSmartTable("Select Oid, REPLACE(Οδός,'\"','') as Οδός, Αριθμός, REPLACE(Περιοχή,'\"','') as Περιοχή, Τηλέφωνο, Τηλέφωνο1, " +
                        "KίνΤηλέφωνο, Κείμενο5, FAX, ΓεωγραφικόΠλάτος, ΓεωγραφικόΜήκος, ΤΚ, Πόλη, Πελάτης From ΔιευθύνσειςΠελάτη where ");
                 if (dt == null)
                 {
