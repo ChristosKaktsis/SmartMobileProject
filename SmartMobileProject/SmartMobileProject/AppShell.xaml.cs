@@ -44,6 +44,8 @@ namespace SmartMobileProject
             Routing.RegisterRoute(nameof(ΔιευθύνσειςΠελάτηDetailViewPage), typeof(ΔιευθύνσειςΠελάτηDetailViewPage));
             Routing.RegisterRoute(nameof(ΕργασίεςDetailViewPage), typeof(ΕργασίεςDetailViewPage));
             Routing.RegisterRoute(nameof(ΕνέργειαDetailViewPage), typeof(ΕνέργειαDetailViewPage));
+            Routing.RegisterRoute(nameof(BarCodeListViewPage), typeof(BarCodeListViewPage));
+            Routing.RegisterRoute(nameof(BarCodeDetailViewPage), typeof(BarCodeDetailViewPage));
             Routing.RegisterRoute("Settings/PrintSettingsPage", typeof(PrintSettingsPage));
             Routing.RegisterRoute("Settings/ΣειρέςΠαρΕισπPage", typeof(ΣειρέςΠαρΕισπPage));
             Routing.RegisterRoute("Settings/ΣτοιχείαΕταιρίαςPage", typeof(ΣτοιχείαΕταιρίαςPage));

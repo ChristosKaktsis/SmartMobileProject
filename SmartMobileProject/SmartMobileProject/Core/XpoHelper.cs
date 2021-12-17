@@ -24,7 +24,7 @@ namespace SmartMobileProject.Core
         static readonly Type[] entityTypes = new Type[] { typeof(ΣτοιχείαΕταιρίας),
             typeof(Πελάτης),typeof(ΔιευθύνσειςΠελάτη),typeof(ΤαχυδρομικόςΚωδικός),typeof(Πόλη),typeof(Χώρα)
             ,typeof(ΔΟΥ),typeof(ΦΠΑ)
-            ,typeof(Είδος),typeof(ΟικογένειαΕίδους),typeof(ΥποοικογένειαΕίδους),typeof(ΟμάδαΕίδους),typeof(ΚατηγορίαΕίδους)
+            ,typeof(Είδος),typeof(BarCodeΕίδους),typeof(ΟικογένειαΕίδους),typeof(ΥποοικογένειαΕίδους),typeof(ΟμάδαΕίδους),typeof(ΚατηγορίαΕίδους)
             ,typeof(ΠαραστατικάΠωλήσεων),typeof(ΓραμμέςΠαραστατικώνΠωλήσεων),typeof(ΣειρέςΠαραστατικώνΠωλήσεων),typeof(ΤρόποςΠληρωμής),typeof(ΤρόποςΑποστολής)
             ,typeof(ΠαραστατικάΕισπράξεων),typeof(ΓραμμέςΠαραστατικώνΕισπράξεων),typeof(ΣειρέςΠαραστατικώνΕισπράξεων),typeof(ΛογαριασμοίΧρηματικώνΔιαθέσιμων),typeof(Αξιόγραφα)
             ,typeof(Τράπεζα),typeof(ΤραπεζικοίΛογαριασμοί)
@@ -385,7 +385,7 @@ namespace SmartMobileProject.Core
                 if (dt == null) { return false; }
                 foreach (DataRow row in dt.Rows)
                 {
-                    var seireslist = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"]));
+                    var seireslist = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.SmartOid.ToString() == row["Oid"].ToString());
                     var seiresmeIdioOnoma = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.Σειρά == row["Σειρά"].ToString());
                     if (seireslist.Any() || seiresmeIdioOnoma.Any())
                     {

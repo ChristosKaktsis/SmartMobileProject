@@ -1,19 +1,11 @@
 ﻿using SmartMobileProject.Views;
 using SmartMobileProject.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using DevExpress.Xpo;
-using System.Linq;
-using DevExpress.XamarinForms.DataGrid;
-using DevExpress.XamarinForms.Scheduler;
 using SmartMobileProject.Core;
-using DevExpress.XamarinForms.Editors;
 using SmartMobileProject.Services;
 
 namespace SmartMobileProject.ViewModels

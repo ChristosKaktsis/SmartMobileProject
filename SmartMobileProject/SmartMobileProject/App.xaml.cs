@@ -62,9 +62,9 @@ namespace SmartMobileProject
             }
             else
             {
-                await AppShell.Current.GoToAsync("///LoginPage");
+                await AppShell.Current.GoToAsync("///LoginPage");       
             }
-            //await ActivationCheck.CheckActivationCode();
+            //await ActivationCheck.CheckActivationCode();           
             TrialCheck.Check();
         }
 

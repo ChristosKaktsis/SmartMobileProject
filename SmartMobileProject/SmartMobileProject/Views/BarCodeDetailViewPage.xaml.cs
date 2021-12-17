@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace SmartMobileProject.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ΝέοΠαραστατικόPage : TabbedPage
+    public partial class BarCodeDetailViewPage : ContentPage
     {
-        public ΝέοΠαραστατικόPage()
+        public BarCodeDetailViewPage()
         {
             InitializeComponent();
         }

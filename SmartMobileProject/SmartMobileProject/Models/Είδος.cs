@@ -99,6 +99,11 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(ΗμνίαΔημ), ref ημνίαδημ, value); }
         }
         DateTime ημνίαδημ;
+        [Association, Aggregated]
+        public XPCollection<BarCodeΕίδους> BarCodeΕίδους
+        {
+            get { return GetCollection<BarCodeΕίδους>(nameof(BarCodeΕίδους)); }
+        }
         //
         [NonPersistent]
         Single ποσότητα;

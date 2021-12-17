@@ -20,11 +20,12 @@ namespace SmartMobileProject.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            //await AppShell.Current.Navigation.PushAsync(new Views.ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage());
             if (!(BindingContext is LoginViewModel model))
                 return;
             if(!model.Remember)
             {
-                TrialPopUp.IsVisible = true;
+               // TrialPopUp.IsVisible = true;
                 await Task.Delay(1000);
                 await TrialPopUp.FadeTo(1, 200);
             }

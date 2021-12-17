@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using DevExpress.Xpo;
 using SmartMobileProject.Models;
+using SmartMobileProject.Views;
 
 namespace SmartMobileProject.ViewModels
 {
@@ -67,8 +68,15 @@ namespace SmartMobileProject.ViewModels
             ΟμάδαΕίδους = new XPCollection<ΟμάδαΕίδους>(uow);
             ΚατηγορίαΕίδους = new XPCollection<ΚατηγορίαΕίδους>(uow);
             Αποθήκευση = new Command(Save);
+            BarCodeΕίδους = new Command(GoToBarcode);
             Πίσω = new Command(GoBack);
         }
+
+        private async void GoToBarcode(object obj)
+        {
+            await Shell.Current.GoToAsync(nameof(BarCodeListViewPage));
+        }
+
         private void SetTitle()
         {
             if (IsFromEdit)
@@ -94,6 +102,7 @@ namespace SmartMobileProject.ViewModels
             await Shell.Current.GoToAsync("..");
         }
         public ICommand Αποθήκευση { set; get; }
+        public ICommand BarCodeΕίδους { get; set; }
         public ICommand Πίσω { get; set; }
     }
 }

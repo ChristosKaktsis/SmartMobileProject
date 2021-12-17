@@ -104,6 +104,7 @@
                           LabelFontSize="Body"
                           IsLabelFloating="True"
                           Value="{Binding Eidos.ΤιμήΧονδρικής}"/>
+                <Button Text="BarCode" Grid.Row="9" Command="{Binding BarCodeΕίδους}"/>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

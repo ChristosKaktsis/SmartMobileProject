@@ -89,7 +89,6 @@
     <TabBar Route="LoginPage">
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>
-
     <FlyoutItem Title="Πωλητής" Route="MainPage" Icon="BOPosition2_16x16.png">
         <ShellContent Route="ΠωλητήςViewPage" ContentTemplate="{DataTemplate local:ΠωλητήςViewPage}" />
     </FlyoutItem>
