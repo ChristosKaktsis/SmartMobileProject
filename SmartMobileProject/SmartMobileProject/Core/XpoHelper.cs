@@ -71,7 +71,8 @@ namespace SmartMobileProject.Core
                  CreateEvent(),
                  CreatePolitisData(),
                  CreateTrapezaData(),
-                 CreateΤΚData()
+                 CreateΤΚData(),
+                 CreateBarCodeEIDOSData()
                  );
             var okP = await CreatePELATISData();
             if (okP)
@@ -760,6 +761,67 @@ namespace SmartMobileProject.Core
             }
             return true;
         }
+        public static async Task<bool> CreateBarCodeEIDOSData()
+        {
+            using (UnitOfWork uow = CreateUnitOfWork())
+            {
+                DataTable dt = await getSmartTable("SELECT BarCode , ΑκολουθείΤήνΤιμήΕίδους, REPLACE(Περιγραφή, '\"', '') as Περιγραφή, " +
+                                                  "ΤιμήΧονδρικής, Είδος, Χρώματα.Χρώματα, Μεγέθη.Μεγέθη, ΦΠΑ"+
+                                             " FROM BarCodeΕίδους left join Χρώματα on BarCodeΕίδους.Χρώμα=Χρώματα.Oid left join Μεγέθη on BarCodeΕίδους.Μέγεθος=Μεγέθη.Oid  where BarCodeΕίδους.");
+                if (dt == null)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading BarCode", "OK");
+                    return false;
+                }
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (uow.Query<BarCodeΕίδους>().Where(x => x.Κωδικός == (string)row["BarCode"]).Any())
+                    {
+                        continue;
+                    }
+                    BarCodeΕίδους data = new BarCodeΕίδους(uow);                    
+                    data.Κωδικός = row["BarCode"].ToString();
+                    data.Περιγραφή = row["Περιγραφή"].ToString();
+                    data.ΤιμήΧονδρικής = row["ΤιμήΧονδρικής"] != DBNull.Value ? double.Parse(row["ΤιμήΧονδρικής"].ToString()) : 0.0;
+                    data.Μέγεθος = row["Μεγέθη"] != DBNull.Value ? row["Μεγέθη"].ToString() : "";
+                    data.Χρώμα = row["Χρώματα"] != DBNull.Value ? row["Χρώματα"].ToString() : "";
+                    data.ΑκολουθείΤήνΤιμήΕίδους = row["ΑκολουθείΤήνΤιμήΕίδους"].ToString() == "0"? false : true;
+                    data.ΕίδοςOid = row["Είδος"] != DBNull.Value ? Guid.Parse(row["Είδος"].ToString()) : Guid.Empty;
+                    if (!string.IsNullOrEmpty(row["ΦΠΑ"].ToString()))
+                    {
+                        var p = uow.Query<ΦΠΑ>().Where(x => x.Φπαid == row["ΦΠΑ"].ToString());
+                        data.ΦΠΑ = p.FirstOrDefault();
+                    }
+                    else
+                    {
+                        var p = uow.Query<ΦΠΑ>().Where(x => x.Φπαid == "0");
+                        data.ΦΠΑ = p.FirstOrDefault();
+                    }
+
+                    data.ΤιμήΧονδρικής = double.Parse(row["ΤιμήΧονδρικής"].ToString()); 
+
+                    uow.Save(data);
+                }
+
+                if (uow.InTransaction)
+                {
+                    try
+                    {
+                        uow.CommitChanges();
+                        return true;
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
+                        return false;
+                    }
+                }
+                //await Application.Current.MainPage.DisplayAlert("Alert", "Υπάρχουν όλα τα Είδη στην βάση", "OK");
+
+            }
+            return true;
+        }
         public static async Task CreateTRAPLOGData()
         {
             using (var uow = CreateUnitOfWork())
@@ -1346,12 +1408,31 @@ namespace SmartMobileProject.Core
                 Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
             }
         }
-        public static void ClearAllData()
+        public static bool ClearAllData()
         {
-            using (var uow = CreateUnitOfWork())
+            try
             {
-                uow.Delete(new XPCollection<ΣτοιχείαΕταιρίας>(uow));
+                using (var uow = CreateUnitOfWork())
+                {
+                    uow.Delete(new XPCollection<ΣτοιχείαΕταιρίας>(uow));
+                    uow.Delete(new XPCollection<Πελάτης>(uow));
+                    uow.Delete(new XPCollection<Είδος>(uow));
+                    uow.Delete(new XPCollection<BarCodeΕίδους>(uow));
+                    uow.Delete(new XPCollection<ΔιευθύνσειςΠελάτη>(uow));
+                    uow.Delete(new XPCollection<ΟμάδαΕίδους>(uow));
+                    uow.Delete(new XPCollection<ΟικογένειαΕίδους>(uow));
+                    uow.Delete(new XPCollection<ΚατηγορίαΕίδους>(uow));
+                    uow.Delete(new XPCollection<ΥποοικογένειαΕίδους>(uow));
+                    uow.Delete(new XPCollection<ΦΠΑ>(uow));
+                }
+                return true;
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+
         }
         public static async Task<double> GetYpoloipo(string customerOid)
         {

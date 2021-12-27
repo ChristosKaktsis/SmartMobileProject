@@ -30,10 +30,14 @@ namespace SmartMobileProject.ViewModels
             ΝέαΓραμμή = new Command(CreateLineOfOrder);
             ΓρήγορηΕπιλογή = new Command(QuickPick);
             Scanner = new Command(GotoScanner);
+            BarCodeSelection = new Command(OnBarCodeSelectionPressed);
             ΕπεξεργασίαΓραμμής = new Command(EditLineOfOrder);
             ΔιαγραφήΓραμμής = new Command(DeleteLineOfOrder);
             Ολοκλήρωση = new Command(Submission);
         }
+
+        
+
         private async void SetTitle()
         {
             await Task.Run(()=>
@@ -58,7 +62,10 @@ namespace SmartMobileProject.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(ScannerViewPage));
         }
-
+        private async void OnBarCodeSelectionPressed(object obj)
+        {
+            await Shell.Current.GoToAsync(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage));
+        }
         private async void CreateLineOfOrder(object obj)
         {
             ΝέοΠαραστατικόViewModel.editline = null;
@@ -96,6 +103,7 @@ namespace SmartMobileProject.ViewModels
         public ICommand ΝέαΓραμμή { get; set; }
         public ICommand ΓρήγορηΕπιλογή { get; set; }
         public ICommand Scanner { set; get; }
+        public ICommand BarCodeSelection { set; get; }
         public ICommand ΕπεξεργασίαΓραμμής { get; set; }
         public ICommand ΔιαγραφήΓραμμής { get; set; }
         public ICommand Ολοκλήρωση { get; set; }

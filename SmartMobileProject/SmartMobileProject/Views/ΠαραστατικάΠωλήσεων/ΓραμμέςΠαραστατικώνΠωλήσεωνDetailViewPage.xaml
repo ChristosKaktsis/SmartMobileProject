@@ -61,8 +61,7 @@
                           LabelFontSize="Body"
                           IsLabelFloating="True"   
                           IsUpDownIconVisible="True"
-                          MinValue="0"   
-                          MaxValue="100000000000"
+                          SelectValueOnFocus="True"
                           Value="{Binding Ποσότητα}"/>
                 <dxe:NumericEdit Grid.Row="4"
                           Grid.Column="0"
@@ -73,6 +72,7 @@
                           Suffix="€"
                           MinValue="0"
                           MaxValue="100000000000"
+                          SelectValueOnFocus="True"
                           Value="{Binding Τιμή }"/>
                 <Grid Grid.Row="5">
                     <dxe:NumericEdit Grid.Row="0"

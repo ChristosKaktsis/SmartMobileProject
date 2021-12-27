@@ -74,7 +74,15 @@ namespace SmartMobileProject.ViewModels
 
         private async void GoToBarcode(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(BarCodeListViewPage));
+            //await Shell.Current.GoToAsync(nameof(BarCodeListViewPage));
+            // This will push the ItemDetailPage onto the navigation stack
+            if (Eidos != null)
+                await Shell.Current.GoToAsync($"{nameof(BarCodeListViewPage)}?{nameof(BarCodeListViewModel.ItemId)}={Eidos.SmartOid}");
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("BarCode",
+                     "Δεν έχει φορτοθεί σωστά το είδος", "Εντάξει");
+            }
         }
 
         private void SetTitle()

@@ -22,11 +22,14 @@ namespace SmartMobileProject.Views
         {
             base.OnAppearing();
             await ScanSelectionBtn.ScaleTo(0, 100);
+            await BarCodeSelectionBtn.ScaleTo(0, 100);
             await NewlnBtn.ScaleTo(0, 100);
             await QuickSelectionBtn.ScaleTo(0, 100);
             ScanSelectionBtn.IsVisible = false;
+            BarCodeSelectionBtn.IsVisible = false;
             NewlnBtn.IsVisible = false;
             QuickSelectionBtn.IsVisible = false;
+            BackgroundDisable.IsVisible = false;
             plusBtn.ImageSource = "add_white_20";
         }
         private async void Button_Clicked(object sender, EventArgs e)
@@ -35,20 +38,26 @@ namespace SmartMobileProject.Views
             if (NewlnBtn.IsVisible)
             {
                 await ScanSelectionBtn.ScaleTo(0, 100);
+                await BarCodeSelectionBtn.ScaleTo(0, 100);
                 await NewlnBtn.ScaleTo(0, 100);
                 await QuickSelectionBtn.ScaleTo(0, 100);
                 ScanSelectionBtn.IsVisible = false;
+                BarCodeSelectionBtn.IsVisible = false;
                 NewlnBtn.IsVisible = false;
                 QuickSelectionBtn.IsVisible = false;
+                BackgroundDisable.IsVisible = false;
                 ((Button)sender).ImageSource = "add_white_20";
             }
             else
             {
+                BackgroundDisable.IsVisible = true;
                 ScanSelectionBtn.IsVisible = true;
+                BarCodeSelectionBtn.IsVisible = true;
                 NewlnBtn.IsVisible = true;
-                QuickSelectionBtn.IsVisible = true;
+                QuickSelectionBtn.IsVisible = true;                
                 await QuickSelectionBtn.ScaleTo(1, 100);
                 await NewlnBtn.ScaleTo(1, 100);
+                await BarCodeSelectionBtn.ScaleTo(1, 100);
                 await ScanSelectionBtn.ScaleTo(1, 100);
                 ((Button)sender).ImageSource = "outline_clear_white_20";
             }

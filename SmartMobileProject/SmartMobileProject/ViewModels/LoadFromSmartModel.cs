@@ -53,8 +53,8 @@ namespace SmartMobileProject.ViewModels
                 XpoHelper.CreateYPOOIKOGENEIAEIDOYSData()
                 );
             bool done = await XpoHelper.CreateEIDOSData();
-            AllLoading = false;
-           
+            bool barcode = await XpoHelper.CreateBarCodeEIDOSData();
+            AllLoading = false;          
             return done;
         }
 

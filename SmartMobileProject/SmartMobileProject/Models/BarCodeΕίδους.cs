@@ -26,6 +26,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(Κωδικός), ref κωδικός, value); }
         }
         string κωδικός;
+        public bool ΑκολουθείΤήνΤιμήΕίδους
+        {
+            get { return ακολουθείΤήνΤιμήΕίδους; }
+            set { SetPropertyValue(nameof(ΑκολουθείΤήνΤιμήΕίδους), ref ακολουθείΤήνΤιμήΕίδους, value); }
+        }
+        bool ακολουθείΤήνΤιμήΕίδους;
         public string Περιγραφή
         {
             get { return περιγραφή; }
@@ -63,6 +69,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(Είδος), ref είδος, value); }
         }
         Είδος είδος;
+        public ΦΠΑ ΦΠΑ
+        {
+            get { return φπα; }
+            set { SetPropertyValue(nameof(ΦΠΑ), ref φπα, value); }
+        }
+        ΦΠΑ φπα;
     }
 
 }

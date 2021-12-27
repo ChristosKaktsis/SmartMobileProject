@@ -16,22 +16,55 @@ namespace SmartMobileProject.ViewModels
         private string _searchText;
         private bool _isFocused;
         private BarCodeΕίδους _selectedBarCode;
+        private bool _isSelected;
+        private float _ποσότητα = 1;
 
         public ObservableCollection<BarCodeΕίδους> BarCodeList { get; set; }
         public Command LoadBarCodeItemsCommand { get; set; }
-
+        public Command Προσθήκη { get; set; }
         public ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodeViewModel()
         {
             LoadBarCodeItemsCommand = new Command(async () => await LoadBarCodeitems());
+            Προσθήκη = new Command(OnAddLinePressed);
             BarCodeList = new ObservableCollection<BarCodeΕίδους>();
         }
 
-        private Task LoadBarCodeitems()
+        private async void OnAddLinePressed(object obj)
+        {
+            try
+            {
+                UnitOfWork uow = ΝέοΠαραστατικόViewModel.uow;
+                ΓραμμέςΠαραστατικώνΠωλήσεων νεαΓραμμή = new ΓραμμέςΠαραστατικώνΠωλήσεων(uow);
+                νεαΓραμμή.SmartOid = Guid.NewGuid();
+                νεαΓραμμή.Ποσότητα = Ποσότητα;
+
+                νεαΓραμμή.Είδος = uow.Query<Είδος>().Where(x => x.SmartOid == SelectedBarCode.ΕίδοςOid).FirstOrDefault();
+                νεαΓραμμή.Τιμή = SelectedBarCode.ΤιμήΧονδρικής;
+                νεαΓραμμή.ΠοσοστόΦπα = SelectedBarCode.ΦΠΑ != null ? (SelectedBarCode.ΦΠΑ.Φπακανονικό / 100) : 0;
+                νεαΓραμμή.Εκπτωση = 0;
+                νεαΓραμμή.ΑξίαΕκπτωσης = (decimal)(νεαΓραμμή.Ποσότητα * νεαΓραμμή.Τιμή * νεαΓραμμή.Εκπτωση);
+                νεαΓραμμή.ΚαθαρήΑξία = (decimal)(νεαΓραμμή.Ποσότητα * νεαΓραμμή.Τιμή) - νεαΓραμμή.ΑξίαΕκπτωσης;
+                νεαΓραμμή.Φπα = νεαΓραμμή.ΚαθαρήΑξία * (decimal)νεαΓραμμή.ΠοσοστόΦπα;
+                νεαΓραμμή.ΑξίαΓραμμής = νεαΓραμμή.ΚαθαρήΑξία + νεαΓραμμή.Φπα;
+                
+                νεαΓραμμή.ΠαραστατικάΠωλήσεων = ΝέοΠαραστατικόViewModel.Order;
+                await Shell.Current.GoToAsync("..");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("BarCode Add Line Error "+e);
+                await Application.Current.MainPage.DisplayAlert("Σφάλμα",
+                     "Κάτι πήγε λάθος στην προσθήκη Γραμμής με BarCode", "Εντάξει");
+            }
+           
+        }
+
+        private async Task<bool> LoadBarCodeitems()
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(SearchText))
-                    return Task.FromResult(false); 
+                    return await Task.FromResult(false); 
 
                 IsBusy = true;
                 BarCodeList.Clear();
@@ -41,12 +74,16 @@ namespace SmartMobileProject.ViewModels
                     foreach (var item in barcodeitems)
                         BarCodeList.Add(item);
                 }
-                return Task.FromResult(true);
+                if(!BarCodeList.Any())
+                    await Application.Current.MainPage.DisplayAlert("Search",
+                     "Το BarCode Δεν βρέθηκε!", "Εντάξει");
+
+                return await Task.FromResult(true);
             }
             catch(Exception e)
             {
                 Debug.WriteLine("Κάτι πήγε λάθος στο φόρτομα barcode "+e);
-                return Task.FromResult(false);
+                return await Task.FromResult(false);
             }
             finally
             {
@@ -61,7 +98,14 @@ namespace SmartMobileProject.ViewModels
         public BarCodeΕίδους SelectedBarCode
         {
             get { return _selectedBarCode; }
-            set { SetProperty(ref _selectedBarCode, value); }
+            set 
+            { 
+                SetProperty(ref _selectedBarCode, value);
+                if (value != null)
+                    IsItemSelected = true;
+                else
+                    IsItemSelected = false;
+            }
         }
         public string SearchText
         {
@@ -78,6 +122,16 @@ namespace SmartMobileProject.ViewModels
                 if (!value)
                     LoadBarCodeItemsCommand.Execute(null);
             }
+        }
+        public bool IsItemSelected
+        {
+            get { return _isSelected; }
+            set { SetProperty(ref _isSelected, value); }
+        }
+        public float Ποσότητα
+        {
+            get { return _ποσότητα; }
+            set { SetProperty(ref _ποσότητα, value); }
         }
     }
 }

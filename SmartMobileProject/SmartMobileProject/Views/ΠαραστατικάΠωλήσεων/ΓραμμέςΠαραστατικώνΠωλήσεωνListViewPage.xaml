@@ -62,50 +62,90 @@
                 </dxg:DataGridView.TotalSummaries>
 
             </dxg:DataGridView>
-
+            <StackLayout x:Name="BackgroundDisable" Grid.Row="1" BackgroundColor="Gray" Opacity="0.5" IsVisible="false"/>
             <StackLayout Grid.Row="1"
                          Spacing="20"
                          HorizontalOptions="Center"
                          VerticalOptions="End">
-                <Frame x:Name="ScanSelectionBtn"
-                    HasShadow="True"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    CornerRadius="25"
-                    IsVisible="false"
-                    Scale="0"
-                    Padding="0"
-                    HorizontalOptions="Center">
-                    <Button ImageSource="Barcode_16x16"
-                        BackgroundColor="{StaticResource ComplementaryLight}"
-                        Command="{Binding Scanner}"/>
-                </Frame>
-                <Frame x:Name="NewlnBtn"
-                    HasShadow="True"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    CornerRadius="25"
-                    IsVisible="false"
-                    Scale="0"
-                    Padding="0"
-                    HorizontalOptions="Center">
-                    <Button ImageSource="BOProduct_16x16"
-                        BackgroundColor="{StaticResource ComplementaryLight}"
-                        Command="{Binding ΝέαΓραμμή}"/>
-                </Frame>
-                <Frame x:Name="QuickSelectionBtn"
-                    HasShadow="True"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    CornerRadius="25"
-                    IsVisible="false"
-                    Scale="0"
-                    Padding="0"
-                    HorizontalOptions="Center">
-                    <Button ImageSource="BO_Product_Group"
-                        BackgroundColor="{StaticResource ComplementaryLight}"
-                        Command="{Binding ΓρήγορηΕπιλογή}"/>
-                </Frame>
+                <StackLayout>
+                    <Frame x:Name="ScanSelectionBtn" Padding="0" CornerRadius="25" IsVisible="false">
+                        <StackLayout Orientation="Horizontal">
+                            <Grid>
+                                <StackLayout Orientation="Horizontal">
+                                    <Frame Padding="0" WidthRequest="40" HeightRequest="20" BackgroundColor="{StaticResource ComplementaryLight}" >
+                                        <Image Source="Barcode_16x16" 
+                                        Margin="10"
+                                        />
+                                    </Frame>
+                                    <StackLayout VerticalOptions="Center" Margin="10">
+                                        <Label Text="Imager" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <Button BackgroundColor="White" Opacity="0.3" Command="{Binding Scanner}"/>
+                            </Grid>
+
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                <StackLayout>
+                    <Frame x:Name="BarCodeSelectionBtn" Padding="0" CornerRadius="25" IsVisible="false">
+                        <StackLayout Orientation="Horizontal">
+                            <Grid>
+                                <StackLayout Orientation="Horizontal">
+                                    <Frame Padding="0" WidthRequest="40" HeightRequest="20" BackgroundColor="{StaticResource ComplementaryLight}" >
+                                        <Image Source="Barcode_16x16" 
+                                        Margin="10"
+                                        />
+                                    </Frame>
+                                    <StackLayout VerticalOptions="Center" Margin="10">
+                                        <Label Text="Επιλογή BarCode" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <Button BackgroundColor="White" Opacity="0.3" Command="{Binding BarCodeSelection}"/>
+                            </Grid>
+
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                <StackLayout>
+                    <Frame x:Name="NewlnBtn" IsVisible="false" Padding="0" CornerRadius="25" >
+                        <StackLayout Orientation="Horizontal">
+                            <Grid>
+                                <StackLayout Orientation="Horizontal">
+                                    <Frame Padding="0" WidthRequest="40" HeightRequest="20" BackgroundColor="{StaticResource ComplementaryLight}" >
+                                        <Image Source="BOProduct_16x16" 
+                                        Margin="10"
+                                        />
+                                    </Frame>
+                                    <StackLayout VerticalOptions="Center" Margin="10">
+                                        <Label Text="Επιλογή Είδους" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <Button BackgroundColor="White" Opacity="0.3" Command="{Binding ΝέαΓραμμή}"/>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                <StackLayout>
+                    <Frame x:Name="QuickSelectionBtn" IsVisible="false" Padding="0" CornerRadius="25" >
+                        <StackLayout Orientation="Horizontal">
+                            <Grid>
+                                <StackLayout Orientation="Horizontal">
+                                    <Frame Padding="0" WidthRequest="40" HeightRequest="20" BackgroundColor="{StaticResource ComplementaryLight}" >
+                                        <Image Source="BO_Product_Group" 
+                                        Margin="10"
+                                        />
+                                    </Frame>
+                                    <StackLayout VerticalOptions="Center" Margin="10">
+                                        <Label Text="Γρήγορη Επιλογή" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <Button BackgroundColor="White" Opacity="0.3" Command="{Binding ΓρήγορηΕπιλογή}"/>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                
                 <Frame 
                     HasShadow="True"
                     WidthRequest="70"

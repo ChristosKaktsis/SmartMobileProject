@@ -31,7 +31,7 @@
                 </StackLayout>
                 <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding BarCodeList}" 
                                    SelectionMode="Single"
-                                   SelectedItems="{Binding SelectedBarCode}">
+                                   SelectedItem="{Binding SelectedBarCode,Mode=TwoWay}">
                     <!-- Define ItemTemplate here.-->
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate>
@@ -42,15 +42,15 @@
                                            Margin="0"
                                            FontSize="16"
                                            TextColor="#55575c"/>
-                                        <Label Text="{Binding ΤιμήΧονδρικής}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                        <Label Text="{Binding ΤιμήΧονδρικής ,StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout>
                                             <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                            <Label Text="Color b asdasd"/>
-                                            <Label Text=" size adasdasdasdassd s"/>
+                                            <Label Text="{Binding Χρώμα}"/>
+                                            <Label Text="{Binding Μέγεθος}"/>
                                         </StackLayout>
                                     </StackLayout>
                                 </StackLayout>
@@ -66,15 +66,15 @@
                                            Margin="0"
                                            FontSize="16"
                                            TextColor="#55575c"/>
-                                        <Label Text="{Binding ΤιμήΧονδρικής}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                        <Label Text="{Binding ΤιμήΧονδρικής, StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout>
                                             <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                            <Label Text="Color b asdasd"/>
-                                            <Label Text=" size adasdasdasdassd s"/>
+                                            <Label Text="{Binding Χρώμα}"/>
+                                            <Label Text="{Binding Μέγεθος}"/>
                                         </StackLayout>
                                     </StackLayout>
                                 </StackLayout>
@@ -87,15 +87,13 @@
                     </dxcv:DXCollectionView.SortDescriptions>
                 </dxcv:DXCollectionView>
             </StackLayout>
-            <StackLayout VerticalOptions="End" BackgroundColor="Transparent" IsVisible="false">
+            <StackLayout VerticalOptions="End" BackgroundColor="Transparent" IsVisible="{Binding IsItemSelected,Mode=OneWay}">
                 <Frame HasShadow="False" BackgroundColor="Transparent">
                     <StackLayout Spacing="40">
                         <dxe:NumericEdit x:Name="posotita"
                              IsUpDownIconVisible="True" 
                              StepValue="1"
-                             MinValue="1"
-                             MaxValue="1000"
-                             AllowLooping="False"
+                             Value="{Binding Ποσότητα}"                           
                              LabelText="Ποσότητα"
                              BackgroundColor="white"
                                          BorderColor="{StaticResource Primary}"
@@ -104,7 +102,7 @@
                              WidthRequest="150"
                              SelectValueOnFocus="True"
                              HorizontalOptions="End"/>
-                        <Button Text="Προσθήκη" TextTransform="None" />
+                        <Button Text="Προσθήκη" TextTransform="None" Command="{Binding Προσθήκη}" />
                     </StackLayout>
                 </Frame>
             </StackLayout>

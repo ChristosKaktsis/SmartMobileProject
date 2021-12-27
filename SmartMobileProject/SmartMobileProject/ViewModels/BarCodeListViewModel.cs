@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,8 +13,11 @@ using Xamarin.Forms;
 
 namespace SmartMobileProject.ViewModels
 {
+    [QueryProperty(nameof(ItemId), nameof(ItemId))]
     class BarCodeListViewModel :BaseViewModel
     {
+        private string itemId;
+
         public Command BarCodeDetailCommand { get; set; }
         public Command LoadBarCodeItemsCommand { get; set; }
         public ObservableCollection<BarCodeΕίδους> BarCodeList { get; set; } 
@@ -23,6 +27,19 @@ namespace SmartMobileProject.ViewModels
             LoadBarCodeItemsCommand = new Command(async () => await LoadBarCodeItems());
             BarCodeList = new ObservableCollection<BarCodeΕίδους>();
         }
+        public string ItemId
+        {
+            get
+            {
+                return itemId;
+            }
+            set
+            {
+                itemId = value;             
+            }
+        }
+
+        
 
         private  Task LoadBarCodeItems()
         {
@@ -31,7 +48,7 @@ namespace SmartMobileProject.ViewModels
                 BarCodeList.Clear();
                 using (UnitOfWork uow = new UnitOfWork())
                 {
-                    var barcodeitems = uow.Query<BarCodeΕίδους>();
+                    var barcodeitems = uow.Query<BarCodeΕίδους>().Where(x=> x.ΕίδοςOid.ToString()==ItemId);
                     foreach(var item in barcodeitems)
                     {
                         BarCodeList.Add(item);

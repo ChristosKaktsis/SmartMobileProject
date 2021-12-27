@@ -636,8 +636,9 @@ namespace SmartMobileProject.Services
                             sunAxia += gram.ΑξίαΓραμμής;
                         }
                     }
-
-                    htmlstring += $@"<tr>
+                    //mhn kaneis print ama exei timi 0 sto fpa
+                    if(kathAxia != 0 || sunoloFPA != 0 || sunAxia !=0)
+                        htmlstring += $@"<tr>
                           <td> {item.Φπακανονικό} %</td >
                           <td>{kathAxia.ToString("0.##")} </td>
                           <td>{sunoloFPA.ToString("0.##")} </td>

@@ -20,7 +20,7 @@ namespace SmartMobileProject.Views
         public ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewPage()
         {
             InitializeComponent();
-            this.SearchType.ItemsSource = new List<string> { "Κωδικός", "Περιγραφή", "QR" };
+            this.SearchType.ItemsSource = new List<string> { "Κωδικός", "Περιγραφή" };
             this.SearchType.SelectedIndex = 1;
             this.Search.TextChanged += Search_TextChanged;
         }

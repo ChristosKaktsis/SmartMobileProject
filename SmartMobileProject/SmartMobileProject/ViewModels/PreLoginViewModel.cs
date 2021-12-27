@@ -20,13 +20,16 @@ namespace SmartMobileProject.ViewModels
             
             if (Preferences.Get("Remember", false))
             {
-               await Shell.Current.Navigation.PopAsync();
+               await Shell.Current.Navigation.PopAsync();             
                 return;
             }
             
             AllLoading = true;
             if (OnlineMode)
+            {             
                 await XpoHelper.CreatePolitisData();
+                await XpoHelper.CreateSTOIXEIAETAIRIASData();
+            }               
             AllLoading = false;
             await AppShell.Current.GoToAsync("///LoginPage");
         }
