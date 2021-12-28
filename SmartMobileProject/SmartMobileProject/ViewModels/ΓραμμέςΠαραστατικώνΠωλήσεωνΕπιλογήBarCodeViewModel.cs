@@ -39,14 +39,14 @@ namespace SmartMobileProject.ViewModels
                 νεαΓραμμή.Ποσότητα = Ποσότητα;
 
                 νεαΓραμμή.Είδος = uow.Query<Είδος>().Where(x => x.SmartOid == SelectedBarCode.ΕίδοςOid).FirstOrDefault();
-                νεαΓραμμή.Τιμή = SelectedBarCode.ΤιμήΧονδρικής;
+                νεαΓραμμή.Τιμή = SelectedBarCode.ΑκολουθείΤήνΤιμήΕίδους ? νεαΓραμμή.Είδος.ΤιμήΧονδρικής : SelectedBarCode.ΤιμήΧονδρικής;
                 νεαΓραμμή.ΠοσοστόΦπα = SelectedBarCode.ΦΠΑ != null ? (SelectedBarCode.ΦΠΑ.Φπακανονικό / 100) : 0;
                 νεαΓραμμή.Εκπτωση = 0;
                 νεαΓραμμή.ΑξίαΕκπτωσης = (decimal)(νεαΓραμμή.Ποσότητα * νεαΓραμμή.Τιμή * νεαΓραμμή.Εκπτωση);
                 νεαΓραμμή.ΚαθαρήΑξία = (decimal)(νεαΓραμμή.Ποσότητα * νεαΓραμμή.Τιμή) - νεαΓραμμή.ΑξίαΕκπτωσης;
                 νεαΓραμμή.Φπα = νεαΓραμμή.ΚαθαρήΑξία * (decimal)νεαΓραμμή.ΠοσοστόΦπα;
                 νεαΓραμμή.ΑξίαΓραμμής = νεαΓραμμή.ΚαθαρήΑξία + νεαΓραμμή.Φπα;
-                
+                νεαΓραμμή.BarCodeΕίδους = uow.Query<BarCodeΕίδους>().Where(x => x.Oid == SelectedBarCode.Oid).FirstOrDefault();
                 νεαΓραμμή.ΠαραστατικάΠωλήσεων = ΝέοΠαραστατικόViewModel.Order;
                 await Shell.Current.GoToAsync("..");
             }
@@ -77,6 +77,7 @@ namespace SmartMobileProject.ViewModels
                 if(!BarCodeList.Any())
                     await Application.Current.MainPage.DisplayAlert("Search",
                      "Το BarCode Δεν βρέθηκε!", "Εντάξει");
+                SelectedBarCode = BarCodeList.FirstOrDefault();
 
                 return await Task.FromResult(true);
             }

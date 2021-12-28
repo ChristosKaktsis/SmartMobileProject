@@ -19,19 +19,19 @@ namespace SmartMobileProject.ViewModels
         double τιμή;
         public Είδος Eidos
         {
-            get
-            {
-                return eidos;
-            }
+            get => eidos;          
             set
             {
-               
-                SetProperty(ref eidos, value);
+                if (value == null)
+                    return;
+                value = ΕίναιBarCode ? LineOfOrders.Είδος : value;
+                SetProperty(ref eidos, value);              
+                if (LineOfOrders == null)
+                    return;
                 LineOfOrders.Είδος = value;
-                LineOfOrders.Τιμή = value.ΤιμήΧονδρικής;
-                Τιμή = value.ΤιμήΧονδρικής;
-                ΠοσοστόΦπα = value.ΦΠΑ != null ? (value.ΦΠΑ.Φπακανονικό / 100) : 0;
-                OnPropertyChanged("Eidos");
+                LineOfOrders.Τιμή = ΕίναιBarCode? LineOfOrders.Τιμή : value.ΤιμήΧονδρικής;
+                Τιμή = ΕίναιBarCode ? LineOfOrders.Τιμή : value.ΤιμήΧονδρικής;
+                ΠοσοστόΦπα = value.ΦΠΑ != null ? (value.ΦΠΑ.Φπακανονικό / 100) : 0;               
                 ChangeValue();
             }
         }
@@ -80,7 +80,15 @@ namespace SmartMobileProject.ViewModels
             }
         }
         Single ποσοστόφπα;
-
+        public bool ΕίναιBarCode
+        {
+            get { return _ΕίναιBarCode; }
+            set
+            {
+                SetProperty(ref _ΕίναιBarCode, value);               
+            }
+        }
+        bool _ΕίναιBarCode;
         private void ChangeValue()
         {
             LineOfOrders.ΑξίαΕκπτωσης = (decimal)(LineOfOrders.Ποσότητα * LineOfOrders.Τιμή * LineOfOrders.Εκπτωση);
@@ -116,10 +124,11 @@ namespace SmartMobileProject.ViewModels
             else
             {
                 LineOfOrders = ΝέοΠαραστατικόViewModel.editline;
+                ΕίναιBarCode = LineOfOrders.BarCodeΕίδους != null;
                 Eidos = LineOfOrders.Είδος;
                 Ποσότητα = LineOfOrders.Ποσότητα;
                 Εκπτωση = LineOfOrders.Εκπτωση;
-                ΠοσοστόΦπα = LineOfOrders.ΠοσοστόΦπα;
+                ΠοσοστόΦπα = LineOfOrders.ΠοσοστόΦπα;              
             }
             
             EidosCollection = new XPCollection<Είδος>(uow);

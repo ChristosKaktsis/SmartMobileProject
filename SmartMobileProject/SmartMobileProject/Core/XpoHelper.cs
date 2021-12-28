@@ -386,14 +386,24 @@ namespace SmartMobileProject.Core
                 if (dt == null) { return false; }
                 foreach (DataRow row in dt.Rows)
                 {
+                    ΣειρέςΠαραστατικώνΠωλήσεων data;
                     var seireslist = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.SmartOid.ToString() == row["Oid"].ToString());
                     var seiresmeIdioOnoma = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.Σειρά == row["Σειρά"].ToString());
-                    if (seireslist.Any() || seiresmeIdioOnoma.Any())
+                    if (seireslist.Any())
                     {
-                        seireslist.FirstOrDefault().ΚίνησηΣυναλασόμενου = row["ΚίνησηΣυναλασόμενου"] == DBNull.Value ? 2 : int.Parse(row["ΚίνησηΣυναλασόμενου"].ToString());
-                        continue;
+                        //seireslist.FirstOrDefault().ΚίνησηΣυναλασόμενου = row["ΚίνησηΣυναλασόμενου"] == DBNull.Value ? 2 : int.Parse(row["ΚίνησηΣυναλασόμενου"].ToString());
+                        //continue;
+                        data = seireslist.FirstOrDefault();
                     }
-                    ΣειρέςΠαραστατικώνΠωλήσεων data = new ΣειρέςΠαραστατικώνΠωλήσεων(uow);
+                    else if(seiresmeIdioOnoma.Any())
+                    {
+                        data = seiresmeIdioOnoma.FirstOrDefault();
+                    }
+                    else
+                    {
+                        data = new ΣειρέςΠαραστατικώνΠωλήσεων(uow);
+                    }
+                    
                     data.SmartOid = Guid.Parse((string)row["Oid"]);
                     data.Σειρά = row["Σειρά"].ToString();
                     data.Περιγραφή = row["Περιγραφή"].ToString();
@@ -698,11 +708,16 @@ namespace SmartMobileProject.Core
                 }
                 foreach (DataRow row in dt.Rows)
                 {
+                    Είδος data;
                     if (uow.Query<Είδος>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
                     {
-                        continue;
+                        data = uow.Query<Είδος>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).FirstOrDefault();
                     }
-                    Είδος data = new Είδος(uow);
+                    else
+                    {
+                        data = new Είδος(uow);
+                    }
+                    
                     data.SmartOid = Guid.Parse((string)row["Oid"]);
                     data.Κωδικός = row["Κωδικός"].ToString();
                     data.Περιγραφή = row["Περιγραφή"].ToString();
@@ -775,17 +790,21 @@ namespace SmartMobileProject.Core
                 }
                 foreach (DataRow row in dt.Rows)
                 {
+                    BarCodeΕίδους data;
                     if (uow.Query<BarCodeΕίδους>().Where(x => x.Κωδικός == (string)row["BarCode"]).Any())
                     {
-                        continue;
+                        data = uow.Query<BarCodeΕίδους>().Where(x => x.Κωδικός == (string)row["BarCode"]).FirstOrDefault();
                     }
-                    BarCodeΕίδους data = new BarCodeΕίδους(uow);                    
+                    else
+                    {
+                        data = new BarCodeΕίδους(uow);
+                    }                                      
                     data.Κωδικός = row["BarCode"].ToString();
                     data.Περιγραφή = row["Περιγραφή"].ToString();
                     data.ΤιμήΧονδρικής = row["ΤιμήΧονδρικής"] != DBNull.Value ? double.Parse(row["ΤιμήΧονδρικής"].ToString()) : 0.0;
                     data.Μέγεθος = row["Μεγέθη"] != DBNull.Value ? row["Μεγέθη"].ToString() : "";
                     data.Χρώμα = row["Χρώματα"] != DBNull.Value ? row["Χρώματα"].ToString() : "";
-                    data.ΑκολουθείΤήνΤιμήΕίδους = row["ΑκολουθείΤήνΤιμήΕίδους"].ToString() == "0"? false : true;
+                    data.ΑκολουθείΤήνΤιμήΕίδους = bool.Parse(row["ΑκολουθείΤήνΤιμήΕίδους"].ToString());
                     data.ΕίδοςOid = row["Είδος"] != DBNull.Value ? Guid.Parse(row["Είδος"].ToString()) : Guid.Empty;
                     if (!string.IsNullOrEmpty(row["ΦΠΑ"].ToString()))
                     {

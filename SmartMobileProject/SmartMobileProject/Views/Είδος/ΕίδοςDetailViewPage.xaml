@@ -103,6 +103,7 @@
                           LabelText="Τιμή Χονδρικής"
                           LabelFontSize="Body"
                           IsLabelFloating="True"
+                          SelectValueOnFocus="True"
                           Value="{Binding Eidos.ΤιμήΧονδρικής}"/>
                 <Button Text="BarCode" Grid.Row="9" Command="{Binding BarCodeΕίδους}"/>
             </Grid>

@@ -46,23 +46,23 @@
                    Text="Γραμμές Παραστατικών Πωλήσεων"
                    FontAttributes="Bold" FontSize="18"/>
             <Frame  Grid.Row="2"
-                    CornerRadius="20"
-                    BorderColor="Gray">
+                    CornerRadius="10"
+                    BorderColor="Gray" Padding="4">
                 <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding NewOrder.ΓραμμέςΠαραστατικώνΠωλήσεων}" >
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame BorderColor="LightGray" Padding="0">
-                                <Grid Padding="10">
+                            <Frame BorderColor="LightGray" Padding="0" Margin="2" CornerRadius="10" HasShadow="false">
+                                <Grid Margin ="5">
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <Label Text="{Binding Είδος.Περιγραφή}" 
-                                   Margin="0"
-                                   FontSize="16"
-                                   TextColor="#55575c"/>
+                                    <Label Text="{Binding BarCodeInfo}" 
+                                           Margin="0"
+                                           FontSize="16"
+                                           TextColor="#55575c"/>
                                     <StackLayout Grid.Row="1" Orientation="Horizontal">
                                         <Label Text="{Binding Ποσότητα ,StringFormat='Ποσότητα: {0}'}"  Padding="0, 0, 0, 0"/>
-                                        <Label Text="{Binding  ΑξίαΓραμμής ,StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                        <Label Text="{Binding  ΚαθαρήΑξία ,StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
                                     </StackLayout>
                                 </Grid>
                             </Frame>

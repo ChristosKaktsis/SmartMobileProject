@@ -389,12 +389,13 @@ namespace SmartMobileProject.Services
             foreach (var i in order.ΓραμμέςΠαραστατικώνΠωλήσεων)
             {
                 grammes += "<tr>" +
-                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin\">" + i.Είδος.Κωδικός + "</td>" +
-                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin\">" + i.Είδος.Περιγραφή + "</td>" +
+                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin\">" +(i.BarCodeΕίδους==null? i.Είδος.Κωδικός : i.BarCodeΕίδους.Κωδικός)  + "</td>" +
+                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin\">" + (i.BarCodeΕίδους == null ? i.Είδος.Περιγραφή : i.BarCodeΕίδους.Περιγραφή +" "+i.BarCodeΕίδους.Χρώμα+" "+i.BarCodeΕίδους.Μέγεθος) + "</td>" +
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.Ποσότητα + "</td>" +
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.Τιμή + "</td>" +
-                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.ΑξίαΓραμμής.ToString("0.##") + "</td>" +
+                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.ΚαθαρήΑξία.ToString("0.##") + "</td>" +
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.ΠοσοστόΦπα * 100 + "%</td>" +
+                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.ΑξίαΓραμμής.ToString("0.##") + "</td>" +
                        "</tr>";
                 
                 switch (i.ΠοσοστόΦπα * 100)
@@ -567,8 +568,9 @@ namespace SmartMobileProject.Services
                 "<td style=\"text-align: center; background-color: #CCFFFF; border-style: groove; border-width: thin\">Ποσότητα</td>"+
                 "<td style=\"text-align: center; background-color: #CCFFFF; border-style: groove; border-width: thin\">Τιμή μονάδας</td>"+
                 "<td style=\"text-align: center; background-color: #CCFFFF; border-style: groove; border-width: thin\">Αξία</td>"+
-                "<td style=\"text-align: center; background-color: #CCFFFF; border-style: groove; border-width: thin\">ΦΠΑ</td>"+@"
-            </tr>"+grammes+@"
+                "<td style=\"text-align: center; background-color: #CCFFFF; border-style: groove; border-width: thin\">ΦΠΑ</td>"+
+                 "<td style=\"text-align: center; background-color: #CCFFFF; border-style: groove; border-width: thin\">Ποσό</td>" + @"
+            </tr>" +grammes+@"
         </table>
         <br/><br/>
     </div>

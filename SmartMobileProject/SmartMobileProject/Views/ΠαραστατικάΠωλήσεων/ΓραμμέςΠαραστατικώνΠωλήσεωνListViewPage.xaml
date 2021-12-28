@@ -18,10 +18,10 @@
 
     <ContentPage.Content>
         <Grid  
-            RowSpacing="20"
+            RowSpacing="0"
             ColumnSpacing="8">
             <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
+                <RowDefinition Height="0"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -48,16 +48,16 @@
                                Image="edit_white_18.png"/>
                 </dxg:DataGridView.EndSwipeItems>
                 <dxg:DataGridView.Columns>
-                    <dxg:TextColumn FieldName="Είδος.Περιγραφή" Caption="Είδος" RowSpan="2" ColumnSpan="2" VerticalContentAlignment="Start" IsReadOnly="True"/>
+                    <dxg:TextColumn FieldName="BarCodeInfo" Caption="Είδος" RowSpan="2" ColumnSpan="2" VerticalContentAlignment="Start" IsReadOnly="True"/>
+                    <dxg:TextColumn FieldName="ΚαθαρήΑξία" Column="2" DisplayFormat="n2" Suffix="€" HorizontalContentAlignment="End" IsReadOnly="True"/>
                     <dxg:NumberColumn FieldName="Ποσότητα"  DisplayFormat="Ποσότητα: {0}" Row="1" Column="2"   VerticalContentAlignment="Center" />
-                    <dxg:TextColumn FieldName="ΑξίαΓραμμής" Column="2" DisplayFormat="n2" Suffix="€" HorizontalContentAlignment="End" IsReadOnly="True"/>
                 </dxg:DataGridView.Columns>
                 <dxg:DataGridView.TotalSummaries>
                     <dxg:GridColumnSummary FieldName="Ποσότητα" Type="Sum"
                                                    DisplayFormat="Ποσότητα: {0}"/>
-                    <dxg:GridColumnSummary FieldName="ΑξίαΓραμμής" Type="Sum"
+                    <dxg:GridColumnSummary FieldName="ΚαθαρήΑξία" Type="Sum"
                                                    DisplayFormat="Αξία: {0:n0} €"/>
-                    <dxg:GridColumnSummary FieldName="Είδος.Περιγραφή" Type="Count"
+                    <dxg:GridColumnSummary FieldName="BarCodeInfo" Type="Count"
                                                    DisplayFormat="Count: {0}"/>
                 </dxg:DataGridView.TotalSummaries>
 
@@ -65,15 +65,16 @@
             <StackLayout x:Name="BackgroundDisable" Grid.Row="1" BackgroundColor="Gray" Opacity="0.5" IsVisible="false"/>
             <StackLayout Grid.Row="1"
                          Spacing="20"
+                         Margin="0,0,0,20"
                          HorizontalOptions="Center"
                          VerticalOptions="End">
                 <StackLayout>
-                    <Frame x:Name="ScanSelectionBtn" Padding="0" CornerRadius="25" IsVisible="false">
+                    <Frame x:Name="ScanSelectionBtn" Padding="0" CornerRadius="25" IsVisible="false" Scale="0">
                         <StackLayout Orientation="Horizontal">
                             <Grid>
                                 <StackLayout Orientation="Horizontal">
                                     <Frame Padding="0" WidthRequest="40" HeightRequest="20" BackgroundColor="{StaticResource ComplementaryLight}" >
-                                        <Image Source="Barcode_16x16" 
+                                        <Image Source="imager" 
                                         Margin="10"
                                         />
                                     </Frame>
@@ -88,7 +89,7 @@
                     </Frame>
                 </StackLayout>
                 <StackLayout>
-                    <Frame x:Name="BarCodeSelectionBtn" Padding="0" CornerRadius="25" IsVisible="false">
+                    <Frame x:Name="BarCodeSelectionBtn" Padding="0" CornerRadius="25" IsVisible="false" Scale="0">
                         <StackLayout Orientation="Horizontal">
                             <Grid>
                                 <StackLayout Orientation="Horizontal">
@@ -108,7 +109,7 @@
                     </Frame>
                 </StackLayout>
                 <StackLayout>
-                    <Frame x:Name="NewlnBtn" IsVisible="false" Padding="0" CornerRadius="25" >
+                    <Frame x:Name="NewlnBtn" IsVisible="false" Padding="0" CornerRadius="25" Scale="0">
                         <StackLayout Orientation="Horizontal">
                             <Grid>
                                 <StackLayout Orientation="Horizontal">
@@ -127,7 +128,7 @@
                     </Frame>
                 </StackLayout>
                 <StackLayout>
-                    <Frame x:Name="QuickSelectionBtn" IsVisible="false" Padding="0" CornerRadius="25" >
+                    <Frame x:Name="QuickSelectionBtn" IsVisible="false" Padding="0" CornerRadius="25" Scale="0">
                         <StackLayout Orientation="Horizontal">
                             <Grid>
                                 <StackLayout Orientation="Horizontal">

@@ -25,7 +25,9 @@
                     <RowDefinition Height="70*"/>
                     <RowDefinition Height="70*"/>
                     <RowDefinition Height="70*"/>
+                    <RowDefinition Height="70*"/>
                     <RowDefinition Height="10"/>
+                    <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="0"/>
                 </Grid.RowDefinitions>
@@ -37,11 +39,34 @@
                     <Label Text="{Binding Title}" FontSize="20"
                            HorizontalOptions="StartAndExpand"/>
                 </StackLayout>
-               
-                <dxe:ComboBoxEdit Grid.Row="2"                              
+                <Frame Grid.Row="2" Padding="0" BackgroundColor="Transparent">
+                    <StackLayout Orientation="Horizontal" >
+                        <dxe:ComboBoxEdit                               
+                              ItemsSource="{Binding EidosCollection}"
+                              DisplayMember="Κωδικός"
+                              SelectedItem="{Binding Eidos,Mode=TwoWay}"
+                              LabelText="Κωδικός"
+                              IsFilterEnabled="True" FilterMode="Contains"
+                              LabelFontSize="Body" 
+                              IsLabelFloating="True"
+                              WidthRequest="200"
+                              HorizontalOptions="StartAndExpand">
+                            <dxe:ComboBoxEdit.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Label Padding="10" Text="{Binding Κωδικός}" Grid.ColumnSpan="2" FontAttributes="Bold"/>
+                                        <Label Padding="10" Grid.Column="2" Text="{Binding ΤιμήΧονδρικής , StringFormat='{0} €'}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </dxe:ComboBoxEdit.ItemTemplate>
+                        </dxe:ComboBoxEdit>
+                        <dxe:CheckEdit HorizontalOptions="End" Label="Είναι BarCode" LabelFontSize="18" IsEnabled="False" IsChecked="{Binding ΕίναιBarCode ,Mode=OneWay}"/>
+                    </StackLayout>
+                </Frame>
+                <dxe:ComboBoxEdit Grid.Row="3"                              
                               ItemsSource="{Binding EidosCollection}"
                               DisplayMember="Περιγραφή"
-                              SelectedItem="{Binding Eidos}"
+                              SelectedItem="{Binding Eidos,Mode=TwoWay}"
                               LabelText="Είδος"
                               IsFilterEnabled="True" FilterMode="Contains"
                               LabelFontSize="Body"
@@ -55,7 +80,7 @@
                         </DataTemplate>
                     </dxe:ComboBoxEdit.ItemTemplate>
                 </dxe:ComboBoxEdit>
-                <dxe:NumericEdit Grid.Row="3"
+                <dxe:NumericEdit Grid.Row="4"
                           Grid.Column="0"
                           LabelText="Ποσότητα"
                           LabelFontSize="Body"
@@ -63,7 +88,7 @@
                           IsUpDownIconVisible="True"
                           SelectValueOnFocus="True"
                           Value="{Binding Ποσότητα}"/>
-                <dxe:NumericEdit Grid.Row="4"
+                <dxe:NumericEdit Grid.Row="5"
                           Grid.Column="0"
                           LabelText="Τιμή"
                           LabelFontSize="Body"
@@ -74,7 +99,7 @@
                           MaxValue="100000000000"
                           SelectValueOnFocus="True"
                           Value="{Binding Τιμή }"/>
-                <Grid Grid.Row="5">
+                <Grid Grid.Row="6">
                     <dxe:NumericEdit Grid.Row="0"
                           Grid.Column="0"
                           LabelText="Εκπτωση"
@@ -94,7 +119,7 @@
                           IsReadOnly="True"
                           Value="{Binding LineOfOrders.ΑξίαΕκπτωσης}"/>
                 </Grid>
-                <dxe:NumericEdit Grid.Row="6"
+                <dxe:NumericEdit Grid.Row="7"
                           Grid.Column="0"
                           LabelText="Καθαρή Αξία"
                           LabelFontSize="Body"
@@ -103,7 +128,7 @@
                           DisplayFormat="n"
                           Suffix="€"
                           Value="{Binding LineOfOrders.ΚαθαρήΑξία}"/>
-                <Grid Grid.Row="7">
+                <Grid Grid.Row="8">
                     <dxe:NumericEdit Grid.Row="0"
                           Grid.Column="0"
                           LabelText="Ποσοστό Φπα"
@@ -124,7 +149,7 @@
                           DisplayFormat="n"                        
                           Value="{Binding LineOfOrders.Φπα}"/>
                 </Grid>
-                <dxe:NumericEdit Grid.Row="8"
+                <dxe:NumericEdit Grid.Row="9"
                           Grid.Column="0"
                           LabelText="Αξία Γραμμής"
                           LabelFontSize="Body"
@@ -143,7 +168,7 @@
                     <Button Command="{Binding Ακύρωση}"
                            ImageSource="arrow_back_white_20"/>
                 </Frame>
-                <Frame Grid.Row="10"
+                <Frame Grid.Row="11"
                            Grid.Column="0"
                            Padding="0"
                            CornerRadius="10"

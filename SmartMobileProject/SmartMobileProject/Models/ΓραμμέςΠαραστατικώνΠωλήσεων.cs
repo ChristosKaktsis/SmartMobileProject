@@ -36,6 +36,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(Είδος), ref είδος, value); }
         }
         Είδος είδος;
+        public BarCodeΕίδους BarCodeΕίδους
+        {
+            get { return barCodeΕίδους; }
+            set { SetPropertyValue(nameof(BarCodeΕίδους), ref barCodeΕίδους, value); }
+        }
+        BarCodeΕίδους barCodeΕίδους;
 
         public Single Ποσότητα
         {
@@ -105,6 +111,30 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(ΠαραστατικάΠωλήσεων), ref παραστατικάπωλήσεων, value); }
         }
         ΠαραστατικάΠωλήσεων παραστατικάπωλήσεων;
+        [NonPersistent]
+        public string BarCodeString 
+        { 
+            get 
+            {
+                return BarCodeΕίδους != null ? $"{BarCodeΕίδους.Κωδικός}\n{BarCodeΕίδους.Περιγραφή}\n{BarCodeΕίδους.Χρώμα} {BarCodeΕίδους.Μέγεθος}" : string.Empty;
+            } 
+        }
+        [NonPersistent]
+        public string BarCodeCode
+        {
+            get
+            {
+                return BarCodeΕίδους != null ? BarCodeΕίδους.Κωδικός: string.Empty;
+            }
+        }
+        [NonPersistent]
+        public string BarCodeInfo
+        {
+            get
+            {
+                return BarCodeΕίδους != null ? $"{BarCodeΕίδους.Περιγραφή} {BarCodeΕίδους.Χρώμα} {BarCodeΕίδους.Μέγεθος}\n{BarCodeΕίδους.Κωδικός}" : $"{Είδος.Περιγραφή}\n{Είδος.Κωδικός}";
+            }
+        }
         public string ToJson()
         {
             string json = string.Empty;
@@ -112,6 +142,7 @@ namespace SmartMobileProject.Models
                 "\",\"ΗμνίαΔημιουργίας\":\"" + (string.IsNullOrEmpty(ΠαραστατικάΠωλήσεων.Ημνία.ToString()) ? "" : ΠαραστατικάΠωλήσεων.Ημνία.ToString()) +
                 "\",\"ΠαραστατικάΠωλήσεων\":\"" + ΠαραστατικάΠωλήσεων.SmartOid +
                 "\",\"Είδος\":\"" + Είδος.SmartOid +
+                "\",\"BarCode\":\"" + BarCodeCode +
                 "\",\"Ποσότητα\":\"" + Ποσότητα +
                 "\",\"Τιμή\":\"" + Τιμή +
                 "\",\"ΚαθαρήΑξία\":\"" + ΚαθαρήΑξία +
