@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:model="clr-namespace:SmartMobileProject.Models"
+             x:Class="SmartMobileProject.Views.ΚινήσειςΠελατώνViewPage"
+             Title="Κινήσεις">
+    
+    <RefreshView x:DataType="vm:ΚινήσειςΠελατώνViewModel"  IsRefreshing="{Binding IsBusy}"
+             Command="{Binding LoadItemsCommand}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <Frame>
+                <StackLayout Orientation="Horizontal">
+                    <Label  Text="Τρέχων Υπόλοιπο :" FontSize="20"/>
+                    <Label  Text="{Binding ΤρέχωνΥπόλοιπο,StringFormat='{0}€'}" FontSize="20" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </Frame>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding KiniseisList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="0" Margin="10" BorderColor="LightGray">
+                            <Grid Padding="10" x:DataType="model:ΚινήσειςΠελατών">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Label Text="{Binding Παραστατικό}" FontSize="16" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" Text="{Binding Ημνία}" HorizontalOptions="End"/>
+                                <Frame Grid.Row="1"  Padding="5">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label  Text="Χρέωση :" />
+                                        <Label  Text="{Binding Χρέωση,StringFormat='{0}€'}" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                </Frame>
+                                <Frame Grid.Row="1" Grid.Column="1" Padding="5">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label  Text="Πίστωση :"/>
+                                        <Label  Text="{Binding Πίστωση,StringFormat='{0}€'}" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                </Frame>
+                                <Frame  Grid.Row="2" Padding="5">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label  Text="Υπόλοιπο :"/>
+                                        <Label Text="{Binding  Υπόλοιπο,StringFormat='{0}€'}" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                </Frame>
+                                <Frame  Grid.Row="2" Grid.Column="1" Padding="5">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label  Text="Προοδ.Υπόλ. :"/>
+                                        <Label  Text="{Binding ΠροοδευτικόΥπόλοιπο,StringFormat='{0}€'}" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                </Frame>
+                                
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </RefreshView>
+</ContentPage>

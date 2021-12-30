@@ -47,6 +47,7 @@ namespace SmartMobileProject
             Routing.RegisterRoute(nameof(ΕνέργειαDetailViewPage), typeof(ΕνέργειαDetailViewPage));
             Routing.RegisterRoute(nameof(BarCodeListViewPage), typeof(BarCodeListViewPage));
             Routing.RegisterRoute(nameof(BarCodeDetailViewPage), typeof(BarCodeDetailViewPage));
+            Routing.RegisterRoute(nameof(ΚινήσειςΠελατώνViewPage), typeof(ΚινήσειςΠελατώνViewPage));
             Routing.RegisterRoute("Settings/PrintSettingsPage", typeof(PrintSettingsPage));
             Routing.RegisterRoute("Settings/ΣειρέςΠαρΕισπPage", typeof(ΣειρέςΠαρΕισπPage));
             Routing.RegisterRoute("Settings/ΣτοιχείαΕταιρίαςPage", typeof(ΣτοιχείαΕταιρίαςPage));
@@ -99,6 +100,11 @@ namespace SmartMobileProject
         private async void Activation_MenuItem_Clicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(ActivationPage));
+        }
+
+        private async void Exit_MenuItem_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("///LoginPage");
         }
     }
 }

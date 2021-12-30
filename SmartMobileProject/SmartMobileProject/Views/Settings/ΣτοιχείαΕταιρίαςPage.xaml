@@ -6,7 +6,7 @@
              x:Class="SmartMobileProject.Views.Settings.ΣτοιχείαΕταιρίαςPage"
              Title="Στοιχεία Εταιρίας">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" Command="{Binding Αποθήκευση}"/>
+        <ToolbarItem Text="Αποθήκευση" Command="{Binding Αποθήκευση}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
         <vm:SettingsStaticSourceViewModel/>

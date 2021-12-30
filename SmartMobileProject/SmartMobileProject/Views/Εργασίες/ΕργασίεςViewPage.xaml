@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
              xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup" 
              xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors" 
-             xmlns:dxcv="http://schemas.devexpress.com/xamarin/2014/forms/collectionview"
+             xmlns:dxcv="clr-namespace:DevExpress.XamarinForms.CollectionView;assembly=DevExpress.XamarinForms.CollectionView"
              x:Class="SmartMobileProject.Views.ΕργασίεςViewPage">
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">

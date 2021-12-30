@@ -15,19 +15,19 @@ namespace SmartMobileProject.Views
         public LoginPage()
         { 
             InitializeComponent();
-            TrialPopUp.Opacity = 0;
+            
         }
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            //await AppShell.Current.Navigation.PushAsync(new Views.ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage());
+            //await AppShell.Current.Navigation.PushAsync(new Views.ΚινήσειςΠελατώνViewPage());
             if (!(BindingContext is LoginViewModel model))
                 return;
             if(!model.Remember)
             {
                // TrialPopUp.IsVisible = true;
                 await Task.Delay(1000);
-                await TrialPopUp.FadeTo(1, 200);
+                
             }
         }
     }

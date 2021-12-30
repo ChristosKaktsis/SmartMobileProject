@@ -12,54 +12,46 @@
         </StackLayout>
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" Command="{Binding Αποθήκευση}" />
+        <ToolbarItem Text="Αποθήκευση" Command="{Binding Αποθήκευση}" />
     </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
         <vm:ΠωλητήςViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <Grid IsEnabled="{Binding IsTrialOn}"
-            VerticalOptions="FillAndExpand"
-            RowSpacing="20"
-            ColumnSpacing="8"
-            Padding="20">
+            <Grid IsEnabled="{Binding IsTrialOn}"          
+                    RowSpacing="20"
+                    ColumnSpacing="8"
+                    Padding="20">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-                <Image Grid.Row="1"
-                   Source="unnamed.jpg" 
-                   Scale="1"/>
 
-                <dxe:TextEdit Grid.Row="2"
+                <dxe:TextEdit Grid.Row="0"
                           Grid.Column="0"
                           LabelText="Ονοματεπώνυμο"
                           LabelFontSize="Body"
                           IsLabelFloating="True"  
                           Text="{Binding Πωλητής.Ονοματεπώνυμο}"/>
-                <dxe:TextEdit Grid.Row="3"
+                <dxe:TextEdit Grid.Row="1"
                           Grid.Column="0"
                           LabelText="Email"
                           LabelFontSize="Body"
                           IsLabelFloating="True"
                           Keyboard="Email"
                           Text="{Binding Πωλητής.Email}"/>
-                <dxe:TextEdit Grid.Row="4"
+                <dxe:TextEdit Grid.Row="2"
                           Grid.Column="0"
                           LabelText="KίνΤηλέφωνο"
                           LabelFontSize="Body"
                           IsLabelFloating="True"
                           Keyboard="Numeric"
                           Text="{Binding Πωλητής.KίνΤηλέφωνο}"/>
-                <Grid Grid.Row="5">
+                <Grid Grid.Row="3">
                     <dxe:TextEdit Grid.Row="0"
                           Grid.Column="0"
                           LabelText="Οδός"
@@ -74,7 +66,7 @@
                            Keyboard="Numeric"
                           Text="{Binding Πωλητής.Αριθμός}"/>
                 </Grid>
-                <dxe:TextEdit Grid.Row="6"
+                <dxe:TextEdit Grid.Row="4"
                           Grid.Column="0"
                           LabelText="FAX"
                           LabelFontSize="Body"

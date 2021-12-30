@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartMobileProject.Views.ΠελάτηςListViewPage"
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
-             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid" 
-             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             xmlns:dxg="clr-namespace:DevExpress.XamarinForms.DataGrid;assembly=DevExpress.XamarinForms.Grid" 
+             xmlns:dxe="clr-namespace:DevExpress.XamarinForms.Editors;assembly=DevExpress.XamarinForms.Editors"
              Title="{Binding Title}">
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
@@ -66,11 +66,15 @@
                 </dxg:DataGridView.StartSwipeItems>
                 <dxg:DataGridView.EndSwipeItems>
                     <dxg:SwipeItem Command="{Binding Κλήση}" 
-                               Caption="Call" 
+                               Caption="Κλήση" 
                                BackgroundColor="{StaticResource PrimaryLight}"
                                Image="Phone.png"/>
+                    <dxg:SwipeItem Command="{Binding Κινήσεις}" 
+                               Caption="Κινήσεις" 
+                               BackgroundColor="{StaticResource Primary}"
+                               Image="BOCustomer_16x16.png"/>
                     <dxg:SwipeItem Command="{Binding ΤροποποίησηΠελάτη}" 
-                               Caption="edit  " 
+                               Caption="edit" 
                                BackgroundColor="{StaticResource Analogous}"
                                Image="edit_white_18.png"/>
                 </dxg:DataGridView.EndSwipeItems>

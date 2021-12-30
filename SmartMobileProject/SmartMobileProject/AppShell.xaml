@@ -120,7 +120,8 @@
     </MenuItem>
     <MenuItem Text="Activation" IconImageSource="icon_about.png"  StyleClass="MenuItemLayoutStyle"  Clicked="Activation_MenuItem_Clicked">
     </MenuItem>
-    
+    <!--<MenuItem Text="Έξοδος" IconImageSource="icon_about.png"  StyleClass="MenuItemLayoutStyle"  Clicked="Exit_MenuItem_Clicked">
+    </MenuItem>-->
 
 
     <!--

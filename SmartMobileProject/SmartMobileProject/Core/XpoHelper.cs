@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using DevExpress.Xpo;
 using DevExpress.Xpo.DB;
@@ -28,7 +27,7 @@ namespace SmartMobileProject.Core
             ,typeof(ΠαραστατικάΠωλήσεων),typeof(ΓραμμέςΠαραστατικώνΠωλήσεων),typeof(ΣειρέςΠαραστατικώνΠωλήσεων),typeof(ΤρόποςΠληρωμής),typeof(ΤρόποςΑποστολής)
             ,typeof(ΠαραστατικάΕισπράξεων),typeof(ΓραμμέςΠαραστατικώνΕισπράξεων),typeof(ΣειρέςΠαραστατικώνΕισπράξεων),typeof(ΛογαριασμοίΧρηματικώνΔιαθέσιμων),typeof(Αξιόγραφα)
             ,typeof(Τράπεζα),typeof(ΤραπεζικοίΛογαριασμοί)
-            ,typeof(Appointment) ,typeof(Πωλητής), typeof(Εργασία),
+            ,typeof(Appointment) ,typeof(Πωλητής), typeof(Εργασία),typeof(ΚινήσειςΠελατών),
             typeof(Ενέργεια),typeof(ΙδιότηταΕνέργειας),typeof(ΕπιλογήΙδιότητας)
         };
         public static void InitXpo(string connectionString)
@@ -72,7 +71,7 @@ namespace SmartMobileProject.Core
                  CreatePolitisData(),
                  CreateTrapezaData(),
                  CreateΤΚData(),
-                 CreateBarCodeEIDOSData()
+                 CreateBarCodeEIDOSData()                
                  );
             var okP = await CreatePELATISData();
             if (okP)
@@ -1271,6 +1270,63 @@ namespace SmartMobileProject.Core
 
             }
             return true;
+        }
+        public static async Task<bool> CreateKINISEIS(string customerid)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                if (string.IsNullOrEmpty(customerid))
+                    return false;
+                DataTable dt = await getSmartTable($@"select Oid ,Ημνία,Πελάτης,Παραστατικό,Χρέωση,Πίστωση FROM ΚινήσειςΠελατών where Πελάτης='{customerid}' and ");
+                if (dt == null) { return false; }
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (uow.Query<ΚινήσειςΠελατών>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
+                    {
+                        continue;
+                    }
+                    ΚινήσειςΠελατών data = new ΚινήσειςΠελατών(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    data.Ημνία = row["Ημνία"] != DBNull.Value ? DateTime.Parse(row["Ημνία"].ToString()) : DateTime.MinValue;
+                    data.Παραστατικό = row["Παραστατικό"] != DBNull.Value ? row["Παραστατικό"].ToString() : string.Empty;
+                    data.Πελάτης = row["Πελάτης"] != DBNull.Value ? row["Πελάτης"].ToString() : string.Empty;
+                    data.Χρέωση = row["Χρέωση"] != DBNull.Value ? decimal.Parse(row["Χρέωση"].ToString()) : 0;
+                    data.Πίστωση = row["Πίστωση"] != DBNull.Value ? decimal.Parse(row["Πίστωση"].ToString()) : 0;
+                    data.Υπόλοιπο = data.Χρέωση - data.Πίστωση;
+                    uow.Save(data);
+                }
+
+                if (uow.InTransaction)
+                {
+                    try
+                    {
+                        uow.CommitChanges();
+                        return true;
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
+                        return false;
+                    }
+
+                }
+
+            }
+            return true;
+        }
+        public static async Task<string> GetCurrentYPOLOIPO(string customerid)
+        {
+            if (string.IsNullOrEmpty(customerid))
+                return string.Empty;
+            DataTable dt = await getSmartTable($@"select _ΤρέχουσαΧρέωση-_ΤρέχουσαΠίστωση as Υπόλοιπο FROM Πελάτης where Oid='{customerid}' and ");
+            string currentypoloipo = string.Empty;
+            if (dt == null) { return string.Empty; }
+            foreach (DataRow row in dt.Rows)
+            {
+                currentypoloipo = row["Υπόλοιπο"] != DBNull.Value ? row["Υπόλοιπο"].ToString() : string.Empty;
+            }
+            return currentypoloipo;
         }
         /// <summary>
         /// Ανοιγει ενα HttpClient και παιρνει το response

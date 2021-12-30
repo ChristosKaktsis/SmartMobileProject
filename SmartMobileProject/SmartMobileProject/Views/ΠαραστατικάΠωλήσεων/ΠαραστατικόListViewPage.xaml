@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartMobileProject.Views.ΠαραστατικόListViewPage" 
-             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
-             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid"
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"           
+             xmlns:dxg="clr-namespace:DevExpress.XamarinForms.DataGrid;assembly=DevExpress.XamarinForms.Grid"
              Title="{Binding Title}">
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">

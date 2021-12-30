@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
+             x:Class="SmartMobileProject.Views.LoadingFromSmart"
+             Title="Εισαγωγή απο το Smart" Shell.FlyoutBehavior="Disabled">
+    <ContentPage.BindingContext>
+        <vm:LoadFromSmartModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid IsEnabled="{Binding IsTrialOn}">
+            <Grid Margin="20"
+                  RowSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" Grid.Column="0"
+                        IsEnabled="{Binding OnlineMode}"
+                   HorizontalOptions="Center"
+                   Text="Εισαγωγή Όλων"
+                    CornerRadius="10"
+                   FontSize="24" Clicked="Button_Clicked"/>
+                
+                <Image Grid.Row="0" Grid.Column="1" x:Name="done"
+                   Source="checkmark" Scale="0"/>
+                <Button Grid.Row="1" Grid.Column="0"
+                        IsEnabled="{Binding OnlineMode}"
+                   HorizontalOptions="Fill"
+                   Text="Schedule"
+                    CornerRadius="10"
+                   FontSize="24" Clicked="Button_Clicked_1"/>
+                
+                <Image Grid.Row="1" Grid.Column="1" x:Name="doneSchedule"
+                   Source="checkmark" Scale="0"/>
+                <Button Grid.Row="2" Grid.Column="0"
+                        IsEnabled="{Binding OnlineMode}"
+                   HorizontalOptions="Fill"
+                   Text="Είδος"
+                    CornerRadius="10"
+                   FontSize="24" Clicked="EIDOS_Button_Clicked"/>
+                
+                <Image Grid.Row="2" Grid.Column="1" x:Name="doneEidos"
+                   Source="checkmark" Scale="0"/>
+                <Button Grid.Row="3" Grid.Column="0"
+                        IsEnabled="{Binding OnlineMode}"
+                   HorizontalOptions="Fill"
+                   Text="Πελάτες"
+                   CornerRadius="10"
+                   FontSize="24" Clicked="Pelates_Button_Clicked"/>
+                
+                <Image Grid.Row="3" Grid.Column="1" x:Name="donePelates"
+                   Source="checkmark" Scale="0"/>
+
+            </Grid>
+            <!--Pop Up-->
+            <StackLayout x:Name="BackGreyColor" BackgroundColor="#80000000" IsVisible="{Binding AllLoading,Mode=OneWay}" ></StackLayout>
+            <Frame x:Name="BottomSheet"
+                   Margin="100"
+                   VerticalOptions="Start"
+                   CornerRadius="20"
+                   HasShadow="True"
+                   IsVisible="{Binding AllLoading,Mode=OneWay}"
+                   BorderColor="White">
+                <StackLayout  Margin="5">
+                    <Label Text="Loading"/>
+                    <ActivityIndicator
+                               IsRunning="{Binding AllLoading, Mode=OneWay}"/>
+                    <!--Pop Up Buttons-->
+                </StackLayout>
+            </Frame>
+            <!--<ContentView x:Name="actIndBackground"
+                         BackgroundColor="#222222" Opacity="0.5"
+                         AbsoluteLayout.LayoutFlags="All"
+                         AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         IsVisible="true">
+                                    </ContentView>
+                                <ActivityIndicator x:Name="actInd"
+                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                         AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+                         IsRunning="True"
+                         IsVisible="true" />-->     
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>

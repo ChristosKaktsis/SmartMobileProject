@@ -31,13 +31,15 @@ namespace SmartMobileProject.ViewModels
             
             Αποθήκευση = new Command(Save);
         }
-        private void Save(object obj)
+        private async void Save(object obj)
         {
             if (!IsTrialOn)
                 return;
             if (uow.InTransaction)
             {
                 uow.CommitChanges();
+                await Application.Current.MainPage.DisplayAlert("Αποθήκευση",
+                     "Οι Αλλαγές Αποθηκεύτηκαν", "Εντάξει");
             }
         }   
         public ICommand Αποθήκευση { set; get; }

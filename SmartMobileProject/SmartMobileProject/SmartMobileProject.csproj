@@ -14,16 +14,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.XamarinForms.Charts" Version="21.1.6" />
-    <PackageReference Include="DevExpress.XamarinForms.CollectionView" Version="21.1.6" />
-    <PackageReference Include="DevExpress.XamarinForms.Editors" Version="21.1.6" />
-    <PackageReference Include="DevExpress.XamarinForms.Grid" Version="21.1.6" />
-    <PackageReference Include="DevExpress.XamarinForms.Navigation" Version="21.1.6" />
-    <PackageReference Include="DevExpress.XamarinForms.Scheduler" Version="21.1.6" />
+    <PackageReference Include="DevExpress.XamarinForms.Charts" Version="21.2.4" />
+    <PackageReference Include="DevExpress.XamarinForms.CollectionView" Version="21.2.4" />
+    <PackageReference Include="DevExpress.XamarinForms.Editors" Version="21.2.4" />
+    <PackageReference Include="DevExpress.XamarinForms.Grid" Version="21.2.4" />
+    <PackageReference Include="DevExpress.XamarinForms.Navigation" Version="21.2.4" />
+    <PackageReference Include="DevExpress.XamarinForms.Scheduler" Version="21.2.4" />
     <PackageReference Include="DevExpress.Xpo" Version="20.2.7" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.6" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2125" />  
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />  
     <PackageReference Include="Xamarin.Forms.DataGrid" Version="4.8.0" />  
     <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2125" />  
@@ -98,7 +98,7 @@
     <Compile Update="Views\Settings\ΣειρέςΠαραστατικώνΠωλήσεωνDetailViewPage.xaml.cs">
       <DependentUpon>ΣειρέςΠαραστατικώνΠωλήσεωνDetailViewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\UploadToSmart.xaml.cs">
+    <Compile Update="Views\UploadLoad\UploadToSmart.xaml.cs">
       <DependentUpon>UploadToSmart.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\ΠαραστατικάΕισπράξεων\ΛογαριασμόςDetailViewPage.xaml.cs">
@@ -125,10 +125,10 @@
     <EmbeddedResource Update="Views\ActivationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\BarCodeDetailViewPage.xaml">
+    <EmbeddedResource Update="Views\Είδος\BarCodeDetailViewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\BarCodeListViewPage.xaml">
+    <EmbeddedResource Update="Views\Είδος\BarCodeListViewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CustomView\TrialPopUp.xaml">
@@ -140,13 +140,16 @@
     <EmbeddedResource Update="Views\FlyoutHeader.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\LoadingFromSmart.xaml">
+    <EmbeddedResource Update="Views\UploadLoad\LoadingFromSmart.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MapViewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage.xaml">
+    <EmbeddedResource Update="Views\ΚινήσειςΠελατώνViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ΠαραστατικάΠωλήσεων\ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ΠαραστατικάΠωλήσεων\ScannerViewPage.xaml">

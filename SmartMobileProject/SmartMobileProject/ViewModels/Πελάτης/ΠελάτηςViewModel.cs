@@ -12,7 +12,6 @@ namespace SmartMobileProject.ViewModels
 {
     class ΠελάτηςViewModel : BaseViewModel
     {  
-
         public UnitOfWork uow = ((App)Application.Current).uow;
         AppShell app = (AppShell)Application.Current.MainPage;
         XPCollection<Πελάτης> customerCollection = null;
@@ -21,20 +20,7 @@ namespace SmartMobileProject.ViewModels
             get { return customerCollection; }
             set { SetProperty(ref customerCollection, value); }
         }
-        Πελάτης customer;
-        public Πελάτης Customer
-        {
-            get
-            {
-                return customer;
-            }
-            set
-            {
-               
-
-            }
-        }
-        public  ΠελάτηςViewModel()
+        public ΠελάτηςViewModel()
         {
             Title = "Πελάτες";
             ΝέοςΠελάτης = new Command(createCustomer);
@@ -44,10 +30,28 @@ namespace SmartMobileProject.ViewModels
             ΝέοςΠελάτηςΜεΑφμΗΧωρίς = new Command(createNewCustomerWithAFMorWithout);
             Ανανέωση = new Command(ReloadList);
             Κλήση = new Command(CallCustomer);
+            Κινήσεις = new Command(GoToKiniseis);
             // CustomerCollection = new XPCollection<Πελάτης>(uow);
             CustomerCollection = app.πωλητής.Πελάτες;
-            CustomerCollection.DeleteObjectOnRemove = true;
-           
+            CustomerCollection.DeleteObjectOnRemove = true;        
+        }
+
+        private async void GoToKiniseis(object obj)
+        {
+            try
+            {
+                if (obj == null)
+                    return;
+
+                var CustomerId = ((Πελάτης)obj).SmartOid;
+                await Shell.Current.GoToAsync($"{nameof(ΚινήσειςΠελατώνViewPage)}?{nameof(ΚινήσειςΠελατώνViewModel.CustomerID)}={CustomerId}");
+            }
+            catch (Exception ex)
+            {
+                // Other error has occurred.
+                Console.WriteLine(ex);
+                await Application.Current.MainPage.DisplayAlert("Alert", "Other error has occurred.", "OK");
+            }
         }
 
         private async void CallCustomer(object obj)
@@ -194,6 +198,7 @@ namespace SmartMobileProject.ViewModels
         /// </summary>
         public ICommand ΒρεςΜεΑΦΜ { set; get; }
         public ICommand Κλήση { set; get; }
+        public ICommand Κινήσεις { set; get; }
         public ICommand ΝέοςΠελάτηςΜεΑφμΗΧωρίς { set; get; }
 
 
