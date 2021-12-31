@@ -1287,7 +1287,7 @@ namespace SmartMobileProject.Core
                     }
                     ΚινήσειςΠελατών data = new ΚινήσειςΠελατών(uow);
                     data.SmartOid = Guid.Parse((string)row["Oid"]);
-                    data.Ημνία = row["Ημνία"] != DBNull.Value ? DateTime.Parse(row["Ημνία"].ToString()) : DateTime.MinValue;
+                    data.Ημνία = row["Ημνία"] != DBNull.Value ? DateTime.Parse(row["Ημνία"].ToString()).ToString("dd/MM/yy") : string.Empty;
                     data.Παραστατικό = row["Παραστατικό"] != DBNull.Value ? row["Παραστατικό"].ToString() : string.Empty;
                     data.Πελάτης = row["Πελάτης"] != DBNull.Value ? row["Πελάτης"].ToString() : string.Empty;
                     data.Χρέωση = row["Χρέωση"] != DBNull.Value ? decimal.Parse(row["Χρέωση"].ToString()) : 0;

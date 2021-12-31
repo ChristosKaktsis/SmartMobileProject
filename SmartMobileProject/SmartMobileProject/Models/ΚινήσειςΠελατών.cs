@@ -28,12 +28,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(SmartOid), ref smartOid, value); }
         }
         Guid smartOid;
-        public DateTime Ημνία
+        public string Ημνία
         {
             get { return ημνία; }
             set { SetPropertyValue(nameof(Ημνία), ref ημνία, value); }
         }
-        DateTime ημνία;
+        string ημνία;
         public string Παραστατικό
         {
             get { return παραστατικό; }

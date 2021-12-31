@@ -17,6 +17,8 @@ namespace SmartMobileProject.ViewModels
     {
         private string _CustomerID;
         private string _ΤρέχωνΥπόλοιπο;
+        private string _ΗμερΤελευτΧρεωσ;
+        private string _ΗμερΤελευτΠιστ;
 
         public ObservableCollection<ΚινήσειςΠελατών> KiniseisList { get; set; }
         public Command LoadItemsCommand { get; set; }
@@ -48,7 +50,8 @@ namespace SmartMobileProject.ViewModels
                         KiniseisList.Add(item);
                     }
                     CalculatePrYpol();
-                        
+                    
+                    SetLastDates();
                 }               
                 return await Task.FromResult(true);
             }
@@ -61,6 +64,19 @@ namespace SmartMobileProject.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        private void SetLastDates()
+        {
+            string XreosilastDate = string.Empty;
+            string PistosiLastDate = string.Empty;
+            foreach(var item in KiniseisList)
+            {
+                XreosilastDate = item.Χρέωση!=0? item.Ημνία: XreosilastDate;
+                PistosiLastDate = item.Πίστωση != 0 ? item.Ημνία : PistosiLastDate;
+            }
+            ΗμερΤελευτΠιστ = PistosiLastDate;
+            ΗμερΤελευτΧρεωσ = XreosilastDate;
         }
 
         private void CalculatePrYpol()
@@ -107,6 +123,27 @@ namespace SmartMobileProject.ViewModels
                 SetProperty(ref _ΤρέχωνΥπόλοιπο, value);
             }
         }
-
+        public string ΗμερΤελευτΧρεωσ
+        {
+            get
+            {
+                return _ΗμερΤελευτΧρεωσ;
+            }
+            set
+            {
+                SetProperty(ref _ΗμερΤελευτΧρεωσ, value);
+            }
+        }
+        public string ΗμερΤελευτΠιστ
+        {
+            get
+            {
+                return _ΗμερΤελευτΠιστ;
+            }
+            set
+            {
+                SetProperty(ref _ΗμερΤελευτΠιστ, value);
+            }
+        }
     }
 }

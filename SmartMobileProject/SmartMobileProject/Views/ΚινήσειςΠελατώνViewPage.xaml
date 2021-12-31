@@ -10,47 +10,68 @@
              Command="{Binding LoadItemsCommand}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="80"/>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            <Frame>
-                <StackLayout Orientation="Horizontal">
-                    <Label  Text="Τρέχων Υπόλοιπο :" FontSize="20"/>
-                    <Label  Text="{Binding ΤρέχωνΥπόλοιπο,StringFormat='{0}€'}" FontSize="20" HorizontalOptions="EndAndExpand"/>
-                </StackLayout>
+            <Frame Padding="10,0,10,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Frame Padding="0">
+                        <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
+                            <Label  Text="Τρέχων Υπόλοιπο :" FontSize="20"/>
+                            <Label  Text="{Binding ΤρέχωνΥπόλοιπο,StringFormat='{0}€'}" FontSize="20" HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                    </Frame>
+                    <StackLayout Grid.Row="1">
+                        <Frame Padding="0">
+                            <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
+                                <Label  Text="Ημνία Τελ Χρέωσης :" FontSize="15" />
+                                <Label Text="{Binding ΗμερΤελευτΧρεωσ}" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </Frame>
+                        <Frame Padding="0">
+                            <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
+                                <Label  Text="Ημνία Τελ Πίστωσης :" FontSize="15"/>
+                                <Label Text="{Binding ΗμερΤελευτΠιστ}" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </Frame>
+
+                    </StackLayout>
+                </Grid>
             </Frame>
-            <CollectionView Grid.Row="1" ItemsSource="{Binding KiniseisList}">
+            <Frame  Grid.Row="1" Padding="0" HasShadow="False" BackgroundColor="Transparent">
+                <Grid>
+                    <Label Grid.Column="0"  Text="Χρέωση" FontSize="15" HorizontalOptions="Center" />
+                    <Label Grid.Column="1" Text="Πίστωση" FontSize="15" HorizontalOptions="Center"/>
+                    <Label Grid.Column="2" Text="Προοδευτ.Υπόλ." FontSize="15" HorizontalOptions="Center" />
+                </Grid>
+            </Frame>
+            <CollectionView Grid.Row="2" ItemsSource="{Binding KiniseisList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="0" Margin="10" BorderColor="LightGray">
-                            <Grid Padding="10" x:DataType="model:ΚινήσειςΠελατών">
+                        <Frame Padding="0" Margin="5" BorderColor="LightGray">
+                            <Grid Padding="10,0,10,0" x:DataType="model:ΚινήσειςΠελατών">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="21"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
-                                
-                                <Label Text="{Binding Παραστατικό}" FontSize="16" FontAttributes="Bold"/>
-                                <Label Grid.Column="1" Text="{Binding Ημνία}" HorizontalOptions="End"/>
-                                <Frame Grid.Row="1"  Padding="5">
+                                <Label  Grid.Column="2" Text="{Binding Παραστατικό}" FontSize="16" FontAttributes="Bold"/>
+                                <Label Text="{Binding Ημνία}" FontAttributes="Bold" HorizontalOptions="End"/>
+                                <Frame Grid.Row="1"  Padding="5" BorderColor="LightGray">
                                     <StackLayout Orientation="Horizontal">
-                                        <Label  Text="Χρέωση :" />
                                         <Label  Text="{Binding Χρέωση,StringFormat='{0}€'}" HorizontalOptions="EndAndExpand"/>
                                     </StackLayout>
                                 </Frame>
-                                <Frame Grid.Row="1" Grid.Column="1" Padding="5">
+                                <Frame Grid.Row="1" Grid.Column="1" Padding="5" BorderColor="LightGray">
                                     <StackLayout Orientation="Horizontal">
-                                        <Label  Text="Πίστωση :"/>
                                         <Label  Text="{Binding Πίστωση,StringFormat='{0}€'}" HorizontalOptions="EndAndExpand"/>
                                     </StackLayout>
                                 </Frame>
-                                <Frame  Grid.Row="2" Padding="5">
+                                <Frame  Grid.Row="1" Grid.Column="2" Padding="5" BorderColor="LightGray">
                                     <StackLayout Orientation="Horizontal">
-                                        <Label  Text="Υπόλοιπο :"/>
-                                        <Label Text="{Binding  Υπόλοιπο,StringFormat='{0}€'}" HorizontalOptions="EndAndExpand"/>
-                                    </StackLayout>
-                                </Frame>
-                                <Frame  Grid.Row="2" Grid.Column="1" Padding="5">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label  Text="Προοδ.Υπόλ. :"/>
-                                        <Label  Text="{Binding ΠροοδευτικόΥπόλοιπο,StringFormat='{0}€'}" HorizontalOptions="EndAndExpand"/>
+                                        <Label  Text="{Binding ΠροοδευτικόΥπόλοιπο,StringFormat='{0}€'}" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
                                     </StackLayout>
                                 </Frame>
                                 
