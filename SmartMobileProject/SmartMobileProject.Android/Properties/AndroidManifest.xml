@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.1.6" package="com.exelixissoftware.smartmobileproject" android:installLocation="auto" android:versionCode="9">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.1.7" package="com.exelixissoftware.smartmobileproject" android:installLocation="auto" android:versionCode="10">
 	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="30" />
 	<application android:label="Smart Mobile" android:theme="@style/MainTheme" android:icon="@drawable/ic_launcher">
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCr4D5etOmamo9b-AEPnx0TkakRFLhDh9Q" />

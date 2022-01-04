@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -25,23 +26,20 @@ namespace SmartMobileProject.ViewModels
         public ΚινήσειςΠελατώνViewModel()
         {
             KiniseisList = new ObservableCollection<ΚινήσειςΠελατών>();
-            LoadItemsCommand = new Command(async () => await OnLoaditems());
+            LoadItemsCommand = new Command(async ()=> await OnLoaditems());
         }
-
-        private async Task<bool> OnLoaditems()
+        
+        private async Task OnLoaditems()
         {
             try
-            {
+            {  
                 IsBusy = true;
                 if(string.IsNullOrEmpty(CustomerID))
-                    return await Task.FromResult(false);
-
+                    return;
                 KiniseisList.Clear();
                 var completed = await XpoHelper.CreateKINISEIS(CustomerID);
                 ΤρέχωνΥπόλοιπο = await XpoHelper.GetCurrentYPOLOIPO(CustomerID);
-                if (!completed)
-                    return await Task.FromResult(false);
-
+                
                 using (UnitOfWork uow = new UnitOfWork())
                 {
                     var items = uow.Query<ΚινήσειςΠελατών>().Where(x=>x.Πελάτης==CustomerID).OrderBy(x=> x.Ημνία);
@@ -49,43 +47,66 @@ namespace SmartMobileProject.ViewModels
                     {                        
                         KiniseisList.Add(item);
                     }
+
+                    SwapItems();
                     CalculatePrYpol();
-                    
                     SetLastDates();
-                }               
-                return await Task.FromResult(true);
+                }                         
+                
             }
             catch (Exception e)
             {
-                Console.WriteLine("Κάτι πήγε λάθος στο φόρτομα barcode " + e);
-                return await Task.FromResult(false);
+                Console.WriteLine("Κάτι πήγε λάθος στο φόρτομα Κινήσεων" + e);               
             }
             finally
             {
                 IsBusy = false;
             }
         }
+        /// <summary>
+        /// Αμα οι έχουν την ιδια μέρα και
+        /// έχουν μπει : Πρώτα Πίστωση και μετά χρέωση :
+        /// Γίνεται αντιστροφή ωστε να φανούν σωστα στον πίνακα
+        /// </summary>
+        private void SwapItems()
+        {
+            var limit = KiniseisList.Count;
+            for (int i = 0; i < limit; i++)
+            {
+                var prevIndex = i - 1;
+                if (prevIndex != -1)
+                {
+                    var previtem = KiniseisList[prevIndex];
+                    if (KiniseisList[i].Ημνία == previtem.Ημνία)
+                    {
+                        if (previtem.Χρέωση == 0 && previtem.Πίστωση != 0)
+                        {
 
+                            KiniseisList.Insert(prevIndex, KiniseisList[i]);
+                            KiniseisList.RemoveAt(i + 1);
+                        }
+                    }
+                }
+            }
+        }
         private void SetLastDates()
         {
             string XreosilastDate = string.Empty;
             string PistosiLastDate = string.Empty;
-            foreach(var item in KiniseisList)
+            foreach (var item in KiniseisList)
             {
-                XreosilastDate = item.Χρέωση!=0? item.Ημνία: XreosilastDate;
+                XreosilastDate = item.Χρέωση != 0 ? item.Ημνία : XreosilastDate;
                 PistosiLastDate = item.Πίστωση != 0 ? item.Ημνία : PistosiLastDate;
             }
             ΗμερΤελευτΠιστ = PistosiLastDate;
             ΗμερΤελευτΧρεωσ = XreosilastDate;
         }
-
         private void CalculatePrYpol()
-        {         
-            
+        {
             foreach (var item in KiniseisList)
             {
                 var index = KiniseisList.IndexOf(item) - 1;
-                if(index != -1)
+                if (index != -1)
                 {
                     var previtem = KiniseisList[index];
                     item.ΠροοδευτικόΥπόλοιπο = item.Υπόλοιπο + previtem.ΠροοδευτικόΥπόλοιπο;
@@ -96,7 +117,6 @@ namespace SmartMobileProject.ViewModels
                 }
             }
         }
-
         public void OnAppearing()
         {
             IsBusy = true;

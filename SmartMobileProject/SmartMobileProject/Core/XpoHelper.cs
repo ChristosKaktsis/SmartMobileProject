@@ -381,7 +381,7 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή, ΚίνησηΣυναλασόμενου, ΠρόθεμαΑρίθμησης From ΣειρέςΠαραστατικώνΠωλήσεων where ");
+                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή, ΚίνησηΣυναλασόμενου, ΠρόθεμαΑρίθμησης From ΣειρέςΠαραστατικώνΠωλήσεων where Ακυρωτικό = 0 and ");
                 if (dt == null) { return false; }
                 foreach (DataRow row in dt.Rows)
                 {
