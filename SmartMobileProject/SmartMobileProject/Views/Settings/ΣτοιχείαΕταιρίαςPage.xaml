@@ -38,20 +38,21 @@
                 <!--<Image Grid.Row="1"
                    Source="unnamed" 
                    Scale="1"/>-->
+                <ActivityIndicator Grid.Row="2" IsRunning="{Binding IsBusy}"/>
 
                 <dxe:TextEdit Grid.Row="2"
                           Grid.Column="0"
                           LabelText="Επωνυμία"
                           LabelFontSize="Body"
                           IsLabelFloating="True"
-                          Text="{Binding Εταιρία.Επωνυμία}"/>
+                          Text="{Binding Επωνυμία}"/>
                 <dxe:ComboBoxEdit Grid.Row="3"
                               Grid.Column="0"
                               LabelText="ΔΟΥ"
                               LabelFontSize="Body"
                               IsLabelFloating="True"
                               ItemsSource="{Binding ΔΟΥ}"
-                              SelectedItem="{Binding Εταιρία.ΔΟΥ}"
+                              SelectedItem="{Binding ΔΟΥ1}"
                               DisplayMember="Περιγραφή"
                               IsFilterEnabled="True" FilterMode="Contains"/>
                 <dxe:TextEdit Grid.Row="4"
@@ -60,7 +61,7 @@
                           LabelFontSize="Body"
                           IsLabelFloating="True"
                           Keyboard="Email"
-                          Text="{Binding Εταιρία.ΔικτυακόςΤόπος}"/>
+                          Text="{Binding ΔικτυακόςΤόπος}"/>
                 <Grid Grid.Row="5">
                     <dxe:TextEdit 
                           Grid.Column="0"
@@ -68,7 +69,7 @@
                           LabelFontSize="Body"
                           IsLabelFloating="True"
                           Keyboard="Numeric"
-                          Text="{Binding Εταιρία.ΑΦΜ}"/>
+                          Text="{Binding ΑΦΜ}"/>
                     <dxe:TextEdit 
                           Grid.Column="1"
                           LabelText="ΚατηγορίαΦΠΑ"
@@ -83,14 +84,14 @@
                           LabelText="Οδός"
                           LabelFontSize="Body"
                           IsLabelFloating="True"
-                          Text="{Binding Εταιρία.Οδός}"/>
+                          Text="{Binding Οδός}"/>
                     <dxe:TextEdit Grid.Row="0"
                           Grid.Column="1"
                           LabelText="Αριθμός"
                           LabelFontSize="Body"
                           IsLabelFloating="True"
                           Keyboard="Numeric"
-                          Text="{Binding Εταιρία.Αριθμός}"/>
+                          Text="{Binding Αριθμός}"/>
                 </Grid>
                 <dxe:ComboBoxEdit Grid.Row="7"
                               Grid.Column="0"
@@ -117,7 +118,7 @@
                               LabelFontSize="Body"
                               IsLabelFloating="True"
                               ItemsSource="{Binding Poli}"
-                              SelectedItem="{Binding Εταιρία.Πόλη}"
+                              SelectedItem="{Binding ΠΟΛΗ1}"
                               DisplayMember="ΟνομαΠόλης"
                               IsFilterEnabled="True"/>
                     <dxe:TextEdit Grid.Row="0"
@@ -125,7 +126,7 @@
                           LabelText="Περιοχή"
                           LabelFontSize="Body"
                           IsLabelFloating="True"                           
-                          Text="{Binding Εταιρία.Περιοχή}"/>
+                          Text="{Binding Περιοχή}"/>
                 </Grid>
                 <Grid Grid.Row="9">
                     <dxe:TextEdit 
@@ -134,14 +135,14 @@
                           LabelFontSize="Body"
                           IsLabelFloating="True"
                           Keyboard="Numeric"
-                          Text="{Binding Εταιρία.Τηλέφωνο}"/>
+                          Text="{Binding Τηλέφωνο}"/>
                     <dxe:TextEdit 
                           Grid.Column="1"
                           LabelText="FAX"
                           LabelFontSize="Body"
                           IsLabelFloating="True"
                           Keyboard="Numeric"
-                          Text="{Binding Εταιρία.FAX}"/>
+                          Text="{Binding FAX}"/>
                 </Grid>
                 <dxe:TextEdit Grid.Row="10"
                           Grid.Column="0"
@@ -149,18 +150,18 @@
                           LabelFontSize="Body"
                           IsLabelFloating="True"
                           
-                          Text="{Binding Εταιρία.Email}"/>
+                          Text="{Binding Email}"/>
                 <Grid Grid.Row="11">
                     <dxe:TextEdit Grid.Column="0"
                           LabelText="Username"
                           LabelFontSize="Body"
                           IsLabelFloating="True"
-                          Text="{Binding Εταιρία.UsernameΥπηρεσίαςΣτοιχείωνΜητρώου}"/>
+                          Text="{Binding Username}"/>
                     <dxe:PasswordEdit Grid.Column="1"
                               LabelText="Password"
                               LabelFontSize="Body"
                               IsLabelFloating="True"
-                              Text="{Binding Εταιρία.PasswordΥπηρεσίαςΣτοιχείωνΜητρώου}"/>
+                              Text="{Binding Password}"/>
                 </Grid>
                 
             </Grid>

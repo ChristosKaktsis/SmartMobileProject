@@ -964,7 +964,7 @@ namespace SmartMobileProject.Services
         //        }
         public  async void CreatePrint3(ΠαραστατικάΕισπράξεων order)
         {
-            στοιχείαΕταιρίας = await XpoHelper.CreateSTOIXEIAETAIRIASData();
+            στοιχείαΕταιρίας = await XpoHelper.GetSTOIXEIAETAIRIASData();
             if (στοιχείαΕταιρίας == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "Δεν Υπαρχουν Στοιχεια Εταιρίας", "OK");

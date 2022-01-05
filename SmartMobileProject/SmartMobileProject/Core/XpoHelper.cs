@@ -1082,7 +1082,16 @@ namespace SmartMobileProject.Core
                 if (dt == null) { return null; }
                 foreach (DataRow row in dt.Rows)
                 {
-                    ΣτοιχείαΕταιρίας data = new ΣτοιχείαΕταιρίας(uow);
+                    
+                    ΣτοιχείαΕταιρίας data;
+                    if (uow.Query<ΣτοιχείαΕταιρίας>().Any())
+                    {
+                        data = uow.Query<ΣτοιχείαΕταιρίας>().FirstOrDefault();
+                    }
+                    else
+                    {
+                        data = new ΣτοιχείαΕταιρίας(uow); 
+                    }
                     data.Επωνυμία = row["Επωνυμία"].ToString();
                     data.ΚατηγορίαΦΠΑ = int.Parse(row["ΚατηγορίαΦΠΑ"].ToString());
                     data.ΑΦΜ = row["ΑΦΜ"].ToString();
@@ -1111,13 +1120,13 @@ namespace SmartMobileProject.Core
                         var doy = uow.Query<ΔΟΥ>().Where(x => x.SmartOid == Guid.Parse((string)row["ΔΟΥ"]));
                         data.ΔΟΥ = doy.FirstOrDefault();
                     }
-                    var eterialist =  uow.Query<ΣτοιχείαΕταιρίας>();
-                    if (eterialist.Any())
-                    {
-                        //var eteria= eterialist.FirstOrDefault();
-                        // eteria = data;
-                        uow.Delete(eterialist.FirstOrDefault());
-                    }
+                    //var eterialist =  uow.Query<ΣτοιχείαΕταιρίας>();
+                    //if (eterialist.Any())
+                    //{
+                    //    //var eteria= eterialist.FirstOrDefault();
+                    //    // eteria = data;
+                    //    uow.Delete(eterialist.FirstOrDefault());
+                    //}
                     
                    
                     uow.Save(data);

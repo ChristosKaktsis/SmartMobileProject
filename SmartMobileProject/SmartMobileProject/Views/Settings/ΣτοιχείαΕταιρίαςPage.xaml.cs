@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartMobileProject.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,17 @@ namespace SmartMobileProject.Views.Settings
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ΣτοιχείαΕταιρίαςPage : ContentPage
     {
+        private SettingsStaticSourceViewModel _viewModel;
+
         public ΣτοιχείαΕταιρίαςPage()
         {
             InitializeComponent();
+            BindingContext = _viewModel = new SettingsStaticSourceViewModel();
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _viewModel.LoadCompanyCommand.Execute(null);
         }
     }
 }
