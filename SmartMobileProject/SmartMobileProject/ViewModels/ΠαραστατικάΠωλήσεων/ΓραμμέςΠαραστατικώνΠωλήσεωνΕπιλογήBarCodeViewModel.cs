@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpo;
 using SmartMobileProject.Models;
+using SmartMobileProject.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -49,6 +50,7 @@ namespace SmartMobileProject.ViewModels
                 νεαΓραμμή.BarCodeΕίδους = uow.Query<BarCodeΕίδους>().Where(x => x.Oid == SelectedBarCode.Oid).FirstOrDefault();
                 νεαΓραμμή.ΠαραστατικάΠωλήσεων = ΝέοΠαραστατικόViewModel.Order;
                 await Shell.Current.GoToAsync("..");
+                await Shell.Current.GoToAsync(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage));
             }
             catch(Exception e)
             {

@@ -70,7 +70,7 @@
                 </dxe:ComboBoxEdit>
                 <dxe:ComboBoxEdit Grid.Row="3"                              
                               ItemsSource="{Binding CustomerCollection}"
-                              DisplayMember="Επωνυμία"
+                              DisplayMember="ΑΦΜ"
                               SelectedItem="{Binding Customer, Mode=Default}"
                               LabelText="Πελάτης"
                               IsFilterEnabled="True" FilterMode="Contains"
