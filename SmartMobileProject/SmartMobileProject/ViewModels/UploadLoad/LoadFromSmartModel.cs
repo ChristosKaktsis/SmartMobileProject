@@ -75,6 +75,14 @@ namespace SmartMobileProject.ViewModels
             
             return done && done2;
         }
+        public async Task<bool> LoadBarCode()
+        {
+            AllLoading = true;
+            bool barcode = await XpoHelper.CreateBarCodeEIDOSData();
+            AllLoading = false;
+
+            return barcode;
+        }
 
     }
 }

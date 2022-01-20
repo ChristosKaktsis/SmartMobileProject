@@ -16,6 +16,7 @@
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="80"/>
+                    <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
@@ -55,6 +56,17 @@
                    FontSize="24" Clicked="Pelates_Button_Clicked"/>
                 
                 <Image Grid.Row="3" Grid.Column="1" x:Name="donePelates"
+                   Source="checkmark" Scale="0"/>
+
+                
+                <Button Grid.Row="4" Grid.Column="0"
+                        IsEnabled="{Binding OnlineMode}"
+                   HorizontalOptions="Fill"
+                   Text="BarCode"
+                   CornerRadius="10"
+                   FontSize="24" Clicked="BarCode_Clicked"/>
+
+                <Image Grid.Row="4" Grid.Column="1" x:Name="doneBarCode"
                    Source="checkmark" Scale="0"/>
 
             </Grid>

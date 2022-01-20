@@ -116,6 +116,29 @@ namespace SmartMobileProject.Views
                 return false;
             return model.AllLoading;
         }
+
+        private async void BarCode_Clicked(object sender, EventArgs e)
+        {
+            doneBarCode.Scale = 0;
+            base.OnBindingContextChanged();
+            if (!(BindingContext is LoadFromSmartModel model))
+                return;
+            Shell.SetBackButtonBehavior(this, new BackButtonBehavior
+            {
+                IsEnabled = false
+            });
+            var error = await model.LoadBarCode();
+            if (!error)
+                doneBarCode.Source = ImageSource.FromFile("error.png");
+            Shell.SetBackButtonBehavior(this, new BackButtonBehavior
+            {
+                IsEnabled = true
+            });
+            if (!model.AllLoading)
+                await Task.WhenAll(
+                    doneBarCode.ScaleTo(1, 300)
+                    );
+        }
         //private async Task OpenPopUp(bool ok)
         //{
         //    //

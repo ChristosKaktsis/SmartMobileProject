@@ -780,8 +780,8 @@ namespace SmartMobileProject.Core
             using (UnitOfWork uow = CreateUnitOfWork())
             {
                 DataTable dt = await getSmartTable("SELECT BarCode , ΑκολουθείΤήνΤιμήΕίδους, REPLACE(Περιγραφή, '\"', '') as Περιγραφή, " +
-                                                  "ΤιμήΧονδρικής, Είδος, Χρώματα.Χρώματα, Μεγέθη.Μεγέθη, ΦΠΑ"+
-                                             " FROM BarCodeΕίδους left join Χρώματα on BarCodeΕίδους.Χρώμα=Χρώματα.Oid left join Μεγέθη on BarCodeΕίδους.Μέγεθος=Μεγέθη.Oid  where BarCodeΕίδους.");
+                                                  "ΤιμήΧονδρικής, Είδος, REPLACE(Χρώματα.Χρώματα, '\"', '') as Χρώματα,  Μεγέθη.Μεγέθη, ΦΠΑ" +
+                                             " FROM BarCodeΕίδους left join Χρώματα on BarCodeΕίδους.Χρώμα=Χρώματα.Oid left join Μεγέθη on BarCodeΕίδους.Μέγεθος=Μεγέθη.Oid  where BarCodeΕίδους.Ενεργό = '1' and BarCodeΕίδους.");
                 if (dt == null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading BarCode", "OK");

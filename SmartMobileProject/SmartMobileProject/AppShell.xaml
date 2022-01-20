@@ -167,7 +167,7 @@
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <StackLayout>
-                <Label Text="Ver 1.1.8"
+                <Label Text="Ver 1.1.9"
                        TextColor="Black"
                        FontAttributes="Bold"
                        HorizontalOptions="Center" />
