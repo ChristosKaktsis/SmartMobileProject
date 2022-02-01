@@ -168,7 +168,8 @@
                     <Button Command="{Binding Ακύρωση}"
                            ImageSource="arrow_back_white_20"/>
                 </Frame>
-                <Frame Grid.Row="11"
+                <dxe:MultilineEdit Grid.Row="11" LabelText="Σχόλια" Text="{Binding LineOfOrders.Σχολια}"/>
+                <Frame Grid.Row="12"
                            Grid.Column="0"
                            Padding="0"
                            CornerRadius="10"

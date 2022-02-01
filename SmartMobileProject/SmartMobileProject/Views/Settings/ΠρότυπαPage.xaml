@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid"
+             xmlns:vm1="clr-namespace:SmartMobileProject.ViewModels.Settings"
+             x:Class="SmartMobileProject.Views.Settings.ΠρότυπαPage">
+    <ContentPage.BindingContext>
+        <vm1:ΠρότυπαViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Προσθηκη" Command="{Binding Προσθήκη}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <dxg:DataGridView x:Name="grid" Grid.Row="1" HorizontalOptions="Center"
+                          ItemsSource="{Binding Πρότυπα}" EditorShowMode="Tap" DoubleTap="grid_DoubleTap">
+                <dxg:DataGridView.Columns>
+                    <dxg:TextColumn FieldName="Περιγραφή" Column="0" IsReadOnly="True"/>
+                </dxg:DataGridView.Columns>
+            </dxg:DataGridView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

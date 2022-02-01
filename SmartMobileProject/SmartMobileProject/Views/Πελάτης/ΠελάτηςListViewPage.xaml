@@ -59,10 +59,15 @@
                     </dxg:CellStyle>
                 </dxg:DataGridView.CellStyle>
                 <dxg:DataGridView.StartSwipeItems>
+                    <dxg:SwipeItem Command="{Binding ΝέοΠαραστατικό}" 
+                               Caption="Νέο Παρ." 
+                               BackgroundColor="{StaticResource PrimaryLight}"
+                               Image="BO_Sale.png"/>
                     <dxg:SwipeItem Command="{Binding ΔιαγραφήΠελάτη}"
                                Caption="delete"
                                BackgroundColor="{StaticResource Tradic}"
                                Image="delete_white_18"/>
+                  
                 </dxg:DataGridView.StartSwipeItems>
                 <dxg:DataGridView.EndSwipeItems>
                     <dxg:SwipeItem Command="{Binding Κλήση}" 
@@ -73,6 +78,7 @@
                                Caption="Κινήσεις" 
                                BackgroundColor="{StaticResource Primary}"
                                Image="BOCustomer_16x16.png"/>
+                    
                     <dxg:SwipeItem Command="{Binding ΤροποποίησηΠελάτη}" 
                                Caption="edit" 
                                BackgroundColor="{StaticResource Analogous}"

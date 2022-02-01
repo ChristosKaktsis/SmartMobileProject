@@ -92,7 +92,24 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(CanUpload), ref canUpload, value); }
         }
         bool canUpload;
-
+        public string ImageBytes
+        {
+            get { return imageBytes; }
+            set { SetPropertyValue(nameof(ImageBytes), ref imageBytes, value); }
+        }
+        string imageBytes;
+        public string Σημείωση1
+        {
+            get { return σημείωση1; }
+            set { SetPropertyValue(nameof(Σημείωση1), ref σημείωση1, value); }
+        }
+        string σημείωση1;
+        public string Σημείωση2
+        {
+            get { return σημείωση2; }
+            set { SetPropertyValue(nameof(Σημείωση2), ref σημείωση2, value); }
+        }
+        string σημείωση2;
         [Association]
         public Πωλητής Πωλητής
         {
@@ -187,11 +204,14 @@ namespace SmartMobileProject.Models
                  "\",\"ΑΦΜ\":\"" + ΑΦΜ +
                  "\",\"ΔΟΥ\":\"" + ΔΟΥ.SmartOid +
                  "\",\"Email\":\"" + (string.IsNullOrEmpty(Email) ? "" : Email) +
+                 "\",\"Σημείωση1\":\"" + (string.IsNullOrEmpty(Σημείωση1) ? "" : Σημείωση1) +
+                 "\",\"Σημείωση2\":\"" + (string.IsNullOrEmpty(Σημείωση2) ? "" : Σημείωση2) +
                 "\",\"Πωλητής\":\"" + Πωλητής.SmartOid +
                 "\",\"ΚεντρικήΔιευθυνση\":\"" + ΚεντρικήΔιευθυνση.SmartOid +
                 "\",\"ΗμνίαΔημ\":\"" + ΗμνίαΔημ.ToString("dd/MM/yyyy HH:mm:ss") +
                 "\",\"ΔιευθύνσειςΠελάτη\":" + addressJson +
-                "}";
+                ",\"Image\":\"" + (string.IsNullOrEmpty(ImageBytes) ? "" : ImageBytes) +
+                "\"}";
             return json;
         }
     }

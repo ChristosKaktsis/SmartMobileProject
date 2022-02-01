@@ -106,6 +106,7 @@ namespace SmartMobileProject.ViewModels
                 Order.ΗμνίαΔημ = DateTime.Now;
                 //Selected Πελατης με Oid 
                 SetCustomer();
+                SetCustomerFromNewCustomer(ΝέοΠαραστατικόViewModel.πελατης);
                 Title = "Βασικά Στοιχεία";
             }
             else
@@ -116,6 +117,14 @@ namespace SmartMobileProject.ViewModels
             }
 
         }
+
+        private void SetCustomerFromNewCustomer(Πελάτης πελατης)
+        {
+            if (πελατης == null)
+                return;
+            Customer = uow.Query<Πελάτης>().Where(x => x.Oid== πελατης.Oid).FirstOrDefault();
+        }
+
         private void SetCustomer()
         {
             if (Application.Current.Properties.ContainsKey("Πελάτης"))

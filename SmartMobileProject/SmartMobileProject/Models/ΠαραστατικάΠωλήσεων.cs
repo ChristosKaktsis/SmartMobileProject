@@ -145,6 +145,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(ΗμνίαΔημ), ref ημνίαδημ, value); }
         }
         DateTime ημνίαδημ;
+        public string Σχολια
+        {
+            get { return σχολια; }
+            set { SetPropertyValue(nameof(Σχολια), ref σχολια, value); }
+        }
+        string σχολια;
         [NonPersistent]
         string seira
         {
@@ -215,6 +221,7 @@ namespace SmartMobileProject.Models
                 "\",\"ΤρόποςΠληρωμής\":\"" + tropospliromis +
                 "\",\"ΤρόποςΑποστολής\":\"" + troposapostolis +
                 "\",\"ΗμνίαΔημ\":\"" + ΗμνίαΔημ.ToString("dd/MM/yyyy HH:mm:ss") +
+                "\",\"Σχόλια\":\"" + (string.IsNullOrEmpty(Σχολια) ? "" : Σχολια) +
                 "\",\"ΓραμμέςΠαραστατικώνΠωλήσεων\":" + LineJson +
                 "}";
             return json;

@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using DevExpress.Xpo;
 using SmartMobileProject.Core;
 using SmartMobileProject.Services;
+using System.Linq;
 
 namespace SmartMobileProject.ViewModels
 {
@@ -31,6 +32,7 @@ namespace SmartMobileProject.ViewModels
             Ανανέωση = new Command(ReloadList);
             Κλήση = new Command(CallCustomer);
             Κινήσεις = new Command(GoToKiniseis);
+            ΝέοΠαραστατικό = new Command(newOrder);
             // CustomerCollection = new XPCollection<Πελάτης>(uow);
             CustomerCollection = app.πωλητής.Πελάτες;
             CustomerCollection.DeleteObjectOnRemove = true;        
@@ -112,6 +114,29 @@ namespace SmartMobileProject.ViewModels
             //await Shell.Current.GoToAsync($"{nameof(ΠελάτηςDetailTabViewPage)}?{nameof(ΠελάτηςDetailViewModel.IsFromEdit)}={true}");   
 
         }
+        async void newOrder(object obj)
+        {
+            if (!IsTrialOn)
+                return;
+            if (uow.InTransaction)
+            {
+                uow.ReloadChangedObjects();
+            }
+            Πελάτης customer = (Πελάτης)obj;
+            
+            if (!IsTrialOn)
+                return;
+            //setthe static class for new order
+            ΝέοΠαραστατικόViewModel.Order = null;
+
+            ΝέοΠαραστατικόViewModel.uow = new UnitOfWork();
+            //set politi
+            AppShell app = (AppShell)Application.Current.MainPage;
+            var p = ΝέοΠαραστατικόViewModel.uow.Query<Πωλητής>().Where(x => x.Oid == app.πωλητής.Oid);
+            ΝέοΠαραστατικόViewModel.politis = p.FirstOrDefault();
+            ΝέοΠαραστατικόViewModel.πελατης = customer;
+            await Shell.Current.GoToAsync(nameof(ΠαραστατικόΒασικάΣτοιχείαPage));
+        }
 
         async void deleteCustomer(Object sender)
         {        
@@ -191,6 +216,7 @@ namespace SmartMobileProject.ViewModels
         public ICommand ΝέοςΠελάτης { get; }
         public ICommand Ανανέωση { get; }
         public ICommand ΤροποποίησηΠελάτη { get; }
+        public ICommand ΝέοΠαραστατικό { get; }
         public ICommand ΔιαγραφήΠελάτη { get; }
         /// <summary>
         /// Καλειται η setCustomerwithafm και γεμιζει τον customer

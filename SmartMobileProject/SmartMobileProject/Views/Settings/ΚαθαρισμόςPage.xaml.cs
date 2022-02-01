@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartMobileProject.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,12 @@ namespace SmartMobileProject.Views.Settings
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ΚαθαρισμόςPage : ContentPage
     {
+        private ΚαθαρισμόςViewModel _viewModel;
+
         public ΚαθαρισμόςPage()
         {
             InitializeComponent();
+            BindingContext = _viewModel = new ΚαθαρισμόςViewModel();
         }
     }
 }

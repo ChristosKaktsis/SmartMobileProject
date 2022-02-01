@@ -31,14 +31,17 @@
             Padding="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="AUTO"/>
-                    <RowDefinition Height="20*"/>
-                    <RowDefinition Height="20*"/>
-                    <RowDefinition Height="20*"/>
-                    <RowDefinition Height="20*"/>
-                    <RowDefinition Height="20*"/>
-                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="150"/>
                    
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -111,9 +114,20 @@
                         FontSize="20"
                         Command="{Binding Διευθύνσεις}"/>
                 </Frame>
-               
+                <dxe:MultilineEdit Grid.Row="8" LabelText="Σημείωση 1" Text="{Binding customer.Σημείωση1}"/>
+                <dxe:ComboBoxEdit Grid.Row="9"
+                              Grid.Column="0"
+                              LabelText="Πρότυπα"
+                              LabelFontSize="Body"
+                              IsLabelFloating="True"
+                              ItemsSource="{Binding ΠρότυπαCollection}"
+                              SelectedItem="{Binding customer.Σημείωση2,Mode=TwoWay}"
+                              DisplayMember="Περιγραφή"
+                              IsFilterEnabled="True" FilterMode="Contains"/>
+                <Button Grid.Row="10" Text="Φωτογραφία" Command="{Binding Φωτογραφία}"/>
+                <Image Grid.Row="11" Source="{Binding ImageSource}"/>
 
-                
+
             </Grid>
         </ScrollView>
         

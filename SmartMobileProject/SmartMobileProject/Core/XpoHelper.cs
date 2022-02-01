@@ -28,7 +28,7 @@ namespace SmartMobileProject.Core
             ,typeof(ΠαραστατικάΕισπράξεων),typeof(ΓραμμέςΠαραστατικώνΕισπράξεων),typeof(ΣειρέςΠαραστατικώνΕισπράξεων),typeof(ΛογαριασμοίΧρηματικώνΔιαθέσιμων),typeof(Αξιόγραφα)
             ,typeof(Τράπεζα),typeof(ΤραπεζικοίΛογαριασμοί)
             ,typeof(Appointment) ,typeof(Πωλητής), typeof(Εργασία),typeof(ΚινήσειςΠελατών),
-            typeof(Ενέργεια),typeof(ΙδιότηταΕνέργειας),typeof(ΕπιλογήΙδιότητας)
+            typeof(Ενέργεια),typeof(ΙδιότηταΕνέργειας),typeof(ΕπιλογήΙδιότητας),typeof(Πρότυπα)
         };
         public static void InitXpo(string connectionString)
         {
@@ -381,7 +381,7 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή, ΚίνησηΣυναλασόμενου, ΠρόθεμαΑρίθμησης From ΣειρέςΠαραστατικώνΠωλήσεων where Ακυρωτικό = 0 and ");
+                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή, ΚίνησηΣυναλασόμενου, ΠρόθεμαΑρίθμησης From ΣειρέςΠαραστατικώνΠωλήσεων where Ακυρωτικό = 0 and Ενεργή=1 and ");
                 if (dt == null) { return false; }
                 foreach (DataRow row in dt.Rows)
                 {
@@ -432,7 +432,7 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή From ΣειρέςΠαραστατικώνΕισπράξεων where ");
+                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή From ΣειρέςΠαραστατικώνΕισπράξεων where Ενεργή=1 and ");
                 if (dt == null) { return false; }
                 foreach (DataRow row in dt.Rows)
                 {
@@ -699,7 +699,7 @@ namespace SmartMobileProject.Core
         {
             using (UnitOfWork uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select  Oid, Κωδικός, REPLACE(Περιγραφή,'\"','') as Περιγραφή, ΦΠΑ, ΤιμήΧονδρικής, Ομάδα, Κατηγορία, Οικογένεια, Υποοικογένεια From Είδος where ");
+                DataTable dt = await getSmartTable("Select  Oid, Κωδικός, REPLACE(Περιγραφή,'\"','') as Περιγραφή, ΦΠΑ, ΤιμήΧονδρικής, Ομάδα, Κατηγορία, Οικογένεια, Υποοικογένεια From Είδος where Ενεργό=1 and ");
                 if (dt == null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading Είδος", "OK");
@@ -925,7 +925,7 @@ namespace SmartMobileProject.Core
             using (var uow = CreateUnitOfWork())
             {
                 DataTable dt = await getSmartTable("Select Oid, REPLACE(Επωνυμία,'\"','') as Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email, " +
-                        "ΔΟΥ, ΚεντρικήΔιευθυνση, Πωλητής, Κείμενο5 , ΔιακριτικόςΤίτλος From Πελάτης where ΑΦΜ is not null and ΑΦΜ != '' and ");
+                        "ΔΟΥ, ΚεντρικήΔιευθυνση, Πωλητής, Κείμενο5 , ΔιακριτικόςΤίτλος From Πελάτης where ΑΦΜ is not null and ΑΦΜ != '' and Ενεργός=1 and ");
                 if (dt == null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading Πελάτης", "OK");
@@ -1286,7 +1286,7 @@ namespace SmartMobileProject.Core
             {
                 if (string.IsNullOrEmpty(customerid))
                     return false;
-                DataTable dt = await getSmartTable($@"select Oid ,Ημνία,Πελάτης,Παραστατικό,Χρέωση,Πίστωση FROM ΚινήσειςΠελατών where Πελάτης='{customerid}' and ");
+                DataTable dt = await getSmartTable2($@"select top(10) Oid ,Ημνία,Πελάτης,Παραστατικό,Χρέωση,Πίστωση FROM ΚινήσειςΠελατών where Πελάτης='{customerid}' and GCRecord is null order by (Ημνία) desc");
                 if (dt == null) { return false; }
                 foreach (DataRow row in dt.Rows)
                 {
@@ -1408,6 +1408,36 @@ namespace SmartMobileProject.Core
                 return false;
             }
             
+        }
+        //delete this afternew way
+        public static async Task<DataTable> getSmartTable2(string smartTable)
+        {
+            HttpClient client = new HttpClient();
+            string ip = Preferences.Get("IP", "79.129.5.42");
+            string port = Preferences.Get("Port1", "8881");
+            string uri = "http://" + ip + ":" + port + "/mobile/Values?sql= " + smartTable ;
+            HttpResponseMessage response;
+            string content;
+            try
+            {
+                response = await client.GetAsync(uri);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                content = await response.Content.ReadAsStringAsync();
+                content = content.Replace("\\", "");
+                content = content.Remove(0, 1);
+                content = content.Remove(content.Length - 1, 1);
+                DataTable dt = JsonConvert.DeserializeAnonymousType(content, new { Answare = default(DataTable) }).Answare;
+                return dt;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("---EXEPTION IN GET SMART TABLE---" + exc);
+                return null;
+            }
+
         }
         public static void CheckForConnection()
         {
@@ -1551,6 +1581,62 @@ namespace SmartMobileProject.Core
                     return στοιχείαΕταιρίας;
                 }
             });
+        }
+        public static async Task DeleteAllΕίδοςData()
+        {
+            using (UnitOfWork uow = CreateUnitOfWork())
+            {
+                var objtodelete = uow.Query<Είδος>();
+                foreach(var item in objtodelete)
+                    await uow.DeleteAsync(item);
+
+                uow.CommitChanges();
+            }
+        }
+        public static async Task DeleteAllΠελάτηςData()
+        {
+            using (UnitOfWork uow = CreateUnitOfWork())
+            {
+                var objtodelete = uow.Query<Πελάτης>();
+                foreach (var item in objtodelete)
+                    await uow.DeleteAsync(item);
+
+                uow.CommitChanges();
+            }
+        }
+        public static async Task DeleteAllΣεράData()
+        {
+            using (UnitOfWork uow = CreateUnitOfWork())
+            {
+                var objtodelete = uow.Query<ΣειρέςΠαραστατικώνΕισπράξεων>();
+                foreach (var item in objtodelete)
+                    await uow.DeleteAsync(item);
+
+                var objtodelete2 = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>();
+                foreach (var item in objtodelete2)
+                    await uow.DeleteAsync(item);
+                uow.CommitChanges();
+            }
+        }
+        public static async Task DeleteAllKinisisData()
+        {
+            using (UnitOfWork uow = CreateUnitOfWork())
+            {
+                var objtodelete = uow.Query<ΚινήσειςΠελατών>();
+                foreach (var item in objtodelete)
+                    await uow.DeleteAsync(item);
+
+                uow.CommitChanges();
+            }
+        }
+        public static async Task DeleteAllData()
+        {
+            await Task.WhenAll(
+                DeleteAllΕίδοςData(),
+                DeleteAllΠελάτηςData(),
+                DeleteAllΣεράData(),
+                DeleteAllKinisisData()
+                );
         }
     }
 }

@@ -14,6 +14,7 @@ namespace SmartMobileProject.ViewModels
     {
         public static UnitOfWork uow;
         public static Πωλητής politis;
+        public static Πελάτης πελατης;
         public static ΣτοιχείαΕταιρίας στοιχείαΕταιρίας;
         static ΠαραστατικάΠωλήσεων order;
         public static ΠαραστατικάΠωλήσεων Order

@@ -104,6 +104,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(IsUploaded), ref canUpload, value); }
         }
         bool canUpload;
+        public string Σχολια
+        {
+            get { return σχολια; }
+            set { SetPropertyValue(nameof(Σχολια), ref σχολια, value); }
+        }
+        string σχολια;
         [Association]
         public ΠαραστατικάΠωλήσεων ΠαραστατικάΠωλήσεων
         {
@@ -151,6 +157,7 @@ namespace SmartMobileProject.Models
                 "\",\"ΠοσοστόΦπα\":\"" + ΠοσοστόΦπα +
                 "\",\"Φπα\":\"" + Φπα +
                 "\",\"ΑξίαΓραμμής\":\"" + ΑξίαΓραμμής +
+                "\",\"Σχόλια\":\"" + (string.IsNullOrEmpty(Σχολια) ? "" : Σχολια) +
                 "\"}";
             return json;
         }

@@ -96,5 +96,10 @@ namespace SmartMobileProject.Views
         {
             await Shell.Current.GoToAsync("Settings/ΤρόποςΑποστολήςPage");
         }
+
+        private async void Button_Clicked_16(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("Settings/ΠρότυπαPage");
+        }
     }
 }

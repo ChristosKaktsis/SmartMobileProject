@@ -63,6 +63,7 @@ namespace SmartMobileProject
             Routing.RegisterRoute("Settings/ΚαθαρισμόςPage", typeof(ΚαθαρισμόςPage));
             Routing.RegisterRoute("Settings/ΤρόποςΠληρωμήςPage", typeof(ΤρόποςΠληρωμήςPage));
             Routing.RegisterRoute("Settings/ΤρόποςΑποστολήςPage", typeof(ΤρόποςΑποστολήςPage));
+            Routing.RegisterRoute("Settings/ΠρότυπαPage", typeof(ΠρότυπαPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

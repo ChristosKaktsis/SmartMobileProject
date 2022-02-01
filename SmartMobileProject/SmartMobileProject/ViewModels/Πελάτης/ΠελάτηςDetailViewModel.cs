@@ -11,6 +11,8 @@ using System.ComponentModel;
 using SmartMobileProject.Views;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
+using System.IO;
 
 namespace SmartMobileProject.ViewModels
 {
@@ -34,6 +36,9 @@ namespace SmartMobileProject.ViewModels
         string afmErrorMessage;
         string eponimiaErrorMessage;
         string dieuthinsiErrorMessage;
+        private ImageSource imageSource;
+        private string _imageInBytes;
+
         //
 
         public Πελάτης customer
@@ -46,10 +51,25 @@ namespace SmartMobileProject.ViewModels
             {
                 //icustomer = value;
                 SetProperty(ref icustomer, value);
-                OnPropertyChanged("customer");
+
+                if (value == null)
+                    return;
+                ImageSource = ShowImage(value.ImageBytes);
             }
         }
+
+        private ImageSource ShowImage(string imageBytes)
+        {
+            if (string.IsNullOrWhiteSpace(imageBytes))
+                return null;
+            var bytearray = Convert.FromBase64String(imageBytes);
+            Stream stream = new MemoryStream(bytearray);
+            var imageSource = ImageSource.FromStream(() => stream);
+            return imageSource;
+        }
+
         public XPCollection<ΔΟΥ> DOYCollection { get; set; }
+        public XPCollection<Πρότυπα> ΠρότυπαCollection { get; set; }
         public string ErrorMessage
         {
             get
@@ -160,11 +180,13 @@ namespace SmartMobileProject.ViewModels
             }            
             //set the DOY Collection
             DOYCollection = new XPCollection<ΔΟΥ>(app.uow);
+            ΠρότυπαCollection = new XPCollection<Πρότυπα>(app.uow);
 
             //commands
             Δημιουργία = new Command(Create);
             Αποθήκευση = new Command(Save);
             Διευθύνσεις = new Command(OpenAddress);
+            Φωτογραφία = new Command(TakeImage);
             Πίσω = new Command(GoBack);
         }
 
@@ -227,6 +249,24 @@ namespace SmartMobileProject.ViewModels
             
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
+            //ask if new Order
+            var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να δημιουργήσετε νέο παραστατικό πωλήσεων ; ", "Ναί", "Όχι");
+            if (answer)
+            {
+                if (!IsTrialOn)
+                    return;
+                //setthe static class for new order
+                ΝέοΠαραστατικόViewModel.Order = null;
+
+                ΝέοΠαραστατικόViewModel.uow = new UnitOfWork();
+                //set politi
+                AppShell app = (AppShell)Application.Current.MainPage;
+                var p = ΝέοΠαραστατικόViewModel.uow.Query<Πωλητής>().Where(x => x.Oid == app.πωλητής.Oid);
+                ΝέοΠαραστατικόViewModel.politis = p.FirstOrDefault();
+                ΝέοΠαραστατικόViewModel.πελατης = customer;
+                await Shell.Current.GoToAsync(nameof(ΠαραστατικόΒασικάΣτοιχείαPage));
+            }
+           
 
         }
         private async void OpenAddress(object obj)
@@ -338,7 +378,70 @@ namespace SmartMobileProject.ViewModels
            
             
         }
-      //
+        //
+        //Take photo
+        public ImageSource ImageSource
+        {
+            get { return imageSource; }
+            set => SetProperty(ref imageSource, value);
+        }
+        public string ImageInBytes
+        {
+            get => _imageInBytes;
+            set
+            {
+                SetProperty(ref _imageInBytes, value);
+                
+                customer.ImageBytes = value;
+            }
+        }
+        private async void TakeImage()
+        {
+            try
+            {
+                var photo = await MediaPicker.CapturePhotoAsync();
+                
+                await LoadPhotoAsync(photo);
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Feature is not supported on the device
+                Console.WriteLine($"CapturePhotoAsync THREW: {fnsEx.Message}");
+            }
+            catch (PermissionException pEx)
+            {
+                // Permissions not granted
+                Console.WriteLine($"CapturePhotoAsync THREW: {pEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"CapturePhotoAsync THREW: {ex.Message}");
+            }
+        }
+        public async Task LoadPhotoAsync(FileResult photo)
+        {
+            // canceled
+            if (photo == null)
+            {
+                ImageSource = null;
+                ImageInBytes = null;
+                return;
+            }
+            // save the file into local storage
+            var newFile = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+            using (var stream = await photo.OpenReadAsync())
+            using (var newStream = File.OpenWrite(newFile))
+                await stream.CopyToAsync(newStream);
+
+            
+            ImageSource = ImageSource.FromFile(newFile);
+            ConvertImage(newFile);
+        }
+        void ConvertImage(string p)
+        {
+            byte[] imageByte = File.ReadAllBytes(p);
+            ImageInBytes = Convert.ToBase64String(imageByte);
+        }
         /// <summary>
         /// Γινεται commit στην βαση
         /// </summary>
@@ -346,6 +449,6 @@ namespace SmartMobileProject.ViewModels
         public ICommand Δημιουργία { set; get; }
         public ICommand Διευθύνσεις { set; get; }
         public ICommand Πίσω { get; set; }
-
+        public ICommand Φωτογραφία { get; set; }
     }
 }

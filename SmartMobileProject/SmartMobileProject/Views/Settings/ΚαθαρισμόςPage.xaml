@@ -1,22 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SmartMobileProject.Views.Settings.ΚαθαρισμόςPage" 
+             x:Class="SmartMobileProject.Views.Settings.ΚαθαρισμόςPage"
              Title="Καθαρισμώς Δεδομένων" Shell.FlyoutBehavior="Disabled">
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding}"/>
-    </Shell.BackButtonBehavior>
     <ContentPage.Content>
         <Grid>
             <StackLayout  HorizontalOptions="Center">
                 <StackLayout HeightRequest="50"></StackLayout>
-                <Frame Padding="0" >
-                    <Button Text="Καθαρισμός όλων των δεδομένων" Command="{Binding }"/>
-                </Frame>
-                
+                <Button Text="Καθαρισμός όλων των δεδομένων" Command="{Binding Καθαρισμός}"/>
+                <Button Text="Καθαρισμός όλων των Ειδών" Command="{Binding ΚαθαρισμόςΕίδους}"/>
+                <Button Text="Καθαρισμός όλων των Πελατών" Command="{Binding ΚαθαρισμόςΠελάτη}"/>
+                <Button Text="Καθαρισμός όλων των Σειρών" Command="{Binding ΚαθαρισμόςΣειράς}"/>
             </StackLayout>
-            <StackLayout BackgroundColor="Black" Opacity="0.7" IsVisible="{Binding }">
-                <ActivityIndicator IsRunning="{Binding }" Color="{StaticResource PrimaryLight}" HeightRequest="100" VerticalOptions="CenterAndExpand"/>
+            
+            <StackLayout  IsVisible="{Binding IsBusy}">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{StaticResource PrimaryLight}" HeightRequest="100" VerticalOptions="CenterAndExpand"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>
