@@ -95,8 +95,8 @@ namespace SmartMobileProject.ViewModels
             string PistosiLastDate = string.Empty;
             foreach (var item in KiniseisList)
             {
-                XreosilastDate = item.Χρέωση != 0 ? item.Ημνία : XreosilastDate;
-                PistosiLastDate = item.Πίστωση != 0 ? item.Ημνία : PistosiLastDate;
+                XreosilastDate = item.Χρέωση != 0 ? item.Ημνία.ToString() : XreosilastDate;
+                PistosiLastDate = item.Πίστωση != 0 ? item.Ημνία.ToString() : PistosiLastDate;
             }
             ΗμερΤελευτΠιστ = PistosiLastDate;
             ΗμερΤελευτΧρεωσ = XreosilastDate;

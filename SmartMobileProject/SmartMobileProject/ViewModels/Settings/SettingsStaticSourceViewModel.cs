@@ -346,31 +346,41 @@ namespace SmartMobileProject.ViewModels
             //    await Application.Current.MainPage.DisplayAlert("Αποθήκευση",
             //         "Οι Αλλαγές Αποθηκεύτηκαν", "Εντάξει");
             //}
-            using(UnitOfWork uow = new UnitOfWork())
+            try
             {
-                ΣτοιχείαΕταιρίας νεαΕταιρία;
-                if (Εταιρία == null)
-                    νεαΕταιρία = new ΣτοιχείαΕταιρίας(uow);
-                else
-                    νεαΕταιρία = uow.Query<ΣτοιχείαΕταιρίας>().Where(x => x.Oid == Εταιρία.Oid).FirstOrDefault();
-                νεαΕταιρία.Επωνυμία= Επωνυμία;
-                νεαΕταιρία.ΤΚ = uow.Query<ΤαχυδρομικόςΚωδικός>().Where(x=> x.Oid == Tk.Oid).FirstOrDefault();
-                νεαΕταιρία.ΔΟΥ= uow.Query<ΔΟΥ>().Where(x => x.Oid == ΔΟΥ1.Oid).FirstOrDefault();
-                νεαΕταιρία.ΔικτυακόςΤόπος= ΔικτυακόςΤόπος;
-                νεαΕταιρία.ΑΦΜ= ΑΦΜ;
-                νεαΕταιρία.Οδός=Οδός;
-                νεαΕταιρία.Αριθμός=Αριθμός;
-                νεαΕταιρία.Τηλέφωνο=Τηλέφωνο;
-                νεαΕταιρία.FAX=FAX;
-                νεαΕταιρία.Email=Email;
-                νεαΕταιρία.UsernameΥπηρεσίαςΣτοιχείωνΜητρώου=Username;
-                νεαΕταιρία.PasswordΥπηρεσίαςΣτοιχείωνΜητρώου=Password;
-                uow.Save(νεαΕταιρία);
-                uow.CommitTransaction();
+                using (UnitOfWork uow = new UnitOfWork())
+                {
+                    ΣτοιχείαΕταιρίας νεαΕταιρία;
+                    if (Εταιρία == null)
+                        νεαΕταιρία = new ΣτοιχείαΕταιρίας(uow);
+                    else
+                        νεαΕταιρία = uow.Query<ΣτοιχείαΕταιρίας>().Where(x => x.Oid == Εταιρία.Oid).FirstOrDefault();
+                    νεαΕταιρία.Επωνυμία = Επωνυμία;
+                    νεαΕταιρία.ΤΚ = uow.Query<ΤαχυδρομικόςΚωδικός>().Where(x => x.Oid == Tk.Oid).FirstOrDefault();
+                    νεαΕταιρία.ΔΟΥ = uow.Query<ΔΟΥ>().Where(x => x.Oid == ΔΟΥ1.Oid).FirstOrDefault();
+                    νεαΕταιρία.ΔικτυακόςΤόπος = ΔικτυακόςΤόπος;
+                    νεαΕταιρία.ΑΦΜ = ΑΦΜ;
+                    νεαΕταιρία.Οδός = Οδός;
+                    νεαΕταιρία.Αριθμός = Αριθμός;
+                    νεαΕταιρία.Τηλέφωνο = Τηλέφωνο;
+                    νεαΕταιρία.FAX = FAX;
+                    νεαΕταιρία.Email = Email;
+                    νεαΕταιρία.UsernameΥπηρεσίαςΣτοιχείωνΜητρώου = Username;
+                    νεαΕταιρία.PasswordΥπηρεσίαςΣτοιχείωνΜητρώου = Password;
+                    uow.Save(νεαΕταιρία);
+                    uow.CommitTransaction();
+                }
+
+                await Application.Current.MainPage.DisplayAlert("Αποθήκευση",
+                         "Οι Αλλαγές Αποθηκεύτηκαν", "Εντάξει");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                await Application.Current.MainPage.DisplayAlert("Σφάλμα",
+                         "Οι Αλλαγές Δεν αποθηκευτηκαν", "Εντάξει");
             }
             
-            await Application.Current.MainPage.DisplayAlert("Αποθήκευση",
-                     "Οι Αλλαγές Αποθηκεύτηκαν", "Εντάξει");
         }
         public ICommand LoadCompanyCommand { set; get; }
         public ICommand Αποθήκευση { set; get; }

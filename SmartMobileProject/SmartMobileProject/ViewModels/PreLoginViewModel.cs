@@ -63,6 +63,24 @@ namespace SmartMobileProject.ViewModels
                 OnPropertyChanged(nameof(Port2));
             }
         }
+        public string uname
+        {
+            get => Preferences.Get(nameof(uname), "DemoAdmin");
+            set
+            {
+                Preferences.Set(nameof(uname), value);
+                OnPropertyChanged(nameof(uname));
+            }
+        }
+        public string passwrd
+        {
+            get => Preferences.Get(nameof(passwrd), "DemoPass");
+            set
+            {
+                Preferences.Set(nameof(passwrd), value);
+                OnPropertyChanged(nameof(passwrd));
+            }
+        }
         bool allLoading = false;
         public bool AllLoading
         {

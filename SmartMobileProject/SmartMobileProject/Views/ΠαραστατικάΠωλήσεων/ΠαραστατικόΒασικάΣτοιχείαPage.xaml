@@ -25,7 +25,6 @@
             ColumnSpacing="8"
             Padding="20">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="20*"/>
@@ -38,7 +37,7 @@
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
 
-                <dxe:DateEdit Grid.Row="1"
+                <dxe:DateEdit Grid.Row="0"
                           Grid.Column="0"
                           LabelText="Ημ/νία"
                           LabelFontSize="Body"
@@ -46,7 +45,7 @@
                           DisplayFormat="d"
                           
                           Date="{Binding Order.Ημνία, Mode=TwoWay}"/>
-                <dxe:ComboBoxEdit Grid.Row="2"                              
+                <dxe:ComboBoxEdit Grid.Row="1"                              
                               ItemsSource="{Binding ΣειρέςΠαραστατικώνΠωλήσεων}"
                               DisplayMember="Σειρά" 
                               SelectedItem="{Binding Order.Σειρά }"                         
@@ -68,7 +67,7 @@
                         </DataTemplate>
                     </dxe:ComboBoxEdit.ItemTemplate>
                 </dxe:ComboBoxEdit>
-                <dxe:ComboBoxEdit Grid.Row="3"                              
+                <dxe:ComboBoxEdit Grid.Row="2"                              
                               ItemsSource="{Binding CustomerCollection}"
                               DisplayMember="ΑΦΜ"
                               SelectedItem="{Binding Customer, Mode=Default}"
@@ -88,7 +87,7 @@
                         </DataTemplate>
                     </dxe:ComboBoxEdit.ItemTemplate>
                 </dxe:ComboBoxEdit>
-                <dxe:ComboBoxEdit Grid.Row="4"     
+                <dxe:ComboBoxEdit Grid.Row="3"     
                                   x:Name="ComboBoxDieuthParadosis"
                               ItemsSource="{Binding Order.Πελάτης.ΔιευθύνσειςΠελάτη}"
                               DisplayMember="Οδός" 
@@ -97,7 +96,7 @@
                               LabelFontSize="Body"
                               IsLabelFloating="True">
                 </dxe:ComboBoxEdit>
-                <Grid Grid.Row="5">
+                <Grid Grid.Row="4">
                     <dxe:ComboBoxEdit Grid.Column="0"                              
                               ItemsSource="{Binding ΤρόποςΠληρωμής}"
                               DisplayMember="Τρόποςπληρωμής" 
@@ -116,8 +115,8 @@
                     </dxe:ComboBoxEdit>
                     
                 </Grid>
-                <dxe:MultilineEdit Grid.Row="6" LabelText="Σχόλια" Text="{Binding Order.Σχολια}"/>
-                <Button Grid.Row="7"
+                <dxe:MultilineEdit Grid.Row="5" LabelText="Σχόλια" Text="{Binding Order.Σχολια}"/>
+                <Button Grid.Row="6"
                         HorizontalOptions="End"
                         Text="Επόμενο"
                         ContentLayout="right,10"

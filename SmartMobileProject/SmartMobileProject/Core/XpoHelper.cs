@@ -796,7 +796,7 @@ namespace SmartMobileProject.Core
                     }
                     else
                     {
-                        data = new BarCodeΕίδους(uow);
+                        data = new BarCodeΕίδους();
                     }                                      
                     data.Κωδικός = row["BarCode"].ToString();
                     data.Περιγραφή = row["Περιγραφή"].ToString();
@@ -937,7 +937,7 @@ namespace SmartMobileProject.Core
                     {
                         continue;
                     }
-                    if (!string.IsNullOrEmpty(row["Κείμενο5"].ToString()))
+                    if (row["Κείμενο5"] != DBNull.Value)
                     {
                         if (uow.Query<Πελάτης>().Where(x => x.SmartOid == Guid.Parse((string)row["Κείμενο5"])).Any())
                         {
@@ -951,21 +951,22 @@ namespace SmartMobileProject.Core
                     data.ΚατηγορίαΦΠΑ = int.Parse(row["ΚατηγορίαΦΠΑ"].ToString());
                     data.ΑΦΜ = row["ΑΦΜ"].ToString();
                     data.Email = row["Email"].ToString();
-                    if (!string.IsNullOrEmpty(row["Πωλητής"].ToString()))
+                    if (row["Πωλητής"] != DBNull.Value)
                     {
                         var politis = uow.Query<Πωλητής>().Where(x => x.SmartOid == Guid.Parse((string)row["Πωλητής"]));
                         data.Πωλητής = politis.FirstOrDefault();
                     }
-                    if (!string.IsNullOrEmpty(row["ΔΟΥ"].ToString()))
+                    if (row["ΔΟΥ"] != DBNull.Value)
                     {
                         var doy = uow.Query<ΔΟΥ>().Where(x => x.SmartOid == Guid.Parse((string)row["ΔΟΥ"]));
                         data.ΔΟΥ = doy.FirstOrDefault();
                     }
-                    if (!string.IsNullOrEmpty(row["ΚεντρικήΔιευθυνση"].ToString()))
+                    if (row["ΚεντρικήΔιευθυνση"] != DBNull.Value)
                     {
                         //var dieu = uow.Query<ΔιευθύνσειςΠελάτη>().Where(x => x.SmartOid == Guid.Parse((string)row["ΚεντρικήΔιευθυνση"]));
                         //  data.ΔιευθύνσειςΠελάτη.Add(dieu.FirstOrDefault());
-                        data.SmartOidΚεντρικήΔιεύθυνση = Guid.Parse((string)row["ΚεντρικήΔιευθυνση"]);
+                         
+                        data.SmartOidΚεντρικήΔιεύθυνση = Guid.Parse(row["ΚεντρικήΔιευθυνση"].ToString());
                     }
                     
                     uow.Save(data);
@@ -1296,7 +1297,7 @@ namespace SmartMobileProject.Core
                     }
                     ΚινήσειςΠελατών data = new ΚινήσειςΠελατών(uow);
                     data.SmartOid = Guid.Parse((string)row["Oid"]);
-                    data.Ημνία = row["Ημνία"] != DBNull.Value ? DateTime.Parse(row["Ημνία"].ToString()).ToString("dd/MM/yy") : string.Empty;
+                    data.Ημνία = row["Ημνία"] != DBNull.Value ? DateTime.Parse(row["Ημνία"].ToString()) : DateTime.MinValue;
                     data.Παραστατικό = row["Παραστατικό"] != DBNull.Value ? row["Παραστατικό"].ToString() : string.Empty;
                     data.Πελάτης = row["Πελάτης"] != DBNull.Value ? row["Πελάτης"].ToString() : string.Empty;
                     data.Χρέωση = row["Χρέωση"] != DBNull.Value ? decimal.Parse(row["Χρέωση"].ToString()) : 0;
@@ -1375,7 +1376,8 @@ namespace SmartMobileProject.Core
         }
         public static async Task<bool> setSmartTable(string json, string type)
         {
-            string authval = "DemoAdmin:DemoPass";
+            //string authval = "DemoAdmin:DemoPass";
+            string authval = $"{Preferences.Get("uname", "DemoAdmin")}:{ Preferences.Get("passwrd", "DemoPass")}";
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(authval);
             string conv = System.Convert.ToBase64String(plainTextBytes);
             string ip = Preferences.Get("IP", "79.129.5.42");
@@ -1401,8 +1403,9 @@ namespace SmartMobileProject.Core
 
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine(ex);
                 await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Upload. " +
                     "Ελεγξτε την συνδεση σας", "OK");
                 return false;
@@ -1521,32 +1524,6 @@ namespace SmartMobileProject.Core
                 Console.WriteLine("Don't fragment: {0}", reply.Options.DontFragment);
                 Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
             }
-        }
-        public static bool ClearAllData()
-        {
-            try
-            {
-                using (var uow = CreateUnitOfWork())
-                {
-                    uow.Delete(new XPCollection<ΣτοιχείαΕταιρίας>(uow));
-                    uow.Delete(new XPCollection<Πελάτης>(uow));
-                    uow.Delete(new XPCollection<Είδος>(uow));
-                    uow.Delete(new XPCollection<BarCodeΕίδους>(uow));
-                    uow.Delete(new XPCollection<ΔιευθύνσειςΠελάτη>(uow));
-                    uow.Delete(new XPCollection<ΟμάδαΕίδους>(uow));
-                    uow.Delete(new XPCollection<ΟικογένειαΕίδους>(uow));
-                    uow.Delete(new XPCollection<ΚατηγορίαΕίδους>(uow));
-                    uow.Delete(new XPCollection<ΥποοικογένειαΕίδους>(uow));
-                    uow.Delete(new XPCollection<ΦΠΑ>(uow));
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return false;
-            }
-
         }
         public static async Task<double> GetYpoloipo(string customerOid)
         {

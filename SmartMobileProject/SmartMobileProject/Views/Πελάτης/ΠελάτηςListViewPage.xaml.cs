@@ -60,7 +60,7 @@ namespace SmartMobileProject.Views
 
         private void grid_DoubleTap(object sender, DataGridGestureEventArgs e)
         {
-
+            
             if (e.Item != null)
             {
                 var editForm = new EditFormPage(grid, grid.GetItem(e.RowHandle));

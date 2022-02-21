@@ -54,7 +54,7 @@ namespace SmartMobileProject.ViewModels
             {
                 using(UnitOfWork uow = new UnitOfWork())
                 {
-                    ΕίδοςBarCode = new BarCodeΕίδους(uow);
+                    ΕίδοςBarCode = new BarCodeΕίδους();
                     ΕίδοςBarCode.Κωδικός = Κωδικός;
                     ΕίδοςBarCode.Περιγραφή = Περιγραφή;
                     ΕίδοςBarCode.ΤιμήΧονδρικής = ΤιμήΧονδρικής;

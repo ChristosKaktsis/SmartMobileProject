@@ -15,6 +15,12 @@
                 <ActivityIndicator IsRunning="{Binding IsBusy}"/>
             </StackLayout>
             <StackLayout>
+                <Frame Padding="5">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Ένα Ένα" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                        <Switch IsToggled="{Binding OneOne}"/>
+                    </StackLayout>
+                </Frame>
                 <StackLayout>
                     <Frame Padding="10" HasShadow="False">
                         <StackLayout Orientation="Horizontal" 
@@ -31,7 +37,8 @@
                 </StackLayout>
                 <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding BarCodeList}" 
                                    SelectionMode="Single"
-                                   SelectedItem="{Binding SelectedBarCode,Mode=TwoWay}">
+                                   SelectedItem="{Binding SelectedBarCode,Mode=Default}"  
+                                   HeightRequest="80">
                     <!-- Define ItemTemplate here.-->
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate>
@@ -77,6 +84,7 @@
                                             <Label Text="{Binding Μέγεθος}"/>
                                         </StackLayout>
                                     </StackLayout>
+                                    <Label Text="{Binding Ποσότητα,StringFormat='Ποσότητα :{0}'}"/>
                                 </StackLayout>
                             </Frame>
                         </DataTemplate>
@@ -86,8 +94,73 @@
                         <dxcv:SortDescription FieldName="Περιγραφή" SortOrder="Ascending"/>
                     </dxcv:DXCollectionView.SortDescriptions>
                 </dxcv:DXCollectionView>
+                <Frame>
+                    <StackLayout HeightRequest="200">
+                        <Label Text="Άλλα BarCode"/>
+                        <dxcv:DXCollectionView x:Name="othergrid" ItemsSource="{Binding OtherBarCodeList}" 
+                                   SelectionMode="Multiple"
+                                   SelectedItems="{Binding SelectedBarCodeList}"
+                                   SelectedItem="{Binding SelectedBarCode}">
+                            <!-- Define ItemTemplate here.-->
+                            <dxcv:DXCollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="7" Margin="0" BorderColor="LightGray" HasShadow="False">
+                                        <StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Περιγραφή}" 
+                                           Margin="0"
+                                           FontSize="16"
+                                           TextColor="#55575c"/>
+                                                <Label Text="{Binding ΤιμήΧονδρικής ,StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <StackLayout>
+                                                    <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                                    <Label Text="{Binding Χρώμα}"/>
+                                                    <Label Text="{Binding Μέγεθος}"/>
+                                                </StackLayout>
+                                            </StackLayout>
+                                            <Label Text=""/>
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </dxcv:DXCollectionView.ItemTemplate>
+                            <dxcv:DXCollectionView.SelectedItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="7" Margin="0" BackgroundColor="{StaticResource PrimaryLight}" BorderColor="{StaticResource PrimaryLight}" HasShadow="False">
+                                        <StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Περιγραφή}" 
+                                           Margin="0"
+                                           FontSize="16"
+                                           TextColor="#55575c"/>
+                                                <Label Text="{Binding ΤιμήΧονδρικής, StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <StackLayout>
+                                                    <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                                    <Label Text="{Binding Χρώμα}"/>
+                                                    <Label Text="{Binding Μέγεθος}"/>
+                                                </StackLayout>
+                                            </StackLayout>
+                                            <Label Text="{Binding Ποσότητα,StringFormat='Ποσότητα :{0}'}"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </dxcv:DXCollectionView.SelectedItemTemplate>
+                            <!--Sort items.-->
+                            <dxcv:DXCollectionView.SortDescriptions>
+                                <dxcv:SortDescription FieldName="Περιγραφή" SortOrder="Ascending"/>
+                            </dxcv:DXCollectionView.SortDescriptions>
+                        </dxcv:DXCollectionView>
+                    </StackLayout>
+                </Frame>
             </StackLayout>
-            <StackLayout VerticalOptions="End" BackgroundColor="Transparent" IsVisible="{Binding IsItemSelected,Mode=OneWay}">
+            <StackLayout VerticalOptions="End" BackgroundColor="Transparent" IsVisible="true">
                 <Frame HasShadow="False" BackgroundColor="Transparent">
                     <StackLayout Spacing="40">
                         <dxe:NumericEdit x:Name="posotita"

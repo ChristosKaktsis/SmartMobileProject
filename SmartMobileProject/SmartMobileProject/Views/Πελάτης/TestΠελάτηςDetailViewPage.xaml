@@ -121,9 +121,9 @@
                               LabelFontSize="Body"
                               IsLabelFloating="True"
                               ItemsSource="{Binding ΠρότυπαCollection}"
-                              SelectedItem="{Binding customer.Σημείωση2,Mode=TwoWay}"
+                              SelectedItem="{Binding Πρότυπο,Mode=TwoWay}"
                               DisplayMember="Περιγραφή"
-                              IsFilterEnabled="True" FilterMode="Contains"/>
+                              />
                 <Button Grid.Row="10" Text="Φωτογραφία" Command="{Binding Φωτογραφία}"/>
                 <Image Grid.Row="11" Source="{Binding ImageSource}"/>
 

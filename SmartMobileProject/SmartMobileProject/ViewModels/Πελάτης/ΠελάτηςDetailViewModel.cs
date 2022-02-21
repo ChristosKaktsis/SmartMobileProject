@@ -38,6 +38,7 @@ namespace SmartMobileProject.ViewModels
         string dieuthinsiErrorMessage;
         private ImageSource imageSource;
         private string _imageInBytes;
+        private Πρότυπα πρότυπο;
 
         //
 
@@ -55,6 +56,24 @@ namespace SmartMobileProject.ViewModels
                 if (value == null)
                     return;
                 ImageSource = ShowImage(value.ImageBytes);
+                Πρότυπο = app.uow.Query<Πρότυπα>().Where(x => x.Περιγραφή == value.Σημείωση2).FirstOrDefault(); 
+            }
+        }
+
+        public Πρότυπα Πρότυπο
+        {
+            get
+            {
+                return πρότυπο;
+            }
+            set
+            {
+                //icustomer = value;
+                SetProperty(ref πρότυπο, value);
+
+                if (value == null)
+                    return;
+                customer.Σημείωση2 = value.Περιγραφή;
             }
         }
 
