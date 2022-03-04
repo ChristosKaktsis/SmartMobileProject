@@ -49,7 +49,6 @@ namespace SmartMobileProject
             MainPage = new AppShell();
             //Application.Current.Properties.Clear();
             //string deviceIdentifier = DependencyService.Get<IDevice>().GetIdentifier();
-
         }
 
         protected override async void OnStart()

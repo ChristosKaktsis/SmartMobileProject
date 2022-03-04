@@ -38,6 +38,10 @@
                                Image="delete_white_18.png"/>
             </dxg:DataGridView.StartSwipeItems>
             <dxg:DataGridView.EndSwipeItems>
+                <dxg:SwipeItem Command="{Binding Αποστολή_Email}" 
+                               Caption="Email" 
+                               BackgroundColor="{StaticResource Primary}"
+                               Image="Print_16x16.png"/>
                 <dxg:SwipeItem Command="{Binding Εκτύπωση}" 
                                Caption="Print" 
                                BackgroundColor="{StaticResource PrimaryLight}"

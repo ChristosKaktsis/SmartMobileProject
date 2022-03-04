@@ -2,9 +2,12 @@
 using SmartMobileProject.Models;
 using SmartMobileProject.Services;
 using SmartMobileProject.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SmartMobileProject.ViewModels
@@ -32,7 +35,41 @@ namespace SmartMobileProject.ViewModels
             ΤροποποίησηΠαρασατικού = new Command(EditOrder);
             Εκτύπωση = new Command(Print);
             ΔιαγραφήΠαρασατικού = new Command(DeleteOrder);
-            
+            Αποστολή_Email = new Command<ΠαραστατικάΠωλήσεων>(SendEmailClicked);
+        }
+
+        private async void SendEmailClicked(ΠαραστατικάΠωλήσεων obj)
+        {
+            if (obj == null)
+                return;
+            var subject = $"Αποστολή παραστατικού {obj.Παραστατικό}";
+            var body = "";
+            var reccipients = new List<string> { obj.Πελάτης.Email};
+            await SendEmail(subject,body,reccipients);
+        }
+        public async Task SendEmail(string subject, string body, List<string> recipients)
+        {
+            try
+            {
+                var message = new EmailMessage
+                {
+                    Subject = subject,
+                    Body = body,
+                    To = recipients,
+                    //Cc = ccRecipients,
+                    //Bcc = bccRecipients
+                };
+                await Email.ComposeAsync(message);
+            }
+            catch (FeatureNotSupportedException fbsEx)
+            {
+                Console.WriteLine(fbsEx);
+            }
+            catch (Exception ex)
+            {
+                // Some other exception occurred
+                Console.WriteLine(ex);
+            }
         }
         private void SetPolitis()
         {
@@ -115,5 +152,6 @@ namespace SmartMobileProject.ViewModels
         public ICommand ΤροποποίησηΠαρασατικού { get; set; }
         public ICommand Εκτύπωση { set; get; }
         public ICommand ΔιαγραφήΠαρασατικού { get; set; }
+        public Command<ΠαραστατικάΠωλήσεων> Αποστολή_Email { get; set; }
     }
 }
