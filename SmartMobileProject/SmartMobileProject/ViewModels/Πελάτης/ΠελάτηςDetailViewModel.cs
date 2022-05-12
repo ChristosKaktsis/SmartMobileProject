@@ -420,7 +420,9 @@ namespace SmartMobileProject.ViewModels
             {
                 var photo = await MediaPicker.CapturePhotoAsync();
                 
-                await LoadPhotoAsync(photo);
+                await LoadPhotoAsync(photo);//set it to image source in UI
+                byte[] imageByte = await ResizeImage(photo); //small size image
+                ConvertImage(imageByte); //  to base64 save to customer.ImageInBytes
             }
             catch (FeatureNotSupportedException fnsEx)
             {
@@ -454,12 +456,31 @@ namespace SmartMobileProject.ViewModels
 
             
             ImageSource = ImageSource.FromFile(newFile);
-            ConvertImage(newFile);
+            //ConvertImage(newFile);
+            customer.ImageName = photo.FileName;//save image name
         }
-        void ConvertImage(string p)
+        void ConvertImage(byte[] imageByte)
         {
-            byte[] imageByte = File.ReadAllBytes(p);
+            //byte[] imageByte = File.ReadAllBytes(p);
             ImageInBytes = Convert.ToBase64String(imageByte);
+        }
+        protected async Task<byte[]> ResizeImage(FileResult imageFile)
+        {
+            byte[] imageData;
+
+            Stream stream = await imageFile.OpenReadAsync();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+                imageData = ms.ToArray();
+            }
+
+            var x = 400;
+            var y = 400;
+
+            byte[] resizedImage = await ImageResizer.ResizeImage(imageData, (float)x, (float)y);
+
+            return resizedImage;
         }
         /// <summary>
         /// Γινεται commit στην βαση

@@ -92,6 +92,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(CanUpload), ref canUpload, value); }
         }
         bool canUpload;
+        public string ImageName
+        {
+            get { return imageName; }
+            set { SetPropertyValue(nameof(ImageName), ref imageName, value); }
+        }
+        string imageName;
         public string ImageBytes
         {
             get { return imageBytes; }
@@ -210,7 +216,7 @@ namespace SmartMobileProject.Models
                 "\",\"ΚεντρικήΔιευθυνση\":\"" + ΚεντρικήΔιευθυνση.SmartOid +
                 "\",\"ΗμνίαΔημ\":\"" + ΗμνίαΔημ.ToString("dd/MM/yyyy HH:mm:ss") +
                 "\",\"ΔιευθύνσειςΠελάτη\":" + addressJson +
-                ",\"Image\":\"" + (string.IsNullOrEmpty(ImageBytes) ? "" : ImageBytes) +
+                ",\"Image\":\"" + (string.IsNullOrEmpty(ImageName) ? "" : ImageName) +
                 "\"}";
             return json;
         }

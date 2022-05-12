@@ -3,8 +3,11 @@ using SmartMobileProject.Core;
 using SmartMobileProject.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SmartMobileProject.Services.Repositories
@@ -26,7 +29,7 @@ namespace SmartMobileProject.Services.Repositories
                 {
                     var jsonlist = await ConvertToJson(PelatesItemsList);
                     var can = await XpoHelper.setSmartTable(jsonlist,"Customers");
-
+                    SendImageToCustomers(PelatesItemsList);
                     if (can)
                     {
                         foreach (var item in PelatesItemsList)
@@ -71,6 +74,45 @@ namespace SmartMobileProject.Services.Repositories
                 return json;
             });
             return task;
+        }
+        void SendImageToCustomers(List<Πελάτης> items)
+        {
+            foreach (var item in items)
+                SendImage(item);
+        }
+        private Stream StreamImage(string imageBytes)
+        {
+            if (string.IsNullOrWhiteSpace(imageBytes))
+                return null;
+            var bytearray = Convert.FromBase64String(imageBytes);
+            Stream stream = new MemoryStream(bytearray);
+            
+            return stream;
+        }
+        async void SendImage(Πελάτης customer)
+        {
+            if (customer == null)
+                return;
+            try
+            {
+                var content = new MultipartFormDataContent();
+                //content.Add(new StreamContent(await ImageFile.OpenReadAsync()), "file", ImageFile.FileName);
+                content.Add(new StreamContent(StreamImage(customer.ImageBytes)), "file", customer.ImageName);
+
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                var httpClient = new HttpClient(clientHandler);
+                string ip = Preferences.Get("IP", "79.129.5.42");
+                string port = Preferences.Get("Port1", "8881");
+                var response = await httpClient.PostAsync($"http://{ip}:{port}//mobile/Files/Upload", content);
+
+                var st = response.StatusCode.ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
         }
     }
 }
