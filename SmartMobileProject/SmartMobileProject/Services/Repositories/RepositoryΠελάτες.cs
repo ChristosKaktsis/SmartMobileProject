@@ -98,21 +98,29 @@ namespace SmartMobileProject.Services.Repositories
                 var content = new MultipartFormDataContent();
                 //content.Add(new StreamContent(await ImageFile.OpenReadAsync()), "file", ImageFile.FileName);
                 content.Add(new StreamContent(StreamImage(customer.ImageBytes)), "file", customer.ImageName);
-
-                HttpClientHandler clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-                var httpClient = new HttpClient(clientHandler);
+                //var response = await httpClient.PostAsync($"http://{ip}:{port}//mobile/Files/Upload", content);
+                var client = GetClient();
                 string ip = Preferences.Get("IP", "79.129.5.42");
-                string port = Preferences.Get("Port1", "8881");
-                var response = await httpClient.PostAsync($"http://{ip}:{port}//mobile/Files/Upload", content);
-
+                string port = Preferences.Get("Port2", "8882");
+                var response = await client.PostAsync($"http://{ip}:{port}/api/UploadImage", content);
                 var st = response.StatusCode.ToString();
+                Console.WriteLine(st);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-
+            HttpClient GetClient()
+            {
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                var httpClient = new HttpClient(clientHandler);
+                string authval = $"{Preferences.Get("uname", "DemoAdmin")}:{ Preferences.Get("passwrd", "DemoPass")}";
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(authval);
+                string conv = System.Convert.ToBase64String(plainTextBytes);
+                httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + conv);
+                return httpClient;
+            }
         }
     }
 }

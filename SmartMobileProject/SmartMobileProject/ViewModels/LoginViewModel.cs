@@ -60,6 +60,7 @@ namespace SmartMobileProject.ViewModels
             SetAll();   
             LoginCommand = new Command(OnLoginClicked);
             ΝέοςΠωλητής = new Command(CreateNew);
+            BackToSettingsCommand = new Command(async () => await AppShell.Current.GoToAsync($"//{nameof(PreLoginPage)}"));
         }
         public List<string> items { get; set; }
         private async void SetAll()
@@ -109,5 +110,6 @@ namespace SmartMobileProject.ViewModels
         }
         public ICommand LoginCommand { protected set; get; }
         public ICommand ΝέοςΠωλητής { protected set; get; }
+        public ICommand BackToSettingsCommand { get; set; }
     }
 }

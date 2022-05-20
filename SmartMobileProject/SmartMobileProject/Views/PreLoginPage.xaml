@@ -34,12 +34,12 @@
                           IsEnabled="{Binding OnlineMode}"
                           Text="{Binding IP}"/>
                 <Grid Grid.Row="3">
-                    <dxe:TextEdit  Grid.Column="0"
+                    <!--<dxe:TextEdit  Grid.Column="0"
                                LabelText="Port 1"
                                Keyboard="Numeric"
                                IsEnabled="{Binding OnlineMode}"
-                               Text="{Binding Port1}"/>
-                    <dxe:TextEdit  Grid.Column="1"
+                               Text="{Binding Port1}"/>-->
+                    <dxe:TextEdit  Grid.Column="0"
                                LabelText="Port 2"
                                Keyboard="Numeric"
                                IsEnabled="{Binding OnlineMode}"

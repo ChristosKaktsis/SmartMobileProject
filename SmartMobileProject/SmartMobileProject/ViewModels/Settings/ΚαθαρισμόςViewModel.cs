@@ -37,8 +37,11 @@ namespace SmartMobileProject.ViewModels
             IsBusy = true;
             var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να διαγράψετε τους πελάτες ; ", "Ναί", "Όχι");
             if (answer)
+            {
                 await XpoHelper.DeleteAllΠελάτηςData();
-            IsBusy = false;
+                LACFlag = false;
+            }
+           IsBusy = false;
         }
 
         private async void ClearEidosDataPressed(object obj)
@@ -55,7 +58,10 @@ namespace SmartMobileProject.ViewModels
             IsBusy = true;
             var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να διαγράψετε όλα τα δεδομένα ; ", "Ναί", "Όχι");
             if (answer)
+            {
                 await XpoHelper.DeleteAllData();
+                LACFlag = false;
+            }
             IsBusy = false;
         }
 

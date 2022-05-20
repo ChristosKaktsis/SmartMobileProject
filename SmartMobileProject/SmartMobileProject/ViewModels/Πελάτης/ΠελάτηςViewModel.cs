@@ -12,8 +12,9 @@ using System.Linq;
 namespace SmartMobileProject.ViewModels
 {
     class ΠελάτηςViewModel : BaseViewModel
-    {  
+    {
         public UnitOfWork uow = ((App)Application.Current).uow;
+        //UnitOfWork uow;
         AppShell app = (AppShell)Application.Current.MainPage;
         XPCollection<Πελάτης> customerCollection = null;
         public XPCollection<Πελάτης> CustomerCollection
@@ -33,9 +34,19 @@ namespace SmartMobileProject.ViewModels
             Κλήση = new Command(CallCustomer);
             Κινήσεις = new Command(GoToKiniseis);
             ΝέοΠαραστατικό = new Command(newOrder);
-            // CustomerCollection = new XPCollection<Πελάτης>(uow);
-            CustomerCollection = app.πωλητής.Πελάτες;
-            CustomerCollection.DeleteObjectOnRemove = true;        
+
+        }
+        public void OnAppearing()
+        {
+            //uow = new UnitOfWork();
+
+            if (LoadAllCustomers)
+                CustomerCollection = new XPCollection<Πελάτης>(uow);
+            else
+                CustomerCollection = app.πωλητής.Πελάτες;
+
+            CustomerCollection.DeleteObjectOnRemove = true;
+            ReloadList(null);
         }
 
         private async void GoToKiniseis(object obj)
@@ -130,6 +141,7 @@ namespace SmartMobileProject.ViewModels
             ΝέοΠαραστατικόViewModel.Order = null;
 
             ΝέοΠαραστατικόViewModel.uow = new UnitOfWork();
+            //ΝέοΠαραστατικόViewModel.uow = uow;
             //set politi
             AppShell app = (AppShell)Application.Current.MainPage;
             var p = ΝέοΠαραστατικόViewModel.uow.Query<Πωλητής>().Where(x => x.Oid == app.πωλητής.Oid);
@@ -141,17 +153,26 @@ namespace SmartMobileProject.ViewModels
         async void deleteCustomer(Object sender)
         {        
             var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", 
-                "Θέλετε να γίνει η διαγραφή ", "Ναί", "Όχι");  
+                "Θέλετε να γίνει η διαγραφή ", "Ναί", "Όχι");
+            
             if (answer)
             {
-                Πελάτης customer = (Πελάτης)sender;
-                customer.Delete();
-
-                if (uow.InTransaction)
+                try
                 {
-                    uow.CommitChanges();
+                    Πελάτης customer = (Πελάτης)sender;
+                    await uow.DeleteAsync(customer);
+                    if (uow.InTransaction)
+                    {
+                        uow.CommitChanges();
+                    }
+                    ReloadList(null);
                 }
-                Ανανέωση.Execute(null);
+                catch (Exception ex)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Σφάλμα",
+                    "Κάτι πήγε λάθος στην διαγραφή !", "ΟΚ");
+                    Console.WriteLine(ex);
+                }
             }                 
         }
 

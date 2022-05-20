@@ -52,8 +52,9 @@ namespace SmartMobileProject.Views
 
         protected override void OnAppearing()
         {
-            model.Ανανέωση.Execute(null);
             base.OnAppearing();
+            //model.Ανανέωση.Execute(null);
+            model.OnAppearing();
             NavigationStack = Navigation.NavigationStack.Count;
         }
       

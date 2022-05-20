@@ -83,9 +83,9 @@ namespace SmartMobileProject.ViewModels
             if (!IsTrialOn)
                 return;
             ΝέοΠαραστατικόViewModel.Order = null;
-            
             ΝέοΠαραστατικόViewModel.uow = uow;
-            
+            ΝέοΠαραστατικόViewModel.πελατης = null;
+
             await Shell.Current.GoToAsync(nameof(ΠαραστατικόΒασικάΣτοιχείαPage));
         }
         private async void EditOrder(object obj)

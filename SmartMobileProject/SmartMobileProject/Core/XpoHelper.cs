@@ -15,6 +15,7 @@ using System.IO;
 using System.Threading;
 using Xamarin.Essentials;
 using System.Net.NetworkInformation;
+using System.Collections.Generic;
 
 namespace SmartMobileProject.Core
 {
@@ -95,11 +96,12 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dtPolitis = await getSmartTable("select Oid, Ονοματεπώνυμο, KίνΤηλέφωνο, " +
-                        "Οδός, Αριθμός, Email,  FAX, Κείμενο5 from Πωλητής where ");
-                if (dtPolitis == null) 
+                //DataTable dtPolitis = await getSmartTable("select Oid, Ονοματεπώνυμο, KίνΤηλέφωνο, " +
+                //        "Οδός, Αριθμός, Email,  FAX, Κείμενο5 from Πωλητής where ");
+                DataTable dtPolitis = await GetData("getPolites");
+                if (dtPolitis.Rows.Count == 0)
                 { 
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading Πωλητής", "OK"); 
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Πωλητής", "OK"); 
                     return false; 
                 }
                 foreach (DataRow row in dtPolitis.Rows)
@@ -148,10 +150,11 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dtDOY = await getSmartTable("Select Oid, Κωδικός, ΔΟΥ From ΔΟΥ where ");
-                if (dtDOY == null)
+                //DataTable dtDOY = await getSmartTable("Select Oid, Κωδικός, ΔΟΥ From ΔΟΥ where ");
+                DataTable dtDOY = await GetData("getDOY");
+                if (dtDOY.Rows.Count == 0)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading ΔΟΥ", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΔΟΥ", "OK");
                     return false;
                 }
                 foreach (DataRow row in dtDOY.Rows)
@@ -196,10 +199,11 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select ΦΠΑ, ΟμάδαΦΠΑ, ΦΠΑΚανονικό, ΦΠΑΕξαίρεση, ΦΠΑΜειωμένο From ΦΠΑ where ");
-                if (dt == null) 
+                //DataTable dt = await getSmartTable("Select ΦΠΑ, ΟμάδαΦΠΑ, ΦΠΑΚανονικό, ΦΠΑΕξαίρεση, ΦΠΑΜειωμένο From ΦΠΑ where ");
+                DataTable dt = await GetData("getFPA");
+                if (dt.Rows.Count == 0) 
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading ΦΠΑ", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΦΠΑ", "OK");
                     return; 
                 }
                 foreach (DataRow row in dt.Rows)
@@ -237,10 +241,11 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Χώρα, Συντομογραφία  From Χώρα where ");
-                if (dt == null) 
+                //DataTable dt = await getSmartTable("Select Oid, Χώρα, Συντομογραφία  From Χώρα where ");
+                DataTable dt = await GetData("getCountry");
+                if (dt.Rows.Count == 0) 
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading Χώρα", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Χώρα", "OK");
                     return; 
                 }
                 foreach (DataRow row in dt.Rows)
@@ -276,8 +281,12 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Περιγραφή From ΥποοικογένειαΕίδους where ");
-                if (dt == null) { return; }
+                //DataTable dt = await getSmartTable("Select Oid, Περιγραφή From ΥποοικογένειαΕίδους where ");
+                DataTable dt = await GetData("getYpoOikogeneiaEidous");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΥποοικογένειαΕίδους", "OK");
+                    return; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΥποοικογένειαΕίδους>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -311,8 +320,13 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, ΤρόποςΠληρωμής From ΤρόποςΠληρωμής where ");
-                if (dt == null) { return; }
+                //DataTable dt = await getSmartTable("Select Oid, ΤρόποςΠληρωμής From ΤρόποςΠληρωμής where ");
+                DataTable dt = await GetData("getTroposPliromis");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΤρόποςΠληρωμής", "OK");
+
+                    return; }
                 foreach (DataRow row in dt.Rows)
                 {
                     var troposlist = uow.Query<ΤρόποςΠληρωμής>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"]));
@@ -346,8 +360,12 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, ΤρόποςΑποστολής From ΤρόποςΑποστολής where ");
-                if (dt == null) { return; }
+                //DataTable dt = await getSmartTable("Select Oid, ΤρόποςΑποστολής From ΤρόποςΑποστολής where ");
+                DataTable dt = await GetData("getTroposApostolis");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΤρόποςΑποστολής", "OK");
+                    return; }
                 foreach (DataRow row in dt.Rows)
                 {
                     var troposlist = uow.Query<ΤρόποςΑποστολής>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"]));
@@ -379,10 +397,22 @@ namespace SmartMobileProject.Core
         }
         public static async Task<bool> CreateSEIRAPOLData()
         {
+            var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+            if(currentP == null)
+            {
+                Console.WriteLine("Create SeiraPol Politis Is Null !!!!");
+                return false;
+            }
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή, ΚίνησηΣυναλασόμενου, ΠρόθεμαΑρίθμησης From ΣειρέςΠαραστατικώνΠωλήσεων where Ακυρωτικό = 0 and Ενεργή=1 and ");
-                if (dt == null) { return false; }
+                //DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή, ΚίνησηΣυναλασόμενου,Πωλητής, ΠρόθεμαΑρίθμησης " +
+                //    $"From ΣειρέςΠαραστατικώνΠωλήσεων where Ακυρωτικό = 0 and Ενεργή=1 and SmartMobile = 1 and Πωλητής='{currentP.SmartOid}' and ");
+                DataTable dt = await GetData("getSeiraPoliseon", $"getSeiraPoliseon,@politisId,{currentP.SmartOid}");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΣειρέςΠαραστατικώνΠωλήσεων", "OK");
+
+                    return false; }
                 foreach (DataRow row in dt.Rows)
                 {
                     ΣειρέςΠαραστατικώνΠωλήσεων data;
@@ -408,6 +438,7 @@ namespace SmartMobileProject.Core
                     data.Περιγραφή = row["Περιγραφή"].ToString();
                     data.ΠρόθεμαΑρίθμησης = Guid.Parse((string)row["ΠρόθεμαΑρίθμησης"]);
                     data.ΚίνησηΣυναλασόμενου = row["ΚίνησηΣυναλασόμενου"] == DBNull.Value ? 2:int.Parse(row["ΚίνησηΣυναλασόμενου"].ToString());
+                    data.IDΠωλητή = Guid.Parse((string)row["Πωλητής"]);
                     data.Counter = 0;
                     uow.Save(data);
                 }
@@ -432,8 +463,13 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή From ΣειρέςΠαραστατικώνΕισπράξεων where Ενεργή=1 and ");
-                if (dt == null) { return false; }
+                //DataTable dt = await getSmartTable("Select Oid, Σειρά, Περιγραφή From ΣειρέςΠαραστατικώνΕισπράξεων where Ενεργή=1 and ");
+                DataTable dt = await GetData("getSeiraEispraxeon");
+
+                if (dt.Rows.Count==0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΣειρέςΠαραστατικώνΕισπράξεων", "OK");
+
+                    return false; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΣειρέςΠαραστατικώνΕισπράξεων>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -467,7 +503,9 @@ namespace SmartMobileProject.Core
         public static async Task<int> CreateARITHMISISEIRAData(Guid Oid)
         {
             int counter=0;
-            DataTable dt = await getSmartTable("Select ΤρέχουσαΤιμήΜετρητή From Μετρητές where Oid = '" + Oid + "' and ");
+            //DataTable dt = await getSmartTable("Select ΤρέχουσαΤιμήΜετρητή From Μετρητές where Oid = '" + Oid + "' and ");
+            DataTable dt = await GetData("getMetritisSeiras", $"getMetritisSeiras,@oid,{Oid}");
+
             if (dt == null) { return -1; }
             foreach (DataRow row in dt.Rows)
             {
@@ -479,8 +517,13 @@ namespace SmartMobileProject.Core
         {
             using (UnitOfWork uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Πόλη From Πόλη where ");
-                if (dt == null) { return; }
+                //DataTable dt = await getSmartTable("Select Oid, Πόλη From Πόλη where ");
+                DataTable dt = await GetData("getCity");
+
+                if (dt.Rows.Count==0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Πόλη", "OK");
+
+                    return; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<Πόλη>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -520,10 +563,12 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select ΤαχυδρομικόςΚωδικός, Πόλη, Νομός, Περιοχή, Χώρα From ΤαχυδρομικόςΚωδικός where ");
-                if (dt == null)
+                //DataTable dt = await getSmartTable("Select ΤαχυδρομικόςΚωδικός, Πόλη, Νομός, Περιοχή, Χώρα From ΤαχυδρομικόςΚωδικός where ");
+                DataTable dt = await GetData("getTK");
+
+                if (dt.Rows.Count == 0)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading ΤΚ", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΤΚ", "OK");
                     return false;
                 }
                 foreach (DataRow row in dt.Rows)
@@ -567,8 +612,13 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Τράπεζα From Τράπεζα where ");
-                if (dt == null) { return false; }
+                //DataTable dt = await getSmartTable("Select Oid, Τράπεζα From Τράπεζα where ");
+                DataTable dt = await GetData("getTrapeza");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Τράπεζα", "OK");
+
+                    return false; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<Τράπεζα>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -602,8 +652,13 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Ομάδα, ΣειράΕμφάνισης From ΟμάδεςΕίδους where ");
-                if (dt == null) { return; }
+                //DataTable dt = await getSmartTable("Select Oid, Ομάδα, ΣειράΕμφάνισης From ΟμάδεςΕίδους where ");
+                DataTable dt = await GetData("getOmadaEidous");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΟμάδεςΕίδους", "OK");
+
+                    return; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΟμάδαΕίδους>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -636,8 +691,13 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Περιγραφή From ΟικογένειαΕίδους where ");
-                if (dt == null) { return; }
+                //DataTable dt = await getSmartTable("Select Oid, Περιγραφή From ΟικογένειαΕίδους where ");
+                DataTable dt = await GetData("getOikogeneiaEidous");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΟικογένειαΕίδους", "OK");
+
+                    return; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΟικογένειαΕίδους>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -667,8 +727,13 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Κατηγορία From ΚατηγορίεςΕίδους where ");
-                if (dt == null) { return; }
+                //DataTable dt = await getSmartTable("Select Oid, Κατηγορία From ΚατηγορίεςΕίδους where ");
+                DataTable dt = await GetData("getKatigoriaEidous");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΚατηγορίεςΕίδους", "OK");
+
+                    return; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΚατηγορίαΕίδους>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -699,10 +764,12 @@ namespace SmartMobileProject.Core
         {
             using (UnitOfWork uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select  Oid, Κωδικός, REPLACE(Περιγραφή,'\"','') as Περιγραφή, ΦΠΑ, ΤιμήΧονδρικής, Ομάδα, Κατηγορία, Οικογένεια, Υποοικογένεια From Είδος where Ενεργό=1 and ");
-                if (dt == null)
+                //DataTable dt = await getSmartTable("Select  Oid, Κωδικός, REPLACE(Περιγραφή,'\"','') as Περιγραφή, ΦΠΑ, ΤιμήΧονδρικής, Ομάδα, Κατηγορία, Οικογένεια, Υποοικογένεια From Είδος where Ενεργό=1 and ");
+                DataTable dt = await GetData("getEidos");
+
+                if (dt.Rows.Count == 0)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading Είδος", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Είδος", "OK");
                     return false;
                 }
                 foreach (DataRow row in dt.Rows)
@@ -779,12 +846,14 @@ namespace SmartMobileProject.Core
         {
             using (UnitOfWork uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("SELECT BarCode , ΑκολουθείΤήνΤιμήΕίδους, REPLACE(Περιγραφή, '\"', '') as Περιγραφή, " +
-                                                  "ΤιμήΧονδρικής, Είδος, REPLACE(Χρώματα.Χρώματα, '\"', '') as Χρώματα,  Μεγέθη.Μεγέθη, ΦΠΑ" +
-                                             " FROM BarCodeΕίδους left join Χρώματα on BarCodeΕίδους.Χρώμα=Χρώματα.Oid left join Μεγέθη on BarCodeΕίδους.Μέγεθος=Μεγέθη.Oid  where BarCodeΕίδους.Ενεργό = '1' and BarCodeΕίδους.");
-                if (dt == null)
+                //DataTable dt = await getSmartTable("SELECT BarCode , ΑκολουθείΤήνΤιμήΕίδους, REPLACE(Περιγραφή, '\"', '') as Περιγραφή, " +
+                //                                  "ΤιμήΧονδρικής, Είδος, REPLACE(Χρώματα.Χρώματα, '\"', '') as Χρώματα,  Μεγέθη.Μεγέθη, ΦΠΑ" +
+                //                             " FROM BarCodeΕίδους left join Χρώματα on BarCodeΕίδους.Χρώμα=Χρώματα.Oid left join Μεγέθη on BarCodeΕίδους.Μέγεθος=Μεγέθη.Oid  where BarCodeΕίδους.Ενεργό = '1' and BarCodeΕίδους.");
+                DataTable dt = await GetData("getBarcodeEidos");
+
+                if (dt.Rows.Count == 0)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading BarCode", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο BarCode", "OK");
                     return false;
                 }
                 foreach (DataRow row in dt.Rows)
@@ -844,8 +913,13 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Τράπεζα, Swift, Λογαριασμός, IBAN, Υποκατάστημα From ΤραπεζικοίΛογαριασμοί where ");
-                if (dt == null) { return; }
+                //DataTable dt = await getSmartTable("Select Oid, Τράπεζα, Swift, Λογαριασμός, IBAN, Υποκατάστημα From ΤραπεζικοίΛογαριασμοί where ");
+                DataTable dt = await GetData("getTrapLogarismos");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΤραπεζικοίΛογαριασμοί", "OK");
+
+                    return; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΤραπεζικοίΛογαριασμοί>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -882,8 +956,13 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Τράπεζα, ΤραπεζικόςΛογαριασμός, Λογαριασμός From ΛογαριασμοίΧρηματικώνΔιαθέσιμων where ");
-                if (dt == null) { return; }
+                //DataTable dt = await getSmartTable("Select Oid, Τράπεζα, ΤραπεζικόςΛογαριασμός, Λογαριασμός From ΛογαριασμοίΧρηματικώνΔιαθέσιμων where ");
+                DataTable dt = await GetData("getLogXrhmDiath");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΛογαριασμοίΧρηματικώνΔιαθέσιμων", "OK");
+
+                    return; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΛογαριασμοίΧρηματικώνΔιαθέσιμων>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -922,13 +1001,46 @@ namespace SmartMobileProject.Core
         }
         public static async Task<bool> CreatePELATISData()
         {
+            var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+            if (currentP == null)
+            {
+                Console.WriteLine("Create CreatePELATISData Politis Is Null !!!!");
+                return false;
+            }
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, REPLACE(Επωνυμία,'\"','') as Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email, " +
-                        "ΔΟΥ, ΚεντρικήΔιευθυνση, Πωλητής, Κείμενο5 , ΔιακριτικόςΤίτλος From Πελάτης where ΑΦΜ is not null and ΑΦΜ != '' and Ενεργός=1 and ");
-                if (dt == null)
+                bool asktoloadcustomers;
+                if (Preferences.Get("LACFlag", false))
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading Πελάτης", "OK");
+                    asktoloadcustomers = Preferences.Get("LoadAllCustomers", false);
+                }
+                else
+                {
+                    asktoloadcustomers = await Application.Current.MainPage.DisplayAlert(
+                    "Πελάτες", "Θέλετε να κατέβουν όλοι οι πελάτες ή του συγκεκριμένου πωλητή", "Όλοι", "Του πωλητή");
+                    Preferences.Set("LoadAllCustomers", asktoloadcustomers);//set it glob ???????
+                    Preferences.Set("LACFlag", true);
+                }
+                //string query = string.Empty;
+                DataTable dt;
+                if (asktoloadcustomers)
+                {
+                    //query = "Select Oid, REPLACE(Επωνυμία,'\"','') as Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email, " +
+                    //    "ΔΟΥ, ΚεντρικήΔιευθυνση, Πωλητής, Κείμενο5 , ΔιακριτικόςΤίτλος From Πελάτης " +
+                    //    $"where ΑΦΜ is not null and ΑΦΜ != '' and Ενεργός=1 and ";
+                     dt = await GetData("getPelates");
+                }
+                else
+                {
+                    //query = "Select Oid, REPLACE(Επωνυμία,'\"','') as Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email, " +
+                    //    "ΔΟΥ, ΚεντρικήΔιευθυνση, Πωλητής, Κείμενο5 , ΔιακριτικόςΤίτλος From Πελάτης " +
+                    //    $"where ΑΦΜ is not null and ΑΦΜ != '' and Ενεργός=1 and Πωλητής='{currentP.SmartOid}' and ";
+                     dt = await GetData("getPelatesFromPoliti", $"getPelatesFromPoliti,@politisId,{currentP.SmartOid}");
+                }
+                //DataTable dt = await getSmartTable(query);
+                if (dt.Rows.Count == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Πελάτης", "OK");
                     return false;
                 }
                 foreach (DataRow row in dt.Rows)
@@ -992,11 +1104,13 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, REPLACE(Οδός,'\"','') as Οδός, Αριθμός, REPLACE(Περιοχή,'\"','') as Περιοχή, Τηλέφωνο, Τηλέφωνο1, " +
-                       "KίνΤηλέφωνο, Κείμενο5, FAX, ΓεωγραφικόΠλάτος, ΓεωγραφικόΜήκος, ΤΚ, Πόλη, Πελάτης From ΔιευθύνσειςΠελάτη where ");
-                if (dt == null)
+                //DataTable dt = await getSmartTable("Select Oid, REPLACE(Οδός,'\"','') as Οδός, Αριθμός, REPLACE(Περιοχή,'\"','') as Περιοχή, Τηλέφωνο, Τηλέφωνο1, " +
+                //       "KίνΤηλέφωνο, Κείμενο5, FAX, ΓεωγραφικόΠλάτος, ΓεωγραφικόΜήκος, ΤΚ, Πόλη, Πελάτης From ΔιευθύνσειςΠελάτη where ");
+                DataTable dt = await GetData("getDieuthinseisPelati");
+
+                if (dt.Rows.Count == 0)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Loading ΔιευθύνσειςΠελάτη", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΔιευθύνσειςΠελάτη", "OK");
                     return false;
                 }
                 foreach (DataRow row in dt.Rows)
@@ -1077,10 +1191,15 @@ namespace SmartMobileProject.Core
             ΣτοιχείαΕταιρίας στοιχείαΕταιρίας;
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("Select Oid, Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email," +
-                       " ΔΟΥ, Οδός, Αριθμός, ΔικτυακόςΤόπος, Περιοχή, Τηλέφωνο, Τηλέφωνο1, ΤΚ, Πόλη," +
-                       " UsernameΥπηρεσίαςΣτοιχείωνΜητρώου, PasswordΥπηρεσίαςΣτοιχείωνΜητρώου, Fax From ΣτοιχείαΕταιρίας where ");
-                if (dt == null) { return null; }
+                //DataTable dt = await getSmartTable("Select Oid, Επωνυμία, ΚατηγορίαΦΠΑ, ΑΦΜ, Email," +
+                //       " ΔΟΥ, Οδός, Αριθμός, ΔικτυακόςΤόπος, Περιοχή, Τηλέφωνο, Τηλέφωνο1, ΤΚ, Πόλη," +
+                //       " UsernameΥπηρεσίαςΣτοιχείωνΜητρώου, PasswordΥπηρεσίαςΣτοιχείωνΜητρώου, Fax From ΣτοιχείαΕταιρίας where ");
+                DataTable dt = await GetData("getStoixeiaEtaireias");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΣτοιχείαΕταιρίας", "OK");
+
+                    return null; }
                 foreach (DataRow row in dt.Rows)
                 {
                     
@@ -1155,10 +1274,15 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("SELECT Ιδιότητα.Oid, Ιδιότητα.Περιγραφή, ΤύποςΙδιότητας" +
-                        " FROM Ιδιότητα JOIN ΟμάδαΙδιότητας on Ιδιότητα.ΟμάδαΙδιότητας = ΟμάδαΙδιότητας.Oid " +
-                        "where ΟμάδαΙδιότητας.Περιγραφή = 'CRM Mobile' and Ιδιότητα.");
-                if (dt == null) { return false; }
+                //DataTable dt = await getSmartTable("SELECT Ιδιότητα.Oid, Ιδιότητα.Περιγραφή, ΤύποςΙδιότητας" +
+                //        " FROM Ιδιότητα JOIN ΟμάδαΙδιότητας on Ιδιότητα.ΟμάδαΙδιότητας = ΟμάδαΙδιότητας.Oid " +
+                //        "where ΟμάδαΙδιότητας.Περιγραφή = 'CRM Mobile' and Ιδιότητα.");
+                DataTable dt = await GetData("getIdiotita");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Ιδιότητα", "OK");
+
+                    return false; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΙδιότηταΕνέργειας>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -1193,11 +1317,16 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("SELECT ΕπιλογέςΙδιότητας.Oid, Ιδιότητα.Oid as ΙδιότηταOid, ΕπιλογέςΙδιότητας.Περιγραφή " +
-                      "FROM Ιδιότητα JOIN ΟμάδαΙδιότητας on Ιδιότητα.ΟμάδαΙδιότητας = ΟμάδαΙδιότητας.Oid " +
-                      "join ΕπιλογέςΙδιότητας on ΕπιλογέςΙδιότητας.Ιδιότητα = Ιδιότητα.Oid " +
-                      "where ΟμάδαΙδιότητας.Περιγραφή = 'CRM Mobile' and Ιδιότητα.");
-                if (dt == null) { return false; }
+                //DataTable dt = await getSmartTable("SELECT ΕπιλογέςΙδιότητας.Oid, Ιδιότητα.Oid as ΙδιότηταOid, ΕπιλογέςΙδιότητας.Περιγραφή " +
+                //      "FROM Ιδιότητα JOIN ΟμάδαΙδιότητας on Ιδιότητα.ΟμάδαΙδιότητας = ΟμάδαΙδιότητας.Oid " +
+                //      "join ΕπιλογέςΙδιότητας on ΕπιλογέςΙδιότητας.Ιδιότητα = Ιδιότητα.Oid " +
+                //      "where ΟμάδαΙδιότητας.Περιγραφή = 'CRM Mobile' and Ιδιότητα.");
+                DataTable dt = await GetData("getEpilogesIdiotitas");
+
+                if (dt.Rows.Count == 0) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΕπιλογέςΙδιότητας", "OK");
+
+                    return false; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΕπιλογήΙδιότητας>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -1238,11 +1367,16 @@ namespace SmartMobileProject.Core
         {
             using (var uow = CreateUnitOfWork())
             {
-                DataTable dt = await getSmartTable("SELECT event.Oid, Resource.Caption, Subject, Description, StartOn, EndOn, AllDay, Label, Location FROM Event " +
-                    "join ResourceResources_EventEvents on ResourceResources_EventEvents.Events=Event.Oid " +
-                    "join Resource on Resource.Oid = ResourceResources_EventEvents.Resources where " +
-                    "datepart(year,StartOn) >= datepart(YEAR, GETDATE()) and DATEPART(month, StartOn)>= DATEPART(month, GETDATE()) AND Event.");
-                if (dt == null) { return false; }
+                //DataTable dt = await getSmartTable("SELECT event.Oid, Resource.Caption, Subject, Description, StartOn, EndOn, AllDay, Label, Location FROM Event " +
+                //    "join ResourceResources_EventEvents on ResourceResources_EventEvents.Events=Event.Oid " +
+                //    "join Resource on Resource.Oid = ResourceResources_EventEvents.Resources where " +
+                //    "datepart(year,StartOn) >= datepart(YEAR, GETDATE()) and DATEPART(month, StartOn)>= DATEPART(month, GETDATE()) AND Event.");
+                DataTable dt = await GetData("getEvents");
+
+                //if (dt.Rows.Count == 0) {
+                //    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Event", "OK");
+
+                //    return false; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<Appointment>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -1287,8 +1421,13 @@ namespace SmartMobileProject.Core
             {
                 if (string.IsNullOrEmpty(customerid))
                     return false;
-                DataTable dt = await getSmartTable2($@"select top(10) Oid ,Ημνία,Πελάτης,Παραστατικό,Χρέωση,Πίστωση FROM ΚινήσειςΠελατών where Πελάτης='{customerid}' and GCRecord is null order by (Ημνία) desc");
-                if (dt == null) { return false; }
+                //DataTable dt = await getSmartTable2($@"select top(10) Oid ,Ημνία,Πελάτης,Παραστατικό,Χρέωση,Πίστωση FROM ΚινήσειςΠελατών where Πελάτης='{customerid}' and GCRecord is null order by (Ημνία) desc");
+                DataTable dt = await GetData("getKiniseisPelati", $"getKiniseisPelati,@pelatisId,{customerid}");
+
+                if (dt == null) {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΚινήσειςΠελατών", "OK");
+
+                    return false; }
                 foreach (DataRow row in dt.Rows)
                 {
                     if (uow.Query<ΚινήσειςΠελατών>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
@@ -1329,50 +1468,19 @@ namespace SmartMobileProject.Core
         {
             if (string.IsNullOrEmpty(customerid))
                 return string.Empty;
-            DataTable dt = await getSmartTable($@"select _ΤρέχουσαΧρέωση-_ΤρέχουσαΠίστωση as Υπόλοιπο FROM Πελάτης where Oid='{customerid}' and ");
+            //DataTable dt = await getSmartTable($@"select _ΤρέχουσαΧρέωση-_ΤρέχουσαΠίστωση as Υπόλοιπο FROM Πελάτης where Oid='{customerid}' and ");
+            DataTable dt = await GetData("getTrexonYpoloipoPelati", $"getTrexonYpoloipoPelati,@pelatisId,{customerid}");
+
             string currentypoloipo = string.Empty;
-            if (dt == null) { return string.Empty; }
+            if (dt == null) {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Υπόλοιπο", "OK");
+
+                return string.Empty; }
             foreach (DataRow row in dt.Rows)
             {
                 currentypoloipo = row["Υπόλοιπο"] != DBNull.Value ? row["Υπόλοιπο"].ToString() : string.Empty;
             }
             return currentypoloipo;
-        }
-        /// <summary>
-        /// Ανοιγει ενα HttpClient και παιρνει το response
-        /// Μετατρέπει σε Json μορφή και μετα το κάνει Convert σε datatable
-        /// http://192.168.3.44:80/api/Values?sql= select * from table where GCRecord is null 
-        /// </summary>
-        /// <param name="smartTable">Ο πινακας απο  την βαση του smart</param>
-        /// <returns>Select From smartTable where GCRecord</returns>
-        public static async Task<DataTable> getSmartTable(string smartTable)
-        {
-            HttpClient client = new HttpClient();
-            string ip = Preferences.Get("IP", "79.129.5.42");
-            string port = Preferences.Get("Port1", "8881");
-            string uri = "http://"+ip+":"+port+"/mobile/Values?sql= " + smartTable + "GCRecord is null ";
-            HttpResponseMessage response;
-            string content;
-            try
-            {
-                response = await client.GetAsync(uri);
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-                content = await response.Content.ReadAsStringAsync();
-                content = content.Replace("\\", "");
-                content = content.Remove(0, 1);
-                content = content.Remove(content.Length - 1, 1);
-                DataTable dt = JsonConvert.DeserializeAnonymousType(content, new { Answare = default(DataTable) }).Answare;
-                return dt;
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine("---EXEPTION IN GET SMART TABLE---" + exc);
-                return null;
-            }
-
         }
         public static async Task<bool> setSmartTable(string json, string type)
         {
@@ -1412,35 +1520,54 @@ namespace SmartMobileProject.Core
             }
             
         }
-        //delete this afternew way
-        public static async Task<DataTable> getSmartTable2(string smartTable)
+        public static async Task<DataTable> GetData(string method, string param = "Nothing")
         {
-            HttpClient client = new HttpClient();
-            string ip = Preferences.Get("IP", "79.129.5.42");
-            string port = Preferences.Get("Port1", "8881");
-            string uri = "http://" + ip + ":" + port + "/mobile/Values?sql= " + smartTable ;
-            HttpResponseMessage response;
-            string content;
+            DataTable dt = new DataTable();
             try
             {
-                response = await client.GetAsync(uri);
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-                content = await response.Content.ReadAsStringAsync();
-                content = content.Replace("\\", "");
-                content = content.Remove(0, 1);
-                content = content.Remove(content.Length - 1, 1);
-                DataTable dt = JsonConvert.DeserializeAnonymousType(content, new { Answare = default(DataTable) }).Answare;
-                return dt;
+                string JSONString = await GetJSONFromhttpResponse(method,param);
+                dt = (DataTable)JsonConvert.DeserializeObject(JSONString, (typeof(DataTable)));
             }
-            catch (Exception exc)
+            catch(JsonSerializationException js)
             {
-                Console.WriteLine("---EXEPTION IN GET SMART TABLE---" + exc);
-                return null;
+                Console.WriteLine(js);
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alert", "Κάτι πήγε στραβά στο Get JSON Deserialize Object. ", "OK");
             }
-
+            catch(WebException web)
+            {
+                Console.WriteLine(web);
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alert", "Κάτι πήγε στραβά στο GetJSON From httpResponse. ", "OK");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στο Get.", "OK");
+            }
+            return dt;
+        }
+        private static async Task<string> GetJSONFromhttpResponse(string method,string param = "Nothing")
+        {
+            string authval = $"{Preferences.Get("uname", "DemoAdmin")}:{ Preferences.Get("passwrd", "DemoPass")}";
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(authval);
+            string conv = System.Convert.ToBase64String(plainTextBytes);
+            string ip = Preferences.Get("IP", "79.129.5.42");
+            string port = Preferences.Get("Port2", "8882");
+            var httpRequest = (HttpWebRequest)WebRequest.Create("http://" + ip + ":" + port +
+                $"/api/GetDataJson?SelectMethod={method}&RelationParameter=Nothing&Parameters={param}");
+            httpRequest.ContentType = "application/json";
+            httpRequest.Method = "GET";
+            httpRequest.Headers.Add("Authorization", "Basic " + conv);
+            var httpResponse = await httpRequest.GetResponseAsync();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+                result = result.Replace("\\", "");
+                result = result.Remove(0, 1);
+                result = result.Remove(result.Length - 1, 1);
+                return result;
+            }
         }
         public static void CheckForConnection()
         {
@@ -1529,8 +1656,10 @@ namespace SmartMobileProject.Core
         {
             double trexousaxreosh=0;
             double trexousaPistosh=0;
-            DataTable dt = await getSmartTable($@"Select _ΤρέχουσαΠίστωση, _ΤρέχουσαΧρέωση
-                        From Πελάτης where Oid ='{customerOid}' and ΑΦΜ is not null and ΑΦΜ != '' and ");
+            //DataTable dt = await getSmartTable($@"Select _ΤρέχουσαΠίστωση, _ΤρέχουσαΧρέωση
+            //            From Πελάτης where Oid ='{customerOid}' and ΑΦΜ is not null and ΑΦΜ != '' and ");
+            DataTable dt = await GetData("getYpoloipoPelati", $"getYpoloipoPelati,@pelatisId,{customerOid}");
+
             if (dt == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "Κάτι πήγε στραβά στον υπολογισμό υπολ. Πελάτη", "OK");
@@ -1615,5 +1744,66 @@ namespace SmartMobileProject.Core
                 DeleteAllKinisisData()
                 );
         }
+        /*
+        public static async Task<DataTable> getSmartTable(string smartTable)
+        {
+            HttpClient client = new HttpClient();
+            string ip = Preferences.Get("IP", "79.129.5.42");
+            string port = Preferences.Get("Port1", "8881");
+            string uri = "http://" + ip + ":" + port + "/mobile/Values?sql= " + smartTable + "GCRecord is null ";
+            HttpResponseMessage response;
+            string content;
+            try
+            {
+                response = await client.GetAsync(uri);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                content = await response.Content.ReadAsStringAsync();
+                content = content.Replace("\\", "");
+                content = content.Remove(0, 1);
+                content = content.Remove(content.Length - 1, 1);
+                DataTable dt = JsonConvert.DeserializeAnonymousType(content, new { Answare = default(DataTable) }).Answare;
+                return dt;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("---EXEPTION IN GET SMART TABLE---" + exc);
+                return null;
+            }
+
+        }
+        //delete this afternew way
+        public static async Task<DataTable> getSmartTable2(string smartTable)
+        {
+            HttpClient client = new HttpClient();
+            string ip = Preferences.Get("IP", "79.129.5.42");
+            string port = Preferences.Get("Port1", "8881");
+            string uri = "http://" + ip + ":" + port + "/mobile/Values?sql= " + smartTable;
+            HttpResponseMessage response;
+            string content;
+            try
+            {
+                response = await client.GetAsync(uri);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                content = await response.Content.ReadAsStringAsync();
+                content = content.Replace("\\", "");
+                content = content.Remove(0, 1);
+                content = content.Remove(content.Length - 1, 1);
+                DataTable dt = JsonConvert.DeserializeAnonymousType(content, new { Answare = default(DataTable) }).Answare;
+                return dt;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("---EXEPTION IN GET SMART TABLE---" + exc);
+                return null;
+            }
+
+        }
+        */
     }
 }

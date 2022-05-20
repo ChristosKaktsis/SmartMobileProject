@@ -44,15 +44,15 @@ namespace SmartMobileProject.ViewModels
             }
         }
         
-        public string Port1
-        {
-            get => Preferences.Get(nameof(Port1), "8881");
-            set
-            {
-                Preferences.Set(nameof(Port1), value);
-                OnPropertyChanged(nameof(Port1));
-            }
-        }
+        //public string Port1
+        //{
+        //    get => Preferences.Get(nameof(Port1), "8881");
+        //    set
+        //    {
+        //        Preferences.Set(nameof(Port1), value);
+        //        OnPropertyChanged(nameof(Port1));
+        //    }
+        //}
         
         public string Port2
         {

@@ -33,7 +33,8 @@ namespace SmartMobileProject.Views.Settings
         {
             if (!(BindingContext is SettingsPrintViewModel model))
                 return;
-            model.Save();
+            model.OnAppearing();
+
             base.OnAppearing();
         }
     }

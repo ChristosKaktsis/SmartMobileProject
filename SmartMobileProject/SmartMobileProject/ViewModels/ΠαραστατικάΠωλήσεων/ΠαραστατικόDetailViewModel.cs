@@ -4,8 +4,10 @@ using SmartMobileProject.Models;
 using SmartMobileProject.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -80,7 +82,8 @@ namespace SmartMobileProject.ViewModels
             }
         }       
         public XPCollection<Πελάτης> CustomerCollection { get; set; }
-        public XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; set; }
+        //public XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; set; }
+        public ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; }
         public XPCollection<ΤρόποςΠληρωμής> ΤρόποςΠληρωμής { get; set; }
         public XPCollection<ΤρόποςΑποστολής> ΤρόποςΑποστολής { get; set; }
         public ΠαραστατικόDetailViewModel()
@@ -89,13 +92,50 @@ namespace SmartMobileProject.ViewModels
             SetOrder();
             ΝέοΠαραστατικόViewModel.Order = Order;
             ΝέοΠαραστατικόViewModel.politis.Πελάτες.Reload();//
-            CustomerCollection = ΝέοΠαραστατικόViewModel.politis.Πελάτες;
-            ΣειρέςΠαραστατικώνΠωλήσεων = new XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων>(uow);
+
+            if(LoadAllCustomers)
+                CustomerCollection = new XPCollection<Πελάτης>(uow);
+            else
+                CustomerCollection = ΝέοΠαραστατικόViewModel.politis.Πελάτες;
+
+            //ΣειρέςΠαραστατικώνΠωλήσεων = new XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων>(uow);
+            ΣειρέςΠαραστατικώνΠωλήσεων = new ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων>();
             ΤρόποςΠληρωμής = new XPCollection<ΤρόποςΠληρωμής>(uow);
             ΤρόποςΑποστολής = new XPCollection<ΤρόποςΑποστολής>(uow);
             ΓραμμεςΠΠ = new Command(GoToLines);
             Πίσω = new Command(GoBack);
         }
+        public async void OnAppearing()
+        {
+            await LoadSeires();
+        }
+
+        private async Task LoadSeires()
+        {
+            try
+            {
+                var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+                if (currentP == null)
+                {
+                    Console.WriteLine("LoadSeires Politis Is Null !!!!");
+                    return;
+                }
+                var items = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.IDΠωλητή == currentP.SmartOid);
+                ΣειρέςΠαραστατικώνΠωλήσεων.Clear();
+                await Task.Run(() =>
+                {
+                    foreach (var item in items)
+                    {
+                        ΣειρέςΠαραστατικώνΠωλήσεων.Add(item);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
         private void SetOrder()
         {
             if (ΝέοΠαραστατικόViewModel.Order == null)
@@ -117,14 +157,12 @@ namespace SmartMobileProject.ViewModels
             }
 
         }
-
         private void SetCustomerFromNewCustomer(Πελάτης πελατης)
         {
             if (πελατης == null)
                 return;
             Customer = uow.Query<Πελάτης>().Where(x => x.Oid== πελατης.Oid).FirstOrDefault();
         }
-
         private void SetCustomer()
         {
             if (Application.Current.Properties.ContainsKey("Πελάτης"))

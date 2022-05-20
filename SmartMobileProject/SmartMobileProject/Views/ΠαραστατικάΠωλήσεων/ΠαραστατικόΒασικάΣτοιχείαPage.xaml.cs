@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartMobileProject.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,14 @@ namespace SmartMobileProject.Views
             InitializeComponent();
             ComboBoxDieuthParadosis.SelectionChanged += ComboBoxDieuthParadosis_SelectionChanged;
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
+            if (!(BindingContext is ΠαραστατικόDetailViewModel model))
+                return;
+            model.OnAppearing();
+        }
         private void ComboBoxDieuthParadosis_SelectionChanged(object sender, EventArgs e)
         {
             // throw new NotImplementedException();

@@ -66,14 +66,20 @@ namespace SmartMobileProject.ViewModels
         {
             if (string.IsNullOrEmpty(Πρόθεμα) || string.IsNullOrEmpty(Περιγραφή))
                 return;
-
-            using(UnitOfWork uow = new UnitOfWork())
+            var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+            if (currentP == null)
+            {
+                Console.WriteLine("Save Seires Politis Is Null !!!!");
+                return;
+            }
+            using (UnitOfWork uow = new UnitOfWork())
             {
                 ΣειρέςΠαραστατικώνΠωλήσεων σειρές;
                 if (Σειρά == null)
                 {
                     σειρές = new ΣειρέςΠαραστατικώνΠωλήσεων(uow);
                     σειρές.SmartOid = Guid.NewGuid();
+                    σειρές.IDΠωλητή = currentP.SmartOid;
                 }
                 else
                 {

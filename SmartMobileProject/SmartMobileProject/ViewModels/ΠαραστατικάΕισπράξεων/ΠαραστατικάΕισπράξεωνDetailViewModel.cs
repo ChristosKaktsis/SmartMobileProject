@@ -108,9 +108,13 @@ namespace SmartMobileProject.ViewModels
                 Title = Parastatiko.Παραστατικό;
             }
             ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr = Parastatiko;
-            // CustomerCollection = new XPCollection<Πελάτης>(uow);
             ΠαραστατικάΕισπράξεωνStaticViewModel.politis.Πελάτες.Reload();
-            CustomerCollection = ΠαραστατικάΕισπράξεωνStaticViewModel.politis.Πελάτες;
+
+            if(LoadAllCustomers)
+                CustomerCollection = new XPCollection<Πελάτης>(uow);
+            else
+                CustomerCollection = ΠαραστατικάΕισπράξεωνStaticViewModel.politis.Πελάτες;
+
             ΣειρέςΠαραστατικώνΕισπράξεων = new XPCollection<ΣειρέςΠαραστατικώνΕισπράξεων>(uow);
 
             ΓραμμεςΠΕ = new Command(GoToLines);

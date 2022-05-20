@@ -67,6 +67,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(PrintType), ref printtype, value); }
         }
         string printtype;
+        public Guid IDΠωλητή
+        {
+            get { return iDΠωλητή; }
+            set { SetPropertyValue(nameof(IDΠωλητή), ref iDΠωλητή, value); }
+        }
+        Guid iDΠωλητή;
         public string ToJson()
         {
             string json = string.Empty;

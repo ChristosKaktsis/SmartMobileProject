@@ -22,6 +22,7 @@
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
 
                 </Grid.RowDefinitions>
 
@@ -58,7 +59,10 @@
                         <TapGestureRecognizer Command="{Binding ΝέοςΠωλητής}"/>
                     </Label.GestureRecognizers>
                 </Label>
-                
+                <!--<Button Grid.Row="5"
+                        Text="Πίσω στη ρύθμηση" TextColor="{StaticResource PrimaryLight}"
+                        BackgroundColor="White"
+                        Command="{Binding BackToSettingsCommand}"/>-->
             </Grid>
         </ScrollView>
     </ContentPage.Content>

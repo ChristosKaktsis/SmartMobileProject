@@ -109,6 +109,24 @@ namespace SmartMobileProject.ViewModels
                 OnPropertyChanged(nameof(Active));
             }
         }
+        public bool LoadAllCustomers
+        {
+            get => Preferences.Get(nameof(LoadAllCustomers), false);
+            set
+            {
+                Preferences.Set(nameof(LoadAllCustomers), value);
+                OnPropertyChanged(nameof(LoadAllCustomers));
+            }
+        }
+        public bool LACFlag
+        {
+            get => Preferences.Get(nameof(LACFlag), false);
+            set
+            {
+                Preferences.Set(nameof(LACFlag), value);
+                OnPropertyChanged(nameof(LACFlag));
+            }
+        }
         public async void TrialMessage()
         {
             await Application.Current.MainPage.DisplayAlert("Free Trial",
