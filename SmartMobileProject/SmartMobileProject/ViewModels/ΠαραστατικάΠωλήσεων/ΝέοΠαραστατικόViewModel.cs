@@ -75,9 +75,10 @@ namespace SmartMobileProject.ViewModels
                     Εκτύπωση.Execute(null);
                 }
             }
-                    
+
             // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync("../../..");
+            //await Shell.Current.GoToAsync("../../..");
+            await Shell.Current.Navigation.PopToRootAsync();
         }
 
         private void SaveAsTask()

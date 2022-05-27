@@ -2,22 +2,56 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxe="clr-namespace:DevExpress.XamarinForms.Editors;assembly=DevExpress.XamarinForms.Editors"
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup"
+             xmlns:dxcv="clr-namespace:DevExpress.XamarinForms.CollectionView;assembly=DevExpress.XamarinForms.CollectionView"
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
-             xmlns:local1="clr-namespace:SmartMobileProject.Views"
+             xmlns:local1="clr-namespace:SmartMobileProject.Views" xmlns:models="clr-namespace:SmartMobileProject.Models"
              x:Class="SmartMobileProject.Views.ΠαραστατικόΒασικάΣτοιχείαPage"
              Shell.FlyoutBehavior="Disabled"
              Title="{Binding Title}">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding Πίσω}"/>
     </Shell.BackButtonBehavior>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ιστορικό" Command="{Binding ΕπιλογήΠροηγούμενης}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
         <vm:ΠαραστατικόDetailViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Resources>
         <local1:StringToBoolConverter x:Key="stringToBoolConverter"/>
+        <ResourceDictionary>
+            <DataTemplate x:Key="CustomerCollectionTemplate">
+                <Frame CornerRadius="5" Margin="5" Padding="5" 
+                       BorderColor="{StaticResource PrimaryLight}">
+                    <Grid x:DataType="models:Πελάτης">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding DisplayName}"/>
+                        <Label Text="{Binding ΑΦΜ}"
+                               Grid.Row="1"/>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+            <DataTemplate x:Key="CustomerCollectionSelectedTemplate">
+                <Frame CornerRadius="5" Margin="5" Padding="5"
+                       BorderColor="{StaticResource PrimaryLight}" BackgroundColor="{StaticResource PrimaryLight}">
+                    <Grid x:DataType="models:Πελάτης">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding DisplayName}"/>
+                        <Label Text="{Binding ΑΦΜ}"
+                               Grid.Row="1"/>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        
         <ScrollView>
             <Grid  
             VerticalOptions="FillAndExpand"
@@ -36,7 +70,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-
                 <dxe:DateEdit Grid.Row="0"
                           Grid.Column="0"
                           LabelText="Ημ/νία"
@@ -67,7 +100,51 @@
                         </DataTemplate>
                     </dxe:ComboBoxEdit.ItemTemplate>
                 </dxe:ComboBoxEdit>
-                <dxe:ComboBoxEdit Grid.Row="2"                              
+                <dxp:DXPopup x:Name="PopUp" CornerRadius="10"
+                         AllowScrim="True"
+                         IsOpen="{Binding PopUpIsOpen}">
+                    <Frame Padding="20" CornerRadius="0"
+                       WidthRequest="340" 
+                       BackgroundColor="White">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="360"/>
+                                <RowDefinition Height="60"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="{Binding SelectedCustomerName}" FontSize="20" FontAttributes="Bold"/>
+                            <dxe:TextEdit x:Name="Search" 
+                                          PlaceholderText="Αναζήτηση"
+                                          TextChanged="Search_TextChanged"
+                                          ClearIconVisibility="Auto"
+                                          Grid.Row="1"/>
+                            <dxcv:DXCollectionView x:Name="CustomersCollection" 
+                                                   ItemsSource="{Binding CustomerCollection}"
+                                                   ItemTemplate="{StaticResource CustomerCollectionTemplate}"
+                                                   SelectedItemTemplate="{StaticResource CustomerCollectionSelectedTemplate}"
+                                                   SelectedItem="{Binding Customer,Mode=OneWayToSource}" SelectionMode="Single"
+                                                   Grid.Row="2"/>
+                            <Button Text="Κλείσιμο"
+                                    Grid.Row="3"
+                                    CornerRadius="5"
+                                    HorizontalOptions="Center"
+                                    Command="{Binding OpenPopUp}"/>
+                        </Grid>
+                    </Frame>
+                </dxp:DXPopup>
+                <StackLayout Grid.Row="2">
+                    <Button CornerRadius="5"
+                        Text="{Binding SelectedCustomerName}"
+                        BackgroundColor="White" TextColor="{StaticResource TextColor}"
+                        BorderColor="{Binding CustomerFieldColor,Mode=OneWay}" BorderWidth="1"
+                        IsFocused ="{Binding PelatisIsFocused}"
+                        Command="{Binding OpenPopUp}"/>
+                    <Label Text="{Binding PelatisErrorMessage}"
+                           IsVisible="{Binding PelatisErrorMessage, Converter={StaticResource stringToBoolConverter}}"
+                           TextColor="Red"/>
+                </StackLayout>
+                <!--<dxe:ComboBoxEdit Grid.Row="2"                              
                               ItemsSource="{Binding CustomerCollection}"
                               DisplayMember="ΑΦΜ"
                               SelectedItem="{Binding Customer, Mode=Default}"
@@ -86,7 +163,7 @@
                             </Grid>
                         </DataTemplate>
                     </dxe:ComboBoxEdit.ItemTemplate>
-                </dxe:ComboBoxEdit>
+                </dxe:ComboBoxEdit>-->
                 <dxe:ComboBoxEdit Grid.Row="3"     
                                   x:Name="ComboBoxDieuthParadosis"
                               ItemsSource="{Binding Order.Πελάτης.ΔιευθύνσειςΠελάτη}"

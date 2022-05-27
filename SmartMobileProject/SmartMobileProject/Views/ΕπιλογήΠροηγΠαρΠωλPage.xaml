@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="clr-namespace:DevExpress.XamarinForms.Editors;assembly=DevExpress.XamarinForms.Editors"
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:dxcv="clr-namespace:DevExpress.XamarinForms.CollectionView;assembly=DevExpress.XamarinForms.CollectionView" 
+             xmlns:model="clr-namespace:SmartMobileProject.Models" 
+             xmlns:local="clr-namespace:SmartMobileProject.Views"
+             x:Class="SmartMobileProject.Views.ΕπιλογήΠροηγΠαρΠωλPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="main_template">
+                <Frame BorderColor="LightGray"
+                       CornerRadius="5">
+                    <Grid x:DataType="model:ΠαραστατικάΠωλήσεων">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding Παραστατικό}"
+                               FontSize="20" FontAttributes="Bold"
+                               HorizontalOptions="Start"/>
+                        <Label Text="{Binding ΗμνίαΔημ}"
+                               HorizontalOptions="End"/>
+                       
+                        <dxcv:DXCollectionView Grid.Row="1"
+                                               ItemsSource="{Binding ΓραμμέςΠαραστατικώνΠωλήσεων}">
+                            <dxcv:DXCollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame x:DataType="model:ΓραμμέςΠαραστατικώνΠωλήσεων"
+                                           BorderColor="LightGray"
+                                           CornerRadius="5">
+                                        <Grid>
+                                            <Label Text="{Binding Είδος.Περιγραφή}"/>
+                                            <Label Text="{Binding Ποσότητα}"
+                                                   HorizontalOptions="End"/>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </dxcv:DXCollectionView.ItemTemplate>
+                        </dxcv:DXCollectionView>
+                        <Button Grid.Row="2" Text="Αντιγραφή"
+                                HorizontalOptions="End"
+                                Clicked="Button_Clicked"/>
+                        <!--<Line Grid.Row="3"
+                              X2="400"
+                              VerticalOptions="End"
+                              Stroke="LightGray"/>-->
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid x:DataType="vm:ΕπιλογήΠροηγΠαρΠωλViewModel">
+            <dxcv:DXCollectionView ItemTemplate="{StaticResource main_template}"
+                                   ItemsSource="{Binding PrevSaleOrders}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

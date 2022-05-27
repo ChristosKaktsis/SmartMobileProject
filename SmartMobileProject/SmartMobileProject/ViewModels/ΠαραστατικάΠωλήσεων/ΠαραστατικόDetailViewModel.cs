@@ -78,9 +78,19 @@ namespace SmartMobileProject.ViewModels
                 SetProperty(ref customer, value);
                 Order.Πελάτης = value;
                 Order.ΔιεύθυνσηΠαράδοσης = null;
-                Order.ΔιεύθυνσηΠαράδοσης = value.ΚεντρικήΔιευθυνση;           
+                SelectedCustomerName =value == null ? "Επιλογή Πελάτη" : value.DisplayName;
+                if (value == null)
+                    return;
+                Order.ΔιεύθυνσηΠαράδοσης = value.ΚεντρικήΔιευθυνση;
+                PopUpIsOpen = false;
             }
-        }       
+        }
+        private string selectedCustomerName = "Επιλογή Πελάτη";
+        public string SelectedCustomerName
+        {
+            get => selectedCustomerName;
+            set => SetProperty(ref selectedCustomerName, value);
+        }
         public XPCollection<Πελάτης> CustomerCollection { get; set; }
         //public XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; set; }
         public ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; }
@@ -104,12 +114,13 @@ namespace SmartMobileProject.ViewModels
             ΤρόποςΑποστολής = new XPCollection<ΤρόποςΑποστολής>(uow);
             ΓραμμεςΠΠ = new Command(GoToLines);
             Πίσω = new Command(GoBack);
+            ΕπιλογήΠροηγούμενης = new Command(GoToChooseOlderOrder);
+            OpenPopUp = new Command(() => PopUpIsOpen = !PopUpIsOpen);
         }
         public async void OnAppearing()
         {
             await LoadSeires();
         }
-
         private async Task LoadSeires()
         {
             try
@@ -135,7 +146,6 @@ namespace SmartMobileProject.ViewModels
                 Console.WriteLine(ex);
             }
         }
-
         private void SetOrder()
         {
             if (ΝέοΠαραστατικόViewModel.Order == null)
@@ -184,6 +194,14 @@ namespace SmartMobileProject.ViewModels
             }
             await Shell.Current.GoToAsync(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνListViewPage));
         }
+        private async void GoToChooseOlderOrder(object obj)
+        {
+            if (ChechError())
+            {
+                return;
+            }
+            await Shell.Current.GoToAsync(nameof(ΕπιλογήΠροηγΠαρΠωλPage));
+        }
         //errorChecks
         bool pelatisIsFocused;
         public bool PelatisIsFocused
@@ -231,7 +249,6 @@ namespace SmartMobileProject.ViewModels
                 }
             }
         }
-
         bool ChechError()
         {
             CheckPelati();
@@ -251,11 +268,19 @@ namespace SmartMobileProject.ViewModels
             if (Customer == null)
             {
                 PelatisErrorMessage = "Ο Πελάτης Δεν πρέπει να είναι κενός";
+                CustomerFieldColor = Color.Red;
             }
             else
             {
                 PelatisErrorMessage = string.Empty;
+                CustomerFieldColor = Color.Gray;
             }
+        }
+        private Color _CustomerFieldColor = Color.Gray;
+        public Color CustomerFieldColor
+        {
+            get => _CustomerFieldColor;
+            set =>SetProperty(ref _CustomerFieldColor, value);
         }
         void CheckSeira()
         {
@@ -268,7 +293,18 @@ namespace SmartMobileProject.ViewModels
                 SeiraErrorMessage = string.Empty;
             }
         }
-
+        //popup
+        private bool popUpIsOpen;
+        public bool PopUpIsOpen
+        {
+            get => popUpIsOpen;
+            set
+            {
+                SetProperty(ref popUpIsOpen, value);
+            }
+        }
+        public Command ΕπιλογήΠροηγούμενης { get; set; }
+        public Command OpenPopUp { get; set; }
         public ICommand ΓραμμεςΠΠ { get; set; }
 
         public ICommand Πίσω { get; set; }

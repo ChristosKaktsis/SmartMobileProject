@@ -31,5 +31,19 @@ namespace SmartMobileProject.Views
             // throw new NotImplementedException();
           
         }
+
+        private void Search_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Search.Text))
+            {
+                CustomersCollection.FilterString = string.Empty;
+                return;
+            }
+            int afm = 0;
+            if(int.TryParse(Search.Text,out afm))
+                CustomersCollection.FilterString = $"Contains(ΑΦΜ, '{Search.Text}')";
+            else
+                CustomersCollection.FilterString = $"Contains(DisplayName, '{Search.Text}')";
+        }
     }
 }

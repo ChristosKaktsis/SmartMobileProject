@@ -13,6 +13,7 @@
             <Color x:Key="ComplementaryLight">#ffe3b8</Color>
             <Color x:Key="Analogous">#016360</Color>
             <Color x:Key="Tradic">#be0049</Color>
+            <Color x:Key="TextColor">#434343</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">

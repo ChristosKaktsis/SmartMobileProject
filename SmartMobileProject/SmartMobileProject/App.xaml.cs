@@ -22,6 +22,8 @@ namespace SmartMobileProject
             DevExpress.XamarinForms.Scheduler.Initializer.Init();
             DevExpress.XamarinForms.Editors.Initializer.Init();
             DevExpress.XamarinForms.CollectionView.Initializer.Init();
+            DevExpress.XamarinForms.Popup.Initializer.Init();
+
             InitializeComponent();
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
