@@ -37,7 +37,7 @@
                 </StackLayout>
                 <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding BarCodeList}" 
                                    SelectionMode="Single"
-                                   SelectedItem="{Binding SelectedBarCode,Mode=Default}"  
+                                   SelectedItem="{Binding SelectedBarCode,Mode=TwoWay}"  
                                    HeightRequest="80">
                     <!-- Define ItemTemplate here.-->
                     <dxcv:DXCollectionView.ItemTemplate>
@@ -95,7 +95,7 @@
                     </dxcv:DXCollectionView.SortDescriptions>
                 </dxcv:DXCollectionView>
                 <Frame>
-                    <StackLayout HeightRequest="200">
+                    <StackLayout>
                         <Label Text="Άλλα BarCode"/>
                         <dxcv:DXCollectionView x:Name="othergrid" ItemsSource="{Binding OtherBarCodeList}" 
                                    SelectionMode="Multiple"

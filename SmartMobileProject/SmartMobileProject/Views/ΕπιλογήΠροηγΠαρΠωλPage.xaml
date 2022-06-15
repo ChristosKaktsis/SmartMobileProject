@@ -6,7 +6,8 @@
              xmlns:dxcv="clr-namespace:DevExpress.XamarinForms.CollectionView;assembly=DevExpress.XamarinForms.CollectionView" 
              xmlns:model="clr-namespace:SmartMobileProject.Models" 
              xmlns:local="clr-namespace:SmartMobileProject.Views"
-             x:Class="SmartMobileProject.Views.ΕπιλογήΠροηγΠαρΠωλPage">
+             x:Class="SmartMobileProject.Views.ΕπιλογήΠροηγΠαρΠωλPage"
+             Title="Προηγούμενα Παραστατικά">
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="main_template">

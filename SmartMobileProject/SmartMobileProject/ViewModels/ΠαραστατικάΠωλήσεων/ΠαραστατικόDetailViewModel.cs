@@ -91,7 +91,7 @@ namespace SmartMobileProject.ViewModels
             get => selectedCustomerName;
             set => SetProperty(ref selectedCustomerName, value);
         }
-        public XPCollection<Πελάτης> CustomerCollection { get; set; }
+        public ObservableCollection<Πελάτης> CustomerCollection { get; set; }
         //public XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; set; }
         public ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; }
         public XPCollection<ΤρόποςΠληρωμής> ΤρόποςΠληρωμής { get; set; }
@@ -103,13 +103,15 @@ namespace SmartMobileProject.ViewModels
             ΝέοΠαραστατικόViewModel.Order = Order;
             ΝέοΠαραστατικόViewModel.politis.Πελάτες.Reload();//
 
-            if(LoadAllCustomers)
-                CustomerCollection = new XPCollection<Πελάτης>(uow);
-            else
-                CustomerCollection = ΝέοΠαραστατικόViewModel.politis.Πελάτες;
+            //if(LoadAllCustomers)
+            //    CustomerCollection = new XPCollection<Πελάτης>(uow);
+            //else
+            //    CustomerCollection = ΝέοΠαραστατικόViewModel.politis.Πελάτες;
 
             //ΣειρέςΠαραστατικώνΠωλήσεων = new XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων>(uow);
             ΣειρέςΠαραστατικώνΠωλήσεων = new ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων>();
+
+            CustomerCollection = new ObservableCollection<Πελάτης>();
             ΤρόποςΠληρωμής = new XPCollection<ΤρόποςΠληρωμής>(uow);
             ΤρόποςΑποστολής = new XPCollection<ΤρόποςΑποστολής>(uow);
             ΓραμμεςΠΠ = new Command(GoToLines);
@@ -120,7 +122,45 @@ namespace SmartMobileProject.ViewModels
         public async void OnAppearing()
         {
             await LoadSeires();
+            await LoadCustomers();
         }
+
+        private async Task LoadCustomers()
+        {
+            try
+            {
+                var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+                if (currentP == null)
+                {
+                    Console.WriteLine("LoadSeires Politis Is Null !!!!");
+                    return;
+                }
+                //if(LoadAllCustomers)
+                //    CustomerCollection = new XPCollection<Πελάτης>(uow);
+                //else
+                //    CustomerCollection = ΝέοΠαραστατικόViewModel.politis.Πελάτες;
+                List<Πελάτης> items;
+                if (LoadAllCustomers)
+                    items = await uow.Query<Πελάτης>().ToListAsync();
+                else
+                    items = await uow.Query<Πελάτης>().Where(
+                        x => x.Πωλητής.SmartOid == currentP.SmartOid).ToListAsync();
+                CustomerCollection.Clear();
+                var sortedItems = items.OrderBy(i => i.DisplayName);
+                await Task.Run(() =>
+                {
+                    foreach (var item in sortedItems)
+                    {
+                        CustomerCollection.Add(item);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
         private async Task LoadSeires()
         {
             try

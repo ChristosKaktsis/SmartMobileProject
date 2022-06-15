@@ -17,6 +17,7 @@ namespace SmartMobileProject.Services.Repositories
         AppShell app = (AppShell)Application.Current.MainPage;
         public async Task<bool> UpdateItemAsync()
         {
+            bool result = false;
             using(var uow = XpoHelper.CreateUnitOfWork())
             {
                 var PelatesItemsList = await Task.Run(() =>
@@ -27,23 +28,27 @@ namespace SmartMobileProject.Services.Repositories
                
                 if (PelatesItemsList.Any())
                 {
-                    var jsonlist = await ConvertToJson(PelatesItemsList);
-                    var can = await XpoHelper.setSmartTable(jsonlist,"Customers");
-                    SendImageToCustomers(PelatesItemsList);
-                    if (can)
+                    try
                     {
-                        foreach (var item in PelatesItemsList)
-                            item.CanUpload = false;
+                        var jsonlist = await ConvertToJson(PelatesItemsList);
+                        var can = await XpoHelper.setSmartTable(jsonlist, "Customers");
+                        SendImageToCustomers(PelatesItemsList);
+                        if (can)
+                        {
+                            foreach (var item in PelatesItemsList)
+                                item.CanUpload = false;
 
-                        await uow.CommitChangesAsync();
+                            await uow.CommitChangesAsync();
+                            result = true;
+                        }
                     }
-                    else
+                    catch(Exception ex)
                     {
-                        return false;
+                        Console.WriteLine(ex);
                     }
                 }
             }
-            return true;
+            return result;
         }
         //Task<string> ConvertToJson(List<Πελάτης> items)
         //{

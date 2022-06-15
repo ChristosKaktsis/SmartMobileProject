@@ -70,6 +70,7 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ImageResizer.cs" />
     <Compile Include="NotificationCenter.cs" />
     <Compile Include="ApplePrintService .cs" />
     <Compile Include="Main.cs" />

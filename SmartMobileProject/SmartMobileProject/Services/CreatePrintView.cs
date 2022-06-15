@@ -15,6 +15,8 @@ namespace SmartMobileProject.Services
         ΣτοιχείαΕταιρίας στοιχείαΕταιρίας ;
         XPCollection<ΦΠΑ> φπά;
         private string στοιχείαΕταιρίας_ΔΟΥ_Περιγραφή = "";
+        private string order_Πελάτης_ΚεντρικήΔιευθυνση_τηλ = "";
+
         private string order_Πελάτης_ΚεντρικήΔιευθυνση_Πόλη_ΟνομαΠόλης = "";
         private string order_Πελάτης_ΔΟΥ_Περιγραφή="";
         private string στοιχείαΕταιρίας_ΤΚ_Ονοματκ="";
@@ -42,14 +44,19 @@ namespace SmartMobileProject.Services
         }
         private bool checkPelatis(Πελάτης πελάτης)
         {
-            if (πελάτης.ΚεντρικήΔιευθυνση.Πόλη != null)
+            if(πελάτης.ΚεντρικήΔιευθυνση != null)
             {
-                order_Πελάτης_ΚεντρικήΔιευθυνση_Πόλη_ΟνομαΠόλης = πελάτης.ΚεντρικήΔιευθυνση.Πόλη.ΟνομαΠόλης;
+                order_Πελάτης_ΚεντρικήΔιευθυνση_τηλ = πελάτης.ΚεντρικήΔιευθυνση.Τηλέφωνο;
+                if (πελάτης.ΚεντρικήΔιευθυνση.Πόλη != null)
+                {
+                    order_Πελάτης_ΚεντρικήΔιευθυνση_Πόλη_ΟνομαΠόλης = πελάτης.ΚεντρικήΔιευθυνση.Πόλη.ΟνομαΠόλης;
+                }
+                if (πελάτης.ΚεντρικήΔιευθυνση.ΤΚ != null)
+                {
+                    order_Πελάτης_ΚεντρικήΔιευθυνση_ΤΚ_Ονοματκ = πελάτης.ΚεντρικήΔιευθυνση.ΤΚ.Ονοματκ;
+                }
             }
-            if (πελάτης.ΚεντρικήΔιευθυνση.ΤΚ != null)
-            {
-                order_Πελάτης_ΚεντρικήΔιευθυνση_ΤΚ_Ονοματκ = πελάτης.ΚεντρικήΔιευθυνση.ΤΚ.Ονοματκ;
-            }
+           
             if (πελάτης.ΔΟΥ != null)
             {
                 order_Πελάτης_ΔΟΥ_Περιγραφή = πελάτης.ΔΟΥ.Περιγραφή;
@@ -243,7 +250,7 @@ namespace SmartMobileProject.Services
                                         </tr>
                                         <tr>
                                             <td>ΤΗΛ.</td>
-                                            <td>" + order.Πελάτης.ΚεντρικήΔιευθυνση.Τηλέφωνο + "</td>" + @"
+                                            <td>" + order_Πελάτης_ΚεντρικήΔιευθυνση_τηλ + "</td>" + @"
                                         </tr>
                                     </table>
                                      <div>
@@ -506,7 +513,7 @@ namespace SmartMobileProject.Services
                 <tr>
                     <td>
                         ΤΗΛΕΦΩΝΟ :</td>
-                    <td>" + order.Πελάτης.ΚεντρικήΔιευθυνση.Τηλέφωνο +"</td>"+ @"
+                    <td>" + order_Πελάτης_ΚεντρικήΔιευθυνση_τηλ + "</td>"+ @"
                     <td>
                         FAX :</td>
                     <td>
@@ -570,11 +577,24 @@ namespace SmartMobileProject.Services
                 "<td style=\"text-align: center; background-color: #CCFFFF; border-style: groove; border-width: thin\">Αξία</td>"+
                 "<td style=\"text-align: center; background-color: #CCFFFF; border-style: groove; border-width: thin\">ΦΠΑ</td>"+
                  "<td style=\"text-align: center; background-color: #CCFFFF; border-style: groove; border-width: thin\">Ποσό</td>" + @"
-            </tr>" +grammes+@"
+            </tr>" +grammes+ @"
         </table>
         <br/><br/>
-    </div>
-    <div>"+ YpologismenoYpoloipo+
+    </div>"+
+   "<div style =\"float:center;\">" +
+              "<table style=\"text-align: center; border-style: groove; border-width: thin\">" + @"
+                <tr>" +
+                           "<td colspan=\"4\" style=\"text-align: center\">Σχόλια</td>" + @"
+                     </tr>
+                     <tr>
+                          <td>" + order.Σχολια + "</td>" +
+                       "</tr>" +
+                      @"
+            </table>
+        </div>
+  
+      <div>"+ YpologismenoYpoloipo+
+    
         " <div style=\"float:left;\">" +
             "<table style=\"text-align: center; border-style: groove; border-width: thin\">"+@"
                 <tr>" +
@@ -589,7 +609,8 @@ namespace SmartMobileProject.Services
                      + ypologismosFPA+@"
             </table>
         </div>"+
-        "<div style=\"float:right;\">"+
+        
+        "<div style=\"float:right;\">" +
             "<table style=\"border-style: groove; border-width: thin; width: 100%;\">"+@"
                 <tr>"+
                     "<td style=\"font-weight: bold; text-align: center; background-color: #CCFFFF\">ΣΥΝΟΛΟ ΚΑΘΑΡΗΣ ΑΞΙΑΣ</td>"+@"
@@ -650,9 +671,6 @@ namespace SmartMobileProject.Services
             }
             return htmlstring;
         }
-
-        
-
         private string YpologismosYpoloipou(string τρόποςΠληρωμής,double ProhgoumenoYpoloipo, double αξίαΠαραστατικού ,int κίνηση)
         {
             string htmlpeace = ""; 

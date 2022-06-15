@@ -74,8 +74,18 @@ namespace SmartMobileProject.ViewModels
                 SetProperty(ref customer, value);
                 Parastatiko.Πελάτης = value;
                 Parastatiko.ΔιεύθυνσηΕίσπραξης = null;
+                SelectedCustomerName = value == null ? "Επιλογή Πελάτη" : value.DisplayName;
+                if (value == null)
+                    return;
                 Parastatiko.ΔιεύθυνσηΕίσπραξης = value.ΚεντρικήΔιευθυνση;
+                PopUpIsOpen = false;
             }
+        }
+        private string selectedCustomerName = "Επιλογή Πελάτη";
+        public string SelectedCustomerName
+        {
+            get => selectedCustomerName;
+            set => SetProperty(ref selectedCustomerName, value);
         }
         public XPCollection<Πελάτης> CustomerCollection { get; set; }
         public XPCollection<ΣειρέςΠαραστατικώνΕισπράξεων> ΣειρέςΠαραστατικώνΕισπράξεων { get; set; }
@@ -119,7 +129,7 @@ namespace SmartMobileProject.ViewModels
 
             ΓραμμεςΠΕ = new Command(GoToLines);
             Πίσω = new Command(GoBack);
-
+            OpenPopUp = new Command(() => PopUpIsOpen = !PopUpIsOpen);
         }
         private async void GoToLines(object obj)
         {
@@ -195,11 +205,19 @@ namespace SmartMobileProject.ViewModels
             if (Customer == null)
             {
                 PelatisErrorMessage = "Ο Πελάτης Δεν πρέπει να είναι κενός";
+                CustomerFieldColor = Color.Red;
             }
             else
             {
                 PelatisErrorMessage = string.Empty;
+                CustomerFieldColor = Color.Gray;
             }
+        }
+        private Color _CustomerFieldColor = Color.Gray;
+        public Color CustomerFieldColor
+        {
+            get => _CustomerFieldColor;
+            set => SetProperty(ref _CustomerFieldColor, value);
         }
         void CheckSeira()
         {
@@ -212,6 +230,17 @@ namespace SmartMobileProject.ViewModels
                 SeiraErrorMessage = string.Empty;
             }
         }
+        //popup
+        private bool popUpIsOpen;
+        public bool PopUpIsOpen
+        {
+            get => popUpIsOpen;
+            set
+            {
+                SetProperty(ref popUpIsOpen, value);
+            }
+        }
+        public Command OpenPopUp { get; set; }
         public ICommand ΓραμμεςΠΕ { get; set; }
         public ICommand Πίσω { get; set; }
     }

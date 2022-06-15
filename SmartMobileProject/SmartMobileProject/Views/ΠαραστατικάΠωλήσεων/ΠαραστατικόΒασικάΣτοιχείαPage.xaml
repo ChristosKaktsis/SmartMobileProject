@@ -123,7 +123,7 @@
                                                    ItemsSource="{Binding CustomerCollection}"
                                                    ItemTemplate="{StaticResource CustomerCollectionTemplate}"
                                                    SelectedItemTemplate="{StaticResource CustomerCollectionSelectedTemplate}"
-                                                   SelectedItem="{Binding Customer,Mode=OneWayToSource}" SelectionMode="Single"
+                                                   SelectedItem="{Binding Customer,Mode=TwoWay}" SelectionMode="Single"
                                                    Grid.Row="2"/>
                             <Button Text="Κλείσιμο"
                                     Grid.Row="3"

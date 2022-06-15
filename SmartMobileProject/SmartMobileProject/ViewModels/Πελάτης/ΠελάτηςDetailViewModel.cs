@@ -478,7 +478,7 @@ namespace SmartMobileProject.ViewModels
             var x = 400;
             var y = 400;
 
-            byte[] resizedImage = await ImageResizer.ResizeImage(imageData, (float)x, (float)y);
+            byte[] resizedImage = DependencyService.Get<IResizeImageService>().ResizeImage(imageData, (float)x, (float)y);
 
             return resizedImage;
         }

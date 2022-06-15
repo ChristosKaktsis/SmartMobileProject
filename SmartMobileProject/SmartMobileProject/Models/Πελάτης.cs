@@ -190,8 +190,16 @@ namespace SmartMobileProject.Models
                 }
             }
         }
-       
-      
+       [NonPersistent]
+        public string DoyOid { 
+            get 
+            {
+                string dd;
+                dd = ΔΟΥ == null ? "" : ΔΟΥ.SmartOid.ToString();
+                return dd;
+            }
+        }
+
         public string ToJson()
         {
             string addressJson = "[";
@@ -208,7 +216,7 @@ namespace SmartMobileProject.Models
                  "\",\"ΔιακριτικόςΤίτλος\":\"" + (string.IsNullOrEmpty(Διακριτικόςτίτλος) ? "" : Διακριτικόςτίτλος) +
                  "\",\"ΚατηγορίαΦΠΑ\":\"" + ΚατηγορίαΦΠΑ +
                  "\",\"ΑΦΜ\":\"" + ΑΦΜ +
-                 "\",\"ΔΟΥ\":\"" + ΔΟΥ.SmartOid +
+                 "\",\"ΔΟΥ\":\"" + DoyOid +
                  "\",\"Email\":\"" + (string.IsNullOrEmpty(Email) ? "" : Email) +
                  "\",\"Σημείωση1\":\"" + (string.IsNullOrEmpty(Σημείωση1) ? "" : Σημείωση1) +
                  "\",\"Σημείωση2\":\"" + (string.IsNullOrEmpty(Σημείωση2) ? "" : Σημείωση2) +

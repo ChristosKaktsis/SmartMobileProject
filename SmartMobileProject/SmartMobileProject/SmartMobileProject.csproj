@@ -38,9 +38,6 @@
     <Reference Include="DevExpress.Xpo.v20.2">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.2\Components\Bin\Standard\DevExpress.Xpo.v20.2.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Android">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v11.0\Mono.Android.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.iOS">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\Xamarin.iOS\v1.0\Xamarin.iOS.dll</HintPath>
     </Reference>
