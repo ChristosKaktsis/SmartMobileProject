@@ -93,6 +93,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(ΤιμήΧονδρικής), ref τιμήχονδρικής, value); }
         }
         double τιμήχονδρικής;
+        public double ΤιμήΛιανικής
+        {
+            get { return τιμήΛιανικής; }
+            set { SetPropertyValue(nameof(ΤιμήΛιανικής), ref τιμήΛιανικής, value); }
+        }
+        double τιμήΛιανικής;
         public DateTime ΗμνίαΔημ
         {
             get { return ημνίαδημ; }
@@ -114,6 +120,10 @@ namespace SmartMobileProject.Models
                 return ποσότητα;
             }
             set { SetPropertyValue(nameof(Ποσότητα), ref ποσότητα, value); }
+        }
+        public double getPrice(bool Λιανικής) 
+        {
+            return Λιανικής ? ΤιμήΛιανικής : ΤιμήΧονδρικής;
         }
 
     }

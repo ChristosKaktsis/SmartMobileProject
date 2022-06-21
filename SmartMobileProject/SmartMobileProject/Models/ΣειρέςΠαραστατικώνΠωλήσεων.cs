@@ -43,6 +43,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(Περιγραφή), ref περιγραφή, value); }
         }
         string περιγραφή;
+        public bool Λιανική
+        {
+            get { return λιανική; }
+            set { SetPropertyValue(nameof(Λιανική), ref λιανική, value); }
+        }
+        bool λιανική;
         public Guid ΠρόθεμαΑρίθμησης
         {
             get { return πρόθεμαΑρίθμησης; }

@@ -22,20 +22,21 @@
         <ScrollView>
             <Grid  
             VerticalOptions="FillAndExpand"
-            RowSpacing="20"
+            
             ColumnSpacing="8"
             Padding="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
@@ -105,7 +106,14 @@
                           IsLabelFloating="True"
                           SelectValueOnFocus="True"
                           Value="{Binding Eidos.ΤιμήΧονδρικής}"/>
-                <Button Text="BarCode" Grid.Row="9" Command="{Binding BarCodeΕίδους}"/>
+                <dxe:NumericEdit Grid.Row="9"
+                          Grid.Column="0"
+                          LabelText="Τιμή Λιανικής"
+                          LabelFontSize="Body"
+                          IsLabelFloating="True"
+                          SelectValueOnFocus="True"
+                          Value="{Binding Eidos.ΤιμήΛιανικής}"/>
+                <Button Text="BarCode" Grid.Row="10" Command="{Binding BarCodeΕίδους}"/>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

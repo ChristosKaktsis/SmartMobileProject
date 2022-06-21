@@ -7,7 +7,6 @@ namespace SmartMobileProject.Models
     public class BarCodeΕίδους : BaseModel
     {
         
-
         [Key]
         public string Κωδικός { get; set; }
         
@@ -16,6 +15,8 @@ namespace SmartMobileProject.Models
         public string Περιγραφή { get; set; }
 
         public double ΤιμήΧονδρικής { get; set; }
+        public double ΤιμήΛιανικής { get; set; }
+
 
         public Guid ΕίδοςOid { get; set; }
 
@@ -35,6 +36,10 @@ namespace SmartMobileProject.Models
             set { SetProperty(ref ποσότητα, value); }
         }
         private float ποσότητα;
+        public double getPrice(bool Λιανικής)
+        {
+            return Λιανικής ? ΤιμήΛιανικής : ΤιμήΧονδρικής;
+        }
     }
 
 }

@@ -51,7 +51,8 @@ namespace SmartMobileProject.ViewModels
             {
                 SetProperty(ref eidos, value);
                 LineOfOrders.Είδος = value;
-                LineOfOrders.Τιμή = value.ΤιμήΧονδρικής;   
+                //LineOfOrders.Τιμή = value.ΤιμήΧονδρικής;   
+                LineOfOrders.Τιμή = setPriceOfLine(value);
                 LineOfOrders.ΠοσοστόΦπα =value.ΦΠΑ!=null ? (value.ΦΠΑ.Φπακανονικό / 100) : 0;
                 LineOfOrders.Ποσότητα = value.Ποσότητα;
                 LineOfOrders.Εκπτωση = 0;
@@ -59,14 +60,46 @@ namespace SmartMobileProject.ViewModels
                 ChangeValue();
             }
         }
-       
-       
+        /// <summary>
+        /// Επιστρέφει τιμή λιανικής ή χονδρικής του είδους ανάλογα την σειρά
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private double setPriceOfLine(Είδος value)
+        {
+            if (value == null)
+                return 0;
+            var currentparastatiko = ΝέοΠαραστατικόViewModel.Order;
+            if (currentparastatiko == null)
+                return 0;
+            if (currentparastatiko.Σειρά == null)
+                return 0;
+            return value.getPrice(currentparastatiko.Σειρά.Λιανική);
+        }
         private void ChangeValue()
         {
-            LineOfOrders.ΑξίαΕκπτωσης = (decimal)(LineOfOrders.Ποσότητα * LineOfOrders.Τιμή * LineOfOrders.Εκπτωση);
-            LineOfOrders.ΚαθαρήΑξία = (decimal)(LineOfOrders.Ποσότητα * LineOfOrders.Τιμή) - LineOfOrders.ΑξίαΕκπτωσης;
+            double clearvalue = CalculateClearValue(LineOfOrders.Τιμή, LineOfOrders.ΠοσοστόΦπα);
+            LineOfOrders.ΑξίαΕκπτωσης = (decimal)(LineOfOrders.Ποσότητα * clearvalue * LineOfOrders.Εκπτωση);
+            LineOfOrders.ΚαθαρήΑξία = (decimal)(LineOfOrders.Ποσότητα * clearvalue) - LineOfOrders.ΑξίαΕκπτωσης;
             LineOfOrders.Φπα = LineOfOrders.ΚαθαρήΑξία * (decimal)LineOfOrders.ΠοσοστόΦπα;
             LineOfOrders.ΑξίαΓραμμής = LineOfOrders.ΚαθαρήΑξία + LineOfOrders.Φπα;
+        }
+        /// <summary>
+        /// Υπολογισμός καθαρής αξίας χωρίς καμια εκπτωση
+        /// </summary>
+        /// <param name="τιμή"></param>
+        /// <param name="ποσοστόΦπα"></param>
+        /// <returns></returns>
+        private double CalculateClearValue(double τιμή, float ποσοστόΦπα)
+        {
+            var currentparastatiko = ΝέοΠαραστατικόViewModel.Order;
+            if (currentparastatiko == null)
+                return 0;
+            if (currentparastatiko.Σειρά == null)
+                return 0;
+            if (currentparastatiko.Σειρά.Λιανική)
+                return τιμή / (1 + ποσοστόΦπα);
+            return τιμή;
         }
         public ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewModel()
         {

@@ -465,6 +465,7 @@ namespace SmartMobileProject.Core
                         data.ΚίνησηΣυναλασόμενου = row["ΚίνησηΣυναλασόμενου"] == DBNull.Value ? 2 : int.Parse(row["ΚίνησηΣυναλασόμενου"].ToString());
                         data.IDΠωλητή = Guid.Parse((string)row["Πωλητής"]);
                         data.Counter = 0;
+                        data.Λιανική = bool.Parse(row["Λιανική"].ToString());
                         uow.Save(data);
                     }
                     catch (Exception ex)
@@ -876,6 +877,9 @@ namespace SmartMobileProject.Core
                         data.SmartOid = Guid.Parse((string)row["Oid"]);
                         data.Κωδικός = row["Κωδικός"].ToString();
                         data.Περιγραφή = row["Περιγραφή"].ToString();
+                        data.ΤιμήΧονδρικής = double.Parse(row["ΤιμήΧονδρικής"].ToString());
+                        data.ΤιμήΛιανικής = double.Parse(row["ΤιμήΛιανικής"].ToString());
+
                         if (!string.IsNullOrEmpty(row["ΦΠΑ"].ToString()))
                         {
                             var p = uow.Query<ΦΠΑ>().Where(x => x.Φπαid == row["ΦΠΑ"].ToString());
@@ -886,8 +890,6 @@ namespace SmartMobileProject.Core
                             var p = uow.Query<ΦΠΑ>().Where(x => x.Φπαid == "0");
                             data.ΦΠΑ = p.FirstOrDefault();
                         }
-
-                        data.ΤιμήΧονδρικής = double.Parse(row["ΤιμήΧονδρικής"].ToString());
                         if (!string.IsNullOrEmpty(row["Ομάδα"].ToString()))
                         {
                             var omada = uow.Query<ΟμάδαΕίδους>().Where(x => x.SmartOid == Guid.Parse((string)row["Ομάδα"]));
@@ -967,6 +969,7 @@ namespace SmartMobileProject.Core
                         data.Κωδικός = row["BarCode"].ToString();
                         data.Περιγραφή = row["Περιγραφή"].ToString();
                         data.ΤιμήΧονδρικής = row["ΤιμήΧονδρικής"] != DBNull.Value ? double.Parse(row["ΤιμήΧονδρικής"].ToString()) : 0.0;
+                        data.ΤιμήΛιανικής = row["ΤιμήΛιανικής"] != DBNull.Value ? double.Parse(row["ΤιμήΧονδρικής"].ToString()) : 0.0;
                         data.Μέγεθος = row["Μεγέθη"] != DBNull.Value ? row["Μεγέθη"].ToString() : "";
                         data.Χρώμα = row["Χρώματα"] != DBNull.Value ? row["Χρώματα"].ToString() : "";
                         data.ΑκολουθείΤήνΤιμήΕίδους = bool.Parse(row["ΑκολουθείΤήνΤιμήΕίδους"].ToString());
@@ -1166,18 +1169,22 @@ namespace SmartMobileProject.Core
                 {
                     try
                     {
-                        if (uow.Query<Πελάτης>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
+                        Πελάτης data = new Πελάτης(uow); 
+                        var pelatiGuid = uow.Query<Πελάτης>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"]));
+                        if (pelatiGuid.Any())
                         {
-                            continue;
+                            //continue;
+                            data = pelatiGuid.FirstOrDefault();
                         }
                         if (row["Κείμενο5"] != DBNull.Value)
                         {
-                            if (uow.Query<Πελάτης>().Where(x => x.SmartOid == Guid.Parse((string)row["Κείμενο5"])).Any())
+                            var pelatisKeim5 = uow.Query<Πελάτης>().Where(x => x.SmartOid == Guid.Parse((string)row["Κείμενο5"]));
+                            if (pelatisKeim5.Any())
                             {
-                                continue;
+                                //continue;
+                                data = pelatisKeim5.FirstOrDefault();
                             }
                         }
-                        Πελάτης data = new Πελάτης(uow);
                         data.SmartOid = Guid.Parse((string)row["Oid"]);
                         data.Επωνυμία = row["Επωνυμία"].ToString();
                         data.Διακριτικόςτίτλος = row["ΔιακριτικόςΤίτλος"].ToString();

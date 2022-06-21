@@ -73,19 +73,38 @@ namespace SmartMobileProject.ViewModels
             if (item == null)
                 return;
             UnitOfWork uow = ΝέοΠαραστατικόViewModel.uow;
+            var currentseira = ΝέοΠαραστατικόViewModel.Order.Σειρά;
             ΓραμμέςΠαραστατικώνΠωλήσεων νεαΓραμμή = new ΓραμμέςΠαραστατικώνΠωλήσεων(uow);
             νεαΓραμμή.SmartOid = Guid.NewGuid();
             νεαΓραμμή.Ποσότητα = item.Ποσότητα;
             νεαΓραμμή.Είδος = uow.Query<Είδος>().Where(x => x.SmartOid == item.ΕίδοςOid).FirstOrDefault();
-            νεαΓραμμή.Τιμή = item.ΑκολουθείΤήνΤιμήΕίδους ? νεαΓραμμή.Είδος.ΤιμήΧονδρικής : item.ΤιμήΧονδρικής;
+            νεαΓραμμή.Τιμή = item.ΑκολουθείΤήνΤιμήΕίδους ? νεαΓραμμή.Είδος.getPrice(currentseira.Λιανική) : item.getPrice(currentseira.Λιανική);
             νεαΓραμμή.ΠοσοστόΦπα = item.ΦΠΑ != null ? (item.ΦΠΑ.Φπακανονικό / 100) : 0;
             νεαΓραμμή.Εκπτωση = 0;
-            νεαΓραμμή.ΑξίαΕκπτωσης = (decimal)(νεαΓραμμή.Ποσότητα * νεαΓραμμή.Τιμή * νεαΓραμμή.Εκπτωση);
-            νεαΓραμμή.ΚαθαρήΑξία = (decimal)(νεαΓραμμή.Ποσότητα * νεαΓραμμή.Τιμή) - νεαΓραμμή.ΑξίαΕκπτωσης;
+            double clearvalue = CalculateClearValue(νεαΓραμμή.Τιμή, νεαΓραμμή.ΠοσοστόΦπα);
+            νεαΓραμμή.ΑξίαΕκπτωσης = (decimal)(νεαΓραμμή.Ποσότητα * clearvalue * νεαΓραμμή.Εκπτωση);
+            νεαΓραμμή.ΚαθαρήΑξία = (decimal)(νεαΓραμμή.Ποσότητα * clearvalue) - νεαΓραμμή.ΑξίαΕκπτωσης;
             νεαΓραμμή.Φπα = νεαΓραμμή.ΚαθαρήΑξία * (decimal)νεαΓραμμή.ΠοσοστόΦπα;
             νεαΓραμμή.ΑξίαΓραμμής = νεαΓραμμή.ΚαθαρήΑξία + νεαΓραμμή.Φπα;
             νεαΓραμμή.BarCodeΕίδους = uow.Query<BarCodeΕίδους>().Where(x => x.Κωδικός == item.Κωδικός).FirstOrDefault();
             νεαΓραμμή.ΠαραστατικάΠωλήσεων = ΝέοΠαραστατικόViewModel.Order;
+        }
+        /// <summary>
+        /// Υπολογισμός καθαρής αξίας χωρίς καμια εκπτωση
+        /// </summary>
+        /// <param name="τιμή"></param>
+        /// <param name="ποσοστόΦπα"></param>
+        /// <returns></returns>
+        private double CalculateClearValue(double τιμή, float ποσοστόΦπα)
+        {
+            var currentparastatiko = ΝέοΠαραστατικόViewModel.Order;
+            if (currentparastatiko == null)
+                return 0;
+            if (currentparastatiko.Σειρά == null)
+                return 0;
+            if (currentparastatiko.Σειρά.Λιανική)
+                return τιμή / (1 + ποσοστόΦπα);
+            return τιμή;
         }
         private async Task LoadBarCodeitems()
         {
