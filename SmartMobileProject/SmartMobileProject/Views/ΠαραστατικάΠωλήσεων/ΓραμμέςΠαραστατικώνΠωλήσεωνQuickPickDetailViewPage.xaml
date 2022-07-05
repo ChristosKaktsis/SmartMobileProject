@@ -82,7 +82,7 @@
                                            Margin="0"
                                            FontSize="16"
                                            TextColor="#55575c"/>
-                                    <Label Text="{Binding ΤιμήΧονδρικής ,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                    <Label Text="{Binding getTimh ,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
                                 </StackLayout>
                                 <StackLayout Grid.Row="1" Orientation="Horizontal">
                                     <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
@@ -105,7 +105,7 @@
                                    Margin="0"
                                    FontSize="16"
                                    TextColor="#55575c"/>
-                                    <Label Text="{Binding ΤιμήΧονδρικής ,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                                    <Label Text="{Binding getTimh ,StringFormat='{0} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
                                 </StackLayout>
                                 <StackLayout Grid.Row="1" Orientation="Horizontal">
                                     <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>

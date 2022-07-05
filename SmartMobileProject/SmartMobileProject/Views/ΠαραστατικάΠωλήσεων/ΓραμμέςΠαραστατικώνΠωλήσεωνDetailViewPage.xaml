@@ -55,7 +55,7 @@
                                 <DataTemplate>
                                     <Grid>
                                         <Label Padding="10" Text="{Binding Κωδικός}" Grid.ColumnSpan="2" FontAttributes="Bold"/>
-                                        <Label Padding="10" Grid.Column="2" Text="{Binding ΤιμήΧονδρικής , StringFormat='{0} €'}"/>
+                                        <Label Padding="10" Grid.Column="2" Text="{Binding getTimh , StringFormat='{0} €'}"/>
                                     </Grid>
                                 </DataTemplate>
                             </dxe:ComboBoxEdit.ItemTemplate>
@@ -75,7 +75,7 @@
                         <DataTemplate>
                             <Grid>
                                 <Label Padding="10" Text="{Binding Περιγραφή}" FontAttributes="Bold"/>
-                                <Label Padding="10" Grid.Column="1" Text="{Binding ΤιμήΧονδρικής , StringFormat='{0} €'}"/>
+                                <Label Padding="10" Grid.Column="1" Text="{Binding getTimh , StringFormat='{0} €'}"/>
                             </Grid>
                         </DataTemplate>
                     </dxe:ComboBoxEdit.ItemTemplate>

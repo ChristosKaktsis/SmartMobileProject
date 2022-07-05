@@ -2,6 +2,7 @@
 using SmartMobileProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -13,7 +14,7 @@ namespace SmartMobileProject.ViewModels
         UnitOfWork uow;
         List<Είδος> selectedEidosCollection;
         ΓραμμέςΠαραστατικώνΠωλήσεων lineOfOrders;
-        public XPCollection<ΟικογένειαΕίδους> OikogeneiaCollection { get; set; }
+        public List<ΟικογένειαΕίδους> OikogeneiaCollection { get; set; }
         public XPCollection<Είδος> EidosCollection { get; set; }
         public List<Είδος> SelectedEidosCollection
         {
@@ -104,7 +105,7 @@ namespace SmartMobileProject.ViewModels
         public ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewModel()
         {
             uow = ΝέοΠαραστατικόViewModel.uow;
-            OikogeneiaCollection = new XPCollection<ΟικογένειαΕίδους>(uow);
+            OikogeneiaCollection = new XPCollection<ΟικογένειαΕίδους>(uow).OrderBy(x => x.Περιγραφή).ToList();
             EidosCollection = new XPCollection<Είδος>(uow);
             SelectedEidosCollection = new List<Είδος>();
 
