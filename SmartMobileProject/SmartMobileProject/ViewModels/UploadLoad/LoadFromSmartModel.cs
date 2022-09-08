@@ -72,8 +72,9 @@ namespace SmartMobileProject.ViewModels
             bool done = await XpoHelper.CreatePELATISData();
             bool done2 = await XpoHelper.CreateDIEUPELATIData();
             AllLoading = false;
-            
+
             return done && done2;
+            //return done ;
         }
         public async Task<bool> LoadBarCode()
         {

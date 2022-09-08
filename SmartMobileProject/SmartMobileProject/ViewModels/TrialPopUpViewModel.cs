@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -69,33 +70,48 @@ namespace SmartMobileProject.ViewModels
                          "τον κωδικό ενεργοποίησης τον οποίο τον εισάγετε πατώντας Activate Product ";
             ActiveIsSelected = true;
         }
-        public  void ContinuePressed()
+        public async void ContinuePressed()
         {
-            if (ActiveIsSelected)
+            try
             {
+                if (!ActiveIsSelected)
+                    return;
+                
                 //Get id
                 string Id = GetId();
                 Preferences.Set("ID", Id);
                 //crypto id
                 string crypto = CryptoId(Id);
                 //get compncredetial
-                //set email
-                EmailSetter(crypto);
+                //set email body
+                var body = await BuildBody(crypto);
+                //send mail
+                await EmailSender.SendEmail(
+                    "Αίτηση ενεργοποίησης",
+                    body,
+                    new List<string> { "license@exelixis-software.gr" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                await Application.Current.MainPage.DisplayAlert("Προσοχή",
+                $"Κάτι πήγε στραβά! \n {ex}", "Εντάξει");
             }
         }
 
-        private async void EmailSetter(string crypto)
+        private async Task<string> BuildBody(string crypto)
         {
             if (Εταιρία == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Προσοχή",
                 "Συμπληρώστε τα στοιχεία εταιρίας πριν κάνετε αίτηση ενεργοποίησης", "Εντάξει");
-                return;
+                return string.Empty;
             }
             string Εταιρία_ΔΟΥ_Περιγραφή = "";
             if (Εταιρία.ΔΟΥ != null)
                 Εταιρία_ΔΟΥ_Περιγραφή = Εταιρία.ΔΟΥ.Περιγραφή;
-            String body = "";
+
+            string body = "";
             body += "  --Στοιχεία Εταιρίας--\n" +
                     "Επωνυμία :" + Εταιρία.Επωνυμία + "\n" +
                     "Οδός :" + Εταιρία.Οδός + "\n" +
@@ -113,19 +129,13 @@ namespace SmartMobileProject.ViewModels
                     "Τηλ :" + Πωλητής.KίνΤηλέφωνο + "\n" +
                     "StandAlone :" + (OnlineMode ? "Οχι" : "Ναι") + "\n" +
                     "Activation :" + crypto + "\n";
-                    
-            await EmailSender.SendEmail("Αίτηση ενεργοποίησης", body, new List<string> { "license@exelixis-software.gr" });
+            return body;
         }
-
         private string CryptoId(string id)
         {
             string crypto = AesOperation.EncryptString("b14ca5898a4e4133bbce2ea2315a1916", id);
-            //Console.WriteLine("Before Encrypt : Hello Crypto \n After Encrypt :" + crypto);
-            //string decrypto = AesOperation.DecryptString("b14ca5898a4e4133bbce2ea2315a1916", crypto);
-            //Console.WriteLine("After Decrypt :" + decrypto);
             return crypto;
         }
-
         private string GetId()
         {
             return DependencyService.Get<IDevice>().GetIdentifier();

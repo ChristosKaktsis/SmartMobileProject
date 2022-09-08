@@ -1208,8 +1208,9 @@ namespace SmartMobileProject.Core
 
                             data.SmartOidΚεντρικήΔιεύθυνση = Guid.Parse(row["ΚεντρικήΔιευθυνση"].ToString());
                         }
-
-                        uow.Save(data);
+                        //add adress to customer
+                        await AddAddressToCustomer(uow, data);
+                        await uow.SaveAsync(data);
                     }
                     catch (Exception ex)
                     {
@@ -1234,98 +1235,177 @@ namespace SmartMobileProject.Core
             }
             return true;
         }
-        public static async Task<bool> CreateDIEUPELATIData()
+        private static async Task AddAddressToCustomer(UnitOfWork uow, Πελάτης πελάτης)
         {
-            using (var uow = CreateUnitOfWork())
+            if (πελάτης == null)
+                return;
+
+            DataTable dt;
+            //DataTable dt = await getSmartTable("Select Oid, REPLACE(Οδός,'\"','') as Οδός, Αριθμός, REPLACE(Περιοχή,'\"','') as Περιοχή, Τηλέφωνο, Τηλέφωνο1, " +
+            //       "KίνΤηλέφωνο, Κείμενο5, FAX, ΓεωγραφικόΠλάτος, ΓεωγραφικόΜήκος, ΤΚ, Πόλη, Πελάτης From ΔιευθύνσειςΠελάτη where ");
+            dt = await GetData("getDieuthinseisPelatiWithID", $"getDieuthinseisPelatiWithID,@pelatisId,{πελάτης.SmartOid}");
+
+            if (dt.Rows.Count == 0)
             {
-                //DataTable dt = await getSmartTable("Select Oid, REPLACE(Οδός,'\"','') as Οδός, Αριθμός, REPLACE(Περιοχή,'\"','') as Περιοχή, Τηλέφωνο, Τηλέφωνο1, " +
-                //       "KίνΤηλέφωνο, Κείμενο5, FAX, ΓεωγραφικόΠλάτος, ΓεωγραφικόΜήκος, ΤΚ, Πόλη, Πελάτης From ΔιευθύνσειςΠελάτη where ");
-                DataTable dt = await GetData("getDieuthinseisPelati");
-
-                if (dt.Rows.Count == 0)
+                await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΔιευθύνσειςΠελάτη", "OK");
+                return ;
+            }
+            foreach (DataRow row in dt.Rows)
+            {
+                try
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΔιευθύνσειςΠελάτη", "OK");
-                    return false;
+                    ΔιευθύνσειςΠελάτη data = null;
+                    var idaddress = uow.Query<ΔιευθύνσειςΠελάτη>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"]));
+                    if (idaddress.Any())
+                    {
+                        data = idaddress.FirstOrDefault();
+                    }
+                    if (!string.IsNullOrEmpty(row["Κείμενο5"].ToString()))
+                    {
+                        var k5address = uow.Query<ΔιευθύνσειςΠελάτη>().Where(x => x.SmartOid == Guid.Parse((string)row["Κείμενο5"]));
+                        if (k5address.Any())
+                        {
+                            data = k5address.FirstOrDefault();
+                        }
+                    }
+                    if(data == null)
+                        data = new ΔιευθύνσειςΠελάτη(uow);
+                    data.SmartOid = Guid.Parse((string)row["Oid"]);
+                    data.Οδός = row["Οδός"].ToString();
+                    data.Αριθμός = row["Αριθμός"].ToString();
+                    data.Περιοχή = row["Περιοχή"].ToString();
+                    data.Τηλέφωνο = row["Τηλέφωνο"].ToString();
+                    data.Τηλέφωνο1 = row["Τηλέφωνο1"].ToString();
+                    data.Kίντηλέφωνο = row["KίνΤηλέφωνο"].ToString();
+                    data.FAX = row["FAX"].ToString();
+
+                    if (!string.IsNullOrEmpty(row["ΓεωγραφικόΠλάτος"].ToString()))
+                    {
+                        data.ΓεωγραφικόΠλάτος = double.Parse(row["ΓεωγραφικόΠλάτος"].ToString());
+                    }
+                    if (!string.IsNullOrEmpty(row["ΓεωγραφικόΜήκος"].ToString()))
+                    {
+                        data.ΓεωγραφικόΜήκος = double.Parse(row["ΓεωγραφικόΜήκος"].ToString());
+                    }
+                    if (!string.IsNullOrEmpty(row["ΤΚ"].ToString()))
+                    {
+                        var tk = uow.Query<ΤαχυδρομικόςΚωδικός>().Where(x => x.Ονοματκ == row["ΤΚ"].ToString());
+                        data.ΤΚ = tk.FirstOrDefault();
+                    }
+                    if (!string.IsNullOrEmpty(row["Πόλη"].ToString()))
+                    {
+                        var poli = uow.Query<Πόλη>().Where(x => x.SmartOid == Guid.Parse((string)row["Πόλη"]));
+                        data.Πόλη = poli.FirstOrDefault();
+                    }
+
+                    data.Πελάτης = πελάτης;
+                    if (data.Πελάτης.SmartOidΚεντρικήΔιεύθυνση == data.SmartOid)
+                        data.Πελάτης.ΚεντρικήΔιευθυνση = data;
+
+                    uow.Save(data);
                 }
-                foreach (DataRow row in dt.Rows)
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        if (uow.Query<ΔιευθύνσειςΠελάτη>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
-                        {
-                            continue;
-                        }
-                        if (!string.IsNullOrEmpty(row["Κείμενο5"].ToString()))
-                        {
-                            if (uow.Query<ΔιευθύνσειςΠελάτη>().Where(x => x.SmartOid == Guid.Parse((string)row["Κείμενο5"])).Any())
-                            {
-                                continue;
-                            }
-                        }
-                        ΔιευθύνσειςΠελάτη data = new ΔιευθύνσειςΠελάτη(uow);
-                        data.SmartOid = Guid.Parse((string)row["Oid"]);
-                        data.Οδός = row["Οδός"].ToString();
-                        data.Αριθμός = row["Αριθμός"].ToString();
-                        data.Περιοχή = row["Περιοχή"].ToString();
-                        data.Τηλέφωνο = row["Τηλέφωνο"].ToString();
-                        data.Τηλέφωνο1 = row["Τηλέφωνο1"].ToString();
-                        data.Kίντηλέφωνο = row["KίνΤηλέφωνο"].ToString();
-                        data.FAX = row["FAX"].ToString();
-
-                        if (!string.IsNullOrEmpty(row["ΓεωγραφικόΠλάτος"].ToString()))
-                        {
-                            data.ΓεωγραφικόΠλάτος = double.Parse(row["ΓεωγραφικόΠλάτος"].ToString());
-                        }
-                        if (!string.IsNullOrEmpty(row["ΓεωγραφικόΜήκος"].ToString()))
-                        {
-                            data.ΓεωγραφικόΜήκος = double.Parse(row["ΓεωγραφικόΜήκος"].ToString());
-                        }
-                        if (!string.IsNullOrEmpty(row["ΤΚ"].ToString()))
-                        {
-                            var tk = uow.Query<ΤαχυδρομικόςΚωδικός>().Where(x => x.Ονοματκ == row["ΤΚ"].ToString());
-                            data.ΤΚ = tk.FirstOrDefault();
-                        }
-                        if (!string.IsNullOrEmpty(row["Πόλη"].ToString()))
-                        {
-                            var poli = uow.Query<Πόλη>().Where(x => x.SmartOid == Guid.Parse((string)row["Πόλη"]));
-                            data.Πόλη = poli.FirstOrDefault();
-                        }
-                        if (!string.IsNullOrEmpty(row["Πελάτης"].ToString()))
-                        {
-                            var pelatis = uow.Query<Πελάτης>().Where(x => x.SmartOid == Guid.Parse((string)row["Πελάτης"]));
-                            data.Πελάτης = pelatis.FirstOrDefault();
-                            if (data.Πελάτης != null)
-                            {
-                                if (data.Πελάτης.SmartOidΚεντρικήΔιεύθυνση == data.SmartOid)
-                                {
-                                    data.Πελάτης.ΚεντρικήΔιευθυνση = data;
-                                }
-                            }
-                        }
-                        uow.Save(data);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    
-                }
-
-                if (uow.InTransaction)
-                {
-                    try
-                    {
-                        uow.CommitChanges();
-                    }
-                    catch (Exception exc)
-                    {
-                        uow.RollbackTransaction();
-                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
-                        return false;
-                    }
-
+                    Console.WriteLine(ex);
+                    await Application.Current.MainPage.DisplayAlert("Εισαγωγή Διεύθυνση στον Πελάτη",
+                         $"Κάτι πήγε στραβά στην εισαγωγή Διεύθυνσης Πελάτη \n {ex}", 
+                        "OK");
                 }
             }
+        }
+        public static async Task<bool> CreateDIEUPELATIData()
+        {
+            //using (var uow = CreateUnitOfWork())
+            //{
+            //    DataTable dt;
+            //    //DataTable dt = await getSmartTable("Select Oid, REPLACE(Οδός,'\"','') as Οδός, Αριθμός, REPLACE(Περιοχή,'\"','') as Περιοχή, Τηλέφωνο, Τηλέφωνο1, " +
+            //    //       "KίνΤηλέφωνο, Κείμενο5, FAX, ΓεωγραφικόΠλάτος, ΓεωγραφικόΜήκος, ΤΚ, Πόλη, Πελάτης From ΔιευθύνσειςΠελάτη where ");
+            //    dt = await GetData("getDieuthinseisPelati");
+
+            //    if (dt.Rows.Count == 0)
+            //    {
+            //        await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο ΔιευθύνσειςΠελάτη", "OK");
+            //        return false;
+            //    }
+            //    foreach (DataRow row in dt.Rows)
+            //    {
+            //        try
+            //        {
+            //            if (uow.Query<ΔιευθύνσειςΠελάτη>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"])).Any())
+            //            {
+            //                continue;
+            //            }
+            //            if (!string.IsNullOrEmpty(row["Κείμενο5"].ToString()))
+            //            {
+            //                if (uow.Query<ΔιευθύνσειςΠελάτη>().Where(x => x.SmartOid == Guid.Parse((string)row["Κείμενο5"])).Any())
+            //                {
+            //                    continue;
+            //                }
+            //            }
+            //            ΔιευθύνσειςΠελάτη data = new ΔιευθύνσειςΠελάτη(uow);
+            //            data.SmartOid = Guid.Parse((string)row["Oid"]);
+            //            data.Οδός = row["Οδός"].ToString();
+            //            data.Αριθμός = row["Αριθμός"].ToString();
+            //            data.Περιοχή = row["Περιοχή"].ToString();
+            //            data.Τηλέφωνο = row["Τηλέφωνο"].ToString();
+            //            data.Τηλέφωνο1 = row["Τηλέφωνο1"].ToString();
+            //            data.Kίντηλέφωνο = row["KίνΤηλέφωνο"].ToString();
+            //            data.FAX = row["FAX"].ToString();
+
+            //            if (!string.IsNullOrEmpty(row["ΓεωγραφικόΠλάτος"].ToString()))
+            //            {
+            //                data.ΓεωγραφικόΠλάτος = double.Parse(row["ΓεωγραφικόΠλάτος"].ToString());
+            //            }
+            //            if (!string.IsNullOrEmpty(row["ΓεωγραφικόΜήκος"].ToString()))
+            //            {
+            //                data.ΓεωγραφικόΜήκος = double.Parse(row["ΓεωγραφικόΜήκος"].ToString());
+            //            }
+            //            if (!string.IsNullOrEmpty(row["ΤΚ"].ToString()))
+            //            {
+            //                var tk = uow.Query<ΤαχυδρομικόςΚωδικός>().Where(x => x.Ονοματκ == row["ΤΚ"].ToString());
+            //                data.ΤΚ = tk.FirstOrDefault();
+            //            }
+            //            if (!string.IsNullOrEmpty(row["Πόλη"].ToString()))
+            //            {
+            //                var poli = uow.Query<Πόλη>().Where(x => x.SmartOid == Guid.Parse((string)row["Πόλη"]));
+            //                data.Πόλη = poli.FirstOrDefault();
+            //            }
+            //            if (!string.IsNullOrEmpty(row["Πελάτης"].ToString()))
+            //            {
+            //                var pelatis = uow.Query<Πελάτης>().Where(x => x.SmartOid == Guid.Parse((string)row["Πελάτης"]));
+            //                data.Πελάτης = pelatis.FirstOrDefault();
+            //                if (data.Πελάτης != null)
+            //                {
+            //                    if (data.Πελάτης.SmartOidΚεντρικήΔιεύθυνση == data.SmartOid)
+            //                    {
+            //                        data.Πελάτης.ΚεντρικήΔιευθυνση = data;
+            //                    }
+            //                }
+            //            }
+            //            uow.Save(data);
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            Console.WriteLine(ex);
+            //        }
+                    
+            //    }
+
+            //    if (uow.InTransaction)
+            //    {
+            //        try
+            //        {
+            //            uow.CommitChanges();
+            //        }
+            //        catch (Exception exc)
+            //        {
+            //            uow.RollbackTransaction();
+            //            Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
+            //            return false;
+            //        }
+
+            //    }
+            //}
             return true;
         }
         public static async Task<ΣτοιχείαΕταιρίας> CreateSTOIXEIAETAIRIASData()
