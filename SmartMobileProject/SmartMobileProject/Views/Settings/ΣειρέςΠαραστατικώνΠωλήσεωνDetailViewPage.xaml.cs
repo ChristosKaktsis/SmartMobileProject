@@ -25,6 +25,7 @@ namespace SmartMobileProject.Views
                 var seira = (ΣειρέςΠαραστατικώνΠωλήσεων)σειρά;
                 Πρόθεμα.Text = seira.Σειρά;
                 Περιγραφή.Text = seira.Περιγραφή;
+                Μετρητής.Text = seira.Counter.ToString();
                 Λιανική.IsChecked = seira.Λιανική;
                 //PrintType.SelectedItem = seira.PrintType;
                 model.Σειρά = seira;

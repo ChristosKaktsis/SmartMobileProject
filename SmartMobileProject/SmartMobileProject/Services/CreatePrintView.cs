@@ -365,7 +365,7 @@ namespace SmartMobileProject.Services
         public async Task<string> page2(ΠαραστατικάΠωλήσεων order)
         {
             στοιχείαΕταιρίας = await XpoHelper.GetSTOIXEIAETAIRIASData();
-            
+
             if (στοιχείαΕταιρίας == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "Δεν Υπαρχουν Στοιχεια Εταιρίας", "OK");
@@ -396,15 +396,15 @@ namespace SmartMobileProject.Services
             foreach (var i in order.ΓραμμέςΠαραστατικώνΠωλήσεων)
             {
                 grammes += "<tr>" +
-                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin\">" +(i.BarCodeΕίδους==null? i.Είδος.Κωδικός : i.BarCodeΕίδους.Κωδικός)  + "</td>" +
-                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin\">" + (i.BarCodeΕίδους == null ? i.Είδος.Περιγραφή : i.BarCodeΕίδους.Περιγραφή +" "+i.BarCodeΕίδους.Χρώμα+" "+i.BarCodeΕίδους.Μέγεθος) + "</td>" +
+                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin\">" + (i.BarCodeΕίδους == null ? i.Είδος.Κωδικός : i.BarCodeΕίδους.Κωδικός) + "</td>" +
+                            "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin\">" + (i.BarCodeΕίδους == null ? i.Είδος.Περιγραφή : i.BarCodeΕίδους.Περιγραφή + " " + i.BarCodeΕίδους.Χρώμα + " " + i.BarCodeΕίδους.Μέγεθος) + "</td>" +
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.Ποσότητα + "</td>" +
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.Τιμή + "</td>" +
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.ΚαθαρήΑξία.ToString("0.##") + "</td>" +
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.ΠοσοστόΦπα * 100 + "%</td>" +
                             "<td style=\"border-right-style: dashed; border-bottom-style: dashed; border-width: thin; text-align: right\">" + i.ΑξίαΓραμμής.ToString("0.##") + "</td>" +
                        "</tr>";
-                
+
                 switch (i.ΠοσοστόΦπα * 100)
                 {
                     case 6:
@@ -438,8 +438,8 @@ namespace SmartMobileProject.Services
             string source = @"<html >
 <head>
     
-    <title></title>"+
-    "<style type=\"text/css\">"+ @"
+    <title></title>" +
+    "<style type=\"text/css\">" + @"
         table {
             border-collapse:separate;
             border:solid black 1px;
@@ -449,40 +449,40 @@ namespace SmartMobileProject.Services
     </style>
 </head>
 <body>
-    <div>
-        <h2>" + στοιχείαΕταιρίας.Επωνυμία + "</h2>"+ @"
-            ΑΦΜ: " + στοιχείαΕταιρίας.ΑΦΜ + "<br/>"+
-            στοιχείαΕταιρίας.Οδός +"<br/>"+
-            στοιχείαΕταιρίας_ΤΚ_Ονοματκ + ", "+ στοιχείαΕταιρίας_Πόλη_ΟνομαΠόλης + ","+
-            στοιχείαΕταιρίας_ΤΚ_Χώρα + "<br/>"+
-            "Τηλ: "+ στοιχείαΕταιρίας.Τηλέφωνο +"<br/>"+
-            "FAX: "+ στοιχείαΕταιρίας.FAX +"<br/><br/>" +@"
+    <div>" +
+        $@"<h2>{στοιχείαΕταιρίας.Επωνυμία}</h2>
+            ΑΦΜ: { στοιχείαΕταιρίας.ΑΦΜ} <br/>
+            {στοιχείαΕταιρίας.Οδός} <br/>
+            { στοιχείαΕταιρίας_ΤΚ_Ονοματκ} , { στοιχείαΕταιρίας_Πόλη_ΟνομαΠόλης} ,
+            {στοιχείαΕταιρίας_ΤΚ_Χώρα} <br/>
+            Τηλ:  { στοιχείαΕταιρίας.Τηλέφωνο} <br/>
+            FAX:  { στοιχείαΕταιρίας.FAX} <br/><br/>
 
     </div>
-    <div>"+
-        "<table style=\"border-style: groove; border-width: thin; width: 100%; text-align: center;\">"+@"
-            <tr>"+
-                "<td style=\"border-style: groove; border-width: thin; font-weight: bold; background-color: #CCFFFF\">ΕΙΔΟΣ ΠΑΡΑΣΤΑΤΙΚΟΥ</td>"+
-                "<td style=\"border-style: groove; border-width: thin; font-weight: bold; background-color: #CCFFFF\">ΑΡΙΘΜΟΣ</td>"+
-                "<td style=\"border-style: groove; border-width: thin; font-weight: bold; background-color: #CCFFFF\">ΗΜΕΡΟΜΗΝΙΑ</td>"+@"
-            </tr>
-            <tr>
-                <td>"+ order.Σειρά.Περιγραφή +"</td>"+
-                "<td>"+order.Παραστατικό+"</td>"+
-                "<td>"+order.Ημνία+"</td>"+@"
+    <div>" +
+        "<table style=\"border-style: groove; border-width: thin; width: 100%; text-align: center;\">" + @"
+            <tr>" +
+                "<td style=\"border-style: groove; border-width: thin; font-weight: bold; background-color: #CCFFFF\">ΕΙΔΟΣ ΠΑΡΑΣΤΑΤΙΚΟΥ</td>" +
+                "<td style=\"border-style: groove; border-width: thin; font-weight: bold; background-color: #CCFFFF\">ΑΡΙΘΜΟΣ</td>" +
+                "<td style=\"border-style: groove; border-width: thin; font-weight: bold; background-color: #CCFFFF\">ΗΜΕΡΟΜΗΝΙΑ</td>" +
+            "</tr>" +
+            $@"<tr>
+                <td> {order.Σειρά.Περιγραφή} </td>
+                <td>{order.Παραστατικό}</td>
+                <td>{order.Ημνία} </td>
             </tr>       
         </table><br/><br/>
     </div>
-    <div>"+
-        "<div style=\"float:left;\">"+
-            "<table style=\"border-style: groove; border-width: thin; width: 100%; text-align: center;\">"+@"
-                <tr>"+
-                    "<td colspan=\"5\" style=\"font-weight: bold; background-color: #CCFFFF; border-style: groove; border-width: thin\">ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ</td>"+@"
-                </tr>
+    <div>" +
+        "<div style=\"float:left;\">" +
+            "<table style=\"border-style: groove; border-width: thin; width: 100%; text-align: center;\">" + @"
+                <tr>" +
+                    "<td colspan=\"5\" style=\"font-weight: bold; background-color: #CCFFFF; border-style: groove; border-width: thin\">ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ</td>" +
+                $@"</tr>
                 <tr>
                     <td>
                         ΕΠΩΝΥΜΙΑ :</td>
-                    <td> "+order.Πελάτης.DisplayName+"</td>"+ @"                    
+                    <td> {order.Πελάτης.DisplayName}</td>                   
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
@@ -496,15 +496,15 @@ namespace SmartMobileProject.Services
                 <tr>
                     <td>                        
                         ΔΙΕΥΘΥΝΣΗ :</td>
-                    <td>" + order.Πελάτης.Addresstring+"</td>"+ @"                   
+                    <td>{ order.Πελάτης.Addresstring}</td>                   
                     <td>
                         Τ.Κ. :</td>
-                    <td>" + order_Πελάτης_ΚεντρικήΔιευθυνση_ΤΚ_Ονοματκ + "</td>"+ @"
+                    <td>{ order_Πελάτης_ΚεντρικήΔιευθυνση_ΤΚ_Ονοματκ} </td>
                 </tr>
                 <tr>
                     <td>
                         ΠΟΛΗ :</td>
-                    <td>" + order_Πελάτης_ΚεντρικήΔιευθυνση_Πόλη_ΟνομαΠόλης + " </td>"+ @"
+                    <td>{order_Πελάτης_ΚεντρικήΔιευθυνση_Πόλη_ΟνομαΠόλης}  </td>
                     <td>
                         &nbsp;</td>
                     <td>
@@ -513,7 +513,7 @@ namespace SmartMobileProject.Services
                 <tr>
                     <td>
                         ΤΗΛΕΦΩΝΟ :</td>
-                    <td>" + order_Πελάτης_ΚεντρικήΔιευθυνση_τηλ + "</td>"+ @"
+                    <td>{ order_Πελάτης_ΚεντρικήΔιευθυνση_τηλ}</td>
                     <td>
                         FAX :</td>
                     <td>
@@ -522,10 +522,10 @@ namespace SmartMobileProject.Services
                 <tr>
                     <td>
                         Α.Φ.Μ. :</td>
-                    <td>" + order.Πελάτης.ΑΦΜ +"</td>"+ @"
+                    <td>{ order.Πελάτης.ΑΦΜ} </td>
                     <td>
                         Δ.Ο.Υ:</td>
-                    <td>"+ order_Πελάτης_ΔΟΥ_Περιγραφή + "</td>"+@"
+                    <td>{ order_Πελάτης_ΔΟΥ_Περιγραφή} </td>
                 </tr>
                 <tr>
                     <td>
@@ -543,8 +543,8 @@ namespace SmartMobileProject.Services
         </div>"+
         "<div style=\"float:left;\">"+
             "<br />"+
-            "<table style=\"border-style: groove; border-width: thin; width: 100%;\">"+@"
-                <tr>
+            "<table style=\"border-style: groove; border-width: thin; width: 100%;\">"+
+                $@"<tr>
                     <td >ΜΕΤΑΦΟΡΙΚΟ ΜΕΣΟ</td>
                     <td ></td>
                 </tr>
@@ -554,7 +554,7 @@ namespace SmartMobileProject.Services
                 </tr>
                 <tr>
                     <td>ΤΡΟΠΟΣ ΑΠΟΣΤΟΛΗΣ</td>
-                    <td>"+ τρόποςΑποστολής +"</td>"+@"
+                    <td>{ τρόποςΑποστολής}</td>
                 </tr>
                 <tr>
                     <td>ΣΚΟΠΟΣ ΔΙΑΚΙΝΗΣΗΣ</td>
@@ -562,7 +562,7 @@ namespace SmartMobileProject.Services
                 </tr>
                 <tr>
                     <td>ΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ</td>
-                    <td>"+τρόποςΠληρωμής+"</td>"+@"
+                    <td>{ τρόποςΠληρωμής}</td>
                 </tr>
             </table>
             <br/><br/>
@@ -584,32 +584,28 @@ namespace SmartMobileProject.Services
    "<div style =\"float:center;\">" +
               "<table style=\"text-align: center; border-style: groove; border-width: thin\">" + @"
                 <tr>" +
-                           "<td colspan=\"4\" style=\"text-align: center\">Σχόλια</td>" + @"
-                     </tr>
-                     <tr>
-                          <td>" + order.Σχολια + "</td>" +
-                       "</tr>" +
-                      @"
+                   "<td colspan=\"4\" style=\"text-align: center\">Σχόλια</td>" + 
+             $@"</tr>
+                <tr>
+                    <td>{ order.Σχολια} </td>
+                </tr>
             </table>
         </div>
-  
-      <div>"+ YpologismenoYpoloipo+
-    
+      <div>"+YpologismenoYpoloipo+
         " <div style=\"float:left;\">" +
             "<table style=\"text-align: center; border-style: groove; border-width: thin\">"+@"
                 <tr>" +
-                         "<td colspan=\"4\" style=\"text-align: center\">ΑΝΑΛΥΣΗ Φ.Π.Α.</td>" + @"
-                     </tr>
-                     <tr>
+                   "<td colspan=\"4\" style=\"text-align: center\">ΑΝΑΛΥΣΗ Φ.Π.Α.</td>"+
+             $@"</tr>
+                <tr>
                           <td>Φ.Π.Α.</td>
                           <td>Καθ.αξία</td>
                           <td>Αξία Φ.Π.Α.</td>
                           <td>Συν.αξία</td>
-                     </tr>"
-                     + ypologismosFPA+@"
+                </tr>
+                      {ypologismosFPA}
             </table>
         </div>"+
-        
         "<div style=\"float:right;\">" +
             "<table style=\"border-style: groove; border-width: thin; width: 100%;\">"+@"
                 <tr>"+

@@ -464,7 +464,7 @@ namespace SmartMobileProject.Core
                         data.ΠρόθεμαΑρίθμησης = Guid.Parse((string)row["ΠρόθεμαΑρίθμησης"]);
                         data.ΚίνησηΣυναλασόμενου = row["ΚίνησηΣυναλασόμενου"] == DBNull.Value ? 2 : int.Parse(row["ΚίνησηΣυναλασόμενου"].ToString());
                         data.IDΠωλητή = Guid.Parse((string)row["Πωλητής"]);
-                        data.Counter = 0;
+                        data.Counter = data.Counter < 1 ? await CreateARITHMISISEIRAData(data.ΠρόθεμαΑρίθμησης) : data.Counter;
                         data.Λιανική = bool.Parse(row["Λιανική"].ToString());
                         uow.Save(data);
                     }

@@ -47,7 +47,7 @@ namespace SmartMobileProject.ViewModels
                     if (ΝέοΠαραστατικόViewModel.Order.Σειρά != null)
                     {
                         var p = ΝέοΠαραστατικόViewModel.Order.Σειρά.Counter += 1;
-                        ΝέοΠαραστατικόViewModel.Order.Παραστατικό = ΝέοΠαραστατικόViewModel.Order.Σειρά.Σειρά + p.ToString().PadLeft(8, '0');
+                        ΝέοΠαραστατικόViewModel.Order.Παραστατικό = ΝέοΠαραστατικόViewModel.Order.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
                     }
                 }
                 Title = ΝέοΠαραστατικόViewModel.Order.Παραστατικό;

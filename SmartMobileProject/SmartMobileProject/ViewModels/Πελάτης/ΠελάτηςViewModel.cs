@@ -149,7 +149,6 @@ namespace SmartMobileProject.ViewModels
             ΝέοΠαραστατικόViewModel.πελατης = customer;
             await Shell.Current.GoToAsync(nameof(ΠαραστατικόΒασικάΣτοιχείαPage));
         }
-
         async void deleteCustomer(Object sender)
         {        
             var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", 
@@ -175,7 +174,6 @@ namespace SmartMobileProject.ViewModels
                 }
             }                 
         }
-
         private async void createCustomer(object obj)
         {                          
             app.customer1 = null;
@@ -233,7 +231,6 @@ namespace SmartMobileProject.ViewModels
                 SetProperty(ref afm, value);
             }
         }
-
         public ICommand ΝέοςΠελάτης { get; }
         public ICommand Ανανέωση { get; }
         public ICommand ΤροποποίησηΠελάτη { get; }

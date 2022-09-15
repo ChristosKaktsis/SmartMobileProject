@@ -20,6 +20,7 @@
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <dxe:TextEdit Grid.Row="1" Grid.ColumnSpan="2"
@@ -30,10 +31,15 @@
                           x:Name="Περιγραφή"
                 LabelText="Περιγραφή"
                           Text="{Binding Περιγραφή}"/>
-            <Label Grid.Row="3" 
+            <dxe:TextEdit Grid.Row="3" Grid.ColumnSpan="2"
+                          x:Name="Μετρητής"
+                LabelText="Μετρητής"
+                          Text="{Binding Μετρητής}"
+                          Keyboard="Numeric"/>
+            <Label Grid.Row="4" 
                    VerticalOptions="Center" HorizontalOptions="End"
                    Text="Λιανική"/>
-            <CheckBox Grid.Row="3" Grid.Column="1"
+            <CheckBox Grid.Row="4" Grid.Column="1"
                       x:Name="Λιανική"/>
             <!--<dxe:ComboBoxEdit LabelText="Print Type" Grid.Row="3"
                               x:Name="PrintType"
@@ -45,7 +51,7 @@
                     </x:Array>
                 </dxe:ComboBoxEdit.ItemsSource>
             </dxe:ComboBoxEdit>-->
-            <Button Grid.Row="4" Grid.ColumnSpan="2"
+            <Button Grid.Row="5" Grid.ColumnSpan="2"
                     Text="Προσθήκη"
                     Margin="10"
                     CornerRadius="10"

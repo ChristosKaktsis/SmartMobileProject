@@ -55,7 +55,6 @@
 
                 <dxg:DataGridView.CellStyle>
                     <dxg:CellStyle Padding="1" BorderColor="Transparent"  BottomBorderColor="LightGray" HorizontalLineThickness="1" FontSize="15">
-
                     </dxg:CellStyle>
                 </dxg:DataGridView.CellStyle>
                 <dxg:DataGridView.StartSwipeItems>

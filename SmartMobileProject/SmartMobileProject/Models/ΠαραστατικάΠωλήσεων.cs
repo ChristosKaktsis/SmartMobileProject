@@ -37,11 +37,13 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(Ημνία), ref ημνία, value); }
         }
         DateTime ημνία;
-
         public ΣειρέςΠαραστατικώνΠωλήσεων Σειρά
         {
             get { return σειρά; }
-            set { SetPropertyValue(nameof(Σειρά), ref σειρά, value); }
+            set
+            {
+                SetPropertyValue(nameof(Σειρά), ref σειρά, value);
+            }
         }
         ΣειρέςΠαραστατικώνΠωλήσεων σειρά;
 
