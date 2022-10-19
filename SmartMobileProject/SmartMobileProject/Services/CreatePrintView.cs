@@ -429,11 +429,12 @@ namespace SmartMobileProject.Services
                 ProhgoumenoYpoloipo = await XpoHelper.GetYpoloipo(order.Πελάτης.SmartOid.ToString());
 
             ypologismosFPA += SetYpologismosFPAString(order.ΓραμμέςΠαραστατικώνΠωλήσεων);
-            string τρόποςΑποστολής = "";
-            if (order.ΤρόποςΑποστολής != null) { τρόποςΑποστολής = order.ΤρόποςΑποστολής.Τρόποςαποστολής; }
             string τρόποςΠληρωμής = "";
             if (order.ΤρόποςΠληρωμής != null)
             { τρόποςΠληρωμής = order.ΤρόποςΠληρωμής.Τρόποςπληρωμής; }
+            string μεταφορικόΜέσο = "";
+            if (order.ΜεταφορικόΜέσο != null)
+            { μεταφορικόΜέσο = order.ΜεταφορικόΜέσο.ΑριθμόςΚυκλοφορίας; }
             string YpologismenoYpoloipo = YpologismosYpoloipou(τρόποςΠληρωμής, ProhgoumenoYpoloipo, (double)order.ΑξίαΠαραστατικού, order.Σειρά.ΚίνησηΣυναλασόμενου);
             string source = @"<html >
 <head>
@@ -480,52 +481,25 @@ namespace SmartMobileProject.Services
                     "<td colspan=\"5\" style=\"font-weight: bold; background-color: #CCFFFF; border-style: groove; border-width: thin\">ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ</td>" +
                 $@"</tr>
                 <tr>
-                    <td>
-                        ΕΠΩΝΥΜΙΑ :</td>
+                    <td>ΕΠΩΝΥΜΙΑ :</td>
                     <td> {order.Πελάτης.DisplayName}</td>                   
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td>                        
-                        ΕΠΑΓΓΕΛΜΑ :</td>                    
-                    <td>                        
-                        &nbsp;</td>
-                    <td>                        
-                        &nbsp;</td>
-                </tr>
-                <tr>
-                    <td>                        
-                        ΔΙΕΥΘΥΝΣΗ :</td>
+                    <td>ΔΙΕΥΘΥΝΣΗ :</td>
                     <td>{ order.Πελάτης.Addresstring}</td>                   
-                    <td>
-                        Τ.Κ. :</td>
-                    <td>{ order_Πελάτης_ΚεντρικήΔιευθυνση_ΤΚ_Ονοματκ} </td>
                 </tr>
                 <tr>
-                    <td>
-                        ΠΟΛΗ :</td>
-                    <td>{order_Πελάτης_ΚεντρικήΔιευθυνση_Πόλη_ΟνομαΠόλης}  </td>
-                    <td>
-                        &nbsp;</td>
-                    <td>
-                        &nbsp;</td>
-                </tr>
-                <tr>
-                    <td>
-                        ΤΗΛΕΦΩΝΟ :</td>
+                    <td>ΤΗΛΕΦΩΝΟ :</td>
                     <td>{ order_Πελάτης_ΚεντρικήΔιευθυνση_τηλ}</td>
-                    <td>
-                        FAX :</td>
-                    <td>
-                        &nbsp;</td>
                 </tr>
                 <tr>
-                    <td>
-                        Α.Φ.Μ. :</td>
+                    <td>Α.Φ.Μ. :</td>
                     <td>{ order.Πελάτης.ΑΦΜ} </td>
-                    <td>
-                        Δ.Ο.Υ:</td>
-                    <td>{ order_Πελάτης_ΔΟΥ_Περιγραφή} </td>
+                </tr>
+                <tr> 
+                    <td>Δ.Ο.Υ :</td>
+                    <td>{ order_Πελάτης_ΔΟΥ_Περιγραφή}</td>
                 </tr>
                 <tr>
                     <td>
@@ -540,25 +514,21 @@ namespace SmartMobileProject.Services
                         &nbsp;</td>
                 </tr>
                 </table>
-        </div>"+
+        </div>" +
         "<div style=\"float:left;\">"+
             "<br />"+
             "<table style=\"border-style: groove; border-width: thin; width: 100%;\">"+
                 $@"<tr>
-                    <td >ΜΕΤΑΦΟΡΙΚΟ ΜΕΣΟ</td>
-                    <td ></td>
+                    <td>ΜΕΤΑΦΟΡΙΚΟ ΜΕΣΟ</td>
+                    <td>{μεταφορικόΜέσο}</td>
                 </tr>
                 <tr>
-                    <td>ΤΡΟΠΟΣ ΦΟΡΤΗΣΗΣ</td>
+                    <td>ΤΟΠΟΣ ΦΟΡΤΩΣΗΣ</td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td>ΤΡΟΠΟΣ ΑΠΟΣΤΟΛΗΣ</td>
-                    <td>{ τρόποςΑποστολής}</td>
-                </tr>
-                <tr>
                     <td>ΣΚΟΠΟΣ ΔΙΑΚΙΝΗΣΗΣ</td>
-                    <td></td>
+                    <td>{order.Σειρά.ΣκοπόςΔιακίνησης}</td>
                 </tr>
                 <tr>
                     <td>ΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ</td>

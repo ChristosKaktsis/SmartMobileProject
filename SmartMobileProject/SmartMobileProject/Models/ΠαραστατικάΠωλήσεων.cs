@@ -98,7 +98,12 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(ΤρόποςΑποστολής), ref τρόποςαποστολής, value); }
         }
         ΤρόποςΑποστολής τρόποςαποστολής;
-
+        public ΜεταφορικόΜέσο ΜεταφορικόΜέσο
+        {
+            get { return μεταφορικόΜέσο; }
+            set { SetPropertyValue(nameof(ΜεταφορικόΜέσο), ref μεταφορικόΜέσο, value); }
+        }
+        ΜεταφορικόΜέσο μεταφορικόΜέσο;
 
         [Association]
         public XPCollection<ΓραμμέςΠαραστατικώνΠωλήσεων> ΓραμμέςΠαραστατικώνΠωλήσεων

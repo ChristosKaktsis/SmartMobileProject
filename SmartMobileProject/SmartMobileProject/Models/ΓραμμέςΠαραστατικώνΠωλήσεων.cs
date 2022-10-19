@@ -60,7 +60,11 @@ namespace SmartMobileProject.Models
         public decimal ΚαθαρήΑξία
         {
             get { return καθαρήαξία; }
-            set { SetPropertyValue(nameof(ΚαθαρήΑξία), ref καθαρήαξία, value); }
+            set 
+            {
+                value = decimal.Round(value, 2, MidpointRounding.AwayFromZero);
+                SetPropertyValue(nameof(ΚαθαρήΑξία), ref καθαρήαξία, value); 
+            }
         }
         decimal καθαρήαξία;
 
@@ -74,7 +78,11 @@ namespace SmartMobileProject.Models
         public decimal ΑξίαΕκπτωσης
         {
             get { return αξίαεκπτωσης; }
-            set { SetPropertyValue(nameof(ΑξίαΕκπτωσης), ref αξίαεκπτωσης, value); }
+            set 
+            {
+                value = decimal.Round(value, 2, MidpointRounding.AwayFromZero);
+                SetPropertyValue(nameof(ΑξίαΕκπτωσης), ref αξίαεκπτωσης, value); 
+            }
         }
         decimal αξίαεκπτωσης;
 
@@ -88,7 +96,11 @@ namespace SmartMobileProject.Models
         public decimal Φπα
         {
             get { return φπα; }
-            set { SetPropertyValue(nameof(Φπα), ref φπα, value); }
+            set 
+            {
+                value = decimal.Round(value, 2, MidpointRounding.AwayFromZero);
+                SetPropertyValue(nameof(Φπα), ref φπα, value); 
+            }
         }
         decimal φπα;
 

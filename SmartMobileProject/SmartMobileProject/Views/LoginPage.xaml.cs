@@ -30,5 +30,14 @@ namespace SmartMobileProject.Views
                 
             }
         }
+        private void Search_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Search.Text))
+            {
+                SalerCollection.FilterString = string.Empty;
+                return;
+            }
+            SalerCollection.FilterString = $"Contains(Ονοματεπώνυμο, '{Search.Text}')";
+        }
     }
 }

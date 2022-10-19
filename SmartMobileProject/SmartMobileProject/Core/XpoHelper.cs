@@ -25,7 +25,7 @@ namespace SmartMobileProject.Core
             typeof(Πελάτης),typeof(ΔιευθύνσειςΠελάτη),typeof(ΤαχυδρομικόςΚωδικός),typeof(Πόλη),typeof(Χώρα)
             ,typeof(ΔΟΥ),typeof(ΦΠΑ)
             ,typeof(Είδος),typeof(BarCodeΕίδους),typeof(ΟικογένειαΕίδους),typeof(ΥποοικογένειαΕίδους),typeof(ΟμάδαΕίδους),typeof(ΚατηγορίαΕίδους)
-            ,typeof(ΠαραστατικάΠωλήσεων),typeof(ΓραμμέςΠαραστατικώνΠωλήσεων),typeof(ΣειρέςΠαραστατικώνΠωλήσεων),typeof(ΤρόποςΠληρωμής),typeof(ΤρόποςΑποστολής)
+            ,typeof(ΠαραστατικάΠωλήσεων),typeof(ΓραμμέςΠαραστατικώνΠωλήσεων),typeof(ΣειρέςΠαραστατικώνΠωλήσεων),typeof(ΤρόποςΠληρωμής),typeof(ΤρόποςΑποστολής),typeof(ΜεταφορικόΜέσο)
             ,typeof(ΠαραστατικάΕισπράξεων),typeof(ΓραμμέςΠαραστατικώνΕισπράξεων),typeof(ΣειρέςΠαραστατικώνΕισπράξεων),typeof(ΛογαριασμοίΧρηματικώνΔιαθέσιμων),typeof(Αξιόγραφα)
             ,typeof(Τράπεζα),typeof(ΤραπεζικοίΛογαριασμοί)
             ,typeof(Appointment) ,typeof(Πωλητής), typeof(Εργασία),typeof(ΚινήσειςΠελατών),
@@ -55,7 +55,7 @@ namespace SmartMobileProject.Core
                  CreateFPAData(),
                  CreateXORAData(),
                  CreateTROPOSPLIROMISData(),
-                 CreateTROPOSAPOSTOLISData(),
+                 CreateTROPOSAPOSTOLISData(), CreateMetaforikoMesoData(),
                  CreateOIKOGENEIAEIDOUSData(),
                  CreateOMADAEIDOUSData(),
                  CreateKATIGORIAEIDOUSData(),
@@ -418,6 +418,50 @@ namespace SmartMobileProject.Core
                 }
             }
         }
+        public static async Task CreateMetaforikoMesoData()
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                DataTable dt = await GetData("getTransport");
+                if (dt.Rows.Count == 0)
+                {
+                    return;
+                }
+                foreach (DataRow row in dt.Rows)
+                {
+                    try
+                    {
+                        ΜεταφορικόΜέσο data;
+                        var metaforikolist = uow.Query<ΜεταφορικόΜέσο>().Where(x => x.SmartOid == Guid.Parse((string)row["Oid"]));
+                        if (metaforikolist.Any())
+                            data = metaforikolist.FirstOrDefault();
+                        else
+                            data = new ΜεταφορικόΜέσο(uow);
+                        data.SmartOid = Guid.Parse((string)row["Oid"]);
+                        data.ΑριθμόςΚυκλοφορίας = row["ΑριθμόςΚυκλοφορίας"].ToString();
+                        uow.Save(data);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+
+                }
+                if (uow.InTransaction)
+                {
+                    try
+                    {
+                        uow.CommitChanges();
+                    }
+                    catch (Exception exc)
+                    {
+                        uow.RollbackTransaction();
+                        Console.WriteLine("{0} Exeption In XPoHelper inTransaction Caught!!!", exc);
+                    }
+
+                }
+            }
+        }
         public static async Task<bool> CreateSEIRAPOLData()
         {
             var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
@@ -466,6 +510,7 @@ namespace SmartMobileProject.Core
                         data.IDΠωλητή = Guid.Parse((string)row["Πωλητής"]);
                         data.Counter = data.Counter < 1 ? await CreateARITHMISISEIRAData(data.ΠρόθεμαΑρίθμησης) : data.Counter;
                         data.Λιανική = bool.Parse(row["Λιανική"].ToString());
+                        data.ΣκοπόςΔιακίνησης = row["ΣκοπόςΔιακίνησης"].ToString();
                         uow.Save(data);
                     }
                     catch (Exception ex)

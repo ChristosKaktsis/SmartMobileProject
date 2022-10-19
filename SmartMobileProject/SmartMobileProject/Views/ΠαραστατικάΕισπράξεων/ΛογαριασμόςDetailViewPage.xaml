@@ -41,6 +41,7 @@
                           IsUpDownIconVisible="True"
                           MinValue="0"   
                           MaxValue="100000000000"
+                          DisplayFormat="n"                        
                           Suffix="€"
                           Value="{Binding ΓραμμέςΠΕ.Ποσόν}"/>
             <Frame Grid.Row="1"

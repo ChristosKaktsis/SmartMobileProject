@@ -24,7 +24,7 @@ namespace SmartMobileProject.ViewModels
             LineOfOrdersCollection.DeleteObjectOnRemove = true;
 
             //titlos kai arith seiras
-           SetTitle();
+            SetTitle();
             //
 
             ΝέαΓραμμή = new Command(CreateLineOfOrder);
@@ -35,24 +35,14 @@ namespace SmartMobileProject.ViewModels
             ΔιαγραφήΓραμμής = new Command(DeleteLineOfOrder);
             Ολοκλήρωση = new Command(Submission);
         }
-
-        
-
-        private async void SetTitle()
+        private void SetTitle()
         {
-            await Task.Run(()=>
+            if (ΝέοΠαραστατικόViewModel.Order.Σειρά != null)
             {
-                if (string.IsNullOrEmpty(ΝέοΠαραστατικόViewModel.Order.Παραστατικό))
-                {
-                    if (ΝέοΠαραστατικόViewModel.Order.Σειρά != null)
-                    {
-                        var p = ΝέοΠαραστατικόViewModel.Order.Σειρά.Counter += 1;
-                        ΝέοΠαραστατικόViewModel.Order.Παραστατικό = ΝέοΠαραστατικόViewModel.Order.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
-                    }
-                }
-                Title = ΝέοΠαραστατικόViewModel.Order.Παραστατικό;
-            });
-              
+                var p = ΝέοΠαραστατικόViewModel.Order.Σειρά.Counter + 1;
+                ΝέοΠαραστατικόViewModel.Order.Παραστατικό = ΝέοΠαραστατικόViewModel.Order.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
+            }
+            Title = ΝέοΠαραστατικόViewModel.Order.Παραστατικό;
         }
         private async void QuickPick(object obj)
         {
@@ -99,7 +89,6 @@ namespace SmartMobileProject.ViewModels
             }
             
         }
-
         public ICommand ΝέαΓραμμή { get; set; }
         public ICommand ΓρήγορηΕπιλογή { get; set; }
         public ICommand Scanner { set; get; }

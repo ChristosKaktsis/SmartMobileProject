@@ -72,6 +72,12 @@
                         ContentLayout="right,100"
                 Clicked="Button_Clicked_15"/>
                 <Button HorizontalOptions="FillAndExpand"
+                Text="Μεταφορικό Μέσο"
+                TextColor="#616161"     
+                BackgroundColor="White"
+                        ContentLayout="right,100"
+                Clicked="Button_Clicked_17"/>
+                <Button HorizontalOptions="FillAndExpand"
                 Text="ΤΚ"
                 TextColor="#616161"     
                 BackgroundColor="White"

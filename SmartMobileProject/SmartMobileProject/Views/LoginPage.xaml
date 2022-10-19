@@ -4,17 +4,46 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
-             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" xmlns:customview="clr-namespace:SmartMobileProject.Views.CustomView"
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup"
+             xmlns:dxcv="clr-namespace:DevExpress.XamarinForms.CollectionView;assembly=DevExpress.XamarinForms.CollectionView"
+             xmlns:customview="clr-namespace:SmartMobileProject.Views.CustomView" 
+             xmlns:models="clr-namespace:SmartMobileProject.Models"
              mc:Ignorable="d"
              x:Class="SmartMobileProject.Views.LoginPage"           
              Shell.NavBarIsVisible="False">
     <ContentPage.BindingContext>
         <vm:LoginViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="saler_template">
+                <Frame CornerRadius="5" Margin="5" Padding="15" 
+                       BorderColor="{StaticResource PrimaryLight}">
+                    <Grid x:DataType="models:Πωλητής">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding Ονοματεπώνυμο}"/>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+            <DataTemplate x:Key="selected_saler_template">
+                <Frame CornerRadius="5" Margin="5" Padding="15" 
+                       BorderColor="{StaticResource PrimaryLight}" BackgroundColor="{StaticResource PrimaryLight}">
+                    <Grid x:DataType="models:Πωλητής">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding Ονοματεπώνυμο}"/>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
             <Grid            
-                    
             Padding="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70"/>
@@ -23,7 +52,6 @@
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
-
                 </Grid.RowDefinitions>
 
                 <Label Text="Smart Mobile"
@@ -35,15 +63,54 @@
                     <Image 
                         Source="unnamed.jpg"/>
                 </Frame>
-                
-                <dxe:ComboBoxEdit Grid.Row="2"                              
+                <dxp:DXPopup x:Name="PopUp" CornerRadius="10"
+                         AllowScrim="True"
+                         IsOpen="{Binding PopUpIsOpen}">
+                    <Frame Padding="20" CornerRadius="0"
+                       WidthRequest="340" 
+                       BackgroundColor="White">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="360"/>
+                                <RowDefinition Height="60"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="{Binding SelectedSalerName}" FontSize="20" FontAttributes="Bold"/>
+                            <dxe:TextEdit x:Name="Search" 
+                                          PlaceholderText="Αναζήτηση"
+                                          TextChanged="Search_TextChanged"
+                                          ClearIconVisibility="Auto"
+                                          Grid.Row="1"/>
+                            <dxcv:DXCollectionView x:Name="SalerCollection" 
+                                                   ItemsSource="{Binding Πωλητές}"
+                                                   ItemTemplate="{StaticResource saler_template}"
+                                                   SelectedItemTemplate="{StaticResource selected_saler_template}"
+                                                   SelectedItem="{Binding Πωλητής,Mode=TwoWay}" SelectionMode="Single"
+                                                   Grid.Row="2"/>
+                            <Button Text="Κλείσιμο"
+                                    Grid.Row="3"
+                                    CornerRadius="5"
+                                    HorizontalOptions="Center"
+                                    Command="{Binding OpenPopUp}"/>
+                        </Grid>
+                    </Frame>
+                </dxp:DXPopup>
+                <Button Text="{Binding SelectedSalerName}"
+                        Grid.Row="2"
+                        CornerRadius="5"
+                        VerticalOptions="End"
+                        BackgroundColor="White" TextColor="{StaticResource TextColor}"
+                        BorderColor="LightGray" BorderWidth="1"
+                        Command="{Binding OpenPopUp}"/>
+                <!--<dxe:ComboBoxEdit Grid.Row="2"                              
                               ItemsSource="{Binding Πωλητές}"
                               DisplayMember="Ονοματεπώνυμο"
                               SelectedItem="{Binding Πωλητής}"
                               LabelText="Ονοματεπώνυμο"
                               LabelFontSize="Body"
                               IsLabelFloating="True">
-                </dxe:ComboBoxEdit>
+                </dxe:ComboBoxEdit>-->
                 <dxe:SimpleButton Grid.Row="3"
                                   VerticalOptions="End"
                               Command="{Binding  LoginCommand}"

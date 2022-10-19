@@ -50,6 +50,18 @@ namespace SmartMobileProject.ViewModels
                 SetProperty(ref περιγραφή, value);
             }
         }
+        string σκοπόςΔιακίνησης;
+        public string ΣκοπόςΔιακίνησης
+        {
+            get
+            {
+                return σκοπόςΔιακίνησης;
+            }
+            set
+            {
+                SetProperty(ref σκοπόςΔιακίνησης, value);
+            }
+        }
         private int μετρητής;
         public int Μετρητής
         {
@@ -94,6 +106,7 @@ namespace SmartMobileProject.ViewModels
                 
                 σειρές.Σειρά = Πρόθεμα;
                 σειρές.Περιγραφή = Περιγραφή;
+                σειρές.ΣκοπόςΔιακίνησης = ΣκοπόςΔιακίνησης;
                 σειρές.Counter = Μετρητής;
                 σειρές.PrintType = PrintType;
                 await uow.CommitChangesAsync();

@@ -68,6 +68,7 @@ namespace SmartMobileProject.ViewModels
             if (uow.InTransaction)
             {
                 SaveAsTask();
+                NewOrder.Σειρά.Counter++;
                 uow.CommitChanges();
                 var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να γίνει Εκτύπωση ", "Ναί", "Όχι");
                 if (answer)

@@ -183,10 +183,10 @@
                               IsLabelFloating="True">
                     </dxe:ComboBoxEdit>
                     <dxe:ComboBoxEdit Grid.Column="1"                              
-                              ItemsSource="{Binding ΤρόποςΑποστολής}"
-                              DisplayMember="Τρόποςαποστολής" 
-                              SelectedItem="{Binding Order.ΤρόποςΑποστολής}"                         
-                              LabelText="ΤρόποςΑποστολής"
+                              ItemsSource="{Binding ΜεταφορικόΜέσο}"
+                              DisplayMember="ΑριθμόςΚυκλοφορίας" 
+                              SelectedItem="{Binding Order.ΜεταφορικόΜέσο}"                         
+                              LabelText="Μεταφορικό Μέσο"
                               LabelFontSize="Body"
                               IsLabelFloating="True">
                     </dxe:ComboBoxEdit>

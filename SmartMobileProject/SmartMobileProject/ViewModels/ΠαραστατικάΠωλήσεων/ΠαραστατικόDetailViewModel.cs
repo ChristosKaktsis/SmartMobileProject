@@ -95,7 +95,7 @@ namespace SmartMobileProject.ViewModels
         //public XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; set; }
         public ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; }
         public XPCollection<ΤρόποςΠληρωμής> ΤρόποςΠληρωμής { get; set; }
-        public XPCollection<ΤρόποςΑποστολής> ΤρόποςΑποστολής { get; set; }
+        public XPCollection<ΜεταφορικόΜέσο> ΜεταφορικόΜέσο { get; set; }
         public ΠαραστατικόDetailViewModel()
         {
             uow = ΝέοΠαραστατικόViewModel.uow;
@@ -113,7 +113,7 @@ namespace SmartMobileProject.ViewModels
 
             CustomerCollection = new ObservableCollection<Πελάτης>();
             ΤρόποςΠληρωμής = new XPCollection<ΤρόποςΠληρωμής>(uow);
-            ΤρόποςΑποστολής = new XPCollection<ΤρόποςΑποστολής>(uow);
+            ΜεταφορικόΜέσο = new XPCollection<ΜεταφορικόΜέσο>(uow);
             ΓραμμεςΠΠ = new Command(GoToLines);
             Πίσω = new Command(GoBack);
             ΕπιλογήΠροηγούμενης = new Command(GoToChooseOlderOrder);

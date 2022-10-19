@@ -20,6 +20,17 @@ namespace SmartMobileProject.ViewModels
        public bool Remember { get => Preferences.Get("Remember", false); }
 
         UnitOfWork uow = ((App)Application.Current).uow;
+        private string selectedSalerName = "Επιλογή Πελάτη";
+        public string SelectedSalerName
+        {
+            get => selectedSalerName;
+            set
+            {
+                selectedSalerName = value;
+
+                PropertyChanged(this, new PropertyChangedEventArgs("SelectedSalerName"));
+            }
+        }
         public XPCollection<Πωλητής> Πωλητές { get; set; }
         private Πωλητής πωλητής;
         public Πωλητής Πωλητής
@@ -31,7 +42,21 @@ namespace SmartMobileProject.ViewModels
             set
             {
                 πωλητής = value;
+                SelectedSalerName = value == null ? "Επιλογή Πελάτη" : value.Ονοματεπώνυμο;
+                if (value == null)
+                    return;
+                PopUpIsOpen = false;
                 PropertyChanged(this, new PropertyChangedEventArgs("Πωλητής"));
+            }
+        }
+        private bool popUpIsOpen;
+        public bool PopUpIsOpen
+        {
+            get => popUpIsOpen;
+            set
+            {
+                popUpIsOpen = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("PopUpIsOpen"));
             }
         }
         private string email;
@@ -61,6 +86,7 @@ namespace SmartMobileProject.ViewModels
             LoginCommand = new Command(OnLoginClicked);
             ΝέοςΠωλητής = new Command(CreateNew);
             BackToSettingsCommand = new Command(async () => await AppShell.Current.GoToAsync($"//{nameof(PreLoginPage)}"));
+            OpenPopUp = new Command(() => PopUpIsOpen = !PopUpIsOpen);
         }
         public List<string> items { get; set; }
         private async void SetAll()
@@ -111,5 +137,7 @@ namespace SmartMobileProject.ViewModels
         public ICommand LoginCommand { protected set; get; }
         public ICommand ΝέοςΠωλητής { protected set; get; }
         public ICommand BackToSettingsCommand { get; set; }
+        public Command OpenPopUp { get; set; }
+
     }
 }
