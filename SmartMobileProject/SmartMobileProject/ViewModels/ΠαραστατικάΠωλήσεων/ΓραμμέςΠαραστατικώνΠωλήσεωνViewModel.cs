@@ -37,13 +37,21 @@ namespace SmartMobileProject.ViewModels
         }
         private void SetTitle()
         {
-            if (ΝέοΠαραστατικόViewModel.Order.Σειρά != null)
-            {
-                var p = ΝέοΠαραστατικόViewModel.Order.Σειρά.Counter + 1;
-                ΝέοΠαραστατικόViewModel.Order.Παραστατικό = ΝέοΠαραστατικόViewModel.Order.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
-            }
+            SetOrderSeiraCounter();
+            
             Title = ΝέοΠαραστατικόViewModel.Order.Παραστατικό;
         }
+
+        private void SetOrderSeiraCounter()
+        {
+
+            if (ΝέοΠαραστατικόViewModel.Order.Σειρά == null) return;
+            if (!string.IsNullOrEmpty(ΝέοΠαραστατικόViewModel.Order.Παραστατικό)) return;
+
+            var p = ΝέοΠαραστατικόViewModel.Order.Σειρά.Counter++;
+            ΝέοΠαραστατικόViewModel.Order.Παραστατικό = ΝέοΠαραστατικόViewModel.Order.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
+        }
+
         private async void QuickPick(object obj)
         {
             await Shell.Current.GoToAsync(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewPage));

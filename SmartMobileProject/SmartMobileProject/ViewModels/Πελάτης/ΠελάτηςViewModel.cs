@@ -71,7 +71,10 @@ namespace SmartMobileProject.ViewModels
         {
             try
             {
-                PhoneDialer.Open(((Πελάτης)obj).ΚεντρικήΔιευθυνση.Τηλέφωνο);
+                var customer = obj as Πελάτης;
+                if (customer?.ΚεντρικήΔιευθυνση == null) return;
+                if (string.IsNullOrWhiteSpace(customer.ΚεντρικήΔιευθυνση.Τηλέφωνο)) return;
+                PhoneDialer.Open(customer.ΚεντρικήΔιευθυνση.Τηλέφωνο);
             }
             catch (ArgumentNullException anEx)
             {

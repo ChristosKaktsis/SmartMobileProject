@@ -83,8 +83,11 @@ namespace SmartMobileProject.ViewModels
                 return;
             }
             var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να γίνει η διαγραφή ", "Ναί", "Όχι");
-            if (answer)
+            if (!answer) return;
+            try
             {
+                if (IsOrderLast(par))
+                    par.Σειρά.Counter--;
                 par.Delete();
                 if (uow.InTransaction)
                 {
@@ -92,6 +95,21 @@ namespace SmartMobileProject.ViewModels
                 }
                 Reload.Execute(null);
             }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+           
+        }
+        private bool IsOrderLast(ΠαραστατικάΕισπράξεων par)
+        {
+            string toRemove = par.Σειρά.Σειρά;
+            int i = par.Παραστατικό.IndexOf(toRemove);
+            string result = string.Empty;
+            if (i < 0) return false;
+            result = par.Παραστατικό.Remove(i, toRemove.Length);
+            var orderCounter = int.Parse(result);
+            return (par.Σειρά.Counter - 1) == orderCounter;
         }
 
         private void ReloadCommand(object obj)

@@ -559,7 +559,7 @@ namespace SmartMobileProject.Core
                         data.SmartOid = Guid.Parse((string)row["Oid"]);
                         data.Σειρά = row["Σειρά"].ToString();
                         data.Περιγραφή = row["Περιγραφή"].ToString();
-                        data.Counter = 0;
+                        data.Counter = 1;
                         uow.Save(data);
                     }
                     catch (Exception ex)

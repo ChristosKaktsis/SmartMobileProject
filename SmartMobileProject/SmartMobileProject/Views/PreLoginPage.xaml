@@ -30,7 +30,7 @@
                 </StackLayout>
                 <dxe:TextEdit Grid.Row="2"
                           LabelText="IP"
-                          Keyboard="Telephone"
+                          Keyboard="Default"
                           IsEnabled="{Binding OnlineMode}"
                           Text="{Binding IP}"/>
                 <Grid Grid.Row="3">

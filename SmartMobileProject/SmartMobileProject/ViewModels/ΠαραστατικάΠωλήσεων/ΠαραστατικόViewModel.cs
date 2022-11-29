@@ -131,8 +131,11 @@ namespace SmartMobileProject.ViewModels
                 return;
             }
             var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να γίνει η διαγραφή ", "Ναί", "Όχι");
-            if (answer)
+            if (!answer) return;
+            try
             {
+                if (IsOrderLast(order))
+                    order.Σειρά.Counter--;
                 order.Delete();
                 if (uow.InTransaction)
                 {
@@ -140,6 +143,21 @@ namespace SmartMobileProject.ViewModels
                 }
                 Reload.Execute(null);
             }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                await Shell.Current.DisplayAlert("Alert", "Κάτι πήγε στραβά", "Οκ");
+            }
+        }
+        private bool IsOrderLast(ΠαραστατικάΠωλήσεων order)
+        {
+            string toRemove = order.Σειρά.Σειρά;
+            int i = order.Παραστατικό.IndexOf(toRemove);
+            string result = string.Empty;
+            if (i < 0) return false;
+            result = order.Παραστατικό.Remove(i, toRemove.Length);
+            var orderCounter = int.Parse(result);
+            return (order.Σειρά.Counter - 1) == orderCounter;
         }
         private void ReloadCommand(object obj)
         {

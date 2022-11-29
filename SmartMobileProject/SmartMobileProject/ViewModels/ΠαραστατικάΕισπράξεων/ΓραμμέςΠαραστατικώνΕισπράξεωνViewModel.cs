@@ -19,25 +19,30 @@ namespace SmartMobileProject.ViewModels
         {
             LineOfOrdersCollection = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.ΓραμμέςΠαραστατικώνΕισπράξεων;
             LineOfOrdersCollection.DeleteObjectOnRemove = true;
-
             //titlos
-            if (string.IsNullOrEmpty(ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό))
-            {
-                if (ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Σειρά != null)
-                {
-                    var p = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Σειρά.Counter += 1;
-                    ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Σειρά.Σειρά + p.ToString().PadLeft(8, '0');
-                }
-            }
-            Title = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό;
-            //
+            //titlos kai arith seiras
+            SetTitle();
             ΝέαΓραμμήΛογαριαμός = new Command(CreateLineOfOrder);
             ΝέαΓραμμήΑξιόγραφο = new Command(CreateAxiografo);
             ΕπεξεργασίαΓραμμής = new Command(EditLineOfOrder);
             ΔιαγραφήΓραμμής = new Command(DeleteLineOfOrder);
             Αποθήκευση = new Command(Save);
         }
-
+        private void SetTitle()
+        {
+            SetOrderSeiraCounter();
+            Title = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό;
+        }
+        private void SetOrderSeiraCounter()
+        {
+            if (!string.IsNullOrEmpty(ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό)) return;
+            if (ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Σειρά == null) return;
+           
+            var p = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Σειρά.Counter++;
+            ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό = 
+                ΠαραστατικάΕισπράξεωνStaticViewModel
+                .ParastatikoEispr.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
+        }
         private async void CreateAxiografo(object obj)
         {
             ΠαραστατικάΕισπράξεωνStaticViewModel.editline = null;

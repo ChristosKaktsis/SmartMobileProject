@@ -20,7 +20,7 @@ namespace SmartMobileProject.ViewModels
        public bool Remember { get => Preferences.Get("Remember", false); }
 
         UnitOfWork uow = ((App)Application.Current).uow;
-        private string selectedSalerName = "Επιλογή Πελάτη";
+        private string selectedSalerName = "Επιλογή Πωλητή";
         public string SelectedSalerName
         {
             get => selectedSalerName;

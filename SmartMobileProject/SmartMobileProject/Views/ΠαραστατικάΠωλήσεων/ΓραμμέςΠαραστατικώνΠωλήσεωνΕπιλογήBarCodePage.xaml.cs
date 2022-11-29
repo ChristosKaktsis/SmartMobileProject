@@ -30,10 +30,7 @@ namespace SmartMobileProject.Views
         private async void ChangeFocus()
         {
             await Task.Delay(100);//delay because you have to wait for the element to render!!!
-            await Task.Run(() =>
-            {
-                Search.Focus();
-            });
+            Search.Focus();
         }
     }
 }
