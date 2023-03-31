@@ -3,7 +3,11 @@ using SmartMobileProject.Models;
 using SmartMobileProject.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -11,7 +15,7 @@ namespace SmartMobileProject.ViewModels
 {
     class ΠαραστατικάΕισπράξεωνDetailViewModel : BaseViewModel
     {
-        UnitOfWork uow;
+        UnitOfWork uow = new UnitOfWork();
         ΠαραστατικάΕισπράξεων parastatiko;
         Πελάτης customer;
         //errormessage
@@ -87,13 +91,77 @@ namespace SmartMobileProject.ViewModels
             get => selectedCustomerName;
             set => SetProperty(ref selectedCustomerName, value);
         }
-        public XPCollection<Πελάτης> CustomerCollection { get; set; }
-        public XPCollection<ΣειρέςΠαραστατικώνΕισπράξεων> ΣειρέςΠαραστατικώνΕισπράξεων { get; set; }
+        public ObservableCollection<Πελάτης> CustomerCollection 
+        { get; } = new ObservableCollection<Πελάτης>();
+        public ObservableCollection<ΣειρέςΠαραστατικώνΕισπράξεων> ΣειρέςΠαραστατικώνΕισπράξεων
+        { get; } = new ObservableCollection<ΣειρέςΠαραστατικώνΕισπράξεων>();
         public ΠαραστατικάΕισπράξεωνDetailViewModel()
         {
-            uow = ΠαραστατικάΕισπράξεωνStaticViewModel.uow;
+            DocCollectHelper.uow = uow;
+            SetDoc();
+            ΓραμμεςΠΕ = new Command(GoToLines);
+            Πίσω = new Command(GoBack);
+            OpenPopUp = new Command(() => PopUpIsOpen = !PopUpIsOpen);
+        }
+        public void OnAppearing()
+        {
+            LoadCustomers();
+            LoadSeires();
+        }
 
-            if (ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr == null)
+        private async void LoadCustomers()
+        {
+            try
+            {
+                var currentP = App.Πωλητής;
+                if (currentP == null)
+                {
+                    Debug.WriteLine("LoadCustomers Politis Is Null !!!!");
+                    return;
+                }
+                List<Πελάτης> items;
+                if (LoadAllCustomers)
+                    items = await uow.Query<Πελάτης>().ToListAsync();
+                else
+                    items = await uow.Query<Πελάτης>().Where(
+                        x => x.Πωλητής.SmartOid == currentP.SmartOid).ToListAsync();
+                CustomerCollection.Clear();
+                var sortedItems = items.OrderBy(i => i.DisplayName);
+                await Task.Run(() =>
+                {
+                    foreach (var item in sortedItems)
+                    {
+                        CustomerCollection.Add(item);
+                    }
+                });
+            }
+            catch (Exception ex) { Debug.WriteLine(ex); }
+        }
+        private async void LoadSeires()
+        {
+            try
+            {
+                var currentP = App.Πωλητής;
+                if (currentP == null)
+                {
+                    Console.WriteLine("LoadSeires Politis Is Null !!!!");
+                    return;
+                }
+                var items = uow.Query<ΣειρέςΠαραστατικώνΕισπράξεων>();
+                ΣειρέςΠαραστατικώνΕισπράξεων.Clear();
+                await Task.Run(() =>
+                {
+                    foreach (var item in items)
+                    {
+                        ΣειρέςΠαραστατικώνΕισπράξεων.Add(item);
+                    }
+                });
+            }
+            catch (Exception ex) { Debug.WriteLine(ex);}
+        }
+        private async void SetDoc()
+        {
+            if (DocCollectHelper.ParastatikoEispr == null)
             {
                 Parastatiko = new ΠαραστατικάΕισπράξεων(uow);
                 Parastatiko.Ημνία = DateTime.Now;
@@ -109,27 +177,15 @@ namespace SmartMobileProject.ViewModels
                         Customer = (Πελάτης)find;
                     }
                 }
-                Title = "Βασικά Στοιχεία";
             }
             else
             {
-                Parastatiko = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr;
+                Parastatiko = await uow.GetObjectByKeyAsync<ΠαραστατικάΕισπράξεων>(DocCollectHelper.ParastatikoEispr.Oid);
                 Customer = Parastatiko.Πελάτης;
                 Title = Parastatiko.Παραστατικό;
+                SeiraIsReadOnly = true;
             }
-            ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr = Parastatiko;
-            ΠαραστατικάΕισπράξεωνStaticViewModel.politis.Πελάτες.Reload();
-
-            if(LoadAllCustomers)
-                CustomerCollection = new XPCollection<Πελάτης>(uow);
-            else
-                CustomerCollection = ΠαραστατικάΕισπράξεωνStaticViewModel.politis.Πελάτες;
-
-            ΣειρέςΠαραστατικώνΕισπράξεων = new XPCollection<ΣειρέςΠαραστατικώνΕισπράξεων>(uow);
-
-            ΓραμμεςΠΕ = new Command(GoToLines);
-            Πίσω = new Command(GoBack);
-            OpenPopUp = new Command(() => PopUpIsOpen = !PopUpIsOpen);
+            DocCollectHelper.ParastatikoEispr = Parastatiko;
         }
         private async void GoToLines(object obj)
         {
@@ -229,6 +285,12 @@ namespace SmartMobileProject.ViewModels
             {
                 SeiraErrorMessage = string.Empty;
             }
+        }
+        private bool _SeiraIsReadOnly;
+        public bool SeiraIsReadOnly
+        {
+            get => _SeiraIsReadOnly;
+            set => SetProperty(ref _SeiraIsReadOnly, value);
         }
         //popup
         private bool popUpIsOpen;

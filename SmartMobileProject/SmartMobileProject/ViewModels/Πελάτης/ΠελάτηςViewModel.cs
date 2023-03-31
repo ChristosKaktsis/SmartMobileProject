@@ -43,7 +43,7 @@ namespace SmartMobileProject.ViewModels
             if (LoadAllCustomers)
                 CustomerCollection = new XPCollection<Πελάτης>(uow);
             else
-                CustomerCollection = app.πωλητής.Πελάτες;
+                CustomerCollection = App.Πωλητής.Πελάτες;
 
             CustomerCollection.DeleteObjectOnRemove = true;
             ReloadList(null);
@@ -141,15 +141,14 @@ namespace SmartMobileProject.ViewModels
             if (!IsTrialOn)
                 return;
             //setthe static class for new order
-            ΝέοΠαραστατικόViewModel.Order = null;
+            DocHelperViewModel.Order = null;
 
-            ΝέοΠαραστατικόViewModel.uow = new UnitOfWork();
+            DocHelperViewModel.uow = new UnitOfWork();
             //ΝέοΠαραστατικόViewModel.uow = uow;
             //set politi
-            AppShell app = (AppShell)Application.Current.MainPage;
-            var p = ΝέοΠαραστατικόViewModel.uow.Query<Πωλητής>().Where(x => x.Oid == app.πωλητής.Oid);
-            ΝέοΠαραστατικόViewModel.politis = p.FirstOrDefault();
-            ΝέοΠαραστατικόViewModel.πελατης = customer;
+            //var p = ΝέοΠαραστατικόViewModel.uow.Query<Πωλητής>().Where(x => x.Oid == App.Πωλητής.Oid);
+            //ΝέοΠαραστατικόViewModel.politis = p.FirstOrDefault();
+            DocHelperViewModel.πελατης = customer;
             await Shell.Current.GoToAsync(nameof(ΠαραστατικόΒασικάΣτοιχείαPage));
         }
         async void deleteCustomer(Object sender)
@@ -199,7 +198,7 @@ namespace SmartMobileProject.ViewModels
             Πελάτης customer = new Πελάτης(uow);
             customer.SmartOid = Guid.NewGuid();
             app.customer1 = customer;
-            app.πωλητής.Πελάτες.Add(customer);
+            App.Πωλητής.Πελάτες.Add(customer);
             callAfmInfo.setCustomerWithAfm(AFM, customer);
 
             if (callAfmInfo.error != "")

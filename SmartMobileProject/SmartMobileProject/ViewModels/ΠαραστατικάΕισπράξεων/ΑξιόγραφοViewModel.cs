@@ -90,8 +90,8 @@ namespace SmartMobileProject.ViewModels
         }
         public ΑξιόγραφοViewModel()
         {
-            uow = ΠαραστατικάΕισπράξεωνStaticViewModel.uow;
-            if (ΠαραστατικάΕισπράξεωνStaticViewModel.editline == null)
+            uow = DocCollectHelper.uow;
+            if (DocCollectHelper.editline == null)
             {
                 ΓραμμέςΠΕ = new ΓραμμέςΠαραστατικώνΕισπράξεων(uow);
                 Αξιόγραφο = new Αξιόγραφα(uow);
@@ -104,8 +104,8 @@ namespace SmartMobileProject.ViewModels
             }
             else
             {
-                ΓραμμέςΠΕ = ΠαραστατικάΕισπράξεωνStaticViewModel.editline;
-                Αξιόγραφο = ΠαραστατικάΕισπράξεωνStaticViewModel.editline.Αξιόγραφα;
+                ΓραμμέςΠΕ = DocCollectHelper.editline;
+                Αξιόγραφο = DocCollectHelper.editline.Αξιόγραφα;
                 
             }
            
@@ -125,7 +125,7 @@ namespace SmartMobileProject.ViewModels
                 
                 ΓραμμέςΠΕ.Ποσόν = Αξιόγραφο.Αξία;
                 
-                ΓραμμέςΠΕ.ΠαραστατικάΕισπράξεων = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr;
+                ΓραμμέςΠΕ.ΠαραστατικάΕισπράξεων = DocCollectHelper.ParastatikoEispr;
             }
 
             // This will pop the current page off the navigation stack

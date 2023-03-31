@@ -19,6 +19,14 @@ namespace SmartMobileProject.ViewModels
             get { return isBusy; }
             set { SetProperty(ref isBusy, value); }
         }
+        private bool _IsRefreshing;
+
+        public bool IsRefreshing
+        {
+            get { return _IsRefreshing; }
+            set { SetProperty(ref _IsRefreshing, value); }
+        }
+
 
         string title = string.Empty;
         public string Title

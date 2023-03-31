@@ -8,7 +8,7 @@
              xmlns:local1="clr-namespace:SmartMobileProject.Views" xmlns:models="clr-namespace:SmartMobileProject.Models"
              x:Class="SmartMobileProject.Views.ΠαραστατικόΕισπράξεωνΒασικάΣτοιχείαPage"
              Shell.FlyoutBehavior="Disabled"
-             Title="{Binding Title}">
+             Title="Βασικά Στοιχεία">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding Πίσω}"/>
@@ -60,10 +60,10 @@
             Padding="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10"/>
-                    <RowDefinition Height="20*"/>
-                    <RowDefinition Height="20*"/>
-                    <RowDefinition Height="20*"/>
-                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -89,6 +89,7 @@
                               IsFilterEnabled="True"
                               FilterMode="StartsWith"
                               IsLabelFloating="True"
+                              IsReadOnly="{Binding SeiraIsReadOnly}"
                               IsFocused ="{Binding SeiraIsFocused}"
                               ErrorText="{Binding SeiraErrorMessage}"
                               HasError="{Binding SeiraErrorMessage, Converter={StaticResource stringToBoolConverter}}">

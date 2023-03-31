@@ -31,7 +31,7 @@ namespace SmartMobileProject.ViewModels
         }
         private List<Appointment> getAppointments()
         {
-            var a = uow.Query<Appointment>().Where(x => x.Caption == ((AppShell)Application.Current.MainPage).πωλητής.Ονοματεπώνυμο);
+            var a = uow.Query<Appointment>().Where(x => x.Caption == App.Πωλητής.Ονοματεπώνυμο);
             return a.ToList();
         }
         private void Appointments_CollectionChanged(object sender, XPCollectionChangedEventArgs e)
@@ -65,7 +65,7 @@ namespace SmartMobileProject.ViewModels
         public void Save(Object obj)
         {
             var app = (Appointment)obj;
-            app.Caption = ((AppShell)Application.Current.MainPage).πωλητής.Ονοματεπώνυμο;
+            app.Caption = App.Πωλητής.Ονοματεπώνυμο;
             uow.Save((Appointment)obj);
             Commit(null);
             

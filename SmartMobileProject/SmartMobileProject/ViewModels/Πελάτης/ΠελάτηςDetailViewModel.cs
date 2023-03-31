@@ -195,7 +195,7 @@ namespace SmartMobileProject.ViewModels
                 appShell.customer1.SmartOid = Guid.NewGuid();
                 appShell.customer1.ΗμνίαΔημ = DateTime.Now;
                 customer = appShell.customer1;
-                appShell.πωλητής.Πελάτες.Add(customer);
+                App.Πωλητής.Πελάτες.Add(customer);
             }            
             //set the DOY Collection
             DOYCollection = new XPCollection<ΔΟΥ>(app.uow);
@@ -275,14 +275,13 @@ namespace SmartMobileProject.ViewModels
                 if (!IsTrialOn)
                     return;
                 //setthe static class for new order
-                ΝέοΠαραστατικόViewModel.Order = null;
+                DocHelperViewModel.Order = null;
 
-                ΝέοΠαραστατικόViewModel.uow = new UnitOfWork();
+                DocHelperViewModel.uow = new UnitOfWork();
                 //set politi
-                AppShell app = (AppShell)Application.Current.MainPage;
-                var p = ΝέοΠαραστατικόViewModel.uow.Query<Πωλητής>().Where(x => x.Oid == app.πωλητής.Oid);
-                ΝέοΠαραστατικόViewModel.politis = p.FirstOrDefault();
-                ΝέοΠαραστατικόViewModel.πελατης = customer;
+                //var p = ΝέοΠαραστατικόViewModel.uow.Query<Πωλητής>().Where(x => x.Oid == App.Πωλητής.Oid);
+                //ΝέοΠαραστατικόViewModel.politis = p.FirstOrDefault();
+                DocHelperViewModel.πελατης = customer;
                 await Shell.Current.GoToAsync(nameof(ΠαραστατικόΒασικάΣτοιχείαPage));
             }
            

@@ -146,7 +146,25 @@
                         </StackLayout>
                     </Frame>
                 </StackLayout>
-                
+                <StackLayout>
+                    <Frame x:Name="ImageSelectionBtn" IsVisible="false" Padding="0" CornerRadius="25" Scale="0">
+                        <StackLayout Orientation="Horizontal">
+                            <Grid>
+                                <StackLayout Orientation="Horizontal">
+                                    <Frame Padding="0" WidthRequest="40" HeightRequest="20" BackgroundColor="{StaticResource ComplementaryLight}" >
+                                        <Image Source="BO_Product_Group" 
+                                        Margin="10"
+                                        />
+                                    </Frame>
+                                    <StackLayout VerticalOptions="Center" Margin="10">
+                                        <Label Text="Επιλογή" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <Button BackgroundColor="White" Opacity="0.3" Command="{Binding ImageSelection}"/>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
                 <Frame 
                     HasShadow="True"
                     WidthRequest="70"

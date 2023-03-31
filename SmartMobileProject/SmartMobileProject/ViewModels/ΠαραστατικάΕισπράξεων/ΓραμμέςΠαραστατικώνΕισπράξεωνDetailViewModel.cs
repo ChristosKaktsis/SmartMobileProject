@@ -50,15 +50,15 @@ namespace SmartMobileProject.ViewModels
         }
         public ΓραμμέςΠαραστατικώνΕισπράξεωνDetailViewModel()
         {
-            uow = ΠαραστατικάΕισπράξεωνStaticViewModel.uow;
-            if (ΠαραστατικάΕισπράξεωνStaticViewModel.editline == null)
+            uow = DocCollectHelper.uow;
+            if (DocCollectHelper.editline == null)
             {
                 ΓραμμέςΠΕ = new ΓραμμέςΠαραστατικώνΕισπράξεων(uow);
                 ΓραμμέςΠΕ.SmartOid = Guid.NewGuid();
             }
             else
             {
-                ΓραμμέςΠΕ = ΠαραστατικάΕισπράξεωνStaticViewModel.editline;
+                ΓραμμέςΠΕ = DocCollectHelper.editline;
             }
             
             Λογαριασμοί = new XPCollection<ΛογαριασμοίΧρηματικώνΔιαθέσιμων>(uow);
@@ -73,7 +73,7 @@ namespace SmartMobileProject.ViewModels
             }
             if (uow.InTransaction)
             {            
-                ΓραμμέςΠΕ.ΠαραστατικάΕισπράξεων = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr;
+                ΓραμμέςΠΕ.ΠαραστατικάΕισπράξεων = DocCollectHelper.ParastatikoEispr;
             }
 
             // This will pop the current page off the navigation stack

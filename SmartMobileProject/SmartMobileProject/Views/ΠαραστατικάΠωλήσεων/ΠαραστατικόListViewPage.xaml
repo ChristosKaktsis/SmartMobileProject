@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartMobileProject.Views.ΠαραστατικόListViewPage" 
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"           
-             xmlns:dxg="clr-namespace:DevExpress.XamarinForms.DataGrid;assembly=DevExpress.XamarinForms.Grid"
+             xmlns:dxcv="clr-namespace:DevExpress.XamarinForms.CollectionView;assembly=DevExpress.XamarinForms.CollectionView"
+             xmlns:models="clr-namespace:SmartMobileProject.Models" 
+             xmlns:editors="clr-namespace:DevExpress.XamarinForms.Editors;assembly=DevExpress.XamarinForms.Editors"
              Title="{Binding Title}">
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
@@ -19,9 +21,80 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Νέο" Command="{Binding ΔημιουργίαΠαραστατικού}" IconImageSource="add_white_36"/>
     </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="doc_template">
+                <dxcv:SwipeContainer>
+                    <dxcv:SwipeContainer.ItemView>
+                        <StackLayout>
+                            <Grid x:DataType="models:ΠαραστατικάΠωλήσεων" Margin="10,0,0,0">
+                                <Label Grid.Row="0" Grid.Column="0" 
+                                       Text="{Binding Ημνία ,StringFormat='{0:d/M/y}'}"/>
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding Παραστατικό}"/>
+                                <Label Grid.Row="1" Grid.ColumnSpan="2" 
+                                       Text="{Binding Πελάτης.Επωνυμία}"/>
+                                <Label Grid.Row="2" Grid.Column="0" 
+                                       Text="{Binding ΚαθαρήΑξία,StringFormat='ΚαθαρήΑξία: {0:n1} €'}"/>
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       Text="{Binding ΑξίαΠαραστατικού,StringFormat='Αξία Παρ: {0:n1} €'}"/>
+                            </Grid>
+                            <BoxView Style="{StaticResource Separator}"/>
+                        </StackLayout>
+                    </dxcv:SwipeContainer.ItemView>
 
+                    <dxcv:SwipeContainer.StartSwipeItems>
+                        <dxcv:SwipeItem Invoked="DeleteSwipeItem_Invoked"
+                                        Caption="delete"
+                                        BackgroundColor="{StaticResource Tradic}"
+                                        Image="delete_white_18.png"/>
+                    </dxcv:SwipeContainer.StartSwipeItems>
+
+                    <dxcv:SwipeContainer.EndSwipeItems>
+                        <dxcv:SwipeItem Invoked="EmailSwipeItem_Invoked"
+                               Caption="Email" 
+                               BackgroundColor="{StaticResource Primary}"
+                               Image="Print_16x16.png"/>
+                        <dxcv:SwipeItem Invoked="PrintSwipeItem_Invoked"
+                               Caption="Print" 
+                               BackgroundColor="{StaticResource PrimaryLight}"
+                               Image="Print_16x16.png"/>
+                        <dxcv:SwipeItem Invoked="EditSwipeItem_Invoked"
+                               Caption="edit" 
+                               BackgroundColor="{StaticResource Analogous}"
+                               Image="edit_white_18.png"/>
+                    </dxcv:SwipeContainer.EndSwipeItems>
+                </dxcv:SwipeContainer>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <dxg:DataGridView x:Name="grid" 
+        <Grid>
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               VerticalOptions="Start"/>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <editors:TextEdit 
+                        HorizontalOptions="FillAndExpand"
+                              Margin="10"
+                              HeightRequest="40"
+                              BackgroundColor="LightGray"
+                              PlaceholderText="Search"
+                              Text="{Binding Search_Text}"
+                              StartIcon="outline_search_black_24.png"/>
+                    <ImageButton x:Name="filter_btn" 
+                         Padding="10"
+                         BackgroundColor="White"
+                         Source="filter.png"/>
+                </StackLayout>
+                <dxcv:DXCollectionView ItemsSource="{Binding OrderCollection}"
+                               ItemTemplate="{StaticResource doc_template}"
+                                   IsLoadMoreEnabled="True"
+                                   LoadMoreCommand="{Binding LoadMoreDocs}"
+                                   IsRefreshing="{Binding IsRefreshing,Mode=TwoWay}"/>
+            </StackLayout>
+        </Grid>
+        <!--<dxg:DataGridView x:Name="grid" 
                           ItemsSource="{Binding OrderCollection}" 
                           DoubleTap="grid_DoubleTap"
                           IsColumnHeaderVisible="False">
@@ -60,7 +133,7 @@
                 <dxg:NumberColumn FieldName="ΚαθαρήΑξία" DisplayFormat="ΚαθαρήΑξία: {0:n1} €" Row="2"/>
                 <dxg:NumberColumn FieldName="ΑξίαΠαραστατικού" DisplayFormat="Αξία Παρ: {0:n1} €" Row="2"/>
             </dxg:DataGridView.Columns>
-        </dxg:DataGridView>
+        </dxg:DataGridView>-->
     </ContentPage.Content>
 
 </ContentPage>

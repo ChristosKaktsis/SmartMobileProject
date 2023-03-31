@@ -32,5 +32,11 @@ namespace SmartMobileProject.Views
             await Task.Delay(100);//delay because you have to wait for the element to render!!!
             Search.Focus();
         }
+
+        private void Search_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (!_viewModel.OneOne) return;
+            ChangeFocus();
+        }
     }
 }

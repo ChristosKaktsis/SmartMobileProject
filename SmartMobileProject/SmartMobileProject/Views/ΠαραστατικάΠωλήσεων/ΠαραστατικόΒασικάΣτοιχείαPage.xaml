@@ -88,6 +88,7 @@
                               IsFilterEnabled="True"
                               FilterMode="StartsWith"
                               IsLabelFloating="True"
+                              IsReadOnly="{Binding SeiraIsReadOnly}"
                               IsFocused ="{Binding SeiraIsFocused}"
                               ErrorText="{Binding SeiraErrorMessage}"
                               HasError="{Binding SeiraErrorMessage, Converter={StaticResource stringToBoolConverter}}">

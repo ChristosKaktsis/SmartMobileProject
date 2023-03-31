@@ -14,12 +14,12 @@ namespace SmartMobileProject.ViewModels
     public class ΕπιλογήΠροηγΠαρΠωλViewModel
     {
         UnitOfWork uow;
-        public XPCollection<ΠαραστατικάΠωλήσεων> OrderCollection { get; }
+        //public XPCollection<ΠαραστατικάΠωλήσεων> OrderCollection { get; }
         public ObservableCollection<ΠαραστατικάΠωλήσεων> PrevSaleOrders { get; set; }
         public ΕπιλογήΠροηγΠαρΠωλViewModel()
         {
-            OrderCollection = ΝέοΠαραστατικόViewModel.politis.Παραστατικόπωλήσεων;
-            uow = ΝέοΠαραστατικόViewModel.uow;
+            //OrderCollection = ΝέοΠαραστατικόViewModel.politis.Παραστατικόπωλήσεων;
+            uow = DocHelperViewModel.uow;
             PrevSaleOrders = new ObservableCollection<ΠαραστατικάΠωλήσεων>();        
         }
         public async void OnAppearing()
@@ -31,8 +31,8 @@ namespace SmartMobileProject.ViewModels
             try
             {
                 var items = await uow.Query<ΠαραστατικάΠωλήσεων>().Where(
-                    x => x.Σειρά.Σειρά == ΝέοΠαραστατικόViewModel.Order.Σειρά.Σειρά
-                    && x.Πελάτης.Oid == ΝέοΠαραστατικόViewModel.Order.Πελάτης.Oid).OrderByDescending(
+                    x => x.Σειρά.Σειρά == DocHelperViewModel.Order.Σειρά.Σειρά
+                    && x.Πελάτης.Oid == DocHelperViewModel.Order.Πελάτης.Oid).OrderByDescending(
                     d => d.ΗμνίαΔημ).ToListAsync();
                 foreach (var item in items)
                     PrevSaleOrders.Add(item);
@@ -61,7 +61,7 @@ namespace SmartMobileProject.ViewModels
                     newLine.Σχολια = item.Σχολια;
                     newLine.Τιμή = item.Τιμή;
                     newLine.Φπα = item.Φπα;
-                    newLine.ΠαραστατικάΠωλήσεων = ΝέοΠαραστατικόViewModel.Order;
+                    newLine.ΠαραστατικάΠωλήσεων = DocHelperViewModel.Order;
                 }
             }
             await Shell.Current.GoToAsync(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνListViewPage));

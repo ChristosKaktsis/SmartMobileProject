@@ -18,7 +18,7 @@ namespace SmartMobileProject.ViewModels
 
         public ScannerViewModel()
         {
-            uow = ΝέοΠαραστατικόViewModel.uow;         
+            uow = DocHelperViewModel.uow;         
             EidosCollection = new XPCollection<Είδος>(uow);
         }
 
@@ -45,7 +45,7 @@ namespace SmartMobileProject.ViewModels
             {
                 return;
             }
-            ΝέοΠαραστατικόViewModel.editline = lineOfOrders;
+            DocHelperViewModel.editline = lineOfOrders;
             await Shell.Current.GoToAsync("..");
             await Shell.Current.GoToAsync(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνDetailViewPage));
         }

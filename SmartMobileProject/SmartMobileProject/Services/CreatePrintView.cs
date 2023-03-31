@@ -946,7 +946,7 @@ namespace SmartMobileProject.Services
         //            var printService = DependencyService.Get<IPrintService>();
         //            printService.Print(browser);
         //        }
-        public  async void CreatePrint3(ΠαραστατικάΕισπράξεων order)
+        public  async Task CreatePrint3(ΠαραστατικάΕισπράξεων order)
         {
             στοιχείαΕταιρίας = await XpoHelper.GetSTOIXEIAETAIRIASData();
             if (στοιχείαΕταιρίας == null)

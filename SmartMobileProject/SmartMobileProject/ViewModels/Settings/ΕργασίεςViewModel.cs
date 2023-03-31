@@ -61,7 +61,7 @@ namespace SmartMobileProject.ViewModels
         private void SetPolitis()
         {
             AppShell app = (AppShell)Application.Current.MainPage;
-            var p = uow.Query<Πωλητής>().Where(x => x.Oid == app.πωλητής.Oid);
+            var p = uow.Query<Πωλητής>().Where(x => x.Oid == App.Πωλητής.Oid);
             πωλητής = p.FirstOrDefault();
         }
         private void Save(object obj)

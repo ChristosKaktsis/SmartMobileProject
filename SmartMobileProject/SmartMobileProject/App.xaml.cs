@@ -1,5 +1,4 @@
-﻿using SmartMobileProject.Services;
-using System;
+﻿using System;
 using System.Diagnostics;
 using Xamarin.Forms;
 using DevExpress.Xpo.DB;
@@ -8,6 +7,7 @@ using SmartMobileProject.Core;
 using DevExpress.Xpo;
 using System.Reflection;
 using Xamarin.Essentials;
+using SmartMobileProject.Models;
 
 
 namespace SmartMobileProject
@@ -16,6 +16,7 @@ namespace SmartMobileProject
     {
 
         public UnitOfWork uow;
+        public static Πωλητής Πωλητής { get; set; }
         public App()
         {
             DevExpress.XamarinForms.DataGrid.Initializer.Init();
@@ -63,7 +64,9 @@ namespace SmartMobileProject
             }
             else
             {
-                await AppShell.Current.GoToAsync("///LoginPage");       
+                await AppShell.Current.GoToAsync("///LoginPage");
+                //await AppShell.Current.GoToAsync("///ImageProductsPage");
+
             }
             //await ActivationCheck.CheckActivationCode();           
             TrialCheck.Check();

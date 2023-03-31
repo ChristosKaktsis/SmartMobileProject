@@ -5,6 +5,7 @@ using SmartMobileProject.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,7 @@ namespace SmartMobileProject.ViewModels
 {
     class ΠαραστατικόDetailViewModel : BaseViewModel
     {
-        //UnitOfWork uow = new UnitOfWork();
-        UnitOfWork uow ;
+        UnitOfWork uow = new UnitOfWork();
         ΠαραστατικάΠωλήσεων order;
         Πελάτης customer;
         //errormessage
@@ -25,54 +25,28 @@ namespace SmartMobileProject.ViewModels
         public  bool hasError = false;
         public bool HasError
         {
-            get { return hasError; }
-            set
-            {
-                SetProperty(ref hasError, value);
-            }
+            get => hasError;  
+            set=> SetProperty(ref hasError, value);
         }
         public string PelatisErrorMessage
         {
-            get
-            {
-                return pelatiserrormessage;
-            }
-            set
-            {
-                SetProperty(ref pelatiserrormessage, value);
-            }
+            get => pelatiserrormessage;
+            set => SetProperty(ref pelatiserrormessage, value);
         }
         public string SeiraErrorMessage
         {
-            get
-            {
-                return seiraerrormessage;
-            }
-            set
-            {
-                SetProperty(ref seiraerrormessage, value);
-            }
+            get => seiraerrormessage; 
+            set => SetProperty(ref seiraerrormessage, value);
         }
         //
         public ΠαραστατικάΠωλήσεων Order
         {
-            get
-            {
-                return order;
-            }
-            set
-            {
-                order = value;
-                SetProperty(ref order, value);
-                OnPropertyChanged("Order");
-            }
+            get => order;
+            set=> SetProperty(ref order, value);
         }
         public Πελάτης Customer
         {
-            get
-            {
-                return customer;
-            }
+            get=> customer;
             set
             {
                 SetProperty(ref customer, value);
@@ -91,27 +65,19 @@ namespace SmartMobileProject.ViewModels
             get => selectedCustomerName;
             set => SetProperty(ref selectedCustomerName, value);
         }
-        public ObservableCollection<Πελάτης> CustomerCollection { get; set; }
+        public ObservableCollection<Πελάτης> CustomerCollection 
+        { get; set; } = new ObservableCollection<Πελάτης>();
         //public XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; set; }
-        public ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων { get; }
+        public ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων> ΣειρέςΠαραστατικώνΠωλήσεων 
+        { get; } = new ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων>();
         public XPCollection<ΤρόποςΠληρωμής> ΤρόποςΠληρωμής { get; set; }
         public XPCollection<ΜεταφορικόΜέσο> ΜεταφορικόΜέσο { get; set; }
         public ΠαραστατικόDetailViewModel()
         {
-            uow = ΝέοΠαραστατικόViewModel.uow;
+            DocHelperViewModel.uow = uow;
             SetOrder();
-            ΝέοΠαραστατικόViewModel.Order = Order;
-            ΝέοΠαραστατικόViewModel.politis.Πελάτες.Reload();//
-
-            //if(LoadAllCustomers)
-            //    CustomerCollection = new XPCollection<Πελάτης>(uow);
-            //else
-            //    CustomerCollection = ΝέοΠαραστατικόViewModel.politis.Πελάτες;
-
-            //ΣειρέςΠαραστατικώνΠωλήσεων = new XPCollection<ΣειρέςΠαραστατικώνΠωλήσεων>(uow);
-            ΣειρέςΠαραστατικώνΠωλήσεων = new ObservableCollection<ΣειρέςΠαραστατικώνΠωλήσεων>();
-
-            CustomerCollection = new ObservableCollection<Πελάτης>();
+            DocHelperViewModel.Order = Order;
+            //ΝέοΠαραστατικόViewModel.politis.Πελάτες.Reload();//
             ΤρόποςΠληρωμής = new XPCollection<ΤρόποςΠληρωμής>(uow);
             ΜεταφορικόΜέσο = new XPCollection<ΜεταφορικόΜέσο>(uow);
             ΓραμμεςΠΠ = new Command(GoToLines);
@@ -129,10 +95,10 @@ namespace SmartMobileProject.ViewModels
         {
             try
             {
-                var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+                var currentP = App.Πωλητής;
                 if (currentP == null)
                 {
-                    Console.WriteLine("LoadSeires Politis Is Null !!!!");
+                    Debug.WriteLine("LoadSeires Politis Is Null !!!!");
                     return;
                 }
                 //if(LoadAllCustomers)
@@ -165,7 +131,7 @@ namespace SmartMobileProject.ViewModels
         {
             try
             {
-                var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+                var currentP = App.Πωλητής;
                 if (currentP == null)
                 {
                     Console.WriteLine("LoadSeires Politis Is Null !!!!");
@@ -186,26 +152,31 @@ namespace SmartMobileProject.ViewModels
                 Console.WriteLine(ex);
             }
         }
-        private void SetOrder()
+        private async void SetOrder()
         {
-            if (ΝέοΠαραστατικόViewModel.Order == null)
+            try
             {
-                Order = new ΠαραστατικάΠωλήσεων(uow);
-                Order.Ημνία = DateTime.Now;
-                Order.SmartOid = Guid.NewGuid();
-                Order.ΗμνίαΔημ = DateTime.Now;
-                //Selected Πελατης με Oid 
-                SetCustomer();
-                SetCustomerFromNewCustomer(ΝέοΠαραστατικόViewModel.πελατης);
-                Title = "Βασικά Στοιχεία";
+                if (DocHelperViewModel.Order == null)
+                {
+                    Order = new ΠαραστατικάΠωλήσεων(uow);
+                    Order.Ημνία = DateTime.Now;
+                    Order.SmartOid = Guid.NewGuid();
+                    Order.ΗμνίαΔημ = DateTime.Now;
+                    //Selected Πελατης με Oid 
+                    SetCustomer();
+                    SetCustomerFromNewCustomer(DocHelperViewModel.πελατης);
+                    Title = "Βασικά Στοιχεία";
+                }
+                else
+                {
+                    //Order = ΝέοΠαραστατικόViewModel.Order;
+                    Order = await uow.GetObjectByKeyAsync<ΠαραστατικάΠωλήσεων>(DocHelperViewModel.Order.Oid);
+                    Customer = Order.Πελάτης;//uow in transaction γιατι βαζουμε στοιχεια στο Order 
+                    Title = Order.Παραστατικό;
+                    SeiraIsReadOnly = true;
+                }
             }
-            else
-            {
-                Order = ΝέοΠαραστατικόViewModel.Order;
-                Customer = Order.Πελάτης;//uow in transaction γιατι βαζουμε στοιχεια στο Order 
-                Title = Order.Παραστατικό;
-            }
-
+            catch(Exception ex) { Debug.WriteLine(ex); }
         }
         private void SetCustomerFromNewCustomer(Πελάτης πελατης)
         {
@@ -333,20 +304,22 @@ namespace SmartMobileProject.ViewModels
                 SeiraErrorMessage = string.Empty;
             }
         }
+        private bool _SeiraIsReadOnly;
+        public bool SeiraIsReadOnly
+        {
+            get => _SeiraIsReadOnly;
+            set => SetProperty(ref _SeiraIsReadOnly, value);
+        }
         //popup
         private bool popUpIsOpen;
         public bool PopUpIsOpen
         {
             get => popUpIsOpen;
-            set
-            {
-                SetProperty(ref popUpIsOpen, value);
-            }
+            set=> SetProperty(ref popUpIsOpen, value);
         }
         public Command ΕπιλογήΠροηγούμενης { get; set; }
         public Command OpenPopUp { get; set; }
         public ICommand ΓραμμεςΠΠ { get; set; }
-
         public ICommand Πίσω { get; set; }
     }
 }

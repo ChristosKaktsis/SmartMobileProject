@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpo;
+using Newtonsoft.Json;
 using System;
 
 namespace SmartMobileProject.Models
@@ -24,6 +25,7 @@ namespace SmartMobileProject.Models
         }
 
         [Indexed(Unique = true)]
+        [JsonProperty("Oid")]
         public Guid SmartOid
         {
             get { return smartOid; }

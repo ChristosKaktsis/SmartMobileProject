@@ -17,7 +17,6 @@ namespace SmartMobileProject.ViewModels
 
         private async void Continue(object obj)
         {
-            
             if (Preferences.Get("Remember", false))
             {
                await Shell.Current.Navigation.PopAsync();             
@@ -31,6 +30,7 @@ namespace SmartMobileProject.ViewModels
                 await XpoHelper.CreateSTOIXEIAETAIRIASData();
             }               
             AllLoading = false;
+           
             await AppShell.Current.GoToAsync("///LoginPage");
         }
  

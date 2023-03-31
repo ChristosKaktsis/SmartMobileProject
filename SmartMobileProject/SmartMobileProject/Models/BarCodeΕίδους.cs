@@ -49,9 +49,9 @@ namespace SmartMobileProject.Models
         {
             get
             {
-                if (ViewModels.ΝέοΠαραστατικόViewModel.Order == null)
+                if (ViewModels.DocHelperViewModel.Order == null)
                     return ΤιμήΧονδρικής;
-                if (ViewModels.ΝέοΠαραστατικόViewModel.Order.Σειρά.Λιανική)
+                if (ViewModels.DocHelperViewModel.Order.Σειρά.Λιανική)
                     return ΤιμήΛιανικής;
                 return ΤιμήΧονδρικής;
             }

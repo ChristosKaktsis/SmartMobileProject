@@ -40,7 +40,7 @@ namespace SmartMobileProject.ViewModels
         {
             try
             {
-                var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+                var currentP = App.Πωλητής;
                 if (currentP == null)
                 {
                     Console.WriteLine("LoadSeires Politis Is Null !!!!");

@@ -46,7 +46,7 @@ namespace SmartMobileProject.ViewModels
         {
             if (value == null)
                 return 0;
-            var currentparastatiko = ΝέοΠαραστατικόViewModel.Order;
+            var currentparastatiko = DocHelperViewModel.Order;
             if (currentparastatiko == null)
                 return 0;
             if (currentparastatiko.Σειρά == null)
@@ -124,7 +124,7 @@ namespace SmartMobileProject.ViewModels
         /// <returns></returns>
         private double CalculateClearValue(double τιμή, float ποσοστόΦπα)
         {
-            var currentparastatiko = ΝέοΠαραστατικόViewModel.Order;
+            var currentparastatiko = DocHelperViewModel.Order;
             if (currentparastatiko == null)
                 return 0;
             if (currentparastatiko.Σειρά == null)
@@ -151,16 +151,16 @@ namespace SmartMobileProject.ViewModels
 
         public ΓραμμέςΠαραστατικώνΠωλήσεωνDetailViewModel()
         {
-            Title ="Γραμμή "+ ΝέοΠαραστατικόViewModel.Order.Παραστατικό;
-            uow = ΝέοΠαραστατικόViewModel.uow;
-            if (ΝέοΠαραστατικόViewModel.editline == null)
+            Title ="Γραμμή "+ DocHelperViewModel.Order.Παραστατικό;
+            uow = DocHelperViewModel.uow;
+            if (DocHelperViewModel.editline == null)
             {
                 LineOfOrders = new ΓραμμέςΠαραστατικώνΠωλήσεων(uow);
                 LineOfOrders.SmartOid = Guid.NewGuid();
             }
             else
             {
-                LineOfOrders = ΝέοΠαραστατικόViewModel.editline;
+                LineOfOrders = DocHelperViewModel.editline;
                 ΕίναιBarCode = LineOfOrders.BarCodeΕίδους != null;
                 Eidos = LineOfOrders.Είδος;
                 Ποσότητα = LineOfOrders.Ποσότητα;
@@ -179,7 +179,7 @@ namespace SmartMobileProject.ViewModels
             if (uow.InTransaction)
             {
                 // app.uow.CommitChanges();
-                LineOfOrders.ΠαραστατικάΠωλήσεων = ΝέοΠαραστατικόViewModel.Order;
+                LineOfOrders.ΠαραστατικάΠωλήσεων = DocHelperViewModel.Order;
                 //Address.Customer = appShell.customer1;
             }
         

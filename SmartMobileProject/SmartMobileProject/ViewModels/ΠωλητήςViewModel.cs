@@ -26,7 +26,7 @@ namespace SmartMobileProject.ViewModels
         }
         public ΠωλητήςViewModel()
         {
-            Πωλητής = ((AppShell)Application.Current.MainPage).πωλητής;
+            Πωλητής = App.Πωλητής;
             Preferences.Set("Πωλητής", Πωλητής.Oid.ToString());
             
             Αποθήκευση = new Command(Save);

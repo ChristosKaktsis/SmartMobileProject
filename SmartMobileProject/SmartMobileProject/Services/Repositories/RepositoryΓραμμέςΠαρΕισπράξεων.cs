@@ -22,7 +22,7 @@ namespace SmartMobileProject.Services.Repositories
                     var allItemsList = await Task.Run(() =>
                     {
                         return uow.Query<ΓραμμέςΠαραστατικώνΕισπράξεων>().Where(
-                        x => x.ΠαραστατικάΕισπράξεων.Πωλητής.SmartOid == app.πωλητής.SmartOid &&
+                        x => x.ΠαραστατικάΕισπράξεων.Πωλητής.SmartOid == App.Πωλητής.SmartOid &&
                         x.IsUploaded == false).ToList<ΓραμμέςΠαραστατικώνΕισπράξεων>();
                     });
                     if (allItemsList.Any())

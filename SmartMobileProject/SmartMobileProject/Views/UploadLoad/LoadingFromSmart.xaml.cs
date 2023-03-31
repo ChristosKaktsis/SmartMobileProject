@@ -139,6 +139,28 @@ namespace SmartMobileProject.Views
                     doneBarCode.ScaleTo(1, 300)
                     );
         }
+        //private async void Image_Clicked(object sender, EventArgs e)
+        //{
+        //    doneImage.Scale = 0;
+        //    base.OnBindingContextChanged();
+        //    if (!(BindingContext is LoadFromSmartModel model))
+        //        return;
+        //    Shell.SetBackButtonBehavior(this, new BackButtonBehavior
+        //    {
+        //        IsEnabled = false
+        //    });
+        //    var error = await model.LoadImages();
+        //    if (!error)
+        //        doneImage.Source = ImageSource.FromFile("error.png");
+        //    Shell.SetBackButtonBehavior(this, new BackButtonBehavior
+        //    {
+        //        IsEnabled = true
+        //    });
+        //    if (!model.AllLoading)
+        //        await Task.WhenAll(
+        //            doneImage.ScaleTo(1, 300)
+        //            );
+        //}
         //private async Task OpenPopUp(bool ok)
         //{
         //    //

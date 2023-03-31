@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:editors="clr-namespace:DevExpress.XamarinForms.Editors;assembly=DevExpress.XamarinForms.Editors" 
+             xmlns:dxcv="clr-namespace:DevExpress.XamarinForms.CollectionView;assembly=DevExpress.XamarinForms.CollectionView"
+             xmlns:vmtemplate="clr-namespace:SmartMobileProject.ViewModels.ΠΠViewModels.TemplatesViewModel" 
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:dxp="http://schemas.devexpress.com/xamarin/2014/forms/popup"
+             x:Class="SmartMobileProject.Views.ImageProductsPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ImageButton">
+                <Setter Property="WidthRequest" Value="30"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryLight}"/>
+            </Style>
+            <DataTemplate x:Key="product_template">
+                <Grid x:DataType="vmtemplate:ImageItemViewModel">
+                    <Frame Padding="10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="130"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame Padding="0">
+                                <Image x:Name="product_image"
+                                       Source="{Binding Product.ImageSource}"/>
+                            </Frame>
+                            <StackLayout Grid.Column="1">
+                                <Label Text="{Binding Product.Περιγραφή}"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Product.Κωδικός}"/>
+                                    <Label Text="{Binding Product.getTimh,StringFormat='{0}€'}"
+                                       Grid.Column="1" HorizontalOptions="End"/>
+                                    <Grid Grid.Row="1" Grid.ColumnSpan="2"
+                                          HorizontalOptions="End" HeightRequest="30">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ImageButton Source="minus.png"
+                                                     Grid.Column="0"
+                                                     Command="{Binding RemoveQuantCommand}"/>
+                                        <editors:NumericEdit Value="{Binding Ποσότητα}"
+                                                     Grid.Column="1"/>
+                                        <ImageButton Source="add_white_20.png" 
+                                                    Padding="0"
+                                                    Grid.Column="2"
+                                                    Command="{Binding AddQuantCommand}"/>
+                                    </Grid>
+                                </Grid>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Προσθήκη" Command="{Binding SaveCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <editors:TextEdit x:Name="search_edit"
+                              Margin="10"
+                              HeightRequest="40"
+                              BackgroundColor="LightGray"
+                              PlaceholderText="Search"
+                              Text="{Binding Search_Text}"
+                              StartIcon="outline_search_black_24.png"/>
+            <ImageButton x:Name="filter_btn" 
+                         Grid.Column="1"
+                         Padding="10"
+                         BackgroundColor="White"
+                         Source="filter.png"
+                         Clicked="filter_btn_Clicked"/>
+            <RefreshView IsRefreshing="{Binding IsBusy}"
+                         Grid.Row="1" Grid.ColumnSpan="2">
+                <dxcv:DXCollectionView x:Name="products_collection"
+                                       ItemsSource="{Binding ProductCollection}"
+                                       ItemTemplate="{StaticResource product_template}"
+                                       LoadMoreCommand="{Binding LoadMoreCommand}"
+                                       IsLoadMoreEnabled="True"
+                                       IsRefreshing="{Binding IsBusy,Mode=TwoWay}"/>
+            </RefreshView>
+            <dxp:DXPopup x:Name="filter_popup"
+                         VerticalAlignment="Top" HorizontalAlignment="Right"
+                         Margin="20" CornerRadius="20"
+                         AllowScrim="True">
+                <Frame>
+                    <StackLayout WidthRequest="400" Spacing="0">
+                        <Label Text="Φίλτρα"
+                               HorizontalTextAlignment="Center"/>
+                        <BoxView Style="{StaticResource Separator}"/>
+                        <editors:ComboBoxEdit LabelText="Οικογένεια"
+                                              DisplayMember="Περιγραφή"
+                                              ItemsSource="{Binding FamilyCollection}"
+                                              SelectedItem="{Binding SelectedFamily}"
+                                              ClearIconVisibility="Auto"/>
+                        <BoxView Style="{StaticResource Separator}"/>
+                        <Button Text="Close"
+                                Style="{StaticResource Reverced_Button}"
+                                Clicked="filter_btn_Clicked"/>
+                    </StackLayout>
+
+                </Frame>
+            </dxp:DXPopup>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

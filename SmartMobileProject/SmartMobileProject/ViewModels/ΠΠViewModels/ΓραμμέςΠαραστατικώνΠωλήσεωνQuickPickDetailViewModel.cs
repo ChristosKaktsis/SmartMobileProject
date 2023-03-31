@@ -38,7 +38,6 @@ namespace SmartMobileProject.ViewModels
             {
 
                 SetProperty(ref lineOfOrders, value);
-                OnPropertyChanged("LineOfOrders");
             }
         }
         Είδος eidos;
@@ -57,7 +56,6 @@ namespace SmartMobileProject.ViewModels
                 LineOfOrders.ΠοσοστόΦπα =value.ΦΠΑ!=null ? (value.ΦΠΑ.Φπακανονικό / 100) : 0;
                 LineOfOrders.Ποσότητα = value.Ποσότητα;
                 LineOfOrders.Εκπτωση = 0;
-                OnPropertyChanged("Eidos");
                 ChangeValue();
             }
         }
@@ -70,7 +68,7 @@ namespace SmartMobileProject.ViewModels
         {
             if (value == null)
                 return 0;
-            var currentparastatiko = ΝέοΠαραστατικόViewModel.Order;
+            var currentparastatiko = DocHelperViewModel.Order;
             if (currentparastatiko == null)
                 return 0;
             if (currentparastatiko.Σειρά == null)
@@ -93,7 +91,7 @@ namespace SmartMobileProject.ViewModels
         /// <returns></returns>
         private double CalculateClearValue(double τιμή, float ποσοστόΦπα)
         {
-            var currentparastatiko = ΝέοΠαραστατικόViewModel.Order;
+            var currentparastatiko = DocHelperViewModel.Order;
             if (currentparastatiko == null)
                 return 0;
             if (currentparastatiko.Σειρά == null)
@@ -104,7 +102,7 @@ namespace SmartMobileProject.ViewModels
         }
         public ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewModel()
         {
-            uow = ΝέοΠαραστατικόViewModel.uow;
+            uow = DocHelperViewModel.uow;
             OikogeneiaCollection = new XPCollection<ΟικογένειαΕίδους>(uow).OrderBy(x => x.Περιγραφή).ToList();
             EidosCollection = new XPCollection<Είδος>(uow);
             SelectedEidosCollection = new List<Είδος>();
@@ -122,7 +120,7 @@ namespace SmartMobileProject.ViewModels
                 if (uow.InTransaction)
                 {
                     // app.uow.CommitChanges();
-                    LineOfOrders.ΠαραστατικάΠωλήσεων = ΝέοΠαραστατικόViewModel.Order;
+                    LineOfOrders.ΠαραστατικάΠωλήσεων = DocHelperViewModel.Order;
                     //Address.Customer = appShell.customer1;
                 }
             }

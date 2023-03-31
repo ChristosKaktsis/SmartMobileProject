@@ -16,6 +16,7 @@ using System.Threading;
 using Xamarin.Essentials;
 using System.Net.NetworkInformation;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SmartMobileProject.Core
 {
@@ -49,7 +50,8 @@ namespace SmartMobileProject.Core
         }
         public static async Task<bool> CreateTableData()
         {
-            
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             await Task.WhenAll(
                  CreateDOYData(),
                  CreateFPAData(),
@@ -80,6 +82,9 @@ namespace SmartMobileProject.Core
             await CreateIDIOTITAData();
             await CreateEPILOGESIDIOTITASData();
             await CreateLOGXRHMDIATHData();
+             watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine(elapsedMs.ToString());
             return ok.All(x => x) && okP;
         }
         public static UnitOfWork CreateUnitOfWork()
@@ -100,9 +105,9 @@ namespace SmartMobileProject.Core
                 //        "Οδός, Αριθμός, Email,  FAX, Κείμενο5 from Πωλητής where ");
                 DataTable dtPolitis = await GetData("getPolites");
                 if (dtPolitis.Rows.Count == 0)
-                { 
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Πωλητής", "OK"); 
-                    return false; 
+                {
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Πωλητής", "OK");
+                    return false;
                 }
                 foreach (DataRow row in dtPolitis.Rows)
                 {
@@ -119,7 +124,7 @@ namespace SmartMobileProject.Core
                     }
                     Πωλητής politis = new Πωλητής(uow);
                     politis.SmartOid = Guid.Parse((string)row["Oid"]);
-                    politis.Ονοματεπώνυμο = row["Ονοματεπώνυμο"] == DBNull.Value ?"" : row["Ονοματεπώνυμο"].ToString();
+                    politis.Ονοματεπώνυμο = row["Ονοματεπώνυμο"] == DBNull.Value ? "" : row["Ονοματεπώνυμο"].ToString();
                     politis.KίνΤηλέφωνο = row["KίνΤηλέφωνο"] == DBNull.Value ? "" : row["KίνΤηλέφωνο"].ToString();
                     politis.Οδός = row["Οδός"] == DBNull.Value ? "" : row["Οδός"].ToString();
                     politis.Αριθμός = row["Αριθμός"] == DBNull.Value ? "" : row["Αριθμός"].ToString();
@@ -136,6 +141,27 @@ namespace SmartMobileProject.Core
                 return true;
             }
         }
+        //public static async Task<bool> CreatePolitisData()
+        //{
+        //    using (var uow = CreateUnitOfWork())
+        //    {
+        //        var serializerOptions = new JsonSerializerSettings
+        //        {
+        //            Converters = { new JsonConverters.SellerHelper(uow) }
+        //        };
+        //        string JSONString = await GetJSONFromhttpResponse("getPolites");
+        //        var items = JsonConvert.DeserializeObject<IEnumerable<Πωλητής>>(JSONString, serializerOptions);
+
+        //        foreach (var item in items)
+        //        {
+        //            if (uow.Query<Πωλητής>().Where(x => x.SmartOid == item.SmartOid).Any())
+        //                continue;
+        //            await uow.SaveAsync(item);
+        //        }
+
+        //        return true;
+        //    }
+        //}
         public static async Task<bool> CreateDOYData()
         {
             using (var uow = CreateUnitOfWork())
@@ -464,7 +490,7 @@ namespace SmartMobileProject.Core
         }
         public static async Task<bool> CreateSEIRAPOLData()
         {
-            var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+            var currentP = App.Πωλητής;
             if(currentP == null)
             {
                 Console.WriteLine("Create SeiraPol Politis Is Null !!!!");
@@ -559,7 +585,9 @@ namespace SmartMobileProject.Core
                         data.SmartOid = Guid.Parse((string)row["Oid"]);
                         data.Σειρά = row["Σειρά"].ToString();
                         data.Περιγραφή = row["Περιγραφή"].ToString();
-                        data.Counter = 1;
+                        //data.ΠρόθεμαΑρίθμησης = Guid.Parse((string)row["ΠρόθεμαΑρίθμησης"]);
+                        //data.Counter = data.Counter < 1 ? await CreateARITHMISISEIRAData(data.ΠρόθεμαΑρίθμησης) : data.Counter;
+                        data.Counter = 0;
                         uow.Save(data);
                     }
                     catch (Exception ex)
@@ -962,7 +990,7 @@ namespace SmartMobileProject.Core
                     {
                         Console.WriteLine(ex);
                     }
-                   
+
                 }
 
                 if (uow.InTransaction)
@@ -984,6 +1012,39 @@ namespace SmartMobileProject.Core
             }
             return true;
         }
+        //public static async Task<bool> CreateEIDOSData()
+        //{
+        //    using (UnitOfWork uow = CreateUnitOfWork())
+        //    {
+        //        var serializerOptions = new JsonSerializerSettings
+        //        {
+        //            Converters = { new JsonConverters.ProductHelper(uow) }
+        //        };
+        //        string JSONString = await GetJSONFromhttpResponse("getEidos");
+        //        var items = JsonConvert.DeserializeObject<IEnumerable<Είδος>>(JSONString, serializerOptions);
+
+        //        if (!items.Any())
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Alert", "Δεν φορτώθηκε κανένα αντικείμενο Είδος", "OK");
+        //            return false;
+        //        }
+        //        foreach (var item in items)
+        //        {
+        //            try
+        //            {
+        //                if (uow.GetObjectByKey<Είδος>(item.Oid) != null)
+        //                    continue;
+        //                await uow.SaveAsync(item);
+        //            }
+        //            catch(Exception e)
+        //            {
+        //                Debug.WriteLine(e);
+        //                return false;
+        //            }
+        //        }
+        //    }
+        //    return true;
+        //}
         public static async Task<bool> CreateBarCodeEIDOSData()
         {
             using (UnitOfWork uow = CreateUnitOfWork())
@@ -1168,7 +1229,7 @@ namespace SmartMobileProject.Core
         }
         public static async Task<bool> CreatePELATISData()
         {
-            var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+            var currentP = App.Πωλητής;
             if (currentP == null)
             {
                 Console.WriteLine("Create CreatePELATISData Politis Is Null !!!!");
@@ -2057,66 +2118,39 @@ namespace SmartMobileProject.Core
                 DeleteAllKinisisData()
                 );
         }
-        /*
-        public static async Task<DataTable> getSmartTable(string smartTable)
+        public static async Task LoadImages()
+        {
+            using (var uow = XpoHelper.CreateUnitOfWork())
+            {
+                var items = uow.Query<Είδος>();
+                foreach(var item in items)
+                {
+                    item.ImageBytes = await GetImage(item.SmartOid.ToString());
+                }
+                await uow.CommitChangesAsync();
+            }
+        }
+        public static string GetImageUri(string pid)
+        {
+            return $"{ImageUrl()}/{pid}";
+        }
+        private static async Task<byte[]> GetImage(string oid)
+        {
+            var client = GetClient("ss");
+            var result = await client.GetByteArrayAsync(GetImageUri(oid));
+            //var bytearray = Convert.FromBase64String(result);
+            return result;
+        }
+        private static HttpClient GetClient(string lol = null)
         {
             HttpClient client = new HttpClient();
-            string ip = Preferences.Get("IP", "79.129.5.42");
-            string port = Preferences.Get("Port1", "8881");
-            string uri = "http://" + ip + ":" + port + "/mobile/Values?sql= " + smartTable + "GCRecord is null ";
-            HttpResponseMessage response;
-            string content;
-            try
-            {
-                response = await client.GetAsync(uri);
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-                content = await response.Content.ReadAsStringAsync();
-                content = content.Replace("\\", "");
-                content = content.Remove(0, 1);
-                content = content.Remove(content.Length - 1, 1);
-                DataTable dt = JsonConvert.DeserializeAnonymousType(content, new { Answare = default(DataTable) }).Answare;
-                return dt;
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine("---EXEPTION IN GET SMART TABLE---" + exc);
-                return null;
-            }
-
+            return client;
         }
-        //delete this afternew way
-        public static async Task<DataTable> getSmartTable2(string smartTable)
+        private static string ImageUrl()
         {
-            HttpClient client = new HttpClient();
-            string ip = Preferences.Get("IP", "79.129.5.42");
-            string port = Preferences.Get("Port1", "8881");
-            string uri = "http://" + ip + ":" + port + "/mobile/Values?sql= " + smartTable;
-            HttpResponseMessage response;
-            string content;
-            try
-            {
-                response = await client.GetAsync(uri);
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-                content = await response.Content.ReadAsStringAsync();
-                content = content.Replace("\\", "");
-                content = content.Remove(0, 1);
-                content = content.Remove(content.Length - 1, 1);
-                DataTable dt = JsonConvert.DeserializeAnonymousType(content, new { Answare = default(DataTable) }).Answare;
-                return dt;
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine("---EXEPTION IN GET SMART TABLE---" + exc);
-                return null;
-            }
-
+            string ip = "192.168.3.20";
+            string port = "7224";
+            return $"http://{ip}:{port}/Image";
         }
-        */
     }
 }

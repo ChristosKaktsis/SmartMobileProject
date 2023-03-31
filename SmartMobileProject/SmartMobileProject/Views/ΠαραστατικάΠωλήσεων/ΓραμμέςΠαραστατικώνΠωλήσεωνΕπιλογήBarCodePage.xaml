@@ -6,11 +6,58 @@
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels"
              x:Class="SmartMobileProject.Views.ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage"
              Title="Επιλογή BarCode">
-    <ContentPage.BindingContext>
-        <vm:ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodeViewModel/>
-    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="product_template">
+                <Frame Padding="7" Margin="0" BorderColor="LightGray" HasShadow="False">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Περιγραφή}" 
+                                           Margin="0"
+                                           FontSize="16"
+                                           TextColor="#55575c"/>
+                            <Label Text="{Binding getTimh ,StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <StackLayout>
+                                <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                <Label Text="{Binding Χρώμα}"/>
+                                <Label Text="{Binding Μέγεθος}"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <Label Text=""/>
+                    </StackLayout>
+                </Frame>
+            </DataTemplate>
+            <DataTemplate x:Key="selected_template"> 
+                <Frame Padding="7" Margin="0" BackgroundColor="{StaticResource PrimaryLight}" BorderColor="{StaticResource PrimaryLight}" HasShadow="False">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Περιγραφή}" 
+                                           Margin="0"
+                                           FontSize="16"
+                                           TextColor="#55575c"/>
+                            <Label Text="{Binding getTimh, StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <StackLayout>
+                                <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                <Label Text="{Binding Χρώμα}"/>
+                                <Label Text="{Binding Μέγεθος}"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <Label Text="{Binding Ποσότητα,StringFormat='Ποσότητα :{0}'}"/>
+                    </StackLayout>
+                </Frame>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid>
+        <Grid x:DataType="vm:ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodeViewModel">
             <StackLayout>
                 <ActivityIndicator IsRunning="{Binding IsBusy}"/>
             </StackLayout>
@@ -21,6 +68,7 @@
                         <Switch IsToggled="{Binding OneOne}"/>
                     </StackLayout>
                 </Frame>
+                
                 <StackLayout>
                     <Frame Padding="10" HasShadow="False">
                         <StackLayout Orientation="Horizontal" 
@@ -28,6 +76,7 @@
                             <dxe:TextEdit x:Name="Search"
                                           Text="{Binding SearchText}"
                                           IsFocused="{Binding IsFocused}" 
+                                          Unfocused="Search_Unfocused"
                                           PlaceholderText="Search"
                                           HorizontalOptions="FillAndExpand"                         
                                           StartIcon="outline_search_black_24"
@@ -35,123 +84,52 @@
                         </StackLayout>
                     </Frame>
                 </StackLayout>
-                <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding BarCodeList}" 
-                                   SelectionMode="Single"
-                                   SelectedItem="{Binding SelectedBarCode,Mode=TwoWay}"  
-                                   HeightRequest="80">
-                    <!-- Define ItemTemplate here.-->
-                    <dxcv:DXCollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame Padding="7" Margin="0" BorderColor="LightGray" HasShadow="False">
-                                <StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Περιγραφή}" 
+                <Frame Padding="7" Margin="0" 
+                       BorderColor="{StaticResource PrimaryLight}" 
+                       HasShadow="False">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding  SelectedBarCode.Περιγραφή}" 
                                            Margin="0"
                                            FontSize="16"
                                            TextColor="#55575c"/>
-                                        <Label Text="{Binding getTimh ,StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <StackLayout>
-                                            <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
-                                        </StackLayout>
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                            <Label Text="{Binding Χρώμα}"/>
-                                            <Label Text="{Binding Μέγεθος}"/>
-                                        </StackLayout>
-                                    </StackLayout>
-                                </StackLayout>
-                            </Frame>
-                        </DataTemplate>
-                    </dxcv:DXCollectionView.ItemTemplate>
-                    <dxcv:DXCollectionView.SelectedItemTemplate>
-                        <DataTemplate>
-                            <Frame Padding="7" Margin="0" BackgroundColor="{StaticResource PrimaryLight}" BorderColor="{StaticResource PrimaryLight}" HasShadow="False">
-                                <StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Περιγραφή}" 
-                                           Margin="0"
-                                           FontSize="16"
-                                           TextColor="#55575c"/>
-                                        <Label Text="{Binding getTimh, StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <StackLayout>
-                                            <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
-                                        </StackLayout>
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                            <Label Text="{Binding Χρώμα}"/>
-                                            <Label Text="{Binding Μέγεθος}"/>
-                                        </StackLayout>
-                                    </StackLayout>
-                                    <Label Text="{Binding Ποσότητα,StringFormat='Ποσότητα :{0}'}"/>
-                                </StackLayout>
-                            </Frame>
-                        </DataTemplate>
-                    </dxcv:DXCollectionView.SelectedItemTemplate>
-                    <!--Sort items.-->
-                    <dxcv:DXCollectionView.SortDescriptions>
-                        <dxcv:SortDescription FieldName="Περιγραφή" SortOrder="Ascending"/>
-                    </dxcv:DXCollectionView.SortDescriptions>
-                </dxcv:DXCollectionView>
+                            <Label Text="{Binding SelectedBarCode.getTimh, StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <StackLayout>
+                                <Label Text="{Binding SelectedBarCode.Κωδικός}"  Padding="0, 0, 0, 0"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                <Label Text="{Binding SelectedBarCode.Χρώμα}"/>
+                                <Label Text="{Binding SelectedBarCode.Μέγεθος}"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <dxe:NumericEdit 
+                             IsUpDownIconVisible="True" 
+                             StepValue="1"
+                             Value="{Binding MainItemQuantity}"                           
+                             LabelText="Ποσότητα"
+                                        LabelFontSize="16"
+                             HorizontalOptions="End"
+                                             HeightRequest="50"/>
+                    </StackLayout>
+                </Frame>
                 <Frame>
                     <StackLayout>
-                        <Label Text="Άλλα BarCode"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Άλλα BarCode"
+                                   HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <dxe:NumericEdit 
+                             IsUpDownIconVisible="True"  StepValue="1"
+                             Value="{Binding Ποσότητα}"                           
+                             LabelText="Ποσότητα" LabelFontSize="16"
+                             HorizontalOptions="End" HeightRequest="50"/>
+                        </StackLayout>
                         <dxcv:DXCollectionView x:Name="othergrid" ItemsSource="{Binding OtherBarCodeList}" 
                                    SelectionMode="Multiple"
                                    SelectedItems="{Binding SelectedBarCodeList}"
-                                   SelectedItem="{Binding SelectedBarCode}">
-                            <!-- Define ItemTemplate here.-->
-                            <dxcv:DXCollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Frame Padding="7" Margin="0" BorderColor="LightGray" HasShadow="False">
-                                        <StackLayout>
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label Text="{Binding Περιγραφή}" 
-                                           Margin="0"
-                                           FontSize="16"
-                                           TextColor="#55575c"/>
-                                                <Label Text="{Binding getTimh ,StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
-                                            </StackLayout>
-                                            <StackLayout Orientation="Horizontal">
-                                                <StackLayout>
-                                                    <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
-                                                </StackLayout>
-                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                                    <Label Text="{Binding Χρώμα}"/>
-                                                    <Label Text="{Binding Μέγεθος}"/>
-                                                </StackLayout>
-                                            </StackLayout>
-                                            <Label Text=""/>
-                                        </StackLayout>
-                                    </Frame>
-                                </DataTemplate>
-                            </dxcv:DXCollectionView.ItemTemplate>
-                            <dxcv:DXCollectionView.SelectedItemTemplate>
-                                <DataTemplate>
-                                    <Frame Padding="7" Margin="0" BackgroundColor="{StaticResource PrimaryLight}" BorderColor="{StaticResource PrimaryLight}" HasShadow="False">
-                                        <StackLayout>
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label Text="{Binding Περιγραφή}" 
-                                           Margin="0"
-                                           FontSize="16"
-                                           TextColor="#55575c"/>
-                                                <Label Text="{Binding getTimh, StringFormat='{0:n2} €'}" HorizontalOptions="EndAndExpand" Padding="0, 0, 0, 0"/>
-                                            </StackLayout>
-                                            <StackLayout Orientation="Horizontal">
-                                                <StackLayout>
-                                                    <Label Text="{Binding Κωδικός}"  Padding="0, 0, 0, 0"/>
-                                                </StackLayout>
-                                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                                    <Label Text="{Binding Χρώμα}"/>
-                                                    <Label Text="{Binding Μέγεθος}"/>
-                                                </StackLayout>
-                                            </StackLayout>
-                                            <Label Text="{Binding Ποσότητα,StringFormat='Ποσότητα :{0}'}"/>
-                                        </StackLayout>
-                                    </Frame>
-                                </DataTemplate>
-                            </dxcv:DXCollectionView.SelectedItemTemplate>
+                                   ItemTemplate="{StaticResource product_template}"
+                                   SelectedItemTemplate="{StaticResource selected_template}">
                             <!--Sort items.-->
                             <dxcv:DXCollectionView.SortDescriptions>
                                 <dxcv:SortDescription FieldName="Περιγραφή" SortOrder="Ascending"/>
@@ -159,27 +137,8 @@
                         </dxcv:DXCollectionView>
                     </StackLayout>
                 </Frame>
+                <Button Text="Προσθήκη" TextTransform="None" Command="{Binding Προσθήκη}" />
             </StackLayout>
-            <StackLayout VerticalOptions="End" BackgroundColor="Transparent" IsVisible="true">
-                <Frame HasShadow="False" BackgroundColor="Transparent">
-                    <StackLayout Spacing="40">
-                        <dxe:NumericEdit x:Name="posotita"
-                             IsUpDownIconVisible="True" 
-                             StepValue="1"
-                             Value="{Binding Ποσότητα}"                           
-                             LabelText="Ποσότητα"
-                             BackgroundColor="white"
-                                         BorderColor="{StaticResource Primary}"
-                                         LabelColor="Black"
-                                         LabelFontSize="16"
-                             WidthRequest="150"
-                             SelectValueOnFocus="True"
-                             HorizontalOptions="End"/>
-                        <Button Text="Προσθήκη" TextTransform="None" Command="{Binding Προσθήκη}" />
-                    </StackLayout>
-                </Frame>
-            </StackLayout>
-            
         </Grid>
     </ContentPage.Content>
 </ContentPage>

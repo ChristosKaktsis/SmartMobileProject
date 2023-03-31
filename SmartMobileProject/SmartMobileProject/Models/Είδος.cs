@@ -1,5 +1,8 @@
 ﻿using DevExpress.Xpo;
+using Newtonsoft.Json;
 using System;
+using System.IO;
+using Xamarin.Forms;
 
 namespace SmartMobileProject.Models
 {
@@ -22,7 +25,7 @@ namespace SmartMobileProject.Models
             base.AfterConstruction();
             // Place here your initialization code.
         }
-
+        [JsonProperty("Oid")]
         public Guid SmartOid
         {
             get { return smartOid; }
@@ -105,12 +108,21 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(ΗμνίαΔημ), ref ημνίαδημ, value); }
         }
         DateTime ημνίαδημ;
+
         [Association, Aggregated]
         public XPCollection<BarCodeΕίδους> BarCodeΕίδους
         {
             get { return GetCollection<BarCodeΕίδους>(nameof(BarCodeΕίδους)); }
         }
         //
+        private byte[] imageBytes;
+        public byte[] ImageBytes 
+        { 
+            get => imageBytes; 
+            set => SetPropertyValue(nameof(ImageBytes), ref imageBytes, value);
+        }
+        [NonPersistent]
+        public ImageSource ImageSource { get => ImageBytes != null && ImageBytes.Length > 8 ? ImageSource.FromStream(() => new MemoryStream(ImageBytes)) : "icon_about.png"; }
         [NonPersistent]
         Single ποσότητα;
         public Single Ποσότητα
@@ -134,9 +146,9 @@ namespace SmartMobileProject.Models
         {
             get
             {
-                if (ViewModels.ΝέοΠαραστατικόViewModel.Order == null)
+                if (ViewModels.DocHelperViewModel.Order == null)
                     return ΤιμήΧονδρικής;
-                if (ViewModels.ΝέοΠαραστατικόViewModel.Order.Σειρά.Λιανική)
+                if (ViewModels.DocHelperViewModel.Order.Σειρά.Λιανική)
                     return ΤιμήΛιανικής;
                 return ΤιμήΧονδρικής;
             }

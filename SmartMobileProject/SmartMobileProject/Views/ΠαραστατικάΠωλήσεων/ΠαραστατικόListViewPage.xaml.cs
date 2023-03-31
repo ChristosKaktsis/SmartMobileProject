@@ -22,18 +22,28 @@ namespace SmartMobileProject.Views
         }
         protected override void OnAppearing()
         {
-            model.Reload.Execute(null);
             base.OnAppearing();
+            model.OnAppearing();
         }
-        private void grid_DoubleTap(object sender, DataGridGestureEventArgs e)
+
+        private void DeleteSwipeItem_Invoked(object sender, DevExpress.XamarinForms.CollectionView.SwipeItemTapEventArgs e)
         {
-            if (e.Item != null)
-            {
-                var editForm = new EditFormPage(grid, grid.GetItem(e.RowHandle));
-                editForm.ToolbarItems.Clear();
-                Navigation.PushAsync(editForm);
-            }
-              
+            model.ΔιαγραφήΠαρασατικού.Execute(e.Item);
+        }
+
+        private void EmailSwipeItem_Invoked(object sender, DevExpress.XamarinForms.CollectionView.SwipeItemTapEventArgs e)
+        {
+            model.Αποστολή_Email.Execute(e.Item);
+        }
+
+        private void PrintSwipeItem_Invoked(object sender, DevExpress.XamarinForms.CollectionView.SwipeItemTapEventArgs e)
+        {
+            model.Εκτύπωση.Execute(e.Item);
+        }
+
+        private void EditSwipeItem_Invoked(object sender, DevExpress.XamarinForms.CollectionView.SwipeItemTapEventArgs e)
+        {
+            model.ΤροποποίησηΠαρασατικού.Execute(e.Item);
         }
     }
 }

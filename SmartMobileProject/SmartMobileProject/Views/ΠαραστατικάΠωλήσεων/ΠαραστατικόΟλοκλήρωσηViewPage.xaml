@@ -2,13 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
-             xmlns:dxg="http://schemas.devexpress.com/xamarin/2014/forms/datagrid" 
              xmlns:dxcv="clr-namespace:DevExpress.XamarinForms.CollectionView;assembly=DevExpress.XamarinForms.CollectionView"
              Shell.FlyoutBehavior="Disabled"
              x:Class="SmartMobileProject.Views.ΠαραστατικόΟλοκλήρωσηViewPage"
-             Title="{Binding NewOrder.Παραστατικό}">
+             Title="{Binding Title}">
     <ContentPage.BindingContext>
-        <vm:ΝέοΠαραστατικόViewModel />
+        <vm:DocCompletionViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Ολοκλήρωση" Command="{Binding Αποθήκευση}" IconImageSource="save_white_24.png" />
@@ -23,23 +22,23 @@
             <Grid>
                 <Label Text="Παραστατικό"
                    Grid.Row="0" Grid.Column="0"/>
-                <Label Text="{Binding NewOrder.Παραστατικό}"
+                <Label Text="{Binding Title}"
                    Grid.Row="0" Grid.Column="1"/>
                 <Label Text="Ημνία"
                    Grid.Row="1" Grid.Column="0"/>
-                <Label Text="{Binding NewOrder.Ημνία}"
+                <Label Text="{Binding Order.Ημνία}"
                    Grid.Row="1" Grid.Column="1"/>
                 <Label Text="Πελάτης"
                    Grid.Row="2" Grid.Column="0"/>
-                <Label Text="{Binding NewOrder.Πελάτης.DisplayName}"
+                <Label Text="{Binding Order.Πελάτης.DisplayName}"
                    Grid.Row="2" Grid.Column="1"/>
                 <Label Text="Καθαρή Αξία"
                    Grid.Row="3" Grid.Column="0"/>
-                <Label Text="{Binding NewOrder.ΚαθαρήΑξία, StringFormat='{0:n2} €'}"
+                <Label Text="{Binding Order.ΚαθαρήΑξία, StringFormat='{0:n2} €'}"
                    Grid.Row="3" Grid.Column="1"/>
                 <Label Text="Αξία Παραστατικού"
                    Grid.Row="4" Grid.Column="0"/>
-                <Label Text="{Binding NewOrder.ΑξίαΠαραστατικού, StringFormat='{0:n2} €'}"
+                <Label Text="{Binding Order.ΑξίαΠαραστατικού, StringFormat='{0:n2} €'}"
                    Grid.Row="4" Grid.Column="1"/>
             </Grid>
             <Label Grid.Row="1" HorizontalOptions="Center"
@@ -48,7 +47,7 @@
             <Frame  Grid.Row="2"
                     CornerRadius="10"
                     BorderColor="Gray" Padding="4">
-                <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding NewOrder.ΓραμμέςΠαραστατικώνΠωλήσεων}" >
+                <dxcv:DXCollectionView x:Name="grid" ItemsSource="{Binding Order.ΓραμμέςΠαραστατικώνΠωλήσεων}" >
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame BorderColor="LightGray" Padding="0" Margin="2" CornerRadius="10" HasShadow="false">

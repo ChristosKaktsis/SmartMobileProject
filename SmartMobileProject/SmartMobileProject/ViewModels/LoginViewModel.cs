@@ -131,7 +131,7 @@ namespace SmartMobileProject.ViewModels
                 return;
             }
             Preferences.Set("Remember", true);
-            ((AppShell)Application.Current.MainPage).πωλητής = Πωλητής;
+            App.Πωλητής = Πωλητής;
             await Shell.Current.GoToAsync($"//{nameof(ΠωλητήςViewPage)}");
         }
         public ICommand LoginCommand { protected set; get; }

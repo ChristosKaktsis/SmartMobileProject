@@ -3,6 +3,7 @@ using SmartMobileProject.Models;
 using SmartMobileProject.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -12,12 +13,12 @@ namespace SmartMobileProject.ViewModels
 {
     class ΓραμμέςΠαραστατικώνΕισπράξεωνViewModel : BaseViewModel
     {
-        UnitOfWork uow = ΠαραστατικάΕισπράξεωνStaticViewModel.uow;
+        UnitOfWork uow = DocCollectHelper.uow;
 
         public XPCollection<ΓραμμέςΠαραστατικώνΕισπράξεων> LineOfOrdersCollection { get; set; }
         public ΓραμμέςΠαραστατικώνΕισπράξεωνViewModel()
         {
-            LineOfOrdersCollection = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.ΓραμμέςΠαραστατικώνΕισπράξεων;
+            LineOfOrdersCollection = DocCollectHelper.ParastatikoEispr.ΓραμμέςΠαραστατικώνΕισπράξεων;
             LineOfOrdersCollection.DeleteObjectOnRemove = true;
             //titlos
             //titlos kai arith seiras
@@ -30,34 +31,43 @@ namespace SmartMobileProject.ViewModels
         }
         private void SetTitle()
         {
-            SetOrderSeiraCounter();
-            Title = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό;
+            if (DocCollectHelper.ParastatikoEispr.Σειρά == null) return;
+            var p = getCounter();
+            Title = DocCollectHelper.ParastatikoEispr.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
+        }
+        private int getCounter()
+        {
+            if (uow.Query<ΠαραστατικάΕισπράξεων>()
+              .Where(p => p.Oid == DocCollectHelper.ParastatikoEispr.Oid).Any())
+                if (!DocCollectHelper.ParastatikoEispr.IsSeiraChanged())
+                    return DocCollectHelper.ParastatikoEispr.OrderSeiraCounter();
+            return DocCollectHelper.ParastatikoEispr.Σειρά.Counter + 1;
         }
         private void SetOrderSeiraCounter()
         {
-            if (!string.IsNullOrEmpty(ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό)) return;
-            if (ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Σειρά == null) return;
+            if (!string.IsNullOrEmpty(DocCollectHelper.ParastatikoEispr.Παραστατικό)) return;
+            if (DocCollectHelper.ParastatikoEispr.Σειρά == null) return;
            
-            var p = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Σειρά.Counter++;
-            ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό = 
-                ΠαραστατικάΕισπράξεωνStaticViewModel
+            var p = DocCollectHelper.ParastatikoEispr.Σειρά.Counter++;
+            DocCollectHelper.ParastatikoEispr.Παραστατικό = 
+                DocCollectHelper
                 .ParastatikoEispr.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
         }
         private async void CreateAxiografo(object obj)
         {
-            ΠαραστατικάΕισπράξεωνStaticViewModel.editline = null;
+            DocCollectHelper.editline = null;
             await Shell.Current.GoToAsync(nameof(ΑξιόγραφοDetailViewPage));
         }
 
         private async void CreateLineOfOrder(object obj)
         {
-            ΠαραστατικάΕισπράξεωνStaticViewModel.editline = null;
+            DocCollectHelper.editline = null;
             await Shell.Current.GoToAsync(nameof(ΛογαριασμόςDetailViewPage));
         }
         private async void EditLineOfOrder(object obj)
         {
-            ΠαραστατικάΕισπράξεωνStaticViewModel.editline = (ΓραμμέςΠαραστατικώνΕισπράξεων)obj;
-            if(ΠαραστατικάΕισπράξεωνStaticViewModel.editline.Αξιόγραφα == null)
+            DocCollectHelper.editline = (ΓραμμέςΠαραστατικώνΕισπράξεων)obj;
+            if(DocCollectHelper.editline.Αξιόγραφα == null)
             {
                 await Shell.Current.GoToAsync(nameof(ΛογαριασμόςDetailViewPage));
             }
@@ -80,25 +90,38 @@ namespace SmartMobileProject.ViewModels
         }
         private async void Save(object obj)
         {
-            if(!ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.ΓραμμέςΠαραστατικώνΕισπράξεων.Any())
+            if(!DocCollectHelper.ParastatikoEispr.ΓραμμέςΠαραστατικώνΕισπράξεων.Any())
             {
                 await Application.Current.MainPage.DisplayAlert("Δεν είναι έγκυρη", "Το παραστατικό πρέπει να έχει γραμμές", "Οκ");
                 return;
             }
-            SaveTask();
-            if (uow.InTransaction)
+            try
             {
-                ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Πίστωση = 0;
-                foreach (var i in ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.ΓραμμέςΠαραστατικώνΕισπράξεων)
-                {
-                    ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Πίστωση += i.Ποσόν;
-                }
-                ΠαραστατικάΕισπράξεωνStaticViewModel.politis.ΠαραστατικάΕισπράξεων.Add(ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr);
+                SaveTask();
+                CalculateSums();
+                SetSeller();
                 SaveAsTask();
+                UpdateCounter();
+                SetOrderTitle();
                 uow.CommitChanges();
             }
+            catch (Exception ex) { Debug.WriteLine(ex); }
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("../..");
+        }
+
+        private void SetSeller()
+        {
+            var p = uow.Query<Πωλητής>().Where(x => x.Oid == App.Πωλητής.Oid);
+            DocCollectHelper.ParastatikoEispr.Πωλητής = p.FirstOrDefault();
+        }
+        private void CalculateSums()
+        {
+            DocCollectHelper.ParastatikoEispr.Πίστωση = 0;
+            foreach (var i in DocCollectHelper.ParastatikoEispr.ΓραμμέςΠαραστατικώνΕισπράξεων)
+            {
+                DocCollectHelper.ParastatikoEispr.Πίστωση += i.Ποσόν;
+            }
         }
         private void SaveTask()
         {
@@ -108,12 +131,12 @@ namespace SmartMobileProject.ViewModels
                 if (oid != null)
                 {
                     Εργασία task = uow.GetObjectByKey<Εργασία>(int.Parse((string)oid));
-                    if (task.Πελάτης == ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Πελάτης) 
+                    if (task.Πελάτης == DocCollectHelper.ParastatikoEispr.Πελάτης) 
                     {
                         task.Ενέργειες.Add(new Ενέργεια(uow) {
                             SmartOid = Guid.NewGuid(),
                             Τύπος = "Παραστατικό Εισπράξεων  " + 
-                            ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό }); 
+                            DocCollectHelper.ParastatikoEispr.Παραστατικό }); 
                     }
                 }
             }
@@ -121,7 +144,7 @@ namespace SmartMobileProject.ViewModels
         private void SaveAsTask()
         {
             var task = uow.Query<Εργασία>().Where
-                (x => x.Χαρακτηρισμός == "Είσοδος στον πελάτη" && x.Πωλητής.Oid == ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Πωλητής.Oid && x.Κατάσταση == false);
+                (x => x.Χαρακτηρισμός == "Είσοδος στον πελάτη" && x.Πωλητής.Oid == DocCollectHelper.ParastatikoEispr.Πωλητής.Oid && x.Κατάσταση == false);
             if (task.Any())
             {
                 return;
@@ -133,10 +156,21 @@ namespace SmartMobileProject.ViewModels
             ΕργασίεςStaticViewModel.GetCurrentLocation(Εργασία);
             Εργασία.ΗμνίαΛηξης = DateTime.Now;
             Εργασία.Κατάσταση = true;
-            Εργασία.Πελάτης = ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Πελάτης;
-            ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Πωλητής.Εργασίες.Add(Εργασία);
-            Εργασία.Ενέργειες.Add(new Ενέργεια(uow) { SmartOid = Guid.NewGuid(), Τύπος = "Παραστατικό Εισπράξεων  " + ΠαραστατικάΕισπράξεωνStaticViewModel.ParastatikoEispr.Παραστατικό });
+            Εργασία.Πελάτης = DocCollectHelper.ParastatikoEispr.Πελάτης;
+            DocCollectHelper.ParastatikoEispr.Πωλητής.Εργασίες.Add(Εργασία);
+            Εργασία.Ενέργειες.Add(new Ενέργεια(uow) { SmartOid = Guid.NewGuid(), Τύπος = "Παραστατικό Εισπράξεων  " + DocCollectHelper.ParastatikoEispr.Παραστατικό });
         }
+        private void UpdateCounter()
+        {
+            var item = uow.Query<ΠαραστατικάΕισπράξεων>()
+                .Where(p => p.SmartOid == DocCollectHelper.ParastatikoEispr.SmartOid).FirstOrDefault();
+            if (item != null)
+            {
+                return;
+            }
+            DocCollectHelper.ParastatikoEispr.Σειρά.Counter++;
+        }
+        private void SetOrderTitle() => DocCollectHelper.ParastatikoEispr.Παραστατικό = Title;
         public ICommand ΝέαΓραμμήΛογαριαμός { get; set; }
         public ICommand ΝέαΓραμμήΑξιόγραφο { get; set; }
         public ICommand ΕπεξεργασίαΓραμμής { get; set; }

@@ -51,7 +51,7 @@ namespace SmartMobileProject.ViewModels
         {
             get
             {
-                return ((AppShell)Application.Current.MainPage).πωλητής;
+                return App.Πωλητής;
             }
             
         }

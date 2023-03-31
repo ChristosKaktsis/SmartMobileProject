@@ -84,7 +84,7 @@ namespace SmartMobileProject.ViewModels
         {
             if (string.IsNullOrEmpty(Πρόθεμα) || string.IsNullOrEmpty(Περιγραφή))
                 return;
-            var currentP = ((AppShell)Application.Current.MainPage).πωλητής;
+            var currentP = App.Πωλητής;
             if (currentP == null)
             {
                 Console.WriteLine("Save Seires Politis Is Null !!!!");

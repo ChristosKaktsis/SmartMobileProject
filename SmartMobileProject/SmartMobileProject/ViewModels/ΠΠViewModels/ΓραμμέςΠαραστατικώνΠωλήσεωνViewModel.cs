@@ -13,22 +13,21 @@ namespace SmartMobileProject.ViewModels
 {
     class ΓραμμέςΠαραστατικώνΠωλήσεωνViewModel : BaseViewModel
     {
-        UnitOfWork uow = ΝέοΠαραστατικόViewModel.uow;
+        UnitOfWork uow = DocHelperViewModel.uow;
        
         public XPCollection<ΓραμμέςΠαραστατικώνΠωλήσεων> LineOfOrdersCollection { get; set; }
 
         public ΓραμμέςΠαραστατικώνΠωλήσεωνViewModel()
         {
             
-            LineOfOrdersCollection = ΝέοΠαραστατικόViewModel.Order.ΓραμμέςΠαραστατικώνΠωλήσεων;
+            LineOfOrdersCollection = DocHelperViewModel.Order.ΓραμμέςΠαραστατικώνΠωλήσεων;
             LineOfOrdersCollection.DeleteObjectOnRemove = true;
-
             //titlos kai arith seiras
             SetTitle();
             //
-
             ΝέαΓραμμή = new Command(CreateLineOfOrder);
             ΓρήγορηΕπιλογή = new Command(QuickPick);
+            ImageSelection = new Command(async () => await Shell.Current.GoToAsync(nameof(ImageProductsPage)));
             Scanner = new Command(GotoScanner);
             BarCodeSelection = new Command(OnBarCodeSelectionPressed);
             ΕπεξεργασίαΓραμμής = new Command(EditLineOfOrder);
@@ -37,19 +36,20 @@ namespace SmartMobileProject.ViewModels
         }
         private void SetTitle()
         {
-            SetOrderSeiraCounter();
-            
-            Title = ΝέοΠαραστατικόViewModel.Order.Παραστατικό;
+            if (DocHelperViewModel.Order.Σειρά == null) return;
+            var p = getCounter();
+            Title = DocHelperViewModel
+                .Order.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
         }
 
-        private void SetOrderSeiraCounter()
+        private int getCounter()
         {
+            if (uow.Query<ΠαραστατικάΠωλήσεων>()
+              .Where(p => p.Oid == DocHelperViewModel.Order.Oid).Any())
+                if(!DocHelperViewModel.Order.IsSeiraChanged())
+                    return DocHelperViewModel.Order.OrderSeiraCounter();
 
-            if (ΝέοΠαραστατικόViewModel.Order.Σειρά == null) return;
-            if (!string.IsNullOrEmpty(ΝέοΠαραστατικόViewModel.Order.Παραστατικό)) return;
-
-            var p = ΝέοΠαραστατικόViewModel.Order.Σειρά.Counter++;
-            ΝέοΠαραστατικόViewModel.Order.Παραστατικό = ΝέοΠαραστατικόViewModel.Order.Σειρά.Σειρά + p.ToString().PadLeft(9, '0');
+            return DocHelperViewModel.Order.Σειρά.Counter +1;
         }
 
         private async void QuickPick(object obj)
@@ -66,12 +66,12 @@ namespace SmartMobileProject.ViewModels
         }
         private async void CreateLineOfOrder(object obj)
         {
-            ΝέοΠαραστατικόViewModel.editline = null;
+            DocHelperViewModel.editline = null;
             await Shell.Current.GoToAsync(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνDetailViewPage));
         }
         private async void EditLineOfOrder(object obj)
         {
-            ΝέοΠαραστατικόViewModel.editline = (ΓραμμέςΠαραστατικώνΠωλήσεων)obj; 
+            DocHelperViewModel.editline = (ΓραμμέςΠαραστατικώνΠωλήσεων)obj; 
             await Shell.Current.GoToAsync(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνDetailViewPage));
         }
         private async void DeleteLineOfOrder(object obj)
@@ -87,7 +87,7 @@ namespace SmartMobileProject.ViewModels
         }
         private async void Submission(object obj)
         {
-            if (ΝέοΠαραστατικόViewModel.Order.ΓραμμέςΠαραστατικώνΠωλήσεων.Any())
+            if (DocHelperViewModel.Order.ΓραμμέςΠαραστατικώνΠωλήσεων.Any())
             {
                 await Shell.Current.GoToAsync(nameof(ΠαραστατικόΟλοκλήρωσηViewPage));
             }
@@ -99,6 +99,7 @@ namespace SmartMobileProject.ViewModels
         }
         public ICommand ΝέαΓραμμή { get; set; }
         public ICommand ΓρήγορηΕπιλογή { get; set; }
+        public ICommand ImageSelection { get; set; }
         public ICommand Scanner { set; get; }
         public ICommand BarCodeSelection { set; get; }
         public ICommand ΕπεξεργασίαΓραμμής { get; set; }

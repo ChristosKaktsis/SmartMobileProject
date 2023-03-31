@@ -42,12 +42,19 @@ namespace SmartMobileProject.Models
             set { SetPropertyValue(nameof(Περιγραφή), ref περιγραφή, value); }
         }
         string περιγραφή;
+        public Guid ΠρόθεμαΑρίθμησης
+        {
+            get { return πρόθεμαΑρίθμησης; }
+            set { SetPropertyValue(nameof(ΠρόθεμαΑρίθμησης), ref πρόθεμαΑρίθμησης, value); }
+        }
+        Guid πρόθεμαΑρίθμησης;
         public int Counter
         {
             get { return counter; }
             set { SetPropertyValue(nameof(Counter), ref counter, value); }
         }
         int counter;
+
         public string ToJson()
         {
             string json = string.Empty;

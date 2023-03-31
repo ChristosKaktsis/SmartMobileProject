@@ -68,7 +68,16 @@
 
                 <Image Grid.Row="4" Grid.Column="1" x:Name="doneBarCode"
                    Source="checkmark" Scale="0"/>
+                
+                <!--<Button Grid.Row="5" Grid.Column="0"
+                        IsEnabled="{Binding OnlineMode}"
+                   HorizontalOptions="Fill"
+                   Text="Load Image"
+                   CornerRadius="10"
+                   FontSize="24" Clicked="Image_Clicked"/>
 
+                <Image Grid.Row="5" Grid.Column="1" x:Name="doneImage"
+                   Source="checkmark" Scale="0"/>-->
             </Grid>
             <!--Pop Up-->
             <StackLayout x:Name="BackGreyColor" BackgroundColor="#80000000" IsVisible="{Binding AllLoading,Mode=OneWay}" ></StackLayout>

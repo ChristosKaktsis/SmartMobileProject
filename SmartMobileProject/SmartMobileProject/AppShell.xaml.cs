@@ -1,17 +1,8 @@
-﻿using DevExpress.Xpo;
-using Newtonsoft.Json;
-using SmartMobileProject.Core;
-using SmartMobileProject.Models;
-using SmartMobileProject.ViewModels;
+﻿using SmartMobileProject.Models;
 using SmartMobileProject.Views;
 using SmartMobileProject.Views.Settings;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+
 using Xamarin.Forms;
 
 namespace SmartMobileProject
@@ -19,7 +10,6 @@ namespace SmartMobileProject
     public partial class AppShell : Xamarin.Forms.Shell
     {
         public Πελάτης customer1;
-        public Πωλητής πωλητής;
         
         public AppShell()
         {
@@ -33,6 +23,7 @@ namespace SmartMobileProject
             Routing.RegisterRoute(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνListViewPage), typeof(ΓραμμέςΠαραστατικώνΠωλήσεωνListViewPage));
             Routing.RegisterRoute(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνDetailViewPage), typeof(ΓραμμέςΠαραστατικώνΠωλήσεωνDetailViewPage));
             Routing.RegisterRoute(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewPage), typeof(ΓραμμέςΠαραστατικώνΠωλήσεωνQuickPickDetailViewPage));
+            Routing.RegisterRoute(nameof(ImageProductsPage), typeof(ImageProductsPage));
             Routing.RegisterRoute(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage), typeof(ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage));
             Routing.RegisterRoute(nameof(ScannerViewPage), typeof(ScannerViewPage));
             Routing.RegisterRoute(nameof(ΠαραστατικόΟλοκλήρωσηViewPage), typeof(ΠαραστατικόΟλοκλήρωσηViewPage));

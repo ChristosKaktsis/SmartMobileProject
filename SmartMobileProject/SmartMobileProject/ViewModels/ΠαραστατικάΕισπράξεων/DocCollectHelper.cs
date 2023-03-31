@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SmartMobileProject.ViewModels
 {
-    class ΠαραστατικάΕισπράξεωνStaticViewModel : BaseViewModel
+    class DocCollectHelper : BaseViewModel
     {
         public static UnitOfWork uow;
         public static Πωλητής politis;

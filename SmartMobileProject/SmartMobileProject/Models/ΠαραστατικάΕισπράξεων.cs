@@ -129,6 +129,24 @@ namespace SmartMobileProject.Models
                 return string.Empty;
             }
         }
+        public int OrderSeiraCounter()
+        {
+            string toRemove = Σειρά.Σειρά;
+            string compare = Σειρά.Σειρά + 0.ToString().PadLeft(9, '0');
+            int differece = Παραστατικό.Length - compare.Length;
+            var result = Παραστατικό.Remove(0, toRemove.Length + differece);
+            var orderCounter = int.Parse(result);
+            return orderCounter;
+        }
+        /// <summary>
+        /// Checks in the Παραστατικό title if the Seira is changed during edit
+        /// </summary>
+        /// <returns>returns true if seira is changed</returns>
+        public bool IsSeiraChanged()
+        {
+            string toRemove = Σειρά.Σειρά;
+            return Παραστατικό.IndexOf(toRemove) == -1;
+        }
         public string ToJson()
         {
             string LineJson = "[";

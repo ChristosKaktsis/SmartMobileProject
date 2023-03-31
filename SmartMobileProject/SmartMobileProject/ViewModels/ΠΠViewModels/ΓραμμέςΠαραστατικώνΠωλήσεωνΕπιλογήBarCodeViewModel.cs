@@ -19,22 +19,27 @@ namespace SmartMobileProject.ViewModels
         private bool _isFocused;
         private BarCodeΕίδους _selectedBarCode;
         private bool _isSelected;
-        private float _ποσότητα = 1;
-
-        public ObservableCollection<BarCodeΕίδους> BarCodeList { get; set; }
+        private float _MainQuantity = 1;
+        UnitOfWork uow = DocHelperViewModel.uow;
         public ObservableCollection<BarCodeΕίδους> OtherBarCodeList { get; set; }
         public ObservableCollection<BarCodeΕίδους> SelectedBarCodeList { get; set; }
-        public Command LoadBarCodeItemsCommand { get; set; }
         public Command Προσθήκη { get; set; }
+        public Command LoadBarCodeCommand { get; }
         public ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodeViewModel()
         {
-            LoadBarCodeItemsCommand = new Command(async () => await LoadBarCodeitems());
-            Προσθήκη = new Command(OnAddLinePressed);
-            BarCodeList = new ObservableCollection<BarCodeΕίδους>();
+            Προσθήκη = new Command(Complete);
+            //LoadBarCodeCommand = new Command(LoadOtherBarCodeItems);
             OtherBarCodeList = new ObservableCollection<BarCodeΕίδους>();
             SelectedBarCodeList = new ObservableCollection<BarCodeΕίδους>();
             SelectedBarCodeList.CollectionChanged += SelectedBarCodeList_CollectionChanged;
         }
+
+        private async void Complete()
+        {
+            AddLines();
+            await Shell.Current.GoToAsync("..");
+        }
+
         private void SelectedBarCodeList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var add_action = e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add;
@@ -50,15 +55,13 @@ namespace SmartMobileProject.ViewModels
                 return;
             item.Ποσότητα = Ποσότητα;
         }
-        private async void OnAddLinePressed()
+        private async void AddLines()
         {
             try
             {
                 AddLineOfOrders(SelectedBarCode);
                 foreach (var item in SelectedBarCodeList)
                     AddLineOfOrders(item);
-                await Shell.Current.GoToAsync("..");
-                await Shell.Current.GoToAsync(nameof(ΓραμμέςΠαραστατικώνΠωλήσεωνΕπιλογήBarCodePage));
             }
             catch(Exception e)
             {
@@ -72,8 +75,7 @@ namespace SmartMobileProject.ViewModels
         {
             if (item == null)
                 return;
-            UnitOfWork uow = ΝέοΠαραστατικόViewModel.uow;
-            var currentseira = ΝέοΠαραστατικόViewModel.Order.Σειρά;
+            var currentseira = DocHelperViewModel.Order.Σειρά;
             ΓραμμέςΠαραστατικώνΠωλήσεων νεαΓραμμή = new ΓραμμέςΠαραστατικώνΠωλήσεων(uow);
             νεαΓραμμή.SmartOid = Guid.NewGuid();
             νεαΓραμμή.Ποσότητα = item.Ποσότητα;
@@ -87,7 +89,7 @@ namespace SmartMobileProject.ViewModels
             νεαΓραμμή.Φπα = νεαΓραμμή.ΚαθαρήΑξία * (decimal)νεαΓραμμή.ΠοσοστόΦπα;
             νεαΓραμμή.ΑξίαΓραμμής = νεαΓραμμή.ΚαθαρήΑξία + νεαΓραμμή.Φπα;
             νεαΓραμμή.BarCodeΕίδους = uow.Query<BarCodeΕίδους>().Where(x => x.Κωδικός == item.Κωδικός).FirstOrDefault();
-            νεαΓραμμή.ΠαραστατικάΠωλήσεων = ΝέοΠαραστατικόViewModel.Order;
+            νεαΓραμμή.ΠαραστατικάΠωλήσεων = DocHelperViewModel.Order;
         }
         /// <summary>
         /// Υπολογισμός καθαρής αξίας χωρίς καμια εκπτωση
@@ -97,7 +99,7 @@ namespace SmartMobileProject.ViewModels
         /// <returns></returns>
         private double CalculateClearValue(double τιμή, float ποσοστόΦπα)
         {
-            var currentparastatiko = ΝέοΠαραστατικόViewModel.Order;
+            var currentparastatiko = DocHelperViewModel.Order;
             if (currentparastatiko == null)
                 return 0;
             if (currentparastatiko.Σειρά == null)
@@ -106,30 +108,24 @@ namespace SmartMobileProject.ViewModels
                 return τιμή / (1 + ποσοστόΦπα);
             return τιμή;
         }
-        private async Task LoadBarCodeitems()
+        private async void LoadBarCode()
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(SearchText))
                     return ; 
-
                 IsBusy = true;
-                //set the list
-                BarCodeList.Clear();
+              
                 SelectedBarCodeList.Clear();//if change SearchText
-                using (UnitOfWork uow = new UnitOfWork())
-                {
-                    //get the item
-                    var barcodeitem = await uow.GetObjectByKeyAsync<BarCodeΕίδους>(SearchText);
-                    if (barcodeitem != null)
-                        BarCodeList.Add(barcodeitem);
-                }
+                 //get the item
+                var barcodeitem = await uow.GetObjectByKeyAsync<BarCodeΕίδους>(SearchText);
                 //notify user if nothing came up
-                if(!BarCodeList.Any())
+                if (barcodeitem == null)
                     await Application.Current.MainPage.DisplayAlert("Search",
                      "Το BarCode Δεν βρέθηκε!", "Εντάξει");
                 //select the item
-                SelectedBarCode = BarCodeList.FirstOrDefault();
+                SelectedBarCode = barcodeitem;
+                //load other barcode 
                 LoadOtherBarCodeItems();
             }
             catch(Exception e)
@@ -142,7 +138,7 @@ namespace SmartMobileProject.ViewModels
             }
             
         }
-        private  void LoadOtherBarCodeItems()
+        private void LoadOtherBarCodeItems()
         {
             try
             {
@@ -150,15 +146,12 @@ namespace SmartMobileProject.ViewModels
                 OtherBarCodeList.Clear();
                 if (SelectedBarCode == null)
                     return;
-                
-                using (UnitOfWork uow = new UnitOfWork())
-                {
-                    //get the other bar code items from the same item
-                    var restbarcodeitems = uow.Query<BarCodeΕίδους>().Where(x => x.ΕίδοςOid == SelectedBarCode.ΕίδοςOid);
-                    foreach (var item in restbarcodeitems)
-                        if(item.Κωδικός!=SelectedBarCode.Κωδικός)
-                            OtherBarCodeList.Add(item);
-                }
+                //get the other bar code items from the same item
+                var restbarcodeitems = uow.Query<BarCodeΕίδους>()
+                    .Where(x => x.ΕίδοςOid == SelectedBarCode.ΕίδοςOid);
+                foreach (var item in restbarcodeitems)
+                    if (item.Κωδικός != SelectedBarCode.Κωδικός)
+                        OtherBarCodeList.Add(item);
             }
             catch (Exception e)
             {
@@ -180,16 +173,40 @@ namespace SmartMobileProject.ViewModels
             set 
             { 
                 SetProperty(ref _selectedBarCode, value);
-                AddQuantity(value);
-                if (OneOne)
-                    if (value != null)
-                        OnAddLinePressed();
+                if(_selectedBarCode == null) return;
+                _selectedBarCode.Ποσότητα = MainItemQuantity;
+                AddScanned();
             }
+        }
+
+        private void AddScanned()
+        {
+            if (!OneOne) return;
+            try
+            {
+                AddLineOfOrders(SelectedBarCode);
+                SearchText = string.Empty; // it will clear values 
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"{e.Message}");
+            }
+        }
+
+        private void ClearValues()
+        {
+            SelectedBarCode = null;
+            OtherBarCodeList.Clear();
         }
         public string SearchText
         {
             get { return _searchText; }
-            set { SetProperty(ref _searchText, value); }
+            set 
+            {
+                SetProperty(ref _searchText, value);
+                if (string.IsNullOrWhiteSpace(value))
+                    ClearValues();
+            }
         }
         public bool IsFocused
         {
@@ -198,7 +215,7 @@ namespace SmartMobileProject.ViewModels
             { 
                 _isFocused = value;
                 if (!value)
-                    LoadBarCodeItemsCommand.Execute(null);
+                    LoadBarCode();
             }
         }
         public bool IsItemSelected
@@ -206,14 +223,16 @@ namespace SmartMobileProject.ViewModels
             get { return _isSelected; }
             set { SetProperty(ref _isSelected, value); }
         }
-        public float Ποσότητα
+        public float MainItemQuantity 
         {
-            get { return _ποσότητα; }
+            get => _MainQuantity; 
             set 
-            { 
-                SetProperty(ref _ποσότητα, value);
-            }
+            {
+                if (SelectedBarCode == null) return;
+                SelectedBarCode.Ποσότητα = value;
+            } 
         }
+        public float Ποσότητα { get; set; } = 1;
         public bool OneOne
         {
             get => Preferences.Get(nameof(OneOne), false);

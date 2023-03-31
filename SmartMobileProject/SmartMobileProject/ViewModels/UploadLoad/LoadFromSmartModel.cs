@@ -84,6 +84,20 @@ namespace SmartMobileProject.ViewModels
 
             return barcode;
         }
+        public async Task<bool> LoadImages()
+        {
+            try
+            {
+                AllLoading = true;
+                await XpoHelper.LoadImages();
+                AllLoading = false;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return true;
+        }
 
     }
 }

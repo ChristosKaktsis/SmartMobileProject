@@ -1,9 +1,12 @@
 ﻿using DevExpress.Xpo;
 using SmartMobileProject.Models;
+using SmartMobileProject.Repositories;
 using SmartMobileProject.Services;
 using SmartMobileProject.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,30 +17,75 @@ namespace SmartMobileProject.ViewModels
 {
     class ΠαραστατικόViewModel : BaseViewModel
     {
-        UnitOfWork uow = new UnitOfWork();
-        XPCollection<ΠαραστατικάΠωλήσεων> orderCollection = null;
-        public XPCollection<ΠαραστατικάΠωλήσεων> OrderCollection
-        {
-            get { return orderCollection; }
-            set { SetProperty(ref orderCollection, value); }
-        }
+        public ObservableCollection<ΠαραστατικάΠωλήσεων> OrderCollection 
+        { get; } = new ObservableCollection<ΠαραστατικάΠωλήσεων>();
+       
         public ΠαραστατικόViewModel()
         {
             Title = "Πωλήσεις";
-
-            SetPolitis();
-            //OrderCollection = new XPCollection<ΠαραστατικάΠωλήσεων>(uow);
-            OrderCollection = ΝέοΠαραστατικόViewModel.politis.Παραστατικόπωλήσεων;
-            OrderCollection.DeleteObjectOnRemove = true;
-
-            Reload = new Command(ReloadCommand);
             ΔημιουργίαΠαραστατικού = new Command(CreateOrder);
             ΤροποποίησηΠαρασατικού = new Command(EditOrder);
             Εκτύπωση = new Command(Print);
             ΔιαγραφήΠαρασατικού = new Command(DeleteOrder);
             Αποστολή_Email = new Command<ΠαραστατικάΠωλήσεων>(SendEmailClicked);
+            LoadMoreDocs = new Command(LoadMore);
         }
-
+        public void OnAppearing()
+        {
+            //SetPolitis();
+            LoadDocs();
+        }
+        //private void SetPolitis()
+        //{
+        //    AppShell app = (AppShell)Application.Current.MainPage;
+        //    var p = uow.Query<Πωλητής>().Where(x => x.Oid == app.πωλητής.Oid);
+        //    ΝέοΠαραστατικόViewModel.politis = p.FirstOrDefault();
+        //}
+        private async void LoadDocs()
+        {
+            IsBusy = true;
+            try
+            {
+                using(UnitOfWork uow = new UnitOfWork())
+                {
+                    OrderCollection.Clear();
+                    var items = await uow.Query<ΠαραστατικάΠωλήσεων>()
+                        .Where(d => d.Πωλητής.SmartOid == App.Πωλητής.SmartOid)
+                        .Where(d => d.Πελάτης.Επωνυμία.Contains(Search_Text) || d.Πελάτης.ΑΦΜ.Contains(Search_Text))
+                        .OrderByDescending(p => p.ΗμνίαΔημ)
+                        .Skip(OrderCollection.Count).Take(13)
+                        .ToListAsync();
+                    items.ForEach(item => OrderCollection.Add(item));
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally { IsBusy = false; }
+        }
+        private async void LoadMore()
+        {
+            if (IsBusy) return;
+            try
+            {
+                using(UnitOfWork uow = new UnitOfWork())
+                {
+                    var items = await uow.Query<ΠαραστατικάΠωλήσεων>()
+                    .Where(d => d.Πωλητής.SmartOid == App.Πωλητής.SmartOid)
+                    .Where(d => d.Πελάτης.Επωνυμία.Contains(Search_Text) || d.Πελάτης.ΑΦΜ.Contains(Search_Text))
+                    .OrderByDescending(p => p.ΗμνίαΔημ)
+                    .Skip(OrderCollection.Count).Take(13)
+                    .ToListAsync();
+                    items.ForEach(item => OrderCollection.Add(item));
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally { IsRefreshing = false; }
+        }
         private async void SendEmailClicked(ΠαραστατικάΠωλήσεων obj)
         {
             if (obj == null)
@@ -71,20 +119,13 @@ namespace SmartMobileProject.ViewModels
                 Console.WriteLine(ex);
             }
         }
-        private void SetPolitis()
-        {
-            AppShell app = (AppShell)Application.Current.MainPage;
-            var p = uow.Query<Πωλητής>().Where(x => x.Oid == app.πωλητής.Oid);
-            ΝέοΠαραστατικόViewModel.politis = p.FirstOrDefault();
-        }
-
         private async void CreateOrder(object obj)
         {
             if (!IsTrialOn)
                 return;
-            ΝέοΠαραστατικόViewModel.Order = null;
-            ΝέοΠαραστατικόViewModel.uow = uow;
-            ΝέοΠαραστατικόViewModel.πελατης = null;
+            DocHelperViewModel.Order = null;
+            //ΝέοΠαραστατικόViewModel.uow = uow;
+            DocHelperViewModel.πελατης = null;
 
             await Shell.Current.GoToAsync(nameof(ΠαραστατικόΒασικάΣτοιχείαPage));
         }
@@ -100,25 +141,24 @@ namespace SmartMobileProject.ViewModels
                     "OK");
                 return;
             }
-            ΝέοΠαραστατικόViewModel.uow = uow;
-            ΝέοΠαραστατικόViewModel.Order = editItem;
+            //ΝέοΠαραστατικόViewModel.uow = uow;
+            DocHelperViewModel.Order = editItem;
             await Shell.Current.GoToAsync(nameof(ΠαραστατικόΒασικάΣτοιχείαPage));
         }
         public async void Print(object obj)
         {
             CreatePrintView createPrintView = new CreatePrintView();
-            var seira = uow.Query<ΣειρέςΠαραστατικώνΠωλήσεων>().Where(x => x.SmartOid == ((ΠαραστατικάΠωλήσεων)obj).Σειρά.SmartOid);
-            if (seira.FirstOrDefault().PrintType=="80 mm")
+            try
             {
-                string print = await createPrintView.Page1((ΠαραστατικάΠωλήσεων)obj);
-                createPrintView.CreatePrint(print);
+                var item = obj as ΠαραστατικάΠωλήσεων;
+                using (UnitOfWork uow = new UnitOfWork())
+                {
+                    var order = await uow.GetObjectByKeyAsync<ΠαραστατικάΠωλήσεων>(item.Oid);
+                    string print = await createPrintView.page2(order);
+                    createPrintView.CreatePrint(print);
+                }
             }
-            else
-            {
-                string print = await createPrintView.page2((ΠαραστατικάΠωλήσεων)obj);
-                createPrintView.CreatePrint(print);
-            }
-           
+            catch(Exception ex) { Debug.WriteLine(ex); }
         }
         private async void DeleteOrder(object sender)
         {
@@ -130,46 +170,38 @@ namespace SmartMobileProject.ViewModels
                     "OK");
                 return;
             }
-            var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να γίνει η διαγραφή ", "Ναί", "Όχι");
+            var answer = await Application.Current.MainPage
+                .DisplayAlert("Ερώτηση?", "Θέλετε να γίνει η διαγραφή ", "Ναί", "Όχι");
             if (!answer) return;
             try
             {
-                if (IsOrderLast(order))
-                    order.Σειρά.Counter--;
-                order.Delete();
-                if (uow.InTransaction)
-                {
-                    uow.CommitChanges();
-                }
-                Reload.Execute(null);
+                SalesDocRepository repository = new SalesDocRepository();
+                var result = await repository.DeleteItemAsync(order.SmartOid.ToString());
+                if(result) OrderCollection.Remove(order);
+                Debug.WriteLine($"Deleted:{result}");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine(e);
                 await Shell.Current.DisplayAlert("Alert", "Κάτι πήγε στραβά", "Οκ");
             }
         }
-        private bool IsOrderLast(ΠαραστατικάΠωλήσεων order)
+        private string _Search_Text = string.Empty;
+        public string Search_Text
         {
-            string toRemove = order.Σειρά.Σειρά;
-            int i = order.Παραστατικό.IndexOf(toRemove);
-            string result = string.Empty;
-            if (i < 0) return false;
-            result = order.Παραστατικό.Remove(i, toRemove.Length);
-            var orderCounter = int.Parse(result);
-            return (order.Σειρά.Counter - 1) == orderCounter;
-        }
-        private void ReloadCommand(object obj)
-        {
-            OrderCollection.Reload();
-            uow.ReloadChangedObjects();
+            get { return _Search_Text; }
+            set
+            {
+                _Search_Text = value;
+                LoadDocs();
+            }
         }
         public ICommand OpenWebCommand { get; }
-        public ICommand Reload { get; set; }
         public ICommand ΔημιουργίαΠαραστατικού { get; set; }
         public ICommand ΤροποποίησηΠαρασατικού { get; set; }
         public ICommand Εκτύπωση { set; get; }
         public ICommand ΔιαγραφήΠαρασατικού { get; set; }
         public Command<ΠαραστατικάΠωλήσεων> Αποστολή_Email { get; set; }
+        public Command LoadMoreDocs { get; }
     }
 }
