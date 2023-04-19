@@ -77,15 +77,11 @@ namespace SmartMobileProject.ViewModels
         }
         private async void CreateOrder(object obj)
         {
-            if (!IsTrialOn)
-                return;
             DocCollectHelper.ParastatikoEispr = null;
            await Shell.Current.GoToAsync(nameof(ΠαραστατικόΕισπράξεωνΒασικάΣτοιχείαPage));
         }
         private async void EditOrder(object obj)
         {
-            if (!IsTrialOn)
-                return;
             var editItem = (ΠαραστατικάΕισπράξεων)obj;
             if (editItem.IsUploaded)
             {

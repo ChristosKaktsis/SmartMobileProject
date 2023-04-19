@@ -1,11 +1,14 @@
 ﻿using DevExpress.Xpo;
+using SmartMobileProject.Constants;
 using SmartMobileProject.Core;
 using SmartMobileProject.Models;
+using SmartMobileProject.Services;
 using SmartMobileProject.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,6 +91,7 @@ namespace SmartMobileProject.ViewModels
             BackToSettingsCommand = new Command(async () => await AppShell.Current.GoToAsync($"//{nameof(PreLoginPage)}"));
             OpenPopUp = new Command(() => PopUpIsOpen = !PopUpIsOpen);
         }
+        
         public List<string> items { get; set; }
         private async void SetAll()
         {    

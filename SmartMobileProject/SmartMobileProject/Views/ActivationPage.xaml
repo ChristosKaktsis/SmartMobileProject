@@ -1,77 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" xmlns:customview="clr-namespace:SmartMobileProject.Views.CustomView" xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
+             xmlns:vm="clr-namespace:SmartMobileProject.ViewModels" 
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"
              x:Class="SmartMobileProject.Views.ActivationPage" 
              Shell.NavBarHasShadow="False"
              Title="Ενεργοποίηση προϊόντος">
-    <ContentPage.BindingContext>
-        <vm:ActivationViewModel/>
-    </ContentPage.BindingContext>
-    <ContentPage.Content>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame">
+                <Setter Property="HasShadow" Value="False"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid x:DataType="vm:ActivationViewModel">
         <Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="160"/>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="130"/>
-                    <RowDefinition Height="160"/>
-                </Grid.RowDefinitions>
-                <Image Grid.Row="0"
-                       VerticalOptions="Center"
-                       Source="{Binding LicenseImage}"/>
-                <Label Grid.Row="1"
-                       VerticalOptions="End"
-                       HorizontalOptions="Center"
-                       Text="{Binding LicenseText}"
-                       FontSize="30"
-                       TextColor="{Binding LicenseColor}"/>
-                <Button Grid.Row="2"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Center"
-                            Margin="30"
-                            CornerRadius="10"
-                            Text="Επιλέξτε Προϊόν"
-                        TextColor="DarkGray"
-                        BackgroundColor="WhiteSmoke"
-                        Clicked="Button_Clicked"/>
-                <Button Grid.Row="3"
-                            VerticalOptions="End"
-                            Margin="30"
-                            CornerRadius="30"
-                            Text="Activate Product"
-                        Clicked="Activate_Button_Clicked"
-                        />
-            </Grid>
-            <customview:TrialPopUp x:Name="PopUp" IsVisible="false"/>
-            <!-- Activation Code PopUp-->
-            <StackLayout x:Name="BackGreyColor" BackgroundColor="#80000000" IsVisible="false"></StackLayout>
-            <Frame x:Name="ActivationCodeEntry"
-                   Margin="20"
-                   CornerRadius="10"
-                   VerticalOptions="Center" IsVisible="false">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="60"/>
-                        <RowDefinition Height="40"/>
-                    </Grid.RowDefinitions>
-                    <Label Text="Activate Product"
-                           FontSize="20"
-                           HorizontalOptions="Center"/>
-                    <dxe:TextEdit 
-                          Grid.Row="1"
-                          LabelText="Activation Code"
-                          LabelFontSize="Body"
-                          IsLabelFloating="True"
-                          Text="{Binding ActivationCode}"/>
-                    <Button Grid.Row="2"
-                            CornerRadius="20"
-                            Text="Activate"
-                            Clicked="Code_Button_Clicked"/>
-                </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
+            <Frame>
+                <Label Text="{Binding Device_Number}" FontSize="100"/>
             </Frame>
-            
+            <StackLayout Grid.Row="1" Margin="10" VerticalOptions="End">
+                <Label Text="Η συσκευή θα πρέπει να έχει αριθμό σειράς για να ενεργοποιηθεί."/>
+                <Label Text="Μπορείτε να κάνετε εγγραφή την συσκευή σας πατώντας το κουμπί εγγραφή."/>
+                <Label Text="Μπορείτε να κάνετε διαγραφή του αριθμου σειράς απο το σύστημα πατώντας το κουμπί διαγραφή."/>
+                <Label Text="Δεν μπορείτε να ξεπεράσετε τον αριθμό εγγραφών απο το πλήθος αδειών χρήσης που έχετε."/>
+                <Label Text="Δεν μπορούν να υπάρχουν συσκευές με τον ίδιο αριθμό σειράς."/>
+                <StackLayout Orientation="Horizontal" Margin="0,30,0,0">
+                    <Button VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand"
+                        Text="Διαγραφη" BackgroundColor="{StaticResource Tradic}"
+                        Command="{Binding Delete_Device_Command}"/>
+                    <Button VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand"
+                        Text="Εγγραφη" BackgroundColor="{StaticResource Analogous}"
+                        Command="{Binding Register_Device_Command}"/>
+                </StackLayout>
+            </StackLayout>
+
         </Grid>
-    </ContentPage.Content>
+        <ActivityIndicator IsRunning="{Binding IsBusy}"/>
+    </Grid>
 </ContentPage>

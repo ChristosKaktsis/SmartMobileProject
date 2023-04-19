@@ -90,7 +90,6 @@ namespace SmartMobileProject.ViewModels
             await LoadSeires();
             await LoadCustomers();
         }
-
         private async Task LoadCustomers()
         {
             try
@@ -126,7 +125,6 @@ namespace SmartMobileProject.ViewModels
                 Console.WriteLine(ex);
             }
         }
-
         private async Task LoadSeires()
         {
             try

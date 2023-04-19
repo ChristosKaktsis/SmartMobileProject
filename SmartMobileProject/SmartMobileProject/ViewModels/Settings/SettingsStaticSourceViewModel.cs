@@ -303,49 +303,9 @@ namespace SmartMobileProject.ViewModels
         {
             IsBusy = true;
         }
-        //private void SetAtt()
-        //{
-        //    uow = new UnitOfWork();
-        //    Εταιρία = new ΣτοιχείαΕταιρίας(uow);
-        //    ΔΟΥ = new XPCollection<ΔΟΥ>(uow);
-        //    FPA = new XPCollection<ΦΠΑ>(uow);
-        //    TK = new XPCollection<ΤαχυδρομικόςΚωδικός>(uow);
-        //    Poli = new XPCollection<Πόλη>(uow);
-
-        //}
-        //async void Check()
-        //{
-        //    await XpoHelper.CreateSTOIXEIAETAIRIASData();
-        //    await Task.Run(() => 
-        //    {               
-        //        var list = uow.Query<ΣτοιχείαΕταιρίας>();
-        //        if (list.Any())
-        //        {
-        //            Εταιρία = list.First();
-        //            Tk = Εταιρία.ΤΚ;
-        //            κατΦΠΑ = ((KatFPA)Εταιρία.ΚατηγορίαΦΠΑ).ToString();
-        //        }
-        //    });
-            
-        //}
-        //private void SimpleCheck()
-        //{
-        //    var list = uow.Query<ΣτοιχείαΕταιρίας>();
-        //    if (list.Any())
-        //    {
-        //        Εταιρία = list.First();
-        //        Tk = Εταιρία.ΤΚ;
-        //        κατΦΠΑ = ((KatFPA)Εταιρία.ΚατηγορίαΦΠΑ).ToString();
-        //    }
-        //}
+       
         private async void Save(object obj)
         {
-            //if (uow.InTransaction)
-            //{
-            //    uow.CommitChanges();
-            //    await Application.Current.MainPage.DisplayAlert("Αποθήκευση",
-            //         "Οι Αλλαγές Αποθηκεύτηκαν", "Εντάξει");
-            //}
             try
             {
                 using (UnitOfWork uow = new UnitOfWork())

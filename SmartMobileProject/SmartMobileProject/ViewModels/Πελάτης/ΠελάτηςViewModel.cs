@@ -98,9 +98,6 @@ namespace SmartMobileProject.ViewModels
 
         private async void createNewCustomerWithAFMorWithout(object obj)
         {
-            if (!IsTrialOn)
-                return;
-
             var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να γίνει συμπλήρωση στοιχείων του πελάτη με βάση το ΑΦΜ ; ", "Ναί", "Όχι");
             if (answer)
             {
@@ -115,8 +112,6 @@ namespace SmartMobileProject.ViewModels
 
         async void editcustomer(object obj)
         {
-            if (!IsTrialOn)
-                return;
             if (uow.InTransaction)
             {
                 uow.ReloadChangedObjects();
@@ -130,16 +125,12 @@ namespace SmartMobileProject.ViewModels
         }
         async void newOrder(object obj)
         {
-            if (!IsTrialOn)
-                return;
             if (uow.InTransaction)
             {
                 uow.ReloadChangedObjects();
             }
             Πελάτης customer = (Πελάτης)obj;
             
-            if (!IsTrialOn)
-                return;
             //setthe static class for new order
             DocHelperViewModel.Order = null;
 

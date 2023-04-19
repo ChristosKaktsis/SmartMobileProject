@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using DevExpress.Xpo;
 using System.Linq;
+using SmartMobileProject.Constants;
 
 namespace SmartMobileProject.ViewModels
 {
@@ -62,6 +63,7 @@ namespace SmartMobileProject.ViewModels
         {
             try
             {
+                if (await ActivationService.UseExpired(InfoStrings.Demo_Limit)) return;
                 UpdateCounter();
                 SetOrderTitle();
                 SaveAsTask();
@@ -69,6 +71,7 @@ namespace SmartMobileProject.ViewModels
                 var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να γίνει Εκτύπωση ", "Ναί", "Όχι");
                 if (answer) Print(Order);
                 await Shell.Current.Navigation.PopToRootAsync();
+                InfoStrings.Demo_Limit++;
             }
             catch (Exception ex) 
             { 

@@ -272,9 +272,6 @@ namespace SmartMobileProject.ViewModels
             var answer = await Application.Current.MainPage.DisplayAlert("Ερώτηση?", "Θέλετε να δημιουργήσετε νέο παραστατικό πωλήσεων ; ", "Ναί", "Όχι");
             if (answer)
             {
-                if (!IsTrialOn)
-                    return;
-                //setthe static class for new order
                 DocHelperViewModel.Order = null;
 
                 DocHelperViewModel.uow = new UnitOfWork();

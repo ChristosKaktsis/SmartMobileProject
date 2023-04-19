@@ -8,7 +8,10 @@ using DevExpress.Xpo;
 using System.Reflection;
 using Xamarin.Essentials;
 using SmartMobileProject.Models;
-
+using SmartMobileProject.Services;
+using SmartMobileProject.Constants;
+using System.Threading.Tasks;
+using SmartMobileProject.Repositories;
 
 namespace SmartMobileProject
 {
@@ -26,7 +29,15 @@ namespace SmartMobileProject
             DevExpress.XamarinForms.Popup.Initializer.Init();
 
             InitializeComponent();
+            InitializeDatabase();
+            
+            MainPage = new AppShell();
+            //Application.Current.Properties.Clear();
+            //string deviceIdentifier = DependencyService.Get<IDevice>().GetIdentifier();
+        }
 
+        private void InitializeDatabase()
+        {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -49,9 +60,6 @@ namespace SmartMobileProject
             XpoHelper.InitXpo(connectionString);
             uow = XpoHelper.CreateUnitOfWork();
 
-            MainPage = new AppShell();
-            //Application.Current.Properties.Clear();
-            //string deviceIdentifier = DependencyService.Get<IDevice>().GetIdentifier();
         }
 
         protected override async void OnStart()
@@ -61,15 +69,11 @@ namespace SmartMobileProject
                 await Application.Current.MainPage.DisplayAlert("Online",
                 "Για να μπορείτε να ανεβάζετε και να κατεβάζετε δεδομένα απο το Smart θα πρέπει να γίνουν κάποιες ρυθμήσεις στο Server. " +
                 "Μπορείτε να αλλάξετε τις ρυθμήσεις από το Application Settings", "Εντάξει");
+                return;
             }
-            else
-            {
-                await AppShell.Current.GoToAsync("///LoginPage");
-                //await AppShell.Current.GoToAsync("///ImageProductsPage");
-
-            }
-            //await ActivationCheck.CheckActivationCode();           
-            TrialCheck.Check();
+            CheckForLicense();
+            //await AppShell.Current.GoToAsync("///ImageProductsPage");
+            await AppShell.Current.GoToAsync("///LoginPage");
         }
 
         protected override void OnSleep()
@@ -83,6 +87,24 @@ namespace SmartMobileProject
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Debug.WriteLine(e.ExceptionObject);
+        }
+        /// <summary>
+        /// Check for license exist. If not clear device id value.
+        /// Device id is used when we check if device is activated 
+        /// </summary>
+        private async void CheckForLicense()
+        {
+            try
+            {
+                var repository = new CompanyRepository();
+                var vat = await repository.GetVAT();
+                if (!await ActivationService.IsDeviceActive(vat))
+                    InfoStrings.Device_ID = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
     }

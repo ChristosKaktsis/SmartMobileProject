@@ -91,32 +91,7 @@ namespace SmartMobileProject.ViewModels
                 OnPropertyChanged(nameof(OnlineMode));
             }
         }
-        public bool Lock
-        {
-            get => Preferences.Get(nameof(Lock), false);
-            set
-            {
-                OnPropertyChanged(nameof(Lock));
-            }
-        }
-        public bool IsTrialOn
-        {
-            get 
-            {
-                if(Lock)
-                    TrialMessage();
-                return !Lock; 
-            }
-        }
-        public bool Active
-        {
-            get => Preferences.Get(nameof(Active), false);
-            set
-            {
-                Preferences.Set(nameof(Active), value);
-                OnPropertyChanged(nameof(Active));
-            }
-        }
+      
         public bool LoadAllCustomers
         {
             get => Preferences.Get(nameof(LoadAllCustomers), false);
@@ -134,12 +109,6 @@ namespace SmartMobileProject.ViewModels
                 Preferences.Set(nameof(LACFlag), value);
                 OnPropertyChanged(nameof(LACFlag));
             }
-        }
-        public async void TrialMessage()
-        {
-            await Application.Current.MainPage.DisplayAlert("Free Trial",
-                     "Έχει λήξει ή δωρεάν δοκιμή 30 ημερών. Για να ενεργοποιήσετε την εφαρμογή " +
-                     "πατήστε Activate Product απο το menu Activation", "Εντάξει");
         }
         public async void OnlineWarning()
         {

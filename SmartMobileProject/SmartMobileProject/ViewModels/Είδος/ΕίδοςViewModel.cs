@@ -38,8 +38,6 @@ namespace SmartMobileProject.ViewModels
 
         private async void CreateEidos(object obj)
         {
-            if (!IsTrialOn)
-                return;
             if (uow.InTransaction)
              {
                  uow.ReloadChangedObjects();
@@ -51,8 +49,6 @@ namespace SmartMobileProject.ViewModels
         }
         private async void EditEidos(object obj)
         {
-            if (!IsTrialOn)
-                return;
             if (uow.InTransaction)
              {
                  uow.ReloadChangedObjects();

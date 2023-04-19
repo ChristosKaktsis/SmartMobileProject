@@ -121,8 +121,6 @@ namespace SmartMobileProject.ViewModels
         }
         private async void CreateOrder(object obj)
         {
-            if (!IsTrialOn)
-                return;
             DocHelperViewModel.Order = null;
             //ΝέοΠαραστατικόViewModel.uow = uow;
             DocHelperViewModel.πελατης = null;
@@ -131,8 +129,6 @@ namespace SmartMobileProject.ViewModels
         }
         private async void EditOrder(object obj)
         {
-            if (!IsTrialOn)
-                return;
             var editItem = (ΠαραστατικάΠωλήσεων)obj;
             if(editItem.IsUploaded)
             {

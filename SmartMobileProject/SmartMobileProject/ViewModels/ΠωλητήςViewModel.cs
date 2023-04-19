@@ -33,8 +33,6 @@ namespace SmartMobileProject.ViewModels
         }
         private async void Save(object obj)
         {
-            if (!IsTrialOn)
-                return;
             if (uow.InTransaction)
             {
                 uow.CommitChanges();

@@ -118,8 +118,10 @@
     </MenuItem>
     <MenuItem Text="Ανέβασμα στο Smart" IconImageSource="Upload_16x16.png" StyleClass="MenuItemLayoutStyle"  Clicked="Upload_MenuItem_Clicked">
     </MenuItem>
-    <MenuItem Text="Activation" IconImageSource="icon_about.png"  StyleClass="MenuItemLayoutStyle"  Clicked="Activation_MenuItem_Clicked">
-    </MenuItem>
+    <FlyoutItem Title="Activation"  Icon="icon_about.png">
+        <ShellContent  Route="ActivationPage" ContentTemplate="{DataTemplate local:ActivationPage}" />
+    </FlyoutItem>
+    
     <!--<MenuItem Text="Έξοδος" IconImageSource="icon_about.png"  StyleClass="MenuItemLayoutStyle"  Clicked="Exit_MenuItem_Clicked">
     </MenuItem>-->
 
